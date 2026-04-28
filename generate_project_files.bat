@@ -1,0 +1,1 @@
+engine/tools/scripts/generate_project_vs2022.bat
