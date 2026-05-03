@@ -37,7 +37,7 @@ if __name__ == "__main__":
         if args.clang_tidy:
             runners.append(ClangTidyRunner())
 
-        if args.clang_tidy or args.build:
+        if args.clang_tidy: #or args.build:
             Path(OUTPUT_DIR).mkdir(exist_ok=True)
     
         for runner in runners:

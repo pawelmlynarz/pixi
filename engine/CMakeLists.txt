@@ -3,7 +3,7 @@ set(ENGINE_TARGET_NAME engine)
 set(ENGINE_ROOT "${CMAKE_CURRENT_LIST_DIR}")
 
 add_library(${ENGINE_TARGET_NAME} STATIC "")
-add_library(pixi::engine ALIAS ${ENGINE_TARGET_NAME})
+add_library(px::engine ALIAS ${ENGINE_TARGET_NAME})
 
 add_subdirectory(source)
 
