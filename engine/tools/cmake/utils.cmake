@@ -1,3 +1,6 @@
+# --------------------------------------------------
+# Groups sources in IDE into folder hierarchy
+# --------------------------------------------------
 function(group_sources_for_target target)
     set(SOURCE_GROUP_DELIMITER "/")
     set(last_dir "")
