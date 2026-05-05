@@ -50,7 +50,7 @@ if not exist %ENGINE_ROOT%/../build  (
 :: Project Generation
 :: 
 
-echo Generating project files for %PROJECT_NAME%..
+echo Generating project files..
 
 cmake .. -G "%GENERATOR%"
 if %ERRORLEVEL% NEQ 0 goto FAIL_PROJECT_GENERATION
