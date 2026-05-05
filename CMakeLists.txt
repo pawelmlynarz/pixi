@@ -19,6 +19,16 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP OFF)
 
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    set(COMPILE_OPTIONS -mssse3 -Wextra)
+elseif(MSVC)
+    set(COMPILE_OPTIONS /W4 /WX
+            /wd4324
+    )
+else()
+    message(WARNING "Unknown compiler!")
+endif()
+
 # --------------------------------------------------
 # Build targets
 # --------------------------------------------------
