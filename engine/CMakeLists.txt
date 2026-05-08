@@ -1,58 +1,36 @@
-set(ENGINE_TARGET_NAME PixiEngine)
-
 set(ENGINE_ROOT "${CMAKE_CURRENT_LIST_DIR}")
 
 # --------------------------------------------------
-# Engine Third Party
+# Engine Third Party Fetch
 # --------------------------------------------------
 
-include(fetch_third_party)
+if(NOT BUILD_CLANG_TIDY)
+    include(fetch_third_party)
+endif()
 
 # --------------------------------------------------
-# Engine Target Configuration
+# Engine Target(s) Configuration
 # --------------------------------------------------
 
-add_library(${ENGINE_TARGET_NAME} STATIC "")
-add_library(px::engine ALIAS ${ENGINE_TARGET_NAME})
+#
+# Builds engine modules as dynamic libraries .
+# An exception is Launch module which is obligatory to be static.
+option(PX_BUILD_SHARED "Builds engine modules as separate dlls." ON)
+
+set(PX_ENGINE_COMPILE_DEFINITIONS)
+
+if(PX_BUILD_SHARED)
+    list(APPEND PX_ENGINE_COMPILE_DEFINITIONS PX_BUILD_SHARED)
+else()
+    list(APPEND PX_ENGINE_COMPILE_DEFINITIONS PX_BUILD_SHARED)
+endif()
+
+if(PLATFORM_WINDOWS)
+    list(APPEND PX_ENGINE_COMPILE_DEFINITIONS PLATFORM_WINDOWS)
+endif()
+
+# --------------------------------------------------
+# Module(s) Subdirectories
+# --------------------------------------------------
 
 add_subdirectory(source)
-
-file(GLOB_RECURSE ENGINE_CMAKE_FILES
-        "${ENGINE_ROOT}/CMakeLists.txt"
-        "${ENGINE_ROOT}/tools/cmake/*.cmake"
-        "${ENGINE_ROOT}/source/CMakeLists.txt"
-)
-
-target_sources(${ENGINE_TARGET_NAME} PRIVATE
-        ${ENGINE_CMAKE_FILES}
-)
-
-target_link_libraries(${ENGINE_TARGET_NAME}
-        PRIVATE
-        glfw
-        NRI
-        imgui
-        MathLib
-)
-
-target_include_directories(${ENGINE_TARGET_NAME}
-        PRIVATE
-        "${glfw_SOURCE_DIR}/include"
-)
-
-target_compile_options(${ENGINE_TARGET_NAME} PRIVATE ${COMPILE_OPTIONS})
-set_target_properties(${ENGINE_TARGET_NAME} PROPERTIES FOLDER "engine")
-
-# AgilitySDK requires specific symbols to be exported from the executable, which are not needed elsewhere.
-# Any other method doesn't work. "PUBLIC" to make settings visible in the exe module.
-if(MSVC AND NRI_ENABLE_AGILITY_SDK_SUPPORT)
-    include(CheckLinkerFlag)
-    check_linker_flag(CXX /NOEXP HAS_NOEXP)
-
-    set(LINK_OPTIONS /NOIMPLIB)
-    if(HAS_NOEXP)
-        set(LINK_OPTIONS ${LINK_OPTIONS} /NOEXP)
-    endif()
-
-    target_link_options(${ENGINE_TARGET_NAME} PUBLIC ${LINK_OPTIONS})
-endif()

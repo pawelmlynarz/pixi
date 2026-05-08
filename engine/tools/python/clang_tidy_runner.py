@@ -21,7 +21,8 @@ class ClangTidyRunner:
                                  .append(f"-G {ClangTidyRunner.GENERATOR}")\
                                  .append(f"-DCMAKE_C_COMPILER={ClangTidyRunner.C_COMPILER}")\
                                  .append(f"-DCMAKE_CXX_COMPILER={ClangTidyRunner.CXX_COMPILER}")\
-                                 .append(f"-DCMAKE_EXPORT_COMPILE_COMMANDS=ON")
+                                 .append(f"-DCMAKE_EXPORT_COMPILE_COMMANDS=ON")\
+                                 .append(f"-DBUILD_CLANG_TIDY=ON")
 
         self.script_command = CMakeCommand()\
                               .append(f"-DPROJECT_BINARY_DIR={ClangTidyRunner.BUILD_DIR}")\
