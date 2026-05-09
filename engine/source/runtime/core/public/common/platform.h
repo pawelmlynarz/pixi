@@ -7,6 +7,8 @@
 #include "windows/platform_windows.h"
 #endif
 
+namespace px{
 struct PXCORE_API Platform {
     static uint32 GetCurrentThreadId();
 };
+}
