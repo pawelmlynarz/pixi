@@ -7,24 +7,24 @@
 #include "private/core_misc_internal.h"
 
 namespace px {
+
 EngineLoop GEngineLoop;
-}
-using namespace px;
 
 namespace {
-inline int32 EnginePreInit() {
+
+int32 EnginePreInit() {
     return GEngineLoop.PreInit();
 }
 
-inline int32 EngineInit() {
+int32 EngineInit() {
     return GEngineLoop.Init();
 }
 
-inline void EngineTick() {
+void EngineTick() {
     GEngineLoop.Tick();
 }
 
-inline void EngineExit() {
+void EngineExit() {
     GEngineLoop.Exit();
 }
 
@@ -33,11 +33,12 @@ struct EngineExitGuard {
         EngineExit();
     }
 };
-}
+
+} // namespace
 
 int32 EngineMain() {
     EngineExitGuard ExitGuard;
-    
+
     core::InitGameThreadId(Platform::GetCurrentThreadId());
 
     int32 ErrorLevel{EnginePreInit()};
@@ -47,10 +48,12 @@ int32 EngineMain() {
     ErrorLevel = EngineInit();
     if (ErrorLevel != 0 || core::IsEngineExitRequested())
         return ErrorLevel;
-    
+
     while (!core::IsEngineExitRequested()) {
         EngineTick();
     }
 
     return ErrorLevel;
 }
+
+} // namespace px

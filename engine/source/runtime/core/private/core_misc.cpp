@@ -4,17 +4,20 @@
 #include "common/platform.h"
 
 namespace {
-int32   GGameThreadId{0};
-bool    GEngineExitRequested{false};
-}
 
-namespace px::core{
-void InitGameThreadId(const uint32 ThreadId) {
-    GGameThreadId = ThreadId;
+int32 GameThreadId{0};
+bool EngineExitRequested{false};
+
+} // namespace
+
+namespace px::core {
+
+void InitGameThreadId(uint32 const ThreadId) {
+    GameThreadId = ThreadId;
 }
 
 uint32 GetGameThreadId() {
-    return GGameThreadId;
+    return GameThreadId;
 }
 
 bool IsInGameThread() {
@@ -22,10 +25,11 @@ bool IsInGameThread() {
 }
 
 void RequestEngineExit() {
-    GEngineExitRequested = true;
+    EngineExitRequested = true;
 }
 
 bool IsEngineExitRequested() {
-    return GEngineExitRequested;
+    return EngineExitRequested;
 }
-}
+
+} // namespace px::core
