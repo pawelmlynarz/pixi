@@ -4,17 +4,28 @@
 #include "common/platform.h"
 
 namespace {
-int32 GGameThreadId{0};
+int32   GGameThreadId{0};
+bool    GEngineExitRequested{false};
 }
 
-void FCoreMisc::InitGameThreadId(const uint32 ThreadId) {
+namespace px::core{
+void InitGameThreadId(const uint32 ThreadId) {
     GGameThreadId = ThreadId;
 }
 
-uint32 FCoreMisc::GetGameThreadId() {
+uint32 GetGameThreadId() {
     return GGameThreadId;
 }
 
-bool FCoreMisc::IsInGameThread() {
+bool IsInGameThread() {
     return GetGameThreadId() == Platform::GetCurrentThreadId();
+}
+
+void RequestEngineExit() {
+    GEngineExitRequested = true;
+}
+
+bool IsEngineExitRequested() {
+    return GEngineExitRequested;
+}
 }

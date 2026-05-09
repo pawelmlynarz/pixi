@@ -5,10 +5,10 @@
 #include "core.h"
 #include "common/types.h"
 
-struct PXCORE_API FCoreMisc {
-    static void     InitGameThreadId(const uint32 ThreadId);
+namespace px::core {
+    PXCORE_API uint32   GetGameThreadId();
+    PXCORE_API bool     IsInGameThread();
     
-    static uint32   GetGameThreadId();
-    static bool     IsInGameThread();
+    PXCORE_API void     RequestEngineExit();
+    PXCORE_API bool     IsEngineExitRequested();
 };
-
