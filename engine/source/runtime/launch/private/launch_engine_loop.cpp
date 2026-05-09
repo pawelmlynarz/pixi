@@ -3,6 +3,7 @@
 #include "launch_engine_loop.h"
 
 namespace px {
+
 int32 EngineLoop::PreInit() {
     return 0;
 }
@@ -16,4 +17,5 @@ void EngineLoop::Tick() {
 
 void EngineLoop::Exit() {
 }
-}
+
+} // namespace px

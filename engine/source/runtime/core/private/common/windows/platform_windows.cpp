@@ -2,8 +2,10 @@
 
 #include "common/platform.h"
 
-namespace px{
+namespace px {
+
 uint32 Platform::GetCurrentThreadId() {
     return ::GetCurrentThreadId();
 };
-}
+
+} // namespace px

@@ -2,16 +2,18 @@
 
 #pragma once
 
+// core
 #include "common/types.h"
 
 namespace px {
-class EngineLoop {
-public:
+
+struct EngineLoop {
     int32 PreInit();
     int32 Init();
     void Tick();
     void Exit();
-}; 
+};
 
 extern EngineLoop GEngineLoop;
-}
+
+} // namespace px
