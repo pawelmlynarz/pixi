@@ -3,14 +3,15 @@ cmake_minimum_required(VERSION 4.3 FATAL_ERROR)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/engine/tools/cmake")
 
 include(project_config.cmake)
+include(platform_check)
 
 # --------------------------------------------------
-# Setup project
+# Project Setup
 # --------------------------------------------------
 project(${PROJECT_NAME} C CXX)
 
 # --------------------------------------------------
-# Environment configuration
+# Environment Configuration
 # --------------------------------------------------
 
 set(CMAKE_CXX_STANDARD 23)
@@ -20,9 +21,9 @@ set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP OFF)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    set(COMPILE_OPTIONS -mssse3 -Wextra)
+    set(GLOB_COMPILE_OPTIONS -mssse3 -Wextra)
 elseif(MSVC)
-    set(COMPILE_OPTIONS /W4 /WX
+    set(GLOB_COMPILE_OPTIONS /W4 /WX
             /wd4324
     )
 else()
@@ -30,7 +31,7 @@ else()
 endif()
 
 # --------------------------------------------------
-# Build targets
+# Build Targets
 # --------------------------------------------------
 
 add_subdirectory(engine)
