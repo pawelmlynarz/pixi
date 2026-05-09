@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "compiler.h"
+
 #ifdef PX_BUILD_SHARED
 #ifdef PX_BUILD_CORE
 #define PXCORE_API DLLEXPORT
@@ -11,6 +13,3 @@
 #else
 #define PXCORE_API
 #endif
-
-#include "platform.h"
-#include "core_types.h"

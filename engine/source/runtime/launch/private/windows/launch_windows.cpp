@@ -1,14 +1,12 @@
 // © 2026 Pawel Mlynarz
 
 // core
-#include "core.h"
-
-#include <Windows.h>
+#include "common/platform.h"
 
 extern int32 EngineMain();
 
 namespace {
-int32 LaunchWindowsStartup(HINSTANCE hInInstance, HINSTANCE hPrevInstance, char *, int32 nCmdShow, const TCHAR *CmdLine) {
+int32 LaunchWindowsStartup(HINSTANCE, HINSTANCE, char *, int32, const TCHAR*) {
     return EngineMain();
 }
 } // namespace
