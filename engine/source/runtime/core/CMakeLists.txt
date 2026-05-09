@@ -23,15 +23,15 @@ file(GLOB_RECURSE MODULE_SOURCES CONFIGURE_DEPENDS
         public/*.cpp public/*.h public/*.inl
         private/*.cpp private/*.h private/*.inl
 )
-list(FILTER MODULE_SOURCES EXCLUDE REGEX "[/\\\\]public[/\\\\]platform[/\\\\].*")
-list(FILTER MODULE_SOURCES EXCLUDE REGEX "[/\\\\]private[/\\\\]platform[/\\\\].*")
+list(FILTER MODULE_SOURCES EXCLUDE REGEX "[/\\\\]public[/\\\\]common[/\\\\][^/\\\\]+[/\\\\].*")
+list(FILTER MODULE_SOURCES EXCLUDE REGEX "[/\\\\]private[/\\\\]common[/\\\\][^/\\\\]+[/\\\\].*")
 
 #
 # Platform Sources
 if(WIN32)
     file(GLOB_RECURSE MODULE_PLATFORM_SOURCES CONFIGURE_DEPENDS
-            public/windows/*.cpp public/windows/*.h public/windows/*.inl
-            private/windows/*.cpp private/windows/*.h private/windows/*.inl
+            public/common/windows/*.cpp public/common/windows/*.h public/common/windows/*.inl
+            private/common/windows/*.cpp private/common/windows/*.h private/common/windows/*.inl
     )
 endif()
 list(APPEND MODULE_SOURCES ${MODULE_PLATFORM_SOURCES})
