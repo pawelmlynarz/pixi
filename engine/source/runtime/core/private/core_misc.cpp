@@ -6,7 +6,7 @@
 namespace {
 
 int32 GameThreadId{0};
-bool EngineExitRequested{false};
+bool bEngineExitRequested{false};
 
 } // namespace
 
@@ -25,11 +25,11 @@ bool IsInGameThread() {
 }
 
 void RequestEngineExit() {
-    EngineExitRequested = true;
+    bEngineExitRequested = true;
 }
 
 bool IsEngineExitRequested() {
-    return EngineExitRequested;
+    return bEngineExitRequested;
 }
 
 } // namespace px::core
