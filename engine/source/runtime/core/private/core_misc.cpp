@@ -1,16 +1,17 @@
 // © 2026 Pawel Mlynarz
 
 #include "core_misc.h"
+#include "core_misc_internal.h"
 #include "common/platform.h"
+
+namespace px {
 
 namespace {
 
-int32 GameThreadId{0};
-bool EngineExitRequested{false};
+uint32 GameThreadId{0};
+bool bEngineExitRequested{false};
 
 } // namespace
-
-namespace px::core {
 
 void InitGameThreadId(uint32 const ThreadId) {
     GameThreadId = ThreadId;
@@ -25,11 +26,11 @@ bool IsInGameThread() {
 }
 
 void RequestEngineExit() {
-    EngineExitRequested = true;
+    bEngineExitRequested = true;
 }
 
 bool IsEngineExitRequested() {
-    return EngineExitRequested;
+    return bEngineExitRequested;
 }
 
-} // namespace px::core
+} // namespace px

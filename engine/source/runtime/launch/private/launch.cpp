@@ -3,29 +3,30 @@
 // core
 #include "core_misc.h"
 #include "common/platform.h"
-#include "launch_engine_loop.h"
 #include "private/core_misc_internal.h"
+
+#include "launch_engine_loop.h"
 
 namespace px {
 
-EngineLoop GEngineLoop;
-
 namespace {
 
+EngineLoop EngineLoop;
+
 int32 EnginePreInit() {
-    return GEngineLoop.PreInit();
+    return EngineLoop.PreInit();
 }
 
 int32 EngineInit() {
-    return GEngineLoop.Init();
+    return EngineLoop.Init();
 }
 
 void EngineTick() {
-    GEngineLoop.Tick();
+    EngineLoop.Tick();
 }
 
 void EngineExit() {
-    GEngineLoop.Exit();
+    EngineLoop.Exit();
 }
 
 struct EngineExitGuard {
@@ -39,17 +40,17 @@ struct EngineExitGuard {
 int32 EngineMain() {
     EngineExitGuard ExitGuard;
 
-    core::InitGameThreadId(Platform::GetCurrentThreadId());
+    InitGameThreadId(Platform::GetCurrentThreadId());
 
     int32 ErrorLevel{EnginePreInit()};
-    if (ErrorLevel != 0 || core::IsEngineExitRequested())
+    if (ErrorLevel != 0 || IsEngineExitRequested())
         return ErrorLevel;
 
     ErrorLevel = EngineInit();
-    if (ErrorLevel != 0 || core::IsEngineExitRequested())
+    if (ErrorLevel != 0 || IsEngineExitRequested())
         return ErrorLevel;
 
-    while (!core::IsEngineExitRequested()) {
+    while (!IsEngineExitRequested()) {
         EngineTick();
     }
 

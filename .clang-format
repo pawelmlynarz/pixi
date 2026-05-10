@@ -19,6 +19,7 @@ AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: false
 BinPackArguments: true
 BinPackParameters: true
+InsertNewlineAtEOF: true
 BraceWrapping:   
   AfterClass: false
   AfterControlStatement: false
@@ -48,7 +49,9 @@ IndentWrappedFunctionNames: false
 KeepEmptyLinesAtTheStartOfBlocks: true
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
-PointerAlignment: Right
+PointerAlignment: Left
+ReferenceAlignment: Left
+QualifierAlignment: Right
 ReflowComments: true
 SortIncludes: false
 SpaceAfterCStyleCast: false
