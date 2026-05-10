@@ -5,8 +5,8 @@
 #include "core.h"
 #include "common/types.h"
 
-namespace px::core {
+namespace px {
 
 PXCORE_API void InitGameThreadId(uint32 const ThreadId);
 
-} // namespace px::core
+} // namespace px

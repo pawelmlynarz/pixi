@@ -33,6 +33,8 @@ if(WIN32)
             private/common/windows/*.cpp private/common/windows/*.h private/common/windows/*.inl
             public/window/windows/*.cpp public/window/windows/*.h public/window/windows/*.inl
             private/window/windows/*.cpp private/window/windows/*.h private/window/windows/*.inl
+            public/app/windows/*.cpp public/app/windows/*.h public/app/windows/*.inl
+            private/app/windows/*.cpp private/app/windows/*.h private/app/windows/*.inl
     )
 endif()
 list(APPEND MODULE_SOURCES ${MODULE_PLATFORM_SOURCES})

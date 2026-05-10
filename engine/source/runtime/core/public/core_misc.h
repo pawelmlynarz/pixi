@@ -5,7 +5,7 @@
 #include "core.h"
 #include "common/types.h"
 
-namespace px::core {
+namespace px {
 
 PXCORE_API uint32 GetGameThreadId();
 PXCORE_API bool IsInGameThread();
@@ -13,4 +13,4 @@ PXCORE_API bool IsInGameThread();
 PXCORE_API void RequestEngineExit();
 PXCORE_API bool IsEngineExitRequested();
 
-} // namespace px::core
+} // namespace px

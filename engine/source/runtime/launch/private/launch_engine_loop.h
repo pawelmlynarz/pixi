@@ -14,6 +14,4 @@ struct EngineLoop {
     void Exit();
 };
 
-extern EngineLoop GEngineLoop;
-
 } // namespace px

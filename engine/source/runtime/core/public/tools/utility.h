@@ -10,23 +10,36 @@
 namespace px {
 
 template <typename T>
+using UniquePtr = std::unique_ptr<T>;
+
+template <typename T, typename... TArgs>
+    requires std::constructible_from<T, TArgs...>
+std::unique_ptr<T> MakeUnique(TArgs&&... Args) {
+    return std::make_unique<T>(std::forward<TArgs>(Args)...);
+}
+
+template <typename T>
 using SharedPtr = std::shared_ptr<T>;
 
-template<typename T>
+template <typename T, typename... TArgs>
+    requires std::constructible_from<T, TArgs...>
+std::shared_ptr<T> MakeShared(TArgs&&... Args) {
+    return std::make_shared<T>(std::forward<TArgs>(Args)...);
+}
+
+template <typename T>
 class SharedRef {
-public:
+  public:
     SharedRef() = delete;
 
     SharedRef(SharedPtr<T> const& Ptr) noexcept
-        : m_Ptr(Ptr)
-    {
-        PX_ASSERT_MSG(m_Ptr, "SharedRef constructed with null pointer");
+        : Ptr_(Ptr) {
+        PX_ASSERT_MSG(Ptr_, "SharedRef constructed with null pointer");
     }
 
     SharedRef(SharedPtr<T>&& Ptr) noexcept
-        : m_Ptr(std::move(Ptr))
-    {
-        PX_ASSERT_MSG(m_Ptr, "SharedRef constructed with null pointer");
+        : Ptr_(std::move(Ptr)) {
+        PX_ASSERT_MSG(Ptr_, "SharedRef constructed with null pointer");
     }
 
     SharedRef(SharedRef const&) = default;
@@ -34,25 +47,25 @@ public:
 
     SharedRef(SharedRef&&) noexcept = default;
     SharedRef& operator=(SharedRef&&) noexcept = default;
-    
+
     T& operator*() const noexcept {
-        return *m_Ptr;
+        return *Ptr_;
     }
 
     T* operator->() const noexcept {
-        return m_Ptr.get();
+        return Ptr_.get();
     }
 
     T* Get() const noexcept {
-        return m_Ptr.get();
+        return Ptr_.get();
     }
 
     SharedPtr<T> ToShared() const noexcept {
-        return m_Ptr;
+        return Ptr_;
     }
 
-private:
-   SharedPtr<T> m_Ptr;
+  private:
+    SharedPtr<T> Ptr_;
 };
 
 } // namespace px

@@ -5,11 +5,11 @@
 namespace px {
 
 class NonCopyable {
-protected:
+  protected:
     NonCopyable() = default;
     ~NonCopyable() = default;
 
-public:
+  public:
     NonCopyable(NonCopyable const&) = delete;
     NonCopyable& operator=(NonCopyable const&) = delete;
 
@@ -18,17 +18,17 @@ public:
 };
 
 class NonMovable {
-protected:
+  protected:
     NonMovable() = default;
     ~NonMovable() = default;
 
-public:
+  public:
     NonMovable(NonMovable&&) = delete;
     NonMovable& operator=(NonMovable&&) = delete;
 };
 
 class NonCopyableNonMovable : NonCopyable, NonMovable {
-protected:
+  protected:
     NonCopyableNonMovable() = default;
     ~NonCopyableNonMovable() = default;
 };

@@ -7,9 +7,10 @@
 namespace px {
 
 class WindowsWindow final : public GenericWindow {
-public:
+  public:
+    ~WindowsWindow() = default;
+
     virtual void* GetOSWindowHandle() const;
 };
 
 } // namespace px
-

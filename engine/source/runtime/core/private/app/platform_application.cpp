@@ -1,10 +1,7 @@
 // © 2026 Pawel Mlynarz
 
-#pragma once
+#include "app/platform_application.h"
 
 namespace px {
-
-struct GenericWindowDefinition {
-};
 
 } // namespace px

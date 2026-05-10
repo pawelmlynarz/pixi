@@ -7,9 +7,10 @@
 namespace px {
 
 class GenericWindow : NonCopyableNonMovable {
+  public:
     virtual ~GenericWindow() = default;
-    
-public:
+
+  public:
     [[nodiscard]]
     virtual void* GetOSWindowHandle() const = 0;
 };

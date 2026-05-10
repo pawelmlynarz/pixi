@@ -19,6 +19,7 @@ AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: false
 BinPackArguments: true
 BinPackParameters: true
+InsertNewlineAtEOF: true
 BraceWrapping:   
   AfterClass: false
   AfterControlStatement: false
