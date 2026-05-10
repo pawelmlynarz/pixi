@@ -18,6 +18,13 @@ endif()
 add_library(px::engine::core ALIAS ${MODULE_TARGET_NAME})
 
 #
+# Dependencies
+target_link_libraries(${MODULE_TARGET_NAME}
+        PRIVATE
+        glfw
+)
+
+#
 # Common Sources                                         
 file(GLOB_RECURSE MODULE_SOURCES CONFIGURE_DEPENDS
         public/*.cpp public/*.h public/*.inl

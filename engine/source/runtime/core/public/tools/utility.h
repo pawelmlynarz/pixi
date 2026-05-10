@@ -68,4 +68,9 @@ class SharedRef {
     SharedPtr<T> Ptr_;
 };
 
+template <typename TTo, typename TFrom>
+SharedRef<TTo> StaticCastSharedRef(SharedRef<TFrom> const& Ref) noexcept {
+    return SharedRef<TTo>(std::static_pointer_cast<TTo>(Ref.ToShared()));
+}
+
 } // namespace px

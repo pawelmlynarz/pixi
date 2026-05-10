@@ -5,12 +5,19 @@
 #include "app/platform_application.h"
 #include "tools/utility.h"
 
+#include <vector>
+
 namespace px {
+
+class GenericWindow;
 
 class WindowsApplication final : public PlatformApplication {
   public:
-    WindowsApplication() = default;
-    ~WindowsApplication() = default;
+    virtual UniquePtr<GenericWindow> CreatePlatformWindow() override;
+    virtual void InitializeWindow(SharedRef<GenericWindow> const& Window, GenericWindowDefinition const& WindowDefiinition) override;
+
+  private:
+    std::vector<SharedRef<class WindowsWindow>> Windows_;
 };
 
 struct WindowsApplicationFactory {
