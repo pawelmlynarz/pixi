@@ -25,6 +25,15 @@ void EngineApplication::Shutdown() {
     EngineApp.reset();
 }
 
+EngineApplication::EngineApplication(SharedRef<PlatformApplication> const InPlatformApplication)
+    : PlatformApplication_(InPlatformApplication) {
+    PlatformApplication_->Initialize();
+}
+
+EngineApplication::~EngineApplication() {
+    PlatformApplication_->Shutdown();
+}
+
 bool EngineApplication::IsInitialized() {
     return EngineApp != nullptr;
 }
@@ -34,16 +43,16 @@ EngineApplication& EngineApplication::Get() {
     return *EngineApp;
 }
 
-EngineApplication::EngineApplication(SharedRef<PlatformApplication> const InPlatformApplication)
-    : PlatformApplication_(InPlatformApplication) {
-}
-
 bool EngineApplication::AddWindow(GenericWindowDefinition const& WindowDefinition, bool const bShowImmediately) {
     SharedRef<GenericWindow> const Window{PlatformApplication_->CreatePlatformWindow()};
     PlatformApplication_->InitializeWindow(Window, WindowDefinition);
     if (bShowImmediately)
         Window->Show();
     return true;
+}
+
+void EngineApplication::PollMessages() {
+    PlatformApplication_->PollMessages();
 }
 
 } // namespace px
