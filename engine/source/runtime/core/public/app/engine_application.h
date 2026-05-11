@@ -4,13 +4,14 @@
 
 #include "core.h"
 #include "tools/utility.h"
+#include "tools/misc.h"
 #include "window/generic_window_definition.h"
 
 namespace px {
 
 class PlatformApplication;
 
-class EngineApplication {
+class EngineApplication : NonCopyableNonMovable {
   public:
     static PXCORE_API void Create();
     static PXCORE_API void Create(SharedRef<PlatformApplication> const InPlatformApplication);
@@ -21,8 +22,11 @@ class EngineApplication {
 
   public:
     EngineApplication(SharedRef<PlatformApplication> const InPlatformApplication);
+    ~EngineApplication();
 
     PXCORE_API bool AddWindow(GenericWindowDefinition const& WindowDefinition, bool const bShowImmediately);
+    
+    PXCORE_API void PollMessages();
 
   private:
     SharedRef<PlatformApplication> PlatformApplication_;

@@ -14,16 +14,19 @@ class WindowsWindow final : public GenericWindow {
   public:
     ~WindowsWindow() = default;
 
-    virtual void InitializeWindow(GenericWindowDefinition const& WindowDefiinition) override;
+    virtual void InitializeWindow(SharedPtr<PlatformApplication> OwningApplication, GenericWindowDefinition const& WindowDefiinition) override;
     virtual void DestoryWindow() override;
+
+    virtual SharedRef<PlatformApplication> GetOwningApplication() const override;
 
     virtual void* GetOSWindowHandle() const override;
 
     PXCORE_API virtual void Show() override;
     PXCORE_API virtual void Hide() override;
     PXCORE_API virtual bool IsVisible() const override;
-
+    
   private:
+    SharedPtr<class WindowsApplication> OwningApplication_{nullptr};
     GenericWindowDefinition Definition_;
 
     GLFWwindow* Handle_{nullptr};

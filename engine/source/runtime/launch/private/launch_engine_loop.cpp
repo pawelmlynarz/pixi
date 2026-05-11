@@ -17,9 +17,11 @@ int32 EngineLoop::Init() {
 }
 
 void EngineLoop::Tick() {
+    EngineApplication::Get().PollMessages();
 }
 
 void EngineLoop::Exit() {
+    EngineApplication::Shutdown();
 }
 
 } // namespace px

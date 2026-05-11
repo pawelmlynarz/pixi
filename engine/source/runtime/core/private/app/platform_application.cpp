@@ -5,6 +5,10 @@
 
 namespace px {
 
+PlatformApplication::PlatformApplication() 
+    : MessageHandler_(MakeShared<NullApplicationMessageHandler>()) {
+}
+
 UniquePtr<GenericWindow> PlatformApplication::CreatePlatformWindow() {
     return MakeUnique<GenericWindow>();
 }

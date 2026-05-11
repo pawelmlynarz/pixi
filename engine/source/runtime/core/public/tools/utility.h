@@ -42,6 +42,35 @@ class SharedRef {
         PX_ASSERT_MSG(Ptr_, "SharedRef constructed with null pointer");
     }
 
+    template <typename U>
+        requires std::convertible_to<U*, T*>
+    SharedRef(SharedPtr<U> const& Ptr) noexcept
+        : Ptr_(Ptr) {
+        PX_ASSERT_MSG(Ptr_, "SharedRef constructed with null pointer");
+    }
+
+    template <typename U>
+        requires std::convertible_to<U*, T*>
+    SharedRef(SharedPtr<U>&& Ptr) noexcept
+        : Ptr_(std::move(Ptr)) {
+        PX_ASSERT_MSG(Ptr_, "SharedRef constructed with null pointer");
+    }
+
+    template <typename U>
+        requires std::convertible_to<U*, T*>
+    SharedRef(SharedRef<U> const& Other) noexcept
+        : Ptr_(Other.ToPtr()) {
+        PX_ASSERT_MSG(Ptr_, "SharedRef constructed with null pointer");
+    }
+
+    template <typename U>
+        requires std::convertible_to<U*, T*>
+    SharedRef& operator=(SharedRef<U> const& Other) noexcept {
+        Ptr_ = Other.ToPtr();
+        PX_ASSERT_MSG(Ptr_, "SharedRef assigned null pointer");
+        return *this;
+    }
+
     SharedRef(SharedRef const&) = default;
     SharedRef& operator=(SharedRef const&) = default;
 
@@ -60,7 +89,7 @@ class SharedRef {
         return Ptr_.get();
     }
 
-    SharedPtr<T> ToShared() const noexcept {
+    SharedPtr<T> ToPtr() const noexcept {
         return Ptr_;
     }
 
@@ -69,8 +98,31 @@ class SharedRef {
 };
 
 template <typename TTo, typename TFrom>
-SharedRef<TTo> StaticCastSharedRef(SharedRef<TFrom> const& Ref) noexcept {
-    return SharedRef<TTo>(std::static_pointer_cast<TTo>(Ref.ToShared()));
+[[nodiscard]] SharedPtr<TTo> StaticCastSharedPtr(SharedPtr<TFrom> const& Ptr) noexcept {
+    return std::static_pointer_cast<TTo>(Ptr);
+}
+
+template <typename TTo, typename TFrom>
+[[nodiscard]] SharedRef<TTo> StaticCastSharedRef(SharedPtr<TFrom> const& Ptr) noexcept {
+    return SharedRef<TTo>(std::static_pointer_cast<TTo>(Ptr));
+}
+
+template <typename TTo, typename TFrom>
+[[nodiscard]] SharedRef<TTo> StaticCastSharedRef(SharedRef<TFrom> const& Ref) noexcept {
+    return SharedRef<TTo>(std::static_pointer_cast<TTo>(Ref.ToPtr()));
+}
+
+template <typename T>
+using EnableSharedFromThis = std::enable_shared_from_this<T>;
+
+template <class T>
+[[nodiscard]] static SharedRef<T> SharedThis(T* const ThisPtr) {
+    return StaticCastSharedRef<T>(ThisPtr->shared_from_this());
+}
+
+template <class T>
+[[nodiscard]] static SharedRef<T> SharedThis(T const* const ThisPtr) {
+    return StaticCastSharedRef<T const>(ThisPtr->shared_from_this());
 }
 
 } // namespace px

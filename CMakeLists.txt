@@ -25,6 +25,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 elseif(MSVC)
     set(GLOB_COMPILE_OPTIONS /W4 /WX
             /wd4324
+            /wd4100 # unintialized variables
     )
 else()
     message(WARNING "Unknown compiler!")
