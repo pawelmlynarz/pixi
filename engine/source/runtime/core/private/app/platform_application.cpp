@@ -5,7 +5,7 @@
 
 namespace px {
 
-PlatformApplication::PlatformApplication() 
+PlatformApplication::PlatformApplication()
     : MessageHandler_(MakeShared<NullApplicationMessageHandler>()) {
 }
 

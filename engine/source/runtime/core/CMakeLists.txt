@@ -22,6 +22,8 @@ add_library(px::engine::core ALIAS ${MODULE_TARGET_NAME})
 target_link_libraries(${MODULE_TARGET_NAME}
         PRIVATE
         glfw
+        PUBLIC
+        glm
 )
 
 #

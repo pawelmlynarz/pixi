@@ -29,7 +29,7 @@ void EnsureGLFWInitialized() {
 }
 
 void GLFWKeyCallback(GLFWwindow* const Window, int32_t const Key, int32_t const Scancode, int32_t const Action, int32_t const Mods) {
-    WindowsWindow* const WinWindow{reinterpret_cast<WindowsWindow*>(glfwGetWindowUserPointer(Window))};
+    WindowsWindow* const WinWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(Window))};
     SharedRef const MessageHandler{WinWindow->GetOwningApplication()->GetMessageHandler()};
 
     switch (uint32 const CharacterCode{static_cast<uint32>(Scancode)}; Action) {
@@ -52,7 +52,35 @@ void GLFWKeyCallback(GLFWwindow* const Window, int32_t const Key, int32_t const 
 void GLFWCharCallback(GLFWwindow* const Window, uint32_t const Codepoint) {
 }
 
-void GLFWButtonCallback(GLFWwindow* const Window, int32_t const Button, int32_t const Action, int32_t const Mods) {
+void GLFWMouseButtonCallback(GLFWwindow* const Window, int32_t const Button, int32_t const Action, int32_t const Mods) {
+    WindowsWindow* const WinWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(Window))};
+    SharedRef const MessageHandler{WinWindow->GetOwningApplication()->GetMessageHandler()};
+
+    EMouseButton ButtonEnum{EMouseButton::Left};
+
+    switch (Button) {
+    case GLFW_MOUSE_BUTTON_LEFT:
+        ButtonEnum = EMouseButton::Left;
+        break;
+
+    case GLFW_MOUSE_BUTTON_MIDDLE:
+        ButtonEnum = EMouseButton::Middle;
+        break;
+
+    case GLFW_MOUSE_BUTTON_RIGHT:
+        ButtonEnum = EMouseButton::Right;
+        break;
+    }
+
+    double MouseX{}, MouseY{};
+    glfwGetCursorPos(Window, &MouseX, &MouseY);
+    Vector2 const MousePos{static_cast<float>(MouseX), static_cast<float>(MouseY)};
+
+    if (Action == GLFW_PRESS) {
+        MessageHandler->OnMouseDown(SharedThis(WinWindow), ButtonEnum, MousePos);
+    } else if (Action == GLFW_RELEASE) {
+        MessageHandler->OnMouseUp(SharedThis(WinWindow), ButtonEnum, MousePos);
+    }
 }
 
 void GLFWCursorPosCallback(GLFWwindow* Window, double const X, double const Y) {
@@ -93,7 +121,7 @@ void WindowsWindow::InitializeWindow(SharedPtr<PlatformApplication> OwningApplic
     glfwSetWindowUserPointer(Handle_, this);
     glfwSetKeyCallback(Handle_, GLFWKeyCallback);
     glfwSetCharCallback(Handle_, GLFWCharCallback);
-    glfwSetMouseButtonCallback(Handle_, GLFWButtonCallback);
+    glfwSetMouseButtonCallback(Handle_, GLFWMouseButtonCallback);
     glfwSetCursorPosCallback(Handle_, GLFWCursorPosCallback);
     glfwSetScrollCallback(Handle_, GLFWScrollCallback);
     glfwSetWindowCloseCallback(Handle_, GLFWCloseCallback);

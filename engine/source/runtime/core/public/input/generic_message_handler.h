@@ -3,6 +3,7 @@
 #pragma once
 
 #include "tools/utility.h"
+#include "common/types.h"
 
 namespace px {
 
@@ -21,8 +22,8 @@ class IGenericApplicationMessageHandler {
     virtual bool OnKeyDown(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) = 0;
     virtual bool OnKeyUp(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) = 0;
 
-    virtual bool OnMouseDown(SharedPtr<GenericWindow> const& Window, EMouseButton const Button) = 0;
-    virtual bool OnMouseUp(SharedPtr<GenericWindow> const& Window, EMouseButton const Button) = 0;
+    virtual bool OnMouseDown(SharedRef<GenericWindow> const& Window, EMouseButton const Button, Vector2 const& MousePos) = 0;
+    virtual bool OnMouseUp(SharedRef<GenericWindow> const& Window, EMouseButton const Button, Vector2 const& MousePos) = 0;
 
     virtual void OnWindowClose(SharedRef<GenericWindow> const& Window) = 0;
 };
@@ -32,8 +33,8 @@ class NullApplicationMessageHandler final : public IGenericApplicationMessageHan
     virtual bool OnKeyDown(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) override { return false; };
     virtual bool OnKeyUp(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) override { return false; };
 
-    virtual bool OnMouseDown(SharedPtr<GenericWindow> const& Window, EMouseButton const Button) override { return false; };
-    virtual bool OnMouseUp(SharedPtr<GenericWindow> const& Window, EMouseButton const Button) override { return false; };
+    virtual bool OnMouseDown(SharedRef<GenericWindow> const& Window, EMouseButton const Button, Vector2 const& MousePos) override { return false; };
+    virtual bool OnMouseUp(SharedRef<GenericWindow> const& Window, EMouseButton const Button, Vector2 const& MousePos) override { return false; };
 
     virtual void OnWindowClose(SharedRef<GenericWindow> const& Window) override {};
 };

@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "common/windows/types_windows.h"
 #include "input/generic_message_handler.h"
 #include "tools/misc.h"
 
@@ -11,18 +10,18 @@ namespace px {
 class PlatformApplication;
 
 class InputSystem final : NonCopyableNonMovable, public IGenericApplicationMessageHandler {
-public:
+  public:
     InputSystem(SharedRef<PlatformApplication> const OwningApplication);
-    
+
     virtual bool OnKeyDown(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) override;
     virtual bool OnKeyUp(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) override;
 
-    virtual bool OnMouseDown(SharedPtr<GenericWindow> const& Window, EMouseButton const Button) override;
-    virtual bool OnMouseUp(SharedPtr<GenericWindow> const& Window, EMouseButton const Button) override;
+    virtual bool OnMouseDown(SharedRef<GenericWindow> const& Window, EMouseButton const Button, Vector2 const& MousePos) override;
+    virtual bool OnMouseUp(SharedRef<GenericWindow> const& Window, EMouseButton const Button, Vector2 const& MousePos) override;
 
     virtual void OnWindowClose(SharedRef<GenericWindow> const& Window) override;
-    
-private:
+
+  private:
     SharedRef<PlatformApplication> OwningApplication_;
 };
 
