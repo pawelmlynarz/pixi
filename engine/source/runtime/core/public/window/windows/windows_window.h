@@ -24,7 +24,7 @@ class WindowsWindow final : public GenericWindow {
     PXCORE_API virtual void Show() override;
     PXCORE_API virtual void Hide() override;
     PXCORE_API virtual bool IsVisible() const override;
-    
+
   private:
     SharedPtr<class WindowsApplication> OwningApplication_{nullptr};
     GenericWindowDefinition Definition_;

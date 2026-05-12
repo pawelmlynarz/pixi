@@ -25,7 +25,7 @@ class PlatformApplication : NonCopyableNonMovable,
     virtual UniquePtr<GenericWindow> CreatePlatformWindow();
     virtual void InitializeWindow(SharedRef<GenericWindow> const&, GenericWindowDefinition const&) {}
     virtual void CloseWindow(SharedRef<GenericWindow> const& Window) {}
-    
+
     virtual void PollMessages() {}
 
   private:

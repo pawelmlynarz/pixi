@@ -34,6 +34,16 @@ fetchcontent_declare(
 )
 list(APPEND DEPS mathlib)
 
+# third_party/glm
+
+fetchcontent_declare(
+        glm
+        DOWNLOAD_EXTRACT_TIMESTAMP 1
+        DOWNLOAD_NO_PROGRESS 1
+        URL https://github.com/g-truc/glm/releases/download/1.0.3/glm-1.0.3.zip
+)
+list(APPEND DEPS glm)
+
 # third_party/imgui
 
 fetchcontent_declare(

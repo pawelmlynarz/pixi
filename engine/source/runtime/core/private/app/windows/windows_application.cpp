@@ -39,11 +39,11 @@ void WindowsApplication::CloseWindow(SharedRef<GenericWindow> const& Window) {
         [&Window](auto const& W) {
             return W.Get() == Window.Get();
         })};
-    
+
     PX_ASSERT(FoundWindow != Windows_.end());
     (*FoundWindow)->DestoryWindow();
     Windows_.erase(FoundWindow);
-    
+
     if (Windows_.empty())
         RequestEngineExit();
 }

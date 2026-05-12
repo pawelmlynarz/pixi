@@ -19,11 +19,11 @@ bool InputSystem::OnKeyUp(int32 const KeyCode, uint32 const CharacterCode, bool 
     return true;
 }
 
-bool InputSystem::OnMouseDown(SharedPtr<GenericWindow> const& Window, EMouseButton const Button) {
+bool InputSystem::OnMouseDown(SharedRef<GenericWindow> const& Window, EMouseButton const Button, Vector2 const& MousePos) {
     return true;
 }
 
-bool InputSystem::OnMouseUp(SharedPtr<GenericWindow> const& Window, EMouseButton const Button) {
+bool InputSystem::OnMouseUp(SharedRef<GenericWindow> const& Window, EMouseButton const Button, Vector2 const& MousePos) {
     return true;
 }
 

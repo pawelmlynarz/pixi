@@ -25,7 +25,7 @@ class EngineApplication : NonCopyableNonMovable {
     ~EngineApplication();
 
     PXCORE_API bool AddWindow(GenericWindowDefinition const& WindowDefinition, bool const bShowImmediately);
-    
+
     PXCORE_API void PollMessages();
 
   private:

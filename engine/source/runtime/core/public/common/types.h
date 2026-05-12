@@ -7,3 +7,5 @@
 #else
 #error Unsupported platform: no types header available.
 #endif
+
+#include "math/math_types.h"
