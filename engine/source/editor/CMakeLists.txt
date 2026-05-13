@@ -1,0 +1,2 @@
+add_subdirectory(editor_core)
+add_subdirectory(editor_engine)

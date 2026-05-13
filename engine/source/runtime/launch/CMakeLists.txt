@@ -18,7 +18,16 @@ add_library(px::engine::launch ALIAS ${MODULE_TARGET_NAME})
 target_link_libraries(${MODULE_TARGET_NAME} 
         PRIVATE
         px::engine::core
+        px::engine::engine
 )
+
+if(PX_WITH_EDITOR)
+    target_link_libraries(${MODULE_TARGET_NAME}
+            PRIVATE
+            px::engine::editor::core
+            px::engine::editor::engine
+    )
+endif()
 
 #
 # Common Sources

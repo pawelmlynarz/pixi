@@ -1,9 +1,14 @@
 // © 2026 Pawel Mlynarz
 
-// core
+// pxcore
 #include "core_misc.h"
 #include "common/platform.h"
 #include "private/core_misc_internal.h"
+
+// pxeditor
+#if WITH_EDITOR
+#include "editor_core_launch.h"
+#endif // WITH_EDITOR
 
 #include "launch_engine_loop.h"
 
@@ -31,9 +36,28 @@ void EngineExit() {
     EngineLoop.Exit();
 }
 
+#if WITH_EDITOR
+[[nodiscard]]
+int32 EditorInit() {
+    int32 const Result{EngineInit()};
+    if (!Result)
+        return Result;
+    return ed::EditorInit();
+}
+
+void EditorExit() {
+    ed::EditorExit();
+    EngineExit();
+}
+#endif // WITH_EDITOR
+
 struct EngineExitGuard {
     ~EngineExitGuard() {
+#if WITH_EDITOR
+        EditorExit();
+#else
         EngineExit();
+#endif
     }
 };
 
@@ -48,7 +72,12 @@ int32 EngineMain() {
     if (ErrorLevel != 0 || IsEngineExitRequested())
         return ErrorLevel;
 
+#if WITH_EDITOR
+    ErrorLevel = EditorInit();
+#else
     ErrorLevel = EngineInit();
+#endif
+
     if (ErrorLevel != 0 || IsEngineExitRequested())
         return ErrorLevel;
 

@@ -36,6 +36,10 @@ EngineApplication::~EngineApplication() {
     PlatformApplication_->Shutdown();
 }
 
+void EngineApplication::Tick() {
+    PlatformApplication_->PollMessages();
+}
+
 bool EngineRuntime::IsInitialized() {
     return EngineApp != nullptr;
 }
@@ -51,10 +55,6 @@ bool EngineApplication::AddWindow(GenericWindowDefinition const& WindowDefinitio
     if (bShowImmediately)
         Window->Show();
     return true;
-}
-
-void EngineApplication::PollMessages() const {
-    PlatformApplication_->PollMessages();
 }
 
 } // namespace px

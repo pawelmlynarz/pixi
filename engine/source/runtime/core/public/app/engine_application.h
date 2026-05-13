@@ -25,8 +25,8 @@ class EngineApplication final : NonCopyableNonMovable {
     EngineApplication(SharedRef<PlatformApplication> const InPlatformApplication);
     ~EngineApplication();
 
+    PXCORE_API void Tick();
     PXCORE_API bool AddWindow(GenericWindowDefinition const& WindowDefinition, bool const bShowImmediately) const;
-    PXCORE_API void PollMessages() const;
 
   private:
     SharedRef<PlatformApplication> PlatformApplication_;
