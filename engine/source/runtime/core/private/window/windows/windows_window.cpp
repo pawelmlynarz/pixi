@@ -97,12 +97,12 @@ void GLFWCloseCallback(GLFWwindow* const Window) {
 
 } // namespace
 
-void WindowsWindow::InitializeWindow(SharedPtr<PlatformApplication> OwningApplication, GenericWindowDefinition const& WindowDefiinition) {
-    OwningApplication_ = StaticCastSharedPtr<WindowsApplication>(OwningApplication);
+void WindowsWindow::InitializeWindow(SharedPtr<PlatformApplication> OwningApplication, GenericWindowDefinition const& WindowDefinition) {
+    GenericWindow::InitializeWindow(OwningApplication, WindowDefinition);
 
     EnsureGLFWInitialized();
 
-    Definition_ = WindowDefiinition;
+    Definition_ = WindowDefinition;
 
     glfwDefaultWindowHints();
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -127,7 +127,7 @@ void WindowsWindow::InitializeWindow(SharedPtr<PlatformApplication> OwningApplic
     glfwSetWindowCloseCallback(Handle_, GLFWCloseCallback);
 }
 
-void WindowsWindow::DestoryWindow() {
+void WindowsWindow::DestroyWindow() {
     if (!Handle_)
         return;
 
@@ -141,8 +141,8 @@ SharedRef<PlatformApplication> WindowsWindow::GetOwningApplication() const {
     return SharedRef(OwningApplication_);
 }
 
-void* WindowsWindow::GetOSWindowHandle() const {
-    return Handle_;
+GenericOSWindowHandle WindowsWindow::GetOSWindowHandle() const {
+    return {static_cast<void*>(Handle_)};
 }
 
 void WindowsWindow::Show() {

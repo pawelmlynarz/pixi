@@ -9,9 +9,9 @@ namespace px {
 
 class PlatformApplication;
 
-class InputSystem final : NonCopyableNonMovable, public IGenericApplicationMessageHandler {
+class EngineInputSystem final : NonCopyableNonMovable, public IGenericApplicationMessageHandler {
   public:
-    InputSystem(SharedRef<PlatformApplication> const OwningApplication);
+    EngineInputSystem(SharedRef<PlatformApplication> const OwningApplication);
 
     virtual bool OnKeyDown(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) override;
     virtual bool OnKeyUp(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) override;

@@ -5,23 +5,25 @@
 
 namespace px {
 
+[[nodiscard]]
 int32 EngineLoop::PreInit() {
-    EngineApplication::Create();
+    EngineRuntime::CreateApplication();
     return 0;
 }
 
+[[nodiscard]]
 int32 EngineLoop::Init() {
-    GenericWindowDefinition Definition;
-    EngineApplication::Get().AddWindow(Definition, true);
+    GenericWindowDefinition MainWindowDefinition;
+    EngineRuntime::GetApplication().AddWindow(MainWindowDefinition, true);
     return 0;
 }
 
 void EngineLoop::Tick() {
-    EngineApplication::Get().PollMessages();
+    EngineRuntime::GetApplication().PollMessages();
 }
 
 void EngineLoop::Exit() {
-    EngineApplication::Shutdown();
+    EngineRuntime::Shutdown();
 }
 
 } // namespace px

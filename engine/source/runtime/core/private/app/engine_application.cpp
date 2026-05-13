@@ -3,6 +3,7 @@
 #include "app/engine_application.h"
 #include "app/platform_application.h"
 #include "app/platform_application_misc.h"
+#include "input/engine_input_system.h"
 #include "window/generic_window.h"
 
 namespace px {
@@ -13,37 +14,38 @@ UniquePtr<EngineApplication> EngineApp;
 
 } // namespace
 
-void EngineApplication::Create() {
-    Create(SharedRef<PlatformApplication>(PlatformApplicationMisc::CreateApplication()));
+void EngineRuntime::CreateApplication() {
+    CreateApplication(SharedRef<PlatformApplication>(PlatformApplicationMisc::CreateApplication()));
 }
 
-void EngineApplication::Create(SharedRef<PlatformApplication> const PlatformApplication) {
+void EngineRuntime::CreateApplication(SharedRef<PlatformApplication> const PlatformApplication) {
     EngineApp = MakeUnique<EngineApplication>(PlatformApplication);
 }
 
-void EngineApplication::Shutdown() {
+void EngineRuntime::Shutdown() {
     EngineApp.reset();
 }
 
 EngineApplication::EngineApplication(SharedRef<PlatformApplication> const InPlatformApplication)
     : PlatformApplication_(InPlatformApplication) {
     PlatformApplication_->Initialize();
+    PlatformApplication_->SetMessageHandler(SharedRef<IGenericApplicationMessageHandler>(MakeShared<EngineInputSystem>(PlatformApplication_)));
 }
 
 EngineApplication::~EngineApplication() {
     PlatformApplication_->Shutdown();
 }
 
-bool EngineApplication::IsInitialized() {
+bool EngineRuntime::IsInitialized() {
     return EngineApp != nullptr;
 }
 
-EngineApplication& EngineApplication::Get() {
+EngineApplication& EngineRuntime::GetApplication() {
     PX_ASSERT(IsInitialized());
     return *EngineApp;
 }
 
-bool EngineApplication::AddWindow(GenericWindowDefinition const& WindowDefinition, bool const bShowImmediately) {
+bool EngineApplication::AddWindow(GenericWindowDefinition const& WindowDefinition, bool const bShowImmediately) const {
     SharedRef<GenericWindow> const Window{PlatformApplication_->CreatePlatformWindow()};
     PlatformApplication_->InitializeWindow(Window, WindowDefinition);
     if (bShowImmediately)
@@ -51,7 +53,7 @@ bool EngineApplication::AddWindow(GenericWindowDefinition const& WindowDefinitio
     return true;
 }
 
-void EngineApplication::PollMessages() {
+void EngineApplication::PollMessages() const {
     PlatformApplication_->PollMessages();
 }
 
