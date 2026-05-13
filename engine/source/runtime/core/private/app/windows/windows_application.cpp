@@ -4,7 +4,6 @@
 
 #include "app/windows/windows_application.h"
 #include "window/windows/windows_window.h"
-#include "input/input_system.h"
 
 // GLFW
 #include "core_misc.h"
@@ -13,12 +12,11 @@
 namespace px {
 
 void WindowsApplication::Initialize() {
-    SetMessageHandler(SharedRef<IGenericApplicationMessageHandler>(MakeShared<InputSystem>(SharedThis(this))));
 }
 
 void WindowsApplication::Shutdown() {
     for (auto const& Window : Windows_) {
-        Window->DestoryWindow();
+        Window->DestroyWindow();
     }
 }
 
@@ -26,9 +24,9 @@ UniquePtr<GenericWindow> WindowsApplication::CreatePlatformWindow() {
     return WindowsWindowFactory::Create();
 }
 
-void WindowsApplication::InitializeWindow(SharedRef<GenericWindow> const& Window, GenericWindowDefinition const& WindowDefiinition) {
+void WindowsApplication::InitializeWindow(SharedRef<GenericWindow> const& Window, GenericWindowDefinition const& WindowDefinition) {
     SharedRef const WindowsWindowRef{StaticCastSharedRef<WindowsWindow>(Window)};
-    WindowsWindowRef->InitializeWindow(SharedThis(this).ToPtr(), WindowDefiinition);
+    WindowsWindowRef->InitializeWindow(SharedThis(this).ToPtr(), WindowDefinition);
 
     Windows_.emplace_back(WindowsWindowRef);
 }
@@ -41,7 +39,7 @@ void WindowsApplication::CloseWindow(SharedRef<GenericWindow> const& Window) {
         })};
 
     PX_ASSERT(FoundWindow != Windows_.end());
-    (*FoundWindow)->DestoryWindow();
+    (*FoundWindow)->DestroyWindow();
     Windows_.erase(FoundWindow);
 
     if (Windows_.empty())

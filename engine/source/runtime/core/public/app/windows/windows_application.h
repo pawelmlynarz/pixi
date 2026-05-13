@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "core.h"
 #include "app/platform_application.h"
 #include "tools/utility.h"
 
@@ -17,7 +18,7 @@ class WindowsApplication final : public PlatformApplication {
     virtual void Shutdown() override;
 
     virtual UniquePtr<GenericWindow> CreatePlatformWindow() override;
-    virtual void InitializeWindow(SharedRef<GenericWindow> const& Window, GenericWindowDefinition const& WindowDefiinition) override;
+    virtual void InitializeWindow(SharedRef<GenericWindow> const& Window, GenericWindowDefinition const& WindowDefinition) override;
     virtual void CloseWindow(SharedRef<GenericWindow> const& Window) override;
 
     virtual void PollMessages() override;
@@ -27,6 +28,7 @@ class WindowsApplication final : public PlatformApplication {
 };
 
 struct WindowsApplicationFactory {
+    [[nodiscard]]
     static PXCORE_API UniquePtr<WindowsApplication> Create();
 };
 

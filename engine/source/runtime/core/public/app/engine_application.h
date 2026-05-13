@@ -11,22 +11,22 @@ namespace px {
 
 class PlatformApplication;
 
-class EngineApplication : NonCopyableNonMovable {
-  public:
-    static PXCORE_API void Create();
-    static PXCORE_API void Create(SharedRef<PlatformApplication> const InPlatformApplication);
+struct EngineRuntime {
+    static PXCORE_API void CreateApplication();
+    static PXCORE_API void CreateApplication(SharedRef<PlatformApplication> const InPlatformApplication);
     static PXCORE_API void Shutdown();
 
     static PXCORE_API bool IsInitialized();
-    static PXCORE_API EngineApplication& Get();
+    static PXCORE_API class EngineApplication& GetApplication();
+};
 
+class EngineApplication final : NonCopyableNonMovable {
   public:
     EngineApplication(SharedRef<PlatformApplication> const InPlatformApplication);
     ~EngineApplication();
 
-    PXCORE_API bool AddWindow(GenericWindowDefinition const& WindowDefinition, bool const bShowImmediately);
-
-    PXCORE_API void PollMessages();
+    PXCORE_API bool AddWindow(GenericWindowDefinition const& WindowDefinition, bool const bShowImmediately) const;
+    PXCORE_API void PollMessages() const;
 
   private:
     SharedRef<PlatformApplication> PlatformApplication_;

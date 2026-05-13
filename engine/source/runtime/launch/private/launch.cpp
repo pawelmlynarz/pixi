@@ -13,10 +13,12 @@ namespace {
 
 EngineLoop EngineLoop;
 
+[[nodiscard]]
 int32 EnginePreInit() {
     return EngineLoop.PreInit();
 }
 
+[[nodiscard]]
 int32 EngineInit() {
     return EngineLoop.Init();
 }
