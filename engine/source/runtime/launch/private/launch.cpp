@@ -7,7 +7,7 @@
 
 // pxeditor
 #if WITH_EDITOR
-#include "editor_core_launch.h"
+#include "private/editor_core_launch.h"
 #endif // WITH_EDITOR
 
 #include "launch_engine_loop.h"
@@ -40,7 +40,7 @@ void EngineExit() {
 [[nodiscard]]
 int32 EditorInit() {
     int32 const Result{EngineInit()};
-    if (!Result)
+    if (Result != 0)
         return Result;
     return ed::EditorInit();
 }

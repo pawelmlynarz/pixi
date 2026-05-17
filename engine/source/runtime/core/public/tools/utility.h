@@ -12,6 +12,9 @@ namespace px {
 template <typename T>
 using UniquePtr = std::unique_ptr<T>;
 
+template <typename T>
+using WeakPtr = std::weak_ptr<T>;
+
 template <typename T, typename... TArgs>
     requires std::constructible_from<T, TArgs...>
 std::unique_ptr<T> MakeUnique(TArgs&&... Args) {

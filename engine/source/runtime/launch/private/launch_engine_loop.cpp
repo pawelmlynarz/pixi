@@ -4,43 +4,43 @@
 
 // pxcore
 #include "app/engine_application.h"
+#include "private/app/engine_application_internal.h"
 
 // pxengine
 #include "engine.h"
+#include "private/engine_internal.h"
 
 // pxeditorengine
 #if WITH_EDITOR
 #include "editor_engine.h"
+#include "private/editor_engine_internal.h"
 #endif // WITH_EDITOR
 
 namespace px {
 
 [[nodiscard]]
 int32 EngineLoop::PreInit() {
-    EngineRuntime::CreateApplication();
+    CreateApplication();
     return 0;
 }
 
 [[nodiscard]]
 int32 EngineLoop::Init() {
-
 #if WITH_EDITOR
-    InitializeEditorEngine(MakeShared<ed::EditorEngine>());
+    int32 const Result{InitializeEditorEngine(MakeShared<ed::EditorEngine>())};
 #else
-    InitializeEngine(MakeShared<Engine>());
+    int32 const Result{InitializeEngine(MakeShared<Engine>())};
 #endif
-
-    GenericWindowDefinition MainWindowDefinition;
-    EngineRuntime::GetApplication().AddWindow(MainWindowDefinition, true);
-    return 0;
+    return Result;
 }
 
 void EngineLoop::Tick() {
-    EngineRuntime::GetApplication().Tick();
+    GetApplication().Tick();
 }
 
 void EngineLoop::Exit() {
-    EngineRuntime::Shutdown();
+    DestroyEngine();
+    ShutdownApplication();
 }
 
 } // namespace px

@@ -1,23 +1,32 @@
 // © 2026 Pawel Mlynarz
 
 #include "editor_engine.h"
+#include "editor_engine_internal.h"
+
+// pxengine
+#include "private/engine_internal.h"
 
 namespace px::ed {
 
 namespace {
 
-SharedPtr<EditorEngine> PixiEditorEngine{nullptr};
+WeakPtr<EditorEngine> PixiEditorEngine;
 
 } // namespace
 
-void InitializeEditorEngine(SharedPtr<EditorEngine> const& EditorEngine) {
+int32 InitializeEditorEngine(SharedPtr<EditorEngine> const& EditorEngine) {
+    int32 const Result{InitializeEngine(EditorEngine)};
+    if (!Result)
+        return Result;
     PixiEditorEngine = EditorEngine;
-    InitializeEngine(PixiEditorEngine);
+
+    return 0;
 }
 
-SharedRef<EditorEngine> GetEditorEngine() {
-    PX_ASSERT(PixiEditorEngine != nullptr);
-    return PixiEditorEngine;
+EditorEngine& GetEditorEngine() {
+    auto const SharedEditorEngine{PixiEditorEngine.lock()};
+    PX_ASSERT(SharedEditorEngine != nullptr);
+    return *SharedEditorEngine;
 }
 
 } // namespace px::ed

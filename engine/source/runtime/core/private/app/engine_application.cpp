@@ -1,6 +1,7 @@
 // © 2026 Pawel Mlynarz
 
 #include "app/engine_application.h"
+#include "engine_application_internal.h"
 #include "app/platform_application.h"
 #include "app/platform_application_misc.h"
 #include "input/engine_input_system.h"
@@ -14,15 +15,15 @@ UniquePtr<EngineApplication> EngineApp;
 
 } // namespace
 
-void EngineRuntime::CreateApplication() {
+void CreateApplication() {
     CreateApplication(SharedRef<PlatformApplication>(PlatformApplicationMisc::CreateApplication()));
 }
 
-void EngineRuntime::CreateApplication(SharedRef<PlatformApplication> const PlatformApplication) {
+void CreateApplication(SharedRef<PlatformApplication> const PlatformApplication) {
     EngineApp = MakeUnique<EngineApplication>(PlatformApplication);
 }
 
-void EngineRuntime::Shutdown() {
+void ShutdownApplication() {
     EngineApp.reset();
 }
 
@@ -40,11 +41,11 @@ void EngineApplication::Tick() {
     PlatformApplication_->PollMessages();
 }
 
-bool EngineRuntime::IsInitialized() {
+bool IsInitialized() {
     return EngineApp != nullptr;
 }
 
-EngineApplication& EngineRuntime::GetApplication() {
+EngineApplication& GetApplication() {
     PX_ASSERT(IsInitialized());
     return *EngineApp;
 }
