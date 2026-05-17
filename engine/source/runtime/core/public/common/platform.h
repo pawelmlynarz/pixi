@@ -1,6 +1,6 @@
 // © 2026 Pawel Mlynarz
 
-#include "core.h"
+#include "core_module.h"
 
 #if PLATFORM_WINDOWS
 #include "windows/platform_windows.h"

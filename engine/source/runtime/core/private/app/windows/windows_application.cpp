@@ -1,13 +1,13 @@
 // © 2026 Pawel Mlynarz
 
-#include <algorithm>
-
 #include "app/windows/windows_application.h"
 #include "window/windows/windows_window.h"
 
 // GLFW
 #include "core_misc.h"
 #include "GLFW/glfw3.h"
+
+#include <algorithm>
 
 namespace px {
 

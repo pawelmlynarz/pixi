@@ -11,21 +11,21 @@ set(MODULE_TARGET_NAME px${MODULE_NAME})
 #
 # Library (static only)
 add_library(${MODULE_TARGET_NAME} STATIC "")
-add_library(px::engine::launch ALIAS ${MODULE_TARGET_NAME})
+add_library(px::launch ALIAS ${MODULE_TARGET_NAME})
 
 #
 # Dependencies
 target_link_libraries(${MODULE_TARGET_NAME} 
         PRIVATE
-        px::engine::core
-        px::engine::engine
+        px::core
+        px::engine
 )
 
 if(PX_WITH_EDITOR)
     target_link_libraries(${MODULE_TARGET_NAME}
             PRIVATE
-            px::engine::editor::core
-            px::engine::editor::engine
+            px::editor::core
+            px::editor::engine
     )
 endif()
 
