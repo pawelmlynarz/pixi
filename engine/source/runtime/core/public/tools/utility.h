@@ -9,8 +9,8 @@
 
 namespace px {
 
-template <typename T>
-using UniquePtr = std::unique_ptr<T>;
+template <typename T, typename TDeleter = std::default_delete<T>>
+using UniquePtr = std::unique_ptr<T, TDeleter>;
 
 template <typename T>
 using WeakPtr = std::weak_ptr<T>;

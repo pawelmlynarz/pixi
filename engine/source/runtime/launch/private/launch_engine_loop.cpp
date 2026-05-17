@@ -10,6 +10,9 @@
 #include "engine.h"
 #include "private/engine_internal.h"
 
+// pxrhi
+#include "rhi.h"
+
 // pxeditorengine
 #if WITH_EDITOR
 #include "editor_engine.h"
@@ -21,6 +24,7 @@ namespace px {
 [[nodiscard]]
 int32 EngineLoop::PreInit() {
     CreateApplication();
+    InitializeRHI();
     return 0;
 }
 
@@ -40,6 +44,7 @@ void EngineLoop::Tick() {
 
 void EngineLoop::Exit() {
     DestroyEngine();
+    ShutdownRHI();
     ShutdownApplication();
 }
 
