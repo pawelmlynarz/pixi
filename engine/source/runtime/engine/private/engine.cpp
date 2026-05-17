@@ -1,6 +1,7 @@
 // © 2026 Pawel Mlynarz
 
 #include "engine.h"
+#include "engine_internal.h"
 
 namespace px {
 
@@ -10,17 +11,18 @@ SharedPtr<Engine> PixiEngine{nullptr};
 
 } // namespace
 
-void InitializeEngine(SharedPtr<Engine> const& Engine) {
+int32 InitializeEngine(SharedPtr<Engine> const& Engine) {
     PixiEngine = Engine;
+    return 0;
 }
 
 void DestroyEngine() {
     PixiEngine.reset();
 }
 
-SharedRef<Engine> GetEngine() {
+Engine& GetEngine() {
     PX_ASSERT(PixiEngine != nullptr);
-    return PixiEngine;
+    return *PixiEngine;
 }
 
 } // namespace px

@@ -11,15 +11,6 @@ namespace px {
 
 class PlatformApplication;
 
-struct EngineRuntime {
-    static PXCORE_API void CreateApplication();
-    static PXCORE_API void CreateApplication(SharedRef<PlatformApplication> const InPlatformApplication);
-    static PXCORE_API void Shutdown();
-
-    static PXCORE_API bool IsInitialized();
-    static PXCORE_API class EngineApplication& GetApplication();
-};
-
 class EngineApplication final : NonCopyableNonMovable {
   public:
     EngineApplication(SharedRef<PlatformApplication> const InPlatformApplication);
@@ -31,5 +22,8 @@ class EngineApplication final : NonCopyableNonMovable {
   private:
     SharedRef<PlatformApplication> PlatformApplication_;
 };
+
+PXCORE_API bool IsInitialized();
+PXCORE_API EngineApplication& GetApplication();
 
 } // namespace px

@@ -36,7 +36,8 @@ void WindowsApplication::CloseWindow(SharedRef<GenericWindow> const& Window) {
         Windows_,
         [&Window](auto const& W) {
             return W.Get() == Window.Get();
-        })};
+        }
+    )};
 
     PX_ASSERT(FoundWindow != Windows_.end());
     (*FoundWindow)->DestroyWindow();
