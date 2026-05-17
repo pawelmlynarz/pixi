@@ -7,10 +7,12 @@
 
 namespace px {
 
-PXCORE_API uint32 GetGameThreadId();
-PXCORE_API bool IsInGameThread();
-
 PXCORE_API void RequestEngineExit();
 PXCORE_API bool IsEngineExitRequested();
+
+PXCORE_API bool IsEditor();
+
+PXCORE_API uint32 GetGameThreadId();
+PXCORE_API bool IsInGameThread();
 
 } // namespace px

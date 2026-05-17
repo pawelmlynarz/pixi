@@ -1,7 +1,17 @@
 // © 2026 Pawel Mlynarz
 
 #include "launch_engine_loop.h"
+
+// pxcore
 #include "app/engine_application.h"
+
+// pxengine
+#include "engine.h"
+
+// pxeditorengine
+#if WITH_EDITOR
+#include "editor_engine.h"
+#endif // WITH_EDITOR
 
 namespace px {
 
@@ -13,13 +23,20 @@ int32 EngineLoop::PreInit() {
 
 [[nodiscard]]
 int32 EngineLoop::Init() {
+
+#if WITH_EDITOR
+    InitializeEditorEngine(MakeShared<ed::EditorEngine>());
+#else
+    InitializeEngine(MakeShared<Engine>());
+#endif
+
     GenericWindowDefinition MainWindowDefinition;
     EngineRuntime::GetApplication().AddWindow(MainWindowDefinition, true);
     return 0;
 }
 
 void EngineLoop::Tick() {
-    EngineRuntime::GetApplication().PollMessages();
+    EngineRuntime::GetApplication().Tick();
 }
 
 void EngineLoop::Exit() {
