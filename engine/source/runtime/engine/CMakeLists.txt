@@ -15,13 +15,13 @@ if(PX_BUILD_SHARED)
 else()
     add_library(${MODULE_TARGET_NAME} STATIC "")
 endif()
-add_library(px::engine::engine ALIAS ${MODULE_TARGET_NAME})
+add_library(px::engine ALIAS ${MODULE_TARGET_NAME})
 
 #
 # Dependencies
 target_link_libraries(${MODULE_TARGET_NAME}
-        PRIVATE
-        px::engine::core
+        PUBLIC
+        px::core
 )
 
 #

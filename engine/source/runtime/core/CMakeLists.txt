@@ -15,7 +15,7 @@ if(PX_BUILD_SHARED)
 else()
     add_library(${MODULE_TARGET_NAME} STATIC "")
 endif()
-add_library(px::engine::core ALIAS ${MODULE_TARGET_NAME})
+add_library(px::core ALIAS ${MODULE_TARGET_NAME})
 
 #
 # Dependencies

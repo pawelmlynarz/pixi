@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "editor_core.h"
+#include "editor_core_module.h"
 
 // pxcore
 #include "common/types.h"

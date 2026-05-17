@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "core.h"
+#include "core_module.h"
 #include "common/types.h"
 
 namespace px {
