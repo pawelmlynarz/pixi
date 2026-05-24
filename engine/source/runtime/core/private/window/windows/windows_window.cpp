@@ -142,7 +142,7 @@ SharedRef<PlatformApplication> WindowsWindow::GetOwningApplication() const {
 }
 
 GenericOSWindowHandle WindowsWindow::GetOSWindowHandle() const {
-    return {static_cast<void*>(Handle_)};
+    return {static_cast<void*>(Hwnd_)};
 }
 
 void WindowsWindow::Show() {

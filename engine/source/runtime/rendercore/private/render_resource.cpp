@@ -1,6 +1,6 @@
 // © 2026 Pawel Mlynarz
 
-#include "rhi_interface.h"
+#include "render_resource.h"
 
 namespace px {
 

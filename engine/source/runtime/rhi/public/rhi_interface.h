@@ -8,6 +8,8 @@
 #include "Extensions/NRIStreamer.h"
 #include "Extensions/NRISwapChain.h"
 
+#include <type_traits>
+
 namespace px {
 
 class RHIInterface
@@ -15,22 +17,35 @@ class RHIInterface
       public nri::HelperInterface,
       public nri::StreamerInterface,
       public nri::SwapChainInterface {
-public:
-    bool HasCore() const {
-        return GetDeviceDesc != nullptr;
-    }
-    
-    bool HasHelper() const {
-        return CalculateAllocationNumber != nullptr;
-    }
-    
-    bool HasStreamer() const {
-        return CreateStreamer != nullptr;
-    }
-    
-    bool HasSwapChain() const {
-        return CreateSwapChain != nullptr;
-    }
+  public:
+    template <typename TInterface>
+        requires std::is_base_of_v<TInterface, RHIInterface>
+    TInterface* As() { return static_cast<TInterface*>(this); }
+
+    template <typename TInterface>
+        requires std::is_base_of_v<TInterface, RHIInterface>
+    TInterface const* As() const { return static_cast<TInterface const*>(this); }
+
+    bool HasCore() const;
+    bool HasHelper() const;
+    bool HasStreamer() const;
+    bool HasSwapChain() const;
 };
+
+inline bool RHIInterface::HasCore() const {
+    return GetDeviceDesc != nullptr;
+}
+
+inline bool RHIInterface::HasHelper() const {
+    return CalculateAllocationNumber != nullptr;
+}
+
+inline bool RHIInterface::HasStreamer() const {
+    return CreateStreamer != nullptr;
+}
+
+inline bool RHIInterface::HasSwapChain() const {
+    return CreateSwapChain != nullptr;
+}
 
 } // namespace px

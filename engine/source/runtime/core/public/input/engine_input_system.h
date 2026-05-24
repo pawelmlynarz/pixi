@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "core_module.h"
 #include "input/generic_message_handler.h"
 #include "tools/misc.h"
 
@@ -11,7 +12,7 @@ class PlatformApplication;
 
 class EngineInputSystem final : NonCopyableNonMovable, public IGenericApplicationMessageHandler {
   public:
-    EngineInputSystem(SharedRef<PlatformApplication> const OwningApplication);
+    PXCORE_API EngineInputSystem(SharedRef<PlatformApplication> const OwningApplication);
 
     virtual bool OnKeyDown(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) override;
     virtual bool OnKeyUp(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) override;

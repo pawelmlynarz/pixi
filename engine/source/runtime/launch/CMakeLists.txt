@@ -20,6 +20,8 @@ target_link_libraries(${MODULE_TARGET_NAME}
         px::core
         px::engine
         px::rhi
+        px::ui
+        px::renderer
 )
 
 if(PX_WITH_EDITOR)
