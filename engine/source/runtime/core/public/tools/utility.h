@@ -6,11 +6,13 @@
 
 #include <utility>
 #include <memory>
+#include <ranges>
+#include <vector>
 
 namespace px {
 
-template <typename T>
-using UniquePtr = std::unique_ptr<T>;
+template <typename T, typename TDeleter = std::default_delete<T>>
+using UniquePtr = std::unique_ptr<T, TDeleter>;
 
 template <typename T>
 using WeakPtr = std::weak_ptr<T>;
@@ -96,9 +98,18 @@ class SharedRef {
         return Ptr_;
     }
 
+    WeakPtr<T> ToWeak() const noexcept {
+        return Ptr_;
+    }
+
   private:
     SharedPtr<T> Ptr_;
 };
+
+template <typename T>
+inline bool operator==(SharedRef<T> const& A, SharedRef<T> const& B) noexcept {
+    return A.Get() == B.Get();
+}
 
 template <typename TTo, typename TFrom>
 [[nodiscard]] SharedPtr<TTo> StaticCastSharedPtr(SharedPtr<TFrom> const& Ptr) noexcept {
@@ -128,4 +139,35 @@ template <class T>
     return StaticCastSharedRef<T const>(ThisPtr->shared_from_this());
 }
 
+template <std::integral T, std::integral A>
+[[nodiscard]]
+constexpr T AlignUp(T ActualSize, A Alignment) noexcept {
+    return static_cast<T>(
+        (static_cast<size_t>(ActualSize) + static_cast<size_t>(Alignment) - 1) & ~(static_cast<size_t>(Alignment) - 1)
+    );
+}
+
+template <std::ranges::sized_range R>
+[[nodiscard]]
+constexpr auto CountOf(R const& Range) noexcept {
+    return std::ranges::size(Range);
+}
+
+template <typename T>
+[[nodiscard]]
+constexpr size_t GetByteSizeOf(std::vector<T> const& Vec) noexcept {
+    return Vec.size() * sizeof(T);
+}
+
 } // namespace px
+
+namespace std {
+
+template <typename T>
+struct hash<px::SharedRef<T>> {
+    size_t operator()(px::SharedRef<T> const& Ref) const noexcept {
+        return std::hash<T*>{}(Ref.Get());
+    }
+};
+
+} // namespace std

@@ -3,18 +3,31 @@
 #include "editor_core_launch.h"
 
 // pxcore
-#include "app/engine_application.h"
+#include "app/simple_application.h"
+#include "widgets/swindow.h"
 
 namespace px::ed {
 
 namespace {
 
+class SEditorWindow final : public SWindow {
+  public:
+    virtual void Draw() override {
+    }
+};
+SharedPtr<SEditorWindow> MainEditorWindow{nullptr};
+
 bool CreateMainEditorWindow() {
-    GenericWindowDefinition constexpr EditorMainWindowDef{
-        .WidthDesired = 1920,
-        .HeightDesired = 1080
-    };
-    return GetApplication().AddWindow(EditorMainWindowDef, true);
+    MainEditorWindow = {MakeShared<SEditorWindow>()};
+    (*MainEditorWindow)
+        .Title("Pixi Editor")
+        .Size({1920, 1080})
+        .Decorated(true)
+        .Resizable(true);
+
+    PX_ASSERT(SimpleApplication::Get().AddWindow(MainEditorWindow, true));
+
+    return true;
 }
 
 } // namespace
@@ -26,6 +39,8 @@ int32 EditorInit() {
 }
 
 void EditorExit() {
+    MainEditorWindow->DestoryNativeWindow();
+    MainEditorWindow.reset();
 }
 
 } // namespace px::ed

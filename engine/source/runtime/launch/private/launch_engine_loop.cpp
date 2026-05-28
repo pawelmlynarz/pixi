@@ -2,13 +2,18 @@
 
 #include "launch_engine_loop.h"
 
-// pxcore
-#include "app/engine_application.h"
-#include "private/app/engine_application_internal.h"
+// pxui
+#include "app/simple_application.h"
 
 // pxengine
 #include "engine.h"
 #include "private/engine_internal.h"
+
+// pxrhi
+#include "rhi.h"
+
+// pxrenderer
+#include "renderer.h"
 
 // pxeditorengine
 #if WITH_EDITOR
@@ -20,7 +25,9 @@ namespace px {
 
 [[nodiscard]]
 int32 EngineLoop::PreInit() {
-    CreateApplication();
+    auto& Application{SimpleApplication::CreateApplication()};
+    InitializeRHI();
+    Application.InitializeRenderer(MakeShared<Renderer>());
     return 0;
 }
 
@@ -35,12 +42,13 @@ int32 EngineLoop::Init() {
 }
 
 void EngineLoop::Tick() {
-    GetApplication().Tick();
+    SimpleApplication::Get().Tick();
 }
 
 void EngineLoop::Exit() {
     DestroyEngine();
-    ShutdownApplication();
+    SimpleApplication::ShutdownApplication();
+    ShutdownRHI();
 }
 
 } // namespace px

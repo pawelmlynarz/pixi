@@ -1,11 +1,11 @@
 # --------------------------------------------------
-# Module:           EditorCore
+# Module:           RHI
 # Default Type:     Dynamic
 # --------------------------------------------------
 
 include(utils)
 
-set(MODULE_NAME editor_core)
+set(MODULE_NAME rhi)
 set(MODULE_TARGET_NAME px${MODULE_NAME})
 
 #
@@ -15,15 +15,14 @@ if(PX_BUILD_SHARED)
 else()
     add_library(${MODULE_TARGET_NAME} STATIC "")
 endif()
-add_library(px::editor::core ALIAS ${MODULE_TARGET_NAME})
+add_library(px::rhi ALIAS ${MODULE_TARGET_NAME})
 
 #
 # Dependencies
 target_link_libraries(${MODULE_TARGET_NAME}
-        PRIVATE
+        PUBLIC
         px::core
-        px::ui
-        px::rhi
+        NRI
 )
 
 #
@@ -43,11 +42,11 @@ target_include_directories(${MODULE_TARGET_NAME}
 )
 
 set(MODULE_COMPILE_DEFINITIONS ${PX_ENGINE_COMPILE_DEFINITIONS})
-list(APPEND MODULE_COMPILE_DEFINITIONS PX_BUILD_EDITOR_CORE)
+list(APPEND MODULE_COMPILE_DEFINITIONS PX_BUILD_RHI)
 target_compile_definitions(${MODULE_TARGET_NAME} PRIVATE ${MODULE_COMPILE_DEFINITIONS})
 target_compile_options(${MODULE_TARGET_NAME} PRIVATE ${GLOB_COMPILE_OPTIONS})
 
 #
 # IDE grouping
-set_target_properties(${MODULE_TARGET_NAME} PROPERTIES FOLDER "engine/editor/")
+set_target_properties(${MODULE_TARGET_NAME} PROPERTIES FOLDER "engine/runtime/")
 group_sources_for_target(${MODULE_TARGET_NAME})

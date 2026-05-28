@@ -113,6 +113,7 @@ set_third_party_filter(NRI "NRI")
 set_third_party_filter(NRI_Shared "NRI")
 set_third_party_filter(NRI_Validation "NRI")
 set_third_party_filter(NRI_VK "NRI")
+set_third_party_filter(glm "")
 
 # --------------------------------------------------
 # Manual Third Party Building (ignored CMakeLists)
