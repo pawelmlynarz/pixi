@@ -51,7 +51,7 @@ void Renderer::CreateViewport(SharedRef<SWindow> Window) {
     UniquePtr ViewInfo{MakeUnique<RenderViewportInfo>()};
 
     void* const OSWindow{Window->GetNativeWindow()->GetOSWindowHandle().Handle};
-    PX_ASSERT(OSWindow != nullptr);
+    Assert(OSWindow != nullptr);
 
     ViewInfo->OSWindow = OSWindow;
     ViewInfo->RHIViewport = RHICreateViewport(

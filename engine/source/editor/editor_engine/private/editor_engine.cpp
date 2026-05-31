@@ -25,7 +25,7 @@ int32 InitializeEditorEngine(SharedPtr<EditorEngine> const& EditorEngine) {
 
 EditorEngine& GetEditorEngine() {
     auto const SharedEditorEngine{PixiEditorEngine.lock()};
-    PX_ASSERT(SharedEditorEngine != nullptr);
+    Assert(SharedEditorEngine != nullptr);
     return *SharedEditorEngine;
 }
 

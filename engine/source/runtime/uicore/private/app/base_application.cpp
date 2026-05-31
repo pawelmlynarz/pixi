@@ -8,7 +8,7 @@ namespace px {
 SharedPtr<BaseApplication> BaseApplication::BaseApplicationInstance_{nullptr};
 
 BaseApplication::~BaseApplication() {
-    PX_ASSERT_MSG(Renderer_ == nullptr, "Renderer should be destroyed manually during shutdown flow.");
+    AssertMsgf(Renderer_ == nullptr, "Renderer should be destroyed manually during shutdown flow.");
 }
 
 bool BaseApplication::InitializeRenderer(SharedPtr<BaseRenderer> Renderer) {
@@ -19,10 +19,11 @@ bool BaseApplication::InitializeRenderer(SharedPtr<BaseRenderer> Renderer) {
 void BaseApplication::DestoryRenderer() {
     if (Renderer_)
         Renderer_->Shutdown();
+    Renderer_.reset();
 }
 
 BaseRenderer& BaseApplication::GetRenderer() const {
-    PX_ASSERT(Renderer_ != nullptr);
+    Assert(Renderer_ != nullptr);
     return *Renderer_;
 }
 

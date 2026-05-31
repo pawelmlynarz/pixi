@@ -36,7 +36,7 @@ inline constexpr std::string_view GetShaderIntmdExtension(nri::GraphicsAPI const
     case nri::GraphicsAPI::VK:
         return ".spirv";
     default: {
-        PX_ASSERT_MSG(false, "Shader intermediate extension format not specified.");
+        AssertMsgf(false, "Shader intermediate extension format not specified.");
         return "";
     }
     }
@@ -71,7 +71,7 @@ bool LoadFile(std::string const& Path, std::vector<uint8_t>& Data) {
     std::ifstream File(Path, std::ios::binary);
 
     if (!File) {
-        PX_ASSERT(false);
+        Assert(false);
         Data.clear();
         return false;
     }

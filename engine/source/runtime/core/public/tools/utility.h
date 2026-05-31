@@ -39,40 +39,40 @@ class SharedRef {
 
     SharedRef(SharedPtr<T> const& Ptr) noexcept
         : Ptr_(Ptr) {
-        PX_ASSERT_MSG(Ptr_, "SharedRef constructed with null pointer");
+        AssertMsgf(Ptr_, "SharedRef constructed with null pointer");
     }
 
     SharedRef(SharedPtr<T>&& Ptr) noexcept
         : Ptr_(std::move(Ptr)) {
-        PX_ASSERT_MSG(Ptr_, "SharedRef constructed with null pointer");
+        AssertMsgf(Ptr_, "SharedRef constructed with null pointer");
     }
 
     template <typename U>
         requires std::convertible_to<U*, T*>
     SharedRef(SharedPtr<U> const& Ptr) noexcept
         : Ptr_(Ptr) {
-        PX_ASSERT_MSG(Ptr_, "SharedRef constructed with null pointer");
+        AssertMsgf(Ptr_, "SharedRef constructed with null pointer");
     }
 
     template <typename U>
         requires std::convertible_to<U*, T*>
     SharedRef(SharedPtr<U>&& Ptr) noexcept
         : Ptr_(std::move(Ptr)) {
-        PX_ASSERT_MSG(Ptr_, "SharedRef constructed with null pointer");
+        AssertMsgf(Ptr_, "SharedRef constructed with null pointer");
     }
 
     template <typename U>
         requires std::convertible_to<U*, T*>
     SharedRef(SharedRef<U> const& Other) noexcept
         : Ptr_(Other.ToPtr()) {
-        PX_ASSERT_MSG(Ptr_, "SharedRef constructed with null pointer");
+        AssertMsgf(Ptr_, "SharedRef constructed with null pointer");
     }
 
     template <typename U>
         requires std::convertible_to<U*, T*>
     SharedRef& operator=(SharedRef<U> const& Other) noexcept {
         Ptr_ = Other.ToPtr();
-        PX_ASSERT_MSG(Ptr_, "SharedRef assigned null pointer");
+        AssertMsgf(Ptr_, "SharedRef assigned null pointer");
         return *this;
     }
 

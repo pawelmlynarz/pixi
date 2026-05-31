@@ -23,7 +23,7 @@ void EnsureGLFWInitialized() {
         return;
 
     glfwSetErrorCallback(GLFWErrorCallback);
-    PX_ASSERT(glfwInit());
+    Assert(glfwInit());
 
     bGLFWInitialized = true;
 }
@@ -113,7 +113,7 @@ void WindowsWindow::InitializeWindow(SharedPtr<PlatformApplication> OwningApplic
     Handle_ = glfwCreateWindow(Definition_.WidthDesired, Definition_.HeightDesired, "Window", nullptr, nullptr);
     if (!Handle_) {
         glfwTerminate();
-        PX_ASSERT(false);
+        Assert(false);
     }
 
     Hwnd_ = glfwGetWin32Window(Handle_);
@@ -137,7 +137,7 @@ void WindowsWindow::DestroyWindow() {
 }
 
 SharedRef<PlatformApplication> WindowsWindow::GetOwningApplication() const {
-    PX_ASSERT(OwningApplication_);
+    Assert(OwningApplication_);
     return SharedRef(OwningApplication_);
 }
 
@@ -146,12 +146,12 @@ GenericOSWindowHandle WindowsWindow::GetOSWindowHandle() const {
 }
 
 void WindowsWindow::Show() {
-    PX_ASSERT(Handle_ != nullptr);
+    Assert(Handle_ != nullptr);
     glfwShowWindow(Handle_);
 }
 
 void WindowsWindow::Hide() {
-    PX_ASSERT(Handle_ != nullptr);
+    Assert(Handle_ != nullptr);
     glfwHideWindow(Handle_);
 }
 

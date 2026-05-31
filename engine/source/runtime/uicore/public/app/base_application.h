@@ -27,7 +27,7 @@ class BaseApplication : NonCopyableNonMovable {
      * @return Reference to the application.
      */
     static BaseApplication& Get() {
-        PX_ASSERT(BaseApplicationInstance_.get() != nullptr);
+        Assert(BaseApplicationInstance_.get() != nullptr);
         return *BaseApplicationInstance_;
     }
 

@@ -26,7 +26,7 @@ class SimpleApplication final : public BaseApplication {
     static PXUI_API bool IsInitialized();
 
     static SimpleApplication& Get() {
-        PX_ASSERT(ApplicationInstance_.get() != nullptr);
+        Assert(ApplicationInstance_.get() != nullptr);
         return *ApplicationInstance_;
     }
 
