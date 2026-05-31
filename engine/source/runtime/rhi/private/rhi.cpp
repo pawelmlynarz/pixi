@@ -27,18 +27,18 @@ nri::GraphicsAPI GetBackendForPlatform() {
 } // namespace
 
 void InitializeRHI() {
-    PX_ASSERT(!RHIContextInst);
+    Assert(!RHIContextInst);
     RHIContextInst = MakeUnique<RHIContext>(GetBackendForPlatform());
     RHIContextInst->Initialize();
 }
 
 RHIContext& GetRHIContext() {
-    PX_ASSERT(RHIContextInst);
+    Assert(RHIContextInst);
     return *RHIContextInst;
 }
 
 void ShutdownRHI() {
-    PX_ASSERT(RHIContextInst);
+    Assert(RHIContextInst);
     RHIContextInst->Shutdown();
 }
 

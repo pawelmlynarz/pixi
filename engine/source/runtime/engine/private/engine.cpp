@@ -21,7 +21,7 @@ void DestroyEngine() {
 }
 
 Engine& GetEngine() {
-    PX_ASSERT(PixiEngine != nullptr);
+    Assert(PixiEngine != nullptr);
     return *PixiEngine;
 }
 

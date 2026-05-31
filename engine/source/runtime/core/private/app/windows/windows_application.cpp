@@ -39,7 +39,7 @@ void WindowsApplication::CloseWindow(SharedRef<GenericWindow> const& Window) {
         }
     )};
 
-    PX_ASSERT(FoundWindow != Windows_.end());
+    Assert(FoundWindow != Windows_.end());
     (*FoundWindow)->DestroyWindow();
     Windows_.erase(FoundWindow);
 

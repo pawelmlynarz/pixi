@@ -95,7 +95,7 @@ RHIViewport::RHIViewport(RHIContext& Context, void* const OSWindowHandle, uint16
 
     PrepareNRIWindowHandle(Window_, OSWindowHandle);
 
-    PX_ASSERT(RHIContext_.GetGraphicsQueue() != nullptr);
+    Assert(RHIContext_.GetGraphicsQueue() != nullptr);
 
     SwapChainRHI_ = RHICreateSwapchain(RHIContext_, Window_, SizeX_, SizeY_);
 }

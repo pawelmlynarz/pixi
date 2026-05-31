@@ -19,13 +19,13 @@ SharedPtr<SEditorWindow> MainEditorWindow{nullptr};
 
 bool CreateMainEditorWindow() {
     MainEditorWindow = {MakeShared<SEditorWindow>()};
-    (*MainEditorWindow)
-        .Title("Pixi Editor")
+
+    MainEditorWindow->Title("Pixi Editor")
         .Size({1920, 1080})
         .Decorated(true)
         .Resizable(true);
 
-    PX_ASSERT(SimpleApplication::Get().AddWindow(MainEditorWindow, true));
+    Assert(SimpleApplication::Get().AddWindow(MainEditorWindow, true));
 
     return true;
 }

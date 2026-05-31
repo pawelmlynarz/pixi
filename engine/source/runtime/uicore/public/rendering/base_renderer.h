@@ -20,7 +20,7 @@ class BaseRenderer {
      * @return True if successful.
      */
     virtual bool Initialize() = 0;
-    
+
     /**
      * @brief Shutdowns the renderer.
      */
