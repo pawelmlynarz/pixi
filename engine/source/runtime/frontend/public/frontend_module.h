@@ -5,11 +5,11 @@
 #include "tools/compiler.h"
 
 #ifdef PX_BUILD_SHARED
-#ifdef PX_BUILD_RENDERER
-#define PXRENDERER_API DLLEXPORT
+#ifdef PX_BUILD_FRONTEND
+#define PXFRONTEND_API DLLEXPORT
 #else
-#define PXRENDERER_API DLLIMPORT
+#define PXFRONTEND_API DLLIMPORT
 #endif
 #else
-#define PXRENDERER_API
+#define PXFRONTEND_API
 #endif

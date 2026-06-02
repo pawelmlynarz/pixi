@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "uicore_module.h"
+#include "frontend_module.h"
 
 // pxcore
 #include "tools/misc.h"
@@ -17,8 +17,8 @@ class BaseRenderer;
  */
 class BaseApplication : NonCopyableNonMovable {
   public:
-    PXUICORE_API BaseApplication() = default;
-    PXUICORE_API virtual ~BaseApplication();
+    PXFRONTEND_API BaseApplication() = default;
+    PXFRONTEND_API virtual ~BaseApplication();
 
     /**
      * Returns the current instance of the application. The application should have been initialized before
@@ -36,19 +36,19 @@ class BaseApplication : NonCopyableNonMovable {
      *
      * @param Renderer The renderer to use.
      */
-    PXUICORE_API bool InitializeRenderer(SharedPtr<BaseRenderer> Renderer);
+    PXFRONTEND_API bool InitializeRenderer(SharedPtr<BaseRenderer> Renderer);
 
     /**
      * Destroys the renderer.
      */
-    PXUICORE_API void DestoryRenderer();
+    PXFRONTEND_API void DestoryRenderer();
 
     /**
      * Gets the renderer being used to draw this application.
      *
      * @return The renderer reference.
      */
-    PXUICORE_API BaseRenderer& GetRenderer() const;
+    PXFRONTEND_API BaseRenderer& GetRenderer() const;
 
     /**
      * Associates a high-level Window with a native window and ensures that it is tracked properly by the application.
@@ -62,7 +62,7 @@ class BaseApplication : NonCopyableNonMovable {
 
   protected:
     // Holds a pointer to the current application.
-    static PXUICORE_API SharedPtr<BaseApplication> BaseApplicationInstance_;
+    static PXFRONTEND_API SharedPtr<BaseApplication> BaseApplicationInstance_;
 
     // A pointer to the renderer used to render this application.
     SharedPtr<BaseRenderer> Renderer_{nullptr};

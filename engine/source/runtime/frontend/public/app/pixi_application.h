@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "ui_module.h"
+#include "frontend_module.h"
 #include "app/base_application.h"
 
 // pxcore
@@ -20,28 +20,27 @@ class SimpleApplication final : public BaseApplication {
     SimpleApplication(SharedRef<PlatformApplication> const PlatformApplication);
     ~SimpleApplication();
 
-    static PXUI_API SimpleApplication& CreateApplication();
-    static PXUI_API SimpleApplication& CreateApplication(SharedRef<class PlatformApplication> const InPlatformApplication);
-    static PXUI_API void ShutdownApplication();
-    static PXUI_API bool IsInitialized();
+    static PXFRONTEND_API SimpleApplication& CreateApplication();
+    static PXFRONTEND_API SimpleApplication& CreateApplication(SharedRef<class PlatformApplication> const InPlatformApplication);
+    static PXFRONTEND_API void ShutdownApplication();
+    static PXFRONTEND_API bool IsInitialized();
 
     static SimpleApplication& Get() {
         Assert(ApplicationInstance_.get() != nullptr);
         return *ApplicationInstance_;
     }
 
-    PXUI_API void Tick();
-    PXUI_API virtual bool AddWindow(SharedRef<SWindow> SWindow, bool const bShowImmediately) override;
+    PXFRONTEND_API void Tick();
+    PXFRONTEND_API virtual bool AddWindow(SharedRef<SWindow> SWindow, bool const bShowImmediately) override;
 
   private:
     void DrawWindows() const;
 
   private:
     // Holds a pointer to the current application.
-    static PXUI_API SharedPtr<SimpleApplication> ApplicationInstance_;
+    static PXFRONTEND_API SharedPtr<SimpleApplication> ApplicationInstance_;
 
     SharedRef<PlatformApplication> PlatformApplication_;
-    SharedPtr<BaseRenderer> Renderer_{nullptr};
 
     std::vector<SharedRef<SWindow>> Windows_;
 };

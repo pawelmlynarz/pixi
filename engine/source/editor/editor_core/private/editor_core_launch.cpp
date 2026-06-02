@@ -2,9 +2,16 @@
 
 #include "editor_core_launch.h"
 
-// pxcore
-#include "app/simple_application.h"
+// pxfrontend
+#include "app/pixi_application.h"
 #include "widgets/swindow.h"
+#include "rendering/renderer.h"
+#if WITH_IMGUI
+#include "rendering/imgui_renderer.h"
+
+// imgui
+#include "imgui.h"
+#endif
 
 namespace px::ed {
 
@@ -12,7 +19,18 @@ namespace {
 
 class SEditorWindow final : public SWindow {
   public:
-    virtual void Draw() override {
+    SEditorWindow() {
+        auto& R = dynamic_cast<Renderer&>(SimpleApplication::Get().GetRenderer());
+        ImGui::SetCurrentContext(static_cast<ImGuiContext*>(R.GetImGuiRenderer().GetImguiContext()));
+    }
+
+  protected:
+    virtual void DrawImGui() override {
+        ImGui::Begin("Hello", nullptr, ImGuiWindowFlags_NoResize);
+        {
+            ImGui::Text("Hello, World! (This is the main window, the main window, the main window.");
+        }
+        ImGui::End();
     }
 };
 SharedPtr<SEditorWindow> MainEditorWindow{nullptr};

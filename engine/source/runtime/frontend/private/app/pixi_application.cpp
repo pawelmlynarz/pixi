@@ -1,8 +1,7 @@
 // © 2026 Pawel Mlynarz
 
-#include "app/simple_application.h"
-
-// pxuicore
+#include "app/pixi_application.h"
+#include "base_renderer.h"
 #include "widgets/swindow.h"
 
 // pxcore
@@ -67,6 +66,10 @@ bool SimpleApplication::IsInitialized() {
 
 void SimpleApplication::Tick() {
     PlatformApplication_->PollMessages();
+
+    if (Renderer_)
+        Renderer_->Tick(1.f);
+
     DrawWindows();
 }
 
@@ -82,7 +85,7 @@ bool SimpleApplication::AddWindow(SharedRef<SWindow> SWindow, bool const bShowIm
 
 void SimpleApplication::DrawWindows() const {
     for (auto& Window : Windows_) {
-        Window->Draw();
+        Window->PaintWindow();
     }
 }
 

@@ -1,11 +1,11 @@
 # --------------------------------------------------
-# Module:           Renderer
+# Module:           Frontend
 # Default Type:     Dynamic
 # --------------------------------------------------
 
 include(utils)
 
-set(MODULE_NAME renderer)
+set(MODULE_NAME frontend)
 set(MODULE_TARGET_NAME px${MODULE_NAME})
 
 #
@@ -15,7 +15,7 @@ if(PX_BUILD_SHARED)
 else()
     add_library(${MODULE_TARGET_NAME} STATIC "")
 endif()
-add_library(px::renderer ALIAS ${MODULE_TARGET_NAME})
+add_library(px::frontend ALIAS ${MODULE_TARGET_NAME})
 
 #
 # Dependencies
@@ -24,7 +24,8 @@ target_link_libraries(${MODULE_TARGET_NAME}
         px::core
         px::rhi
         px::rendercore
-        px::ui
+        PUBLIC
+        imgui
 )
 
 #
@@ -32,6 +33,7 @@ target_link_libraries(${MODULE_TARGET_NAME}
 file(GLOB_RECURSE MODULE_SOURCES CONFIGURE_DEPENDS
         public/*.cpp public/*.h public/*.inl
         private/*.cpp private/*.h private/*.inl
+        internal/*.cpp internal/*.h internal/*.inl
 )
 
 #
@@ -44,7 +46,7 @@ target_include_directories(${MODULE_TARGET_NAME}
 )
 
 set(MODULE_COMPILE_DEFINITIONS ${PX_ENGINE_COMPILE_DEFINITIONS})
-list(APPEND MODULE_COMPILE_DEFINITIONS PX_BUILD_RENDERER)
+list(APPEND MODULE_COMPILE_DEFINITIONS PX_BUILD_FRONTEND)
 target_compile_definitions(${MODULE_TARGET_NAME} PRIVATE ${MODULE_COMPILE_DEFINITIONS})
 target_compile_options(${MODULE_TARGET_NAME} PRIVATE ${GLOB_COMPILE_OPTIONS})
 
