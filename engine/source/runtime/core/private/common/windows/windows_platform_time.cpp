@@ -29,7 +29,7 @@ TimePoint WindowsPlatformTime::Now() {
 
     int64 constexpr MicrosecondsPerSecond{1000000LL};
     TimePoint const Microseconds{SafeInt64MulDiv(time.QuadPart, MicrosecondsPerSecond, Frequency.QuadPart)};
-    
+
     return Microseconds;
 }
 

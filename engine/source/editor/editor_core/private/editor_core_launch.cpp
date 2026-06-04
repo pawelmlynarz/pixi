@@ -6,11 +6,9 @@
 #include "../../editor_engine/public/pixi_editor_engine.h"
 #include "app/pixi_application.h"
 #include "widgets/swindow.h"
-#include "rendering/renderer.h"
-#if WITH_IMGUI
-#include "rendering/imgui_renderer.h"
 
 // imgui
+#if WITH_IMGUI
 #include "imgui.h"
 #endif
 
@@ -18,12 +16,9 @@ namespace px::ed {
 
 namespace {
 
-class SEditorWindow final : public SWindow {
+class SEditorMainFrame final : public SWindow {
   public:
-    SEditorWindow() {
-        auto& R = dynamic_cast<Renderer&>(SimpleApplication::Get().GetRenderer());
-        ImGui::SetCurrentContext(static_cast<ImGuiContext*>(R.GetImGuiRenderer().GetImguiContext()));
-    }
+    SEditorMainFrame() = default;
 
   protected:
     virtual void DrawImGui() override {
@@ -36,17 +31,17 @@ class SEditorWindow final : public SWindow {
         ImGui::End();
     }
 };
-SharedPtr<SEditorWindow> MainEditorWindow{nullptr};
+SharedPtr<SEditorMainFrame> EditorMainFrameWindow{nullptr};
 
-bool CreateMainEditorWindow() {
-    MainEditorWindow = {MakeShared<SEditorWindow>()};
+bool CreateEditorMainFrame() {
+    EditorMainFrameWindow = {MakeShared<SEditorMainFrame>()};
 
-    MainEditorWindow->Title("Pixi Editor")
+    EditorMainFrameWindow->Title("Pixi Editor")
         .Size({1920, 1080})
         .Decorated(true)
         .Resizable(true);
 
-    Assert(SimpleApplication::Get().AddWindow(MainEditorWindow, true));
+    Assert(SimpleApplication::Get().AddWindow(EditorMainFrameWindow, true));
 
     return true;
 }
@@ -54,14 +49,14 @@ bool CreateMainEditorWindow() {
 } // namespace
 
 int32 EditorInit() {
-    if (!CreateMainEditorWindow())
+    if (!CreateEditorMainFrame())
         return -1;
     return 0;
 }
 
 void EditorExit() {
-    MainEditorWindow->DestoryNativeWindow();
-    MainEditorWindow.reset();
+    EditorMainFrameWindow->DestoryNativeWindow();
+    EditorMainFrameWindow.reset();
 }
 
 } // namespace px::ed

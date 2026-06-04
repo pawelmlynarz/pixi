@@ -38,14 +38,14 @@ PixiEngine& GetEngine() {
 
 void PixiEngine::UpdateTimeAndHandleMaxTickRate() {
     static double LastRealTime{PlatformTime::Now().AsSeconds() - 0.0001};
-    
+
     CurrentRealTime = PlatformTime::Now().AsSeconds();
     CurrentDeltaTime = static_cast<float>(CurrentRealTime - LastRealTime);
 
     Assert(CurrentDeltaTime >= 0);
 
     if (CurrentDeltaTime < MinFrameTime) {
-        double const SleepTime{ MinFrameTime - CurrentDeltaTime};
+        double const SleepTime{MinFrameTime - CurrentDeltaTime};
 
         PX_TODO("Use Platform HAL and improve accuracy");
         std::this_thread::sleep_for(std::chrono::duration<double>(SleepTime));
