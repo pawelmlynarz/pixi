@@ -22,7 +22,7 @@ add_library(px::editor::core ALIAS ${MODULE_TARGET_NAME})
 target_link_libraries(${MODULE_TARGET_NAME}
         PRIVATE
         px::core
-        px::ui
+        px::frontend
         px::rhi
 )
 

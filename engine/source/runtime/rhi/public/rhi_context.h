@@ -37,6 +37,7 @@ struct RHIContextResources {
     nri::Streamer* Streamer{nullptr};
     nri::Queue* GraphicsQueue{nullptr};
     nri::Fence* FrameFence{nullptr};
+    nri::DescriptorPool* DescriptorPool{nullptr};
     std::vector<RHIQueuedFrame> QueuedFrames;
 };
 
@@ -59,6 +60,8 @@ class RHIContext {
     inline nri::Queue*& GetGraphicsQueue() const;
 
     inline nri::Fence*& GetFrameFence() const;
+
+    inline nri::DescriptorPool*& GetDescriptorPool() const;
 
     inline std::vector<RHIQueuedFrame>& GetQueuedFrames() const;
 
@@ -107,6 +110,10 @@ inline nri::Queue*& RHIContext::GetGraphicsQueue() const {
 
 inline nri::Fence*& RHIContext::GetFrameFence() const {
     return Resources_->FrameFence;
+}
+
+inline nri::DescriptorPool*& RHIContext::GetDescriptorPool() const {
+    return Resources_->DescriptorPool;
 }
 
 inline std::vector<RHIQueuedFrame>& RHIContext::GetQueuedFrames() const {

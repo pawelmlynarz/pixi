@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "uicore_module.h"
+#include "frontend_module.h"
 #include "swidget.h"
 
 // pxcore
@@ -30,18 +30,27 @@ class SWindow : public SWidget {
         bool, Decorated, Decorated_
     )
 
-    PXUICORE_API virtual void Draw() = 0;
+    PXFRONTEND_API void PaintWindow();
 
-    PXUICORE_API void SetNativeWindow(WeakPtr<GenericWindow> const& NativeWindow);
-    PXUICORE_API SharedPtr<GenericWindow> GetNativeWindow() const;
-    PXUICORE_API void DestoryNativeWindow();
+    PXFRONTEND_API void SetNativeWindow(WeakPtr<GenericWindow> const& NativeWindow);
+    PXFRONTEND_API SharedPtr<GenericWindow> GetNativeWindow() const;
+    PXFRONTEND_API void DestoryNativeWindow();
 
-    PXUICORE_API void ShowWindow();
-    PXUICORE_API void HideWindow();
+    PXFRONTEND_API void ShowWindow();
+    PXFRONTEND_API void HideWindow();
+
+  protected:
+    PXFRONTEND_API virtual void DrawImGui() = 0;
+
+  private:
+    void RenderImGui_Internal();
+
+    void RenderFrame_Internal();
 
   private:
     WeakPtr<GenericWindow> NativeWindow_;
     bool bHasEverBeenShown_{false};
+    uint32 FrameIdx_{0};
 };
 
 } // namespace px

@@ -2,8 +2,9 @@
 
 #include "launch_engine_loop.h"
 
-// pxui
-#include "app/simple_application.h"
+// pxfrontend
+#include "app/pixi_application.h"
+#include "rendering/renderer.h"
 
 // pxengine
 #include "engine.h"
@@ -11,9 +12,6 @@
 
 // pxrhi
 #include "rhi.h"
-
-// pxrenderer
-#include "renderer.h"
 
 // pxeditorengine
 #if WITH_EDITOR
