@@ -64,11 +64,11 @@ bool SimpleApplication::IsInitialized() {
     return ApplicationInstance_ != nullptr;
 }
 
-void SimpleApplication::Tick() {
+void SimpleApplication::Tick(float const Dt) {
     PlatformApplication_->PollMessages();
 
     if (Renderer_)
-        Renderer_->Tick(1.f);
+        Renderer_->Tick(Dt);
 
     DrawWindows();
 }

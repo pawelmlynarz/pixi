@@ -23,6 +23,7 @@ target_link_libraries(${MODULE_TARGET_NAME}
         PRIVATE
         px::core
         px::frontend
+        px::editor::engine
 )
 
 #

@@ -8,6 +8,7 @@
 #include <array>
 #include <memory>
 #include <optional>
+#include <thread>
 #include <span>
 #include <unordered_map>
 #include <type_traits>

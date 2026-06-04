@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "engine.h"
+#include "pixi_engine.h"
 
 // pxcore
 #include "common/types.h"
@@ -11,7 +11,7 @@
 namespace px {
 
 [[nodiscard]]
-PXENGINE_API int32 InitializeEngine(SharedPtr<Engine> const& Engine);
+PXENGINE_API int32 InitializeEngine(SharedPtr<PixiEngine> const& Engine);
 PXENGINE_API void DestroyEngine();
 
 } // namespace px

@@ -30,7 +30,7 @@ class SimpleApplication final : public BaseApplication {
         return *ApplicationInstance_;
     }
 
-    PXFRONTEND_API void Tick();
+    PXFRONTEND_API void Tick(float const Dt);
     PXFRONTEND_API virtual bool AddWindow(SharedRef<SWindow> SWindow, bool const bShowImmediately) override;
 
   private:
