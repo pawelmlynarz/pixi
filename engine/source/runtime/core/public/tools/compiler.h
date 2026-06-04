@@ -2,6 +2,8 @@
 
 #pragma once
 
+// clang-format off
+
 //
 // DLL Import/Export
 
@@ -21,7 +23,9 @@
 // Platform Headers Utility
 
 #if PLATFORM_WINDOWS
-#define COMPILED_PLATFORM_HEADER(HeaderFile) PX_STRINGIZE(windows / PX_JOIN(windows_, HeaderFile))
+#define COMPILED_PLATFORM_HEADER(HeaderFile) PX_STRINGIZE(windows/PX_JOIN(windows_, HeaderFile))
 #else
 #error Unsupported platform: compiled platform header format not provided.
 #endif
+
+// clang-format on
