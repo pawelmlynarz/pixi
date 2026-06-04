@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "core_module.h"
 #include "tools/delegates.h"
 
 namespace px {
