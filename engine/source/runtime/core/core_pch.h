@@ -5,11 +5,13 @@
 #include <string>
 #include <string_view>
 #include <vector>
+#include <variant>
 #include <array>
 #include <memory>
 #include <optional>
 #include <thread>
 #include <span>
+#include <utility>
 #include <unordered_map>
 #include <type_traits>
 #include <filesystem>

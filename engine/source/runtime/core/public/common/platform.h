@@ -13,7 +13,7 @@ namespace px {
 struct PXCORE_API Platform {
     static void Initialize();
     static void Shutdown();
-    
+
     static uint32 GetCurrentThreadId();
 };
 

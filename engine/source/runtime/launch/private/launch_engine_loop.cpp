@@ -5,6 +5,7 @@
 // pxcore
 #include "core_globals.h"
 #include "common/platform.h"
+#include "misc/core_delegates.h"
 
 // pxfrontend
 #include "app/pixi_application.h"
@@ -28,12 +29,12 @@ namespace px {
 [[nodiscard]]
 int32 EngineLoop::PreInit() {
     Platform::Initialize();
-    
+
     InitializeRHI();
-    
+
     auto& Application{SimpleApplication::CreateApplication()};
     Application.InitializeRenderer(MakeShared<Renderer>());
-    
+
     return 0;
 }
 
@@ -44,14 +45,16 @@ int32 EngineLoop::Init() {
 #else
     int32 const Result{InitializeEngine(MakeShared<Engine>())};
 #endif
+    CoreDelegates::OnEngineLoopInitComplete.Broadcast();
+
     return Result;
 }
 
 void EngineLoop::Tick() {
     PixiEngine& Engine{GetEngine()};
-    
+
     Engine.UpdateTimeAndHandleMaxTickRate();
-    
+
     PX_TODO("StartFrame for active scenes");
     PX_TODO("Calculate FPS timings");
     PX_TODO("PollMessages");
@@ -60,18 +63,18 @@ void EngineLoop::Tick() {
     PX_TODO("Time and widgets(paint) tick");
     SimpleApplication::Get().Tick(Engine.GetDeltaTime());
     PX_TODO("EndFrame for active scenes");
-    
+
     PX_TODO("Game & Render thread sync");
-    
+
     GFrameCounter++;
 }
 
 void EngineLoop::Exit() {
     DestroyEngine();
-    
+
     SimpleApplication::ShutdownApplication();
     ShutdownRHI();
-    
+
     Platform::Shutdown();
 }
 

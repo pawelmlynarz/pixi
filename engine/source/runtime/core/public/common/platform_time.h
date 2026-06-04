@@ -17,7 +17,7 @@ struct TimePoint {
 class GenericPlatformTime {
 };
 
-inline TimePoint operator-(const TimePoint& Lhs, const TimePoint& Rhs) noexcept {
+inline TimePoint operator-(TimePoint const& Lhs, TimePoint const& Rhs) noexcept {
     return TimePoint{Lhs.Ticks - Rhs.Ticks};
 }
 
