@@ -13,8 +13,4 @@ struct GenericPlatformApplicationMisc {
 
 } // namespace px
 
-#if PLATFORM_WINDOWS
-#include "windows/windows_application_misc.h"
-#else
-#error Unsupported platform: no application misc implementation available.
-#endif // PLATFORM_WINDOWS
+#include COMPILED_PLATFORM_HEADER(application_misc.h)

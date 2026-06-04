@@ -2,7 +2,6 @@
 
 #include "input/engine_input_system.h"
 #include "app/platform_application.h"
-#include "core_misc.h"
 #include "window/generic_window.h"
 
 namespace px {

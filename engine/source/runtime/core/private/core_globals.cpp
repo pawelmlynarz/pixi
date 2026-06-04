@@ -1,14 +1,17 @@
 // © 2026 Pawel Mlynarz
 
-#include "core_misc.h"
-#include "core_misc_internal.h"
+#include "core_globals.h"
+#include "core_globals_internal.h"
 #include "common/platform.h"
 
 namespace px {
 
+uint64 GFrameCounter{0};
+uint32 GGameThreadId{0};
+double GStartTime{0.0};
+
 namespace {
 
-uint32 GameThreadId{0};
 bool bEngineExitRequested{false};
 
 } // namespace
@@ -30,15 +33,11 @@ bool IsEditor() {
 }
 
 void InitGameThreadId(uint32 const ThreadId) {
-    GameThreadId = ThreadId;
-}
-
-uint32 GetGameThreadId() {
-    return GameThreadId;
+    GGameThreadId = ThreadId;
 }
 
 bool IsInGameThread() {
-    return GetGameThreadId() == Platform::GetCurrentThreadId();
+    return GGameThreadId == Platform::GetCurrentThreadId();
 }
 
 } // namespace px

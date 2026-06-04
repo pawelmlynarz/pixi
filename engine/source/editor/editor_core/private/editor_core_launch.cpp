@@ -3,6 +3,7 @@
 #include "editor_core_launch.h"
 
 // pxfrontend
+#include "../../editor_engine/public/pixi_editor_engine.h"
 #include "app/pixi_application.h"
 #include "widgets/swindow.h"
 #include "rendering/renderer.h"
@@ -26,9 +27,11 @@ class SEditorWindow final : public SWindow {
 
   protected:
     virtual void DrawImGui() override {
+        auto& EdEngine{GetEditorEngine()};
+
         ImGui::Begin("Hello", nullptr, ImGuiWindowFlags_NoResize);
         {
-            ImGui::Text("Hello, World! (This is the main window, the main window, the main window.");
+            ImGui::Text("FPS: %.2f", EdEngine.GetFPS());
         }
         ImGui::End();
     }

@@ -1,9 +1,9 @@
 // © 2026 Pawel Mlynarz
 
 // pxcore
-#include "core_misc.h"
+#include "core_globals.h"
 #include "common/platform.h"
-#include "private/core_misc_internal.h"
+#include "private/core_globals_internal.h"
 
 // pxeditor
 #if WITH_EDITOR

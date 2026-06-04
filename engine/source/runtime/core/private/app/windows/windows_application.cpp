@@ -4,7 +4,7 @@
 #include "window/windows/windows_window.h"
 
 // GLFW
-#include "core_misc.h"
+#include "core_globals.h"
 #include "GLFW/glfw3.h"
 
 #include <algorithm>

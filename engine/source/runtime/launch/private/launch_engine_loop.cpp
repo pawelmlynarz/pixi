@@ -2,37 +2,45 @@
 
 #include "launch_engine_loop.h"
 
+// pxcore
+#include "core_globals.h"
+#include "common/platform.h"
+
 // pxfrontend
 #include "app/pixi_application.h"
 #include "rendering/renderer.h"
 
 // pxengine
-#include "engine.h"
-#include "private/engine_internal.h"
+#include "pixi_engine.h"
+#include "private/pixi_engine_internal.h"
 
 // pxrhi
 #include "rhi.h"
 
 // pxeditorengine
 #if WITH_EDITOR
-#include "editor_engine.h"
-#include "private/editor_engine_internal.h"
+#include "pixi_editor_engine.h"
+#include "private/pixi_editor_engine_internal.h"
 #endif // WITH_EDITOR
 
 namespace px {
 
 [[nodiscard]]
 int32 EngineLoop::PreInit() {
-    auto& Application{SimpleApplication::CreateApplication()};
+    Platform::Initialize();
+    
     InitializeRHI();
+    
+    auto& Application{SimpleApplication::CreateApplication()};
     Application.InitializeRenderer(MakeShared<Renderer>());
+    
     return 0;
 }
 
 [[nodiscard]]
 int32 EngineLoop::Init() {
 #if WITH_EDITOR
-    int32 const Result{InitializeEditorEngine(MakeShared<ed::EditorEngine>())};
+    int32 const Result{InitializeEditorEngine(MakeShared<ed::PixiEditorEngine>())};
 #else
     int32 const Result{InitializeEngine(MakeShared<Engine>())};
 #endif
@@ -40,13 +48,31 @@ int32 EngineLoop::Init() {
 }
 
 void EngineLoop::Tick() {
-    SimpleApplication::Get().Tick();
+    PixiEngine& Engine{GetEngine()};
+    
+    Engine.UpdateTimeAndHandleMaxTickRate();
+    
+    PX_TODO("StartFrame for active scenes");
+    PX_TODO("Calculate FPS timings");
+    PX_TODO("PollMessages");
+    PX_TODO("Engine tick");
+    PX_TODO("Platform and input tick");
+    PX_TODO("Time and widgets(paint) tick");
+    SimpleApplication::Get().Tick(Engine.GetDeltaTime());
+    PX_TODO("EndFrame for active scenes");
+    
+    PX_TODO("Game & Render thread sync");
+    
+    GFrameCounter++;
 }
 
 void EngineLoop::Exit() {
     DestroyEngine();
+    
     SimpleApplication::ShutdownApplication();
     ShutdownRHI();
+    
+    Platform::Shutdown();
 }
 
 } // namespace px

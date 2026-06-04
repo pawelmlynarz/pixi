@@ -5,13 +5,13 @@
 #include "editor_engine_module.h"
 
 // pxengine
-#include "engine.h"
+#include "pixi_engine.h"
 
 namespace px::ed {
 
-class EditorEngine final : public Engine {
+class PixiEditorEngine final : public PixiEngine {
 };
 
-PXEDITOR_ENGINE_API EditorEngine& GetEditorEngine();
+PXEDITOR_ENGINE_API PixiEditorEngine& GetEditorEngine();
 
 } // namespace px::ed
