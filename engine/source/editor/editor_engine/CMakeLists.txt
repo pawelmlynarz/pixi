@@ -28,8 +28,7 @@ target_link_libraries(${MODULE_TARGET_NAME}
 #
 # Common Sources                                         
 file(GLOB_RECURSE MODULE_SOURCES CONFIGURE_DEPENDS
-        public/*.cpp public/*.h public/*.inl
-        private/*.cpp private/*.h private/*.inl
+        *.cpp *.h *.inl
 )
 
 #
@@ -39,6 +38,9 @@ target_include_directories(${MODULE_TARGET_NAME}
         PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/public
+)
+target_precompile_headers(${MODULE_TARGET_NAME} PRIVATE
+        ${MODULE_NAME}_pch.h
 )
 
 set(MODULE_COMPILE_DEFINITIONS ${PX_ENGINE_COMPILE_DEFINITIONS})
