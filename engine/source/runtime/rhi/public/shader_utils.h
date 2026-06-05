@@ -18,8 +18,8 @@ namespace px {
 using ShaderStorage = std::vector<std::vector<uint8>>;
 
 PXRHI_API nri::ShaderDesc LoadShader(
-    nri::GraphicsAPI const Backend, std::string const& ShaderName,
-    ShaderStorage& Storage, std::string_view const EntryPointName = ""
+    nri::GraphicsAPI Backend, std::string const& ShaderName,
+    ShaderStorage& Storage, std::string_view EntryPointName = ""
 );
 
 } // namespace px

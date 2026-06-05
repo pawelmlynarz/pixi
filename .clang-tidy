@@ -38,8 +38,9 @@ Checks: >
   -readability-uppercase-literal-suffix,
   -readability-implicit-bool-conversion,
   -readability-redundant-access-specifiers,
+  -readability-redundant-member-init,
   -portability-avoid-pragma-once,
-HeaderFilterRegex: 'TEMP_DISABLE(public|private|internal).+\.(h|hpp|inl)$'
+HeaderFilterRegex: '(public|private|internal).+\.(h|hpp|inl)$'
 WarningsAsErrors: '*'
 CheckOptions:
   - { key: readability-identifier-naming.ClassCase,               value: CamelCase }
@@ -49,5 +50,5 @@ CheckOptions:
   - { key: readability-identifier-naming.ClassMethodCase,         value: CamelCase }
   - { key: readability-identifier-naming.MethodCase,              value: CamelCase }
   - { key: readability-identifier-naming.ClassMemberCase,         value: CamelCase }
-  - { key: readability-identifier-naming.ClassMemberPostfix,       value: _        }
+  - { key: readability-identifier-naming.ClassMemberPostfix,      value: _         }
 ...

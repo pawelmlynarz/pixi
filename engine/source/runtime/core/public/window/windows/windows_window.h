@@ -12,18 +12,18 @@ namespace px {
 
 class WindowsWindow final : public GenericWindow {
   public:
-    ~WindowsWindow() = default;
+    ~WindowsWindow() override = default;
 
-    virtual void InitializeWindow(SharedPtr<PlatformApplication> OwningApplication, GenericWindowDefinition const& WindowDefinition) override;
-    virtual void DestroyWindow() override;
+    void InitializeWindow(SharedPtr<PlatformApplication> OwningApplication, GenericWindowDefinition const& WindowDefinition) override;
+    void DestroyWindow() override;
 
-    virtual SharedRef<PlatformApplication> GetOwningApplication() const override;
+    SharedRef<PlatformApplication> GetOwningApplication() const override;
 
-    virtual GenericOSWindowHandle GetOSWindowHandle() const override;
+    GenericOSWindowHandle GetOSWindowHandle() const override;
 
-    PXCORE_API virtual void Show() override;
-    PXCORE_API virtual void Hide() override;
-    PXCORE_API virtual bool IsVisible() const override;
+    PXCORE_API void Show() override;
+    PXCORE_API void Hide() override;
+    PXCORE_API bool IsVisible() const override;
 
   private:
     GLFWwindow* Handle_{nullptr};

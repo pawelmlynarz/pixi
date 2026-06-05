@@ -44,7 +44,7 @@ constexpr std::string_view GetShaderIntmdExtension(nri::GraphicsAPI const Backen
 
 std::string_view GetFileName(std::string const& Path) {
     std::string_view const View(Path);
-    
+
     size_t const SlashPos{Path.find_last_of("\\/")};
     if (SlashPos != std::string::npos) {
         return View.substr(SlashPos + 1);
@@ -108,9 +108,8 @@ nri::ShaderDesc LoadShader(nri::GraphicsAPI const Backend, std::string const& Sh
     std::string const Path{GetFullPath(ShaderName + std::string(ExtensionStr), DataFolder::SHADERS)};
     nri::ShaderDesc ShaderDesc{};
 
-    for (auto const& Extension : ShaderExtensions)
-    {
-        if (Path.rfind(Extension.Extension) == std::string::npos){
+    for (auto const& Extension : ShaderExtensions) {
+        if (Path.rfind(Extension.Extension) == std::string::npos) {
             continue;
         }
 
@@ -126,7 +125,7 @@ nri::ShaderDesc LoadShader(nri::GraphicsAPI const Backend, std::string const& Sh
         break;
     }
     RHI_ABORT_ON_FALSE(ShaderDesc.size != 0);
-    
+
     return ShaderDesc;
 }
 

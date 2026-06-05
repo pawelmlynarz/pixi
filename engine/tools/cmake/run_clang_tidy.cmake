@@ -25,6 +25,7 @@ execute_process(
         ${RUN_CLANG_TIDY} 
         -clang-tidy-binary ${CLANG_TIDY_EXE} 
         -p ${PROJECT_BINARY_DIR}
+        -quiet
         "^(?!.*[\\\\/]third_party[\\\\/]).*"
     RESULT_VARIABLE EXIT_CODE)
 

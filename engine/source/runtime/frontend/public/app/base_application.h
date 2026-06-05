@@ -58,7 +58,7 @@ class BaseApplication : NonCopyableNonMovable {
      *
      * @return True if operation successful.
      */
-    virtual bool AddWindow(SharedRef<class SWindow> SWindow, bool const bShowImmediately = true) = 0;
+    virtual bool AddWindow(SharedRef<class SWindow> SWindow, bool bShowImmediately = true) = 0;
 
   protected:
     // Holds a pointer to the current application.

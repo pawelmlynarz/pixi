@@ -24,27 +24,27 @@ struct RHISwapChainTexture {
 };
 
 struct RHISwapChain {
-    RHISwapChain(RHIContext& Context, nri::Window const& Window, uint16 const SizeX, uint16 const SizeY);
+    RHISwapChain(RHIContext& Context, nri::Window const& Window, uint16 SizeX, uint16 SizeY);
 
     void Destroy();
 
     nri::SwapChain* SwapChain{nullptr};
     nri::Format SwapChainFormat{nri::Format::UNKNOWN};
-    std::vector<RHISwapChainTexture> SwapChainTexturesRHI{};
+    std::vector<RHISwapChainTexture> SwapChainTexturesRHI;
 
   private:
     RHIContext& RHIContext_;
 };
 
-PXRHI_API UniquePtr<RHISwapChain> RHICreateSwapchain(RHIContext& Context, nri::Window const& Window, uint16 const SizeX, uint16 const SizeY);
+PXRHI_API UniquePtr<RHISwapChain> RHICreateSwapchain(RHIContext& Context, nri::Window const& Window, uint16 SizeX, uint16 SizeY);
 
 struct RHIViewport {
-    PXRHI_API RHIViewport(RHIContext& Context, void* const OSWindowHandle, uint16 const SizeX, uint16 const SizeY);
+    PXRHI_API RHIViewport(RHIContext& Context, void* OSWindowHandle, uint16 SizeX, uint16 SizeY);
     PXRHI_API ~RHIViewport();
 
     PXRHI_API void* GetOSWindowHandle() { return OSWindowHandle_; }
     PXRHI_API SharedPtr<RHISwapChain> GetSwapChain() { return SwapChainRHI_; }
-    PXRHI_API UVector2 GetSize() { return {SizeX_, SizeY_}; }
+    PXRHI_API UVector2 GetSize() const { return {SizeX_, SizeY_}; }
 
   private:
     RHIContext& RHIContext_;
@@ -58,6 +58,6 @@ struct RHIViewport {
     SharedPtr<RHISwapChain> SwapChainRHI_{nullptr};
 };
 
-PXRHI_API UniquePtr<RHIViewport> RHICreateViewport(RHIContext& Context, void* const WindowHandle, uint16 const SizeX, uint16 const SizeY);
+PXRHI_API UniquePtr<RHIViewport> RHICreateViewport(RHIContext& Context, void* WindowHandle, uint16 SizeX, uint16 SizeY);
 
 } // namespace px

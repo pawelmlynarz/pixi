@@ -21,11 +21,11 @@
 namespace px {
 
 void SWindow::PaintWindow() {
-    RenderImGui_Internal();
-    RenderFrame_Internal();
+    RenderImGuiInternal();
+    RenderFrameInternal();
 }
 
-void SWindow::RenderImGui_Internal() {
+void SWindow::RenderImGuiInternal() {
 #if WITH_IMGUI
     ImGui::NewFrame();
     {
@@ -36,10 +36,10 @@ void SWindow::RenderImGui_Internal() {
 #endif
 }
 
-void SWindow::RenderFrame_Internal() {
-    //NOLINTBEGIN
+void SWindow::RenderFrameInternal() {
+    // NOLINTBEGIN
     PX_TODO("Rewrite");
-    
+
     RHIContext const& C{GetRHIContext()};
     Renderer& R{dynamic_cast<Renderer&>(BaseApplication::Get().GetRenderer())};
     SharedPtr const Viewport{R.GetViewportResource(SharedThis(this))};
@@ -140,7 +140,7 @@ void SWindow::RenderFrame_Internal() {
 
         RHI.QueueSubmit(*C.GetGraphicsQueue(), QueueSubmitDesc);
     }
-    //NOLINTEND
+    // NOLINTEND
 }
 
 void SWindow::SetNativeWindow(WeakPtr<GenericWindow> const& NativeWindow) {

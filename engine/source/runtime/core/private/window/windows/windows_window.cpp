@@ -71,7 +71,7 @@ void GLFWMouseButtonCallback(GLFWwindow* const Window, int32_t const Button, int
     case GLFW_MOUSE_BUTTON_RIGHT:
         ButtonEnum = EMouseButton::Right;
         break;
-        
+
     default: break;
     }
 

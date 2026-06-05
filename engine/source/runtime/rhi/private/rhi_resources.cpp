@@ -8,8 +8,8 @@ namespace px {
 
 namespace {
 
-inline uint8 GetOptimalSwapChainTextureNum(RHIContext const& Context) {
-    return Context.GetQueuedFrameNum() + 1;
+inline uint8 GetOptimalSwapChainTextureNum() {
+    return px::RHIContext::GetQueuedFrameNum() + 1;
 }
 
 void PrepareNRIWindowHandle(nri::Window& Window, void* OSWindowHandle) {
@@ -34,10 +34,10 @@ RHISwapChain::RHISwapChain(RHIContext& Context, nri::Window const& Window, uint1
         .queue = RHIContext_.GetGraphicsQueue(),
         .width = SizeX,
         .height = SizeY,
-        .textureNum = GetOptimalSwapChainTextureNum(Context),
+        .textureNum = GetOptimalSwapChainTextureNum(),
         .format = nri::SwapChainFormat::BT709_G22_8BIT,
         .flags = (RHIStaticContext::bVSync ? nri::SwapChainBits::VSYNC : nri::SwapChainBits::NONE) | nri::SwapChainBits::ALLOW_TEARING,
-        .queuedFrameNum = RHIContext_.GetQueuedFrameNum()
+        .queuedFrameNum = px::RHIContext::GetQueuedFrameNum()
     };
 
     RHI_ABORT_ON_FAILURE(RHIContext_.GetRHI().CreateSwapChain(*Device, SwapChainDesc, SwapChain))

@@ -18,7 +18,7 @@ class BaseRenderer;
 class SimpleApplication final : public BaseApplication {
   public:
     SimpleApplication(SharedRef<PlatformApplication> const& PlatformApplication);
-    ~SimpleApplication();
+    ~SimpleApplication() override;
 
     static PXFRONTEND_API SimpleApplication& CreateApplication();
     static PXFRONTEND_API SimpleApplication& CreateApplication(SharedRef<class PlatformApplication> const& InPlatformApplication);
@@ -30,8 +30,8 @@ class SimpleApplication final : public BaseApplication {
         return *ApplicationInstance_;
     }
 
-    PXFRONTEND_API void Tick(float const Dt);
-    PXFRONTEND_API virtual bool AddWindow(SharedRef<SWindow> SWindow, bool const bShowImmediately) override;
+    PXFRONTEND_API void Tick(float Dt);
+    PXFRONTEND_API bool AddWindow(SharedRef<SWindow> SWindow, bool bShowImmediately) override;
 
   private:
     void DrawWindows() const;

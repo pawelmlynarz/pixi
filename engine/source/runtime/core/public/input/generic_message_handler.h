@@ -19,11 +19,11 @@ class IGenericApplicationMessageHandler {
   public:
     virtual ~IGenericApplicationMessageHandler() = default;
 
-    virtual bool OnKeyDown(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) = 0;
-    virtual bool OnKeyUp(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) = 0;
+    virtual bool OnKeyDown(int32 KeyCode, uint32 CharacterCode, bool IsRepeat) = 0;
+    virtual bool OnKeyUp(int32 KeyCode, uint32 CharacterCode, bool IsRepeat) = 0;
 
-    virtual bool OnMouseDown(SharedRef<GenericWindow> const& Window, EMouseButton const Button, Vector2 const& MousePos) = 0;
-    virtual bool OnMouseUp(SharedRef<GenericWindow> const& Window, EMouseButton const Button, Vector2 const& MousePos) = 0;
+    virtual bool OnMouseDown(SharedRef<GenericWindow> const& Window, EMouseButton Button, Vector2 const& MousePos) = 0;
+    virtual bool OnMouseUp(SharedRef<GenericWindow> const& Window, EMouseButton Button, Vector2 const& MousePos) = 0;
 
     virtual void OnWindowClose(SharedRef<GenericWindow> const& Window) = 0;
 };

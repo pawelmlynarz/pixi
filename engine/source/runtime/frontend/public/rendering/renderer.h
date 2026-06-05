@@ -17,16 +17,16 @@ class SWindow;
 class Renderer final : public BaseRenderer {
   public:
     PXFRONTEND_API Renderer();
-    PXFRONTEND_API virtual ~Renderer() override;
+    PXFRONTEND_API ~Renderer() override;
 
-    PXFRONTEND_API virtual bool Initialize() override;
-    PXFRONTEND_API virtual void Shutdown() override;
+    PXFRONTEND_API bool Initialize() override;
+    PXFRONTEND_API void Shutdown() override;
 
-    PXFRONTEND_API virtual void Tick(float const Dt) override;
+    PXFRONTEND_API void Tick(float Dt) override;
 
-    PXFRONTEND_API virtual SharedPtr<RHIViewport> GetViewportResource(SharedRef<SWindow> Window) const override;
+    PXFRONTEND_API SharedPtr<RHIViewport> GetViewportResource(SharedRef<SWindow> Window) const override;
 
-    PXFRONTEND_API virtual void CreateViewport(SharedRef<SWindow> Window) override;
+    PXFRONTEND_API void CreateViewport(SharedRef<SWindow> Window) override;
 
 #if WITH_IMGUI
     PXFRONTEND_API class ImGuiRenderer& GetImGuiRenderer();

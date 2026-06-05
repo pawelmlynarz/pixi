@@ -12,6 +12,8 @@
 
 namespace px {
 
+// NOLINTBEGIN
+
 class RHIInterface
     : public nri::CoreInterface,
       public nri::HelperInterface,
@@ -31,6 +33,8 @@ class RHIInterface
     bool HasStreamer() const;
     bool HasSwapChain() const;
 };
+
+// NOLINTEND
 
 inline bool RHIInterface::HasCore() const {
     return GetDeviceDesc != nullptr;

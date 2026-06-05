@@ -43,9 +43,9 @@ class SWindow : public SWidget {
     PXFRONTEND_API virtual void DrawImGui() = 0;
 
   private:
-    void RenderImGui_Internal();
+    void RenderImGuiInternal();
 
-    void RenderFrame_Internal();
+    void RenderFrameInternal();
 
   private:
     WeakPtr<GenericWindow> NativeWindow_;
