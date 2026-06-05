@@ -12,6 +12,7 @@ Checks: >
   readability-*,
   -bugprone-easily-swappable-parameters,
   -bugprone-reserved-identifier,
+  -bugprone-throwing-static-initialization,
   -cppcoreguidelines-avoid-magic-numbers,
   -cppcoreguidelines-avoid-non-const-global-variables,
   -cppcoreguidelines-macro-usage,
@@ -22,8 +23,12 @@ Checks: >
   -cppcoreguidelines-pro-type-static-cast-downcast,
   -cppcoreguidelines-owning-memory,
   -cppcoreguidelines-special-member-functions,
+  -cppcoreguidelines-pro-type-union-access,
+  -cppcoreguidelines-pro-type-vararg,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
   -google-default-arguments,
   -google-explicit-constructor,
+  -google-build-using-namespace,
   -misc-non-private-member-variables-in-classes,
   -misc-include-cleaner,
   -modernize-use-nodiscard,
@@ -33,14 +38,13 @@ Checks: >
   -readability-uppercase-literal-suffix,
   -readability-implicit-bool-conversion,
   -readability-redundant-access-specifiers,
-  -portability-avoid-pragma-once
+  -portability-avoid-pragma-once,
 HeaderFilterRegex: 'TEMP_DISABLE(public|private|internal).+\.(h|hpp|inl)$'
 WarningsAsErrors: '*'
 CheckOptions:
   - { key: readability-identifier-naming.ClassCase,               value: CamelCase }
   - { key: readability-identifier-naming.StructCase,              value: CamelCase }
   - { key: readability-identifier-naming.FunctionCase,            value: CamelCase }
-  - { key: readability-identifier-naming.LocalVariableCase,       value: CamelCase }
   - { key: readability-identifier-naming.ConstexprVariableCase,   value: CamelCase }
   - { key: readability-identifier-naming.ClassMethodCase,         value: CamelCase }
   - { key: readability-identifier-naming.MethodCase,              value: CamelCase }

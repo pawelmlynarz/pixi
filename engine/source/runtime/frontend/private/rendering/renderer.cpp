@@ -15,10 +15,14 @@
 
 namespace px {
 
+namespace {
+
 struct RenderViewportInfo : public RenderResource {
     void* OSWindow{nullptr};
     SharedPtr<RHIViewport> RHIViewport{nullptr};
 };
+
+} // namespace
 
 struct Renderer::Impl {
     ~Impl() = default;

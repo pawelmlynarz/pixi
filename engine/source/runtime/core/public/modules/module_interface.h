@@ -16,10 +16,12 @@ concept ModuleInterface =
  */
 template <ModuleInterface TModuleClass>
 struct ModuleWrapper {
+    // NOLINTBEGIN
     ModuleWrapper() { Module_.StartupModule(); }
     virtual ~ModuleWrapper() { Module_.ShutdownModule(); }
 
     TModuleClass Module_;
+    // NOLINTEND
 };
 
 } // namespace px

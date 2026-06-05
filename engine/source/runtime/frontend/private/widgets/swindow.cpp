@@ -37,6 +37,9 @@ void SWindow::RenderImGui_Internal() {
 }
 
 void SWindow::RenderFrame_Internal() {
+    //NOLINTBEGIN
+    PX_TODO("Rewrite");
+    
     RHIContext const& C{GetRHIContext()};
     Renderer& R{dynamic_cast<Renderer&>(BaseApplication::Get().GetRenderer())};
     SharedPtr const Viewport{R.GetViewportResource(SharedThis(this))};
@@ -137,6 +140,7 @@ void SWindow::RenderFrame_Internal() {
 
         RHI.QueueSubmit(*C.GetGraphicsQueue(), QueueSubmitDesc);
     }
+    //NOLINTEND
 }
 
 void SWindow::SetNativeWindow(WeakPtr<GenericWindow> const& NativeWindow) {

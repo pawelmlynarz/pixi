@@ -16,24 +16,22 @@ namespace px {
 
 namespace {
 
-EngineLoop EngineLoop;
-
 [[nodiscard]]
 int32 EnginePreInit() {
-    return EngineLoop.PreInit();
+    return EngineLoop::PreInit();
 }
 
 [[nodiscard]]
 int32 EngineInit() {
-    return EngineLoop.Init();
+    return EngineLoop::Init();
 }
 
 void EngineTick() {
-    EngineLoop.Tick();
+    EngineLoop::Tick();
 }
 
 void EngineExit() {
-    EngineLoop.Exit();
+    EngineLoop::Exit();
 }
 
 #if WITH_EDITOR
@@ -64,7 +62,7 @@ struct EngineExitGuard {
 
 } // namespace
 
-// NOLINTNEXTLINE(todo)
+// NOLINTNEXTLINE(misc-use-internal-linkage)
 int32 EngineMain() {
     EngineExitGuard const ExitGuard;
 

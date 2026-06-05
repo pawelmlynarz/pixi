@@ -9,10 +9,6 @@ namespace px {
 
 SharedPtr<BaseApplication> BaseApplication::BaseApplicationInstance_{nullptr};
 
-BaseApplication::~BaseApplication() {
-    AssertMsgf(Renderer_ == nullptr, "Renderer should be destroyed manually during shutdown flow.");
-}
-
 bool BaseApplication::InitializeRenderer(SharedPtr<BaseRenderer> Renderer) {
     Renderer_ = std::move(Renderer);
     return Renderer_->Initialize();

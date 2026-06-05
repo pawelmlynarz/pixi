@@ -22,6 +22,7 @@ void PrepareNRIWindowHandle(nri::Window& Window, void* OSWindowHandle) {
 
 } // namespace
 
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
 RHISwapChain::RHISwapChain(RHIContext& Context, nri::Window const& Window, uint16 const SizeX, uint16 const SizeY)
     : RHIContext_(Context) {
 
@@ -45,8 +46,8 @@ RHISwapChain::RHISwapChain(RHIContext& Context, nri::Window const& Window, uint1
     nri::Texture* const* SwapChainTextures{RHI.GetSwapChainTextures(*SwapChain, SwapChainTextureNum)};
     SwapChainFormat = RHI.GetTextureDesc(*SwapChainTextures[0]).format;
 
-    for (uint32_t I{0}; I < SwapChainTextureNum; ++I) {
-        nri::TextureViewDesc const TextureViewDesc{.texture = SwapChainTextures[I], .type = nri::TextureView::COLOR_ATTACHMENT, .format = SwapChainFormat};
+    for (uint32_t Idx{0}; Idx < SwapChainTextureNum; ++Idx) {
+        nri::TextureViewDesc const TextureViewDesc{.texture = SwapChainTextures[Idx], .type = nri::TextureView::COLOR_ATTACHMENT, .format = SwapChainFormat};
 
         nri::Descriptor* ColorAttachment{nullptr};
         RHI_ABORT_ON_FAILURE(RHI.CreateTextureView(TextureViewDesc, ColorAttachment))
@@ -57,10 +58,10 @@ RHISwapChain::RHISwapChain(RHIContext& Context, nri::Window const& Window, uint1
         nri::Fence* ReleaseSemaphore{nullptr};
         RHI_ABORT_ON_FAILURE(RHI.CreateFence(*Device, nri::SWAPCHAIN_SEMAPHORE, ReleaseSemaphore))
 
-        RHISwapChainTexture Texture{
+        RHISwapChainTexture const Texture{
             .AcquireSemaphore = AcquireSemaphore,
             .ReleaseSemaphore = ReleaseSemaphore,
-            .Texture = SwapChainTextures[I],
+            .Texture = SwapChainTextures[Idx],
             .ColorAttachment = ColorAttachment,
             .AttachmentFormat = SwapChainFormat
         };

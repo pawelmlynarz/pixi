@@ -18,7 +18,7 @@ class BaseRenderer;
 class BaseApplication : NonCopyableNonMovable {
   public:
     PXFRONTEND_API BaseApplication() = default;
-    PXFRONTEND_API virtual ~BaseApplication();
+    PXFRONTEND_API virtual ~BaseApplication() = default;
 
     /**
      * Returns the current instance of the application. The application should have been initialized before

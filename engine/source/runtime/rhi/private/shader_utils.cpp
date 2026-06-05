@@ -43,9 +43,11 @@ constexpr std::string_view GetShaderIntmdExtension(nri::GraphicsAPI const Backen
 }
 
 std::string_view GetFileName(std::string const& Path) {
+    std::string_view const View(Path);
+    
     size_t const SlashPos{Path.find_last_of("\\/")};
     if (SlashPos != std::string::npos) {
-        return Path.c_str() + SlashPos + 1;
+        return View.substr(SlashPos + 1);
     }
     return "";
 }
@@ -65,7 +67,8 @@ std::string GetFullPath(std::string const& LocalPath, DataFolder const DataFolde
         if (std::filesystem::exists(Path)) {
             break;
         }
-        Path = "../" + Path;
+        Path.reserve(Path.size() + 3);
+        Path.insert(0, "../");
     }
     return Path + LocalPath;
 }
@@ -101,13 +104,13 @@ bool LoadFile(std::string const& Path, std::vector<uint8_t>& Data) {
 } // namespace
 
 nri::ShaderDesc LoadShader(nri::GraphicsAPI const Backend, std::string const& ShaderName, ShaderStorage& Storage, std::string_view const EntryPointName) {
-    std::string const Extension{GetShaderIntmdExtension(Backend)};
-    std::string const Path{GetFullPath(ShaderName + std::string(Extension), DataFolder::SHADERS)};
+    std::string_view const ExtensionStr{GetShaderIntmdExtension(Backend)};
+    std::string const Path{GetFullPath(ShaderName + std::string(ExtensionStr), DataFolder::SHADERS)};
     nri::ShaderDesc ShaderDesc{};
 
-    size_t I{1};
-    for (; I < ShaderExtensions.size(); ++I) {
-        if (Path.rfind(ShaderExtensions[I].Extension) == std::string::npos) {
+    for (auto const& Extension : ShaderExtensions)
+    {
+        if (Path.rfind(Extension.Extension) == std::string::npos){
             continue;
         }
 
@@ -115,18 +118,15 @@ nri::ShaderDesc LoadShader(nri::GraphicsAPI const Backend, std::string const& Sh
         std::vector<uint8>& Code{Storage.back()};
 
         if (LoadFile(Path, Code)) {
-            ShaderDesc.stage = ShaderExtensions[I].Stage;
+            ShaderDesc.stage = Extension.Stage;
             ShaderDesc.bytecode = Code.data();
             ShaderDesc.size = Code.size();
             ShaderDesc.entryPointName = EntryPointName.data();
         }
         break;
     }
-
-    if (I == ShaderExtensions.size()) {
-        RHI_ABORT_ON_FALSE(false)
-    }
-
+    RHI_ABORT_ON_FALSE(ShaderDesc.size != 0);
+    
     return ShaderDesc;
 }
 

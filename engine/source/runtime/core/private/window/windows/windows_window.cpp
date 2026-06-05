@@ -71,6 +71,8 @@ void GLFWMouseButtonCallback(GLFWwindow* const Window, int32_t const Button, int
     case GLFW_MOUSE_BUTTON_RIGHT:
         ButtonEnum = EMouseButton::Right;
         break;
+        
+    default: break;
     }
 
     double MouseX{};
@@ -141,7 +143,7 @@ void WindowsWindow::DestroyWindow() {
 
 SharedRef<PlatformApplication> WindowsWindow::GetOwningApplication() const {
     Assert(OwningApplication_);
-    return SharedRef(OwningApplication_);
+    return OwningApplication_;
 }
 
 GenericOSWindowHandle WindowsWindow::GetOSWindowHandle() const {
