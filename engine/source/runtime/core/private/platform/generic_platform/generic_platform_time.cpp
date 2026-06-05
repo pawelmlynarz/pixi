@@ -1,6 +1,6 @@
 // © 2026 Pawel Mlynarz
 
-#include "common/platform_time.h"
+#include "platform/generic_platform/generic_platform_time.h"
 
 namespace px {
 

@@ -1,6 +1,6 @@
 // © 2026 Pawel Mlynarz
 
-#include "window/generic_window.h"
+#include "platform/generic_platform/generic_window.h"
 
 namespace px {
 

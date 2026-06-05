@@ -2,11 +2,16 @@
 
 #pragma once
 
-#include "common/platform.h"
-#include "window/generic_window.h"
+#include "platform/generic_platform/generic_window.h"
 #include "tools/utility.h"
 
 struct GLFWwindow;
+
+#ifndef HWND_DEFINED
+// NOLINTNEXTLINE(modernize-use-using)
+typedef struct HWND__* HWND;
+#define HWND_DEFINED
+#endif
 
 namespace px {
 

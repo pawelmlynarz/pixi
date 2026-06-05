@@ -1,6 +1,7 @@
 # Directories
 
 build/
+*/__pycache__/*
 
 # Cmake 
 

@@ -4,7 +4,6 @@
 
 // pxcore
 #include "core_globals.h"
-#include "common/platform.h"
 #include "misc/core_delegates.h"
 
 // pxfrontend
@@ -28,8 +27,6 @@ namespace px {
 
 [[nodiscard]]
 int32 EngineLoop::PreInit() {
-    Platform::Initialize();
-
     InitializeRHI();
 
     auto& Application{SimpleApplication::CreateApplication()};
@@ -74,8 +71,6 @@ void EngineLoop::Exit() {
 
     SimpleApplication::ShutdownApplication();
     ShutdownRHI();
-
-    Platform::Shutdown();
 }
 
 } // namespace px

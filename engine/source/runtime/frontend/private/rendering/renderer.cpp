@@ -11,7 +11,7 @@
 #include "rhi_context.h"
 #include "rhi_resources.h"
 #include "widgets/swindow.h"
-#include "window/generic_window.h"
+#include "platform/generic_platform/generic_window.h"
 
 namespace px {
 
