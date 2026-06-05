@@ -2,13 +2,14 @@
 
 #include "core_globals.h"
 #include "core_globals_internal.h"
-#include "common/platform.h"
+#include "hal/platform_time.h"
+#include "hal/platform_tls.h"
 
 namespace px {
 
 uint64 GFrameCounter{0};
 uint32 GGameThreadId{0};
-double GStartTime{0.0};
+double GStartTime{PlatformTime::Initialize().AsSeconds()};
 
 namespace {
 
@@ -37,7 +38,7 @@ void InitGameThreadId(uint32 const ThreadId) {
 }
 
 bool IsInGameThread() {
-    return GGameThreadId == Platform::GetCurrentThreadId();
+    return GGameThreadId == PlatformTLS::GetCurrentThreadId();
 }
 
 } // namespace px

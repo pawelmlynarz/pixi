@@ -2,8 +2,9 @@
 
 #include "tools/asserts.h"
 
-#include "common/platform.h"
-
+#if PLATFORM_WINDOWS
+#include "Windows.h"
+#endif
 #include <print>
 
 namespace px::asserts {

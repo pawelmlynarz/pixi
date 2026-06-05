@@ -1,7 +1,7 @@
 // © 2026 Pawel Mlynarz
 
-#include "app/windows/windows_application_misc.h"
-#include "app/windows/windows_application.h"
+#include "platform/windows/windows_platform_application_misc.h"
+#include "platform/windows/windows_application.h"
 
 namespace px {
 

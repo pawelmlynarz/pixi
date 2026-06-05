@@ -2,14 +2,14 @@
 
 #pragma once
 
-#include "common/platform_time.h"
+#include "core_module.h"
+#include "platform/generic_platform/generic_platform_time.h"
 
 namespace px {
 
 class PXCORE_API WindowsPlatformTime final : public GenericPlatformTime {
   public:
-    static void Initialize();
-    static void Shutdown();
+    static TimePoint Initialize() noexcept;
 
     static TimePoint Now();
     static TimePoint From(TimePoint StartingTime);

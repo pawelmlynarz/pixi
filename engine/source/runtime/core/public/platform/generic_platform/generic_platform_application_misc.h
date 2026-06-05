@@ -12,5 +12,3 @@ struct GenericPlatformApplicationMisc {
 };
 
 } // namespace px
-
-#include COMPILED_PLATFORM_HEADER(application_misc.h)

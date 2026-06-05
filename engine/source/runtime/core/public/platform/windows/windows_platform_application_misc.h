@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "app/platform_application_misc.h"
+#include "core_module.h"
+#include "platform/generic_platform/generic_platform_application_misc.h"
 
 namespace px {
 

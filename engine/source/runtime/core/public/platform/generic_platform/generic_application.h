@@ -2,8 +2,8 @@
 
 #pragma once
 
+#include "platform/generic_platform/generic_window_definition.h"
 #include "tools/utility.h"
-#include "window/generic_window_definition.h"
 #include "input/generic_message_handler.h"
 #include "tools/misc.h"
 

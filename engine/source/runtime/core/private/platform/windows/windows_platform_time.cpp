@@ -1,6 +1,6 @@
 // � 2026 Pawel Mlynarz
 
-#include "common/windows/windows_platform_time.h"
+#include "platform/windows/windows_platform_time.h"
 
 #include "Windows.h"
 
@@ -18,11 +18,9 @@ inline int64 SafeInt64MulDiv(int64 const Value, int64 const Numer, int64 const D
 
 } // namespace
 
-void WindowsPlatformTime::Initialize() {
+TimePoint WindowsPlatformTime::Initialize() noexcept {
     QueryPerformanceFrequency(&Frequency);
-}
-
-void WindowsPlatformTime::Shutdown() {
+    return Now();
 }
 
 TimePoint WindowsPlatformTime::Now() {

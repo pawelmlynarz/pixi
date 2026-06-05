@@ -1,7 +1,7 @@
 // © 2026 Pawel Mlynarz
 
-#include "app/platform_application_misc.h"
-#include "app/platform_application.h"
+#include "platform/generic_platform/generic_platform_application_misc.h"
+#include "platform/generic_platform/generic_application.h"
 
 namespace px {
 

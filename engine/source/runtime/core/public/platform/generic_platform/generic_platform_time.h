@@ -22,5 +22,3 @@ inline TimePoint operator-(TimePoint const& Lhs, TimePoint const& Rhs) noexcept 
 }
 
 } // namespace px
-
-#include COMPILED_PLATFORM_HEADER(platform_time.h)

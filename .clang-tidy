@@ -35,6 +35,7 @@ Checks: >
   -modernize-use-trailing-return-type,
   -readability-magic-numbers,
   -readability-identifier-length,
+  -readability-identifier-naming,
   -readability-uppercase-literal-suffix,
   -readability-implicit-bool-conversion,
   -readability-redundant-access-specifiers,

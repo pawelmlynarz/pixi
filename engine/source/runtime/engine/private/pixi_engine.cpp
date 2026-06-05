@@ -4,7 +4,7 @@
 #include "pixi_engine_internal.h"
 
 // pxcore
-#include "common/platform_time.h"
+#include "hal/platform_time.h"
 
 #include <thread>
 

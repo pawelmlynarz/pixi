@@ -3,7 +3,7 @@
 #pragma once
 
 #include "core_module.h"
-#include "app/platform_application.h"
+#include "platform/generic_platform/generic_application.h"
 #include "tools/utility.h"
 
 #include <vector>

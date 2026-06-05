@@ -1,7 +1,7 @@
 // © 2026 Pawel Mlynarz
 
-#include "window/windows/windows_window.h"
-#include "app/windows/windows_application.h"
+#include "platform/windows/windows_window.h"
+#include "platform/windows/windows_application.h"
 
 // GLFW
 #define GLFW_EXPOSE_NATIVE_WIN32

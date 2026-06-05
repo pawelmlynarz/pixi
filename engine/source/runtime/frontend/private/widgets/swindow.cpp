@@ -6,7 +6,7 @@
 #include "rendering/imgui_renderer.h"
 
 // pxcore
-#include "window/generic_window.h"
+#include "platform/generic_platform/generic_window.h"
 
 // pxrhi
 #include "rhi.h"

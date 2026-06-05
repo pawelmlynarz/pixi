@@ -131,6 +131,7 @@ template <typename TTo, typename TFrom>
 
 template <typename TTo, typename TFrom>
 [[nodiscard]] SharedRef<TTo> StaticCastSharedRef(SharedRef<TFrom> const& Ref) noexcept(SharedRefNoexcept) {
+    static_assert(std::is_base_of_v<TFrom, TTo>, "Can't static cast to a type that doesn't derive from TFrom.");
     return SharedRef<TTo>(std::static_pointer_cast<TTo>(Ref.ToPtr()));
 }
 

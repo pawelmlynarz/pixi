@@ -1,7 +1,9 @@
 // © 2026 Pawel Mlynarz
 
 // pxcore
-#include "common/platform.h"
+#include "common/types.h"
+
+#include "Windows.h"
 
 namespace px {
 

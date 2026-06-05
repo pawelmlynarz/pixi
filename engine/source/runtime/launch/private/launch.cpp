@@ -2,7 +2,7 @@
 
 // pxcore
 #include "core_globals.h"
-#include "common/platform.h"
+#include "hal/platform_tls.h"
 #include "private/core_globals_internal.h"
 
 // pxeditor
@@ -66,7 +66,7 @@ struct EngineExitGuard {
 int32 EngineMain() {
     EngineExitGuard const ExitGuard;
 
-    InitGameThreadId(Platform::GetCurrentThreadId());
+    InitGameThreadId(PlatformTLS::GetCurrentThreadId());
 
     int32 ErrorLevel{EnginePreInit()};
     if (ErrorLevel != 0 || IsEngineExitRequested()) {

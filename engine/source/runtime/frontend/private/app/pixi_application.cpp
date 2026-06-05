@@ -5,10 +5,10 @@
 #include "widgets/swindow.h"
 
 // pxcore
-#include "app/platform_application.h"
-#include "app/platform_application_misc.h"
+#include "platform/generic_platform/generic_application.h"
+#include "platform/generic_platform/generic_window.h"
+#include "hal/platform_application_misc.h"
 #include "input/engine_input_system.h"
-#include "window/generic_window.h"
 
 namespace px {
 

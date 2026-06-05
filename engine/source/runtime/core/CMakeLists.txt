@@ -31,18 +31,15 @@ target_link_libraries(${MODULE_TARGET_NAME}
 file(GLOB_RECURSE MODULE_SOURCES CONFIGURE_DEPENDS
         *.cpp *.h *.inl
 )
-list(FILTER MODULE_SOURCES EXCLUDE REGEX "[/\\\\]public[/\\\\][^/\\\\]+[/\\\\][^/\\\\]+[/\\\\].*")
-list(FILTER MODULE_SOURCES EXCLUDE REGEX "[/\\\\]private[/\\\\][^/\\\\]+[/\\\\][^/\\\\]+[/\\\\].*")
+list(FILTER MODULE_SOURCES EXCLUDE REGEX "[/\\\\]public[/\\\\]platform[/\\\\]windows[/\\\\].*")
+list(FILTER MODULE_SOURCES EXCLUDE REGEX "[/\\\\]private[/\\\\]platform[/\\\\]windows[/\\\\].*")
+
 #
 # Platform Sources
 if(WIN32)
     file(GLOB_RECURSE MODULE_PLATFORM_SOURCES CONFIGURE_DEPENDS
-            public/common/windows/*.cpp public/common/windows/*.h public/common/windows/*.inl
-            private/common/windows/*.cpp private/common/windows/*.h private/common/windows/*.inl
-            public/window/windows/*.cpp public/window/windows/*.h public/window/windows/*.inl
-            private/window/windows/*.cpp private/window/windows/*.h private/window/windows/*.inl
-            public/app/windows/*.cpp public/app/windows/*.h public/app/windows/*.inl
-            private/app/windows/*.cpp private/app/windows/*.h private/app/windows/*.inl
+            public/platform/windows/*.cpp public/platform/windows/*.h public/platform/windows/*.inl
+            private/platform/windows/*.cpp private/platform/windows/*.h private/platform/windows/*.inl
     )
 endif()
 list(APPEND MODULE_SOURCES ${MODULE_PLATFORM_SOURCES})

@@ -1,7 +1,8 @@
 // © 2026 Pawel Mlynarz
 
-#include "app/windows/windows_application.h"
-#include "window/windows/windows_window.h"
+#include "platform/generic_platform/generic_window_definition.h"
+#include "platform/windows/windows_application.h"
+#include "platform/windows/windows_window.h"
 
 // GLFW
 #include "core_globals.h"
