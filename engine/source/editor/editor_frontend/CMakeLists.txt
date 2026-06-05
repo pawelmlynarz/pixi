@@ -1,11 +1,11 @@
 # --------------------------------------------------
-# Module:           EditorCore
+# Module:           EditorFrontend
 # Default Type:     Dynamic
 # --------------------------------------------------
 
 include(utils)
 
-set(MODULE_NAME editor_core)
+set(MODULE_NAME editor_frontend)
 set(MODULE_TARGET_NAME px${MODULE_NAME})
 
 #
@@ -15,15 +15,15 @@ if(PX_BUILD_SHARED)
 else()
     add_library(${MODULE_TARGET_NAME} STATIC "")
 endif()
-add_library(px::editor::core ALIAS ${MODULE_TARGET_NAME})
+add_library(px::editor::frontend ALIAS ${MODULE_TARGET_NAME})
 
 #
 # Dependencies
 target_link_libraries(${MODULE_TARGET_NAME}
         PRIVATE
-        px::core
-        px::editor::frontend
         px::editor::engine
+        PUBLIC
+        px::frontend
 )
 
 #
@@ -41,13 +41,13 @@ target_include_directories(${MODULE_TARGET_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/public
 )
 if(NOT BUILD_CLANG_TIDY)
-target_precompile_headers(${MODULE_TARGET_NAME} PRIVATE
-        ${MODULE_NAME}_pch.h
-)
+    target_precompile_headers(${MODULE_TARGET_NAME} PRIVATE
+            ${MODULE_NAME}_pch.h
+    )
 endif()
 
 set(MODULE_COMPILE_DEFINITIONS ${PX_ENGINE_COMPILE_DEFINITIONS})
-list(APPEND MODULE_COMPILE_DEFINITIONS PX_BUILD_EDITOR_CORE)
+list(APPEND MODULE_COMPILE_DEFINITIONS PX_BUILD_EDITOR_FRONTEND)
 target_compile_definitions(${MODULE_TARGET_NAME} PRIVATE ${MODULE_COMPILE_DEFINITIONS})
 target_compile_options(${MODULE_TARGET_NAME} PRIVATE ${GLOB_COMPILE_OPTIONS})
 
