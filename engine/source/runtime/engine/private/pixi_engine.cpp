@@ -37,7 +37,7 @@ void PixiEngine::UpdateTimeAndHandleMaxTickRate() {
     static double LastRealTime{PlatformTime::Now().AsSeconds() - 0.0001};
 
     TimingInfo& Info{TimingInfo_};
-    
+
     Info.CurrentRealTime = PlatformTime::Now().AsSeconds();
     Info.CurrentDeltaTime = static_cast<float>(Info.CurrentRealTime - LastRealTime);
 

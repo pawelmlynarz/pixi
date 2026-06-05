@@ -34,8 +34,7 @@ Renderer::Renderer()
     : Impl_(MakeUnique<Impl>()) {
 }
 
-Renderer::~Renderer() {
-}
+Renderer::~Renderer() = default;
 
 bool Renderer::Initialize() {
 #if WITH_IMGUI

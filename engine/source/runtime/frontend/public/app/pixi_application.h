@@ -17,11 +17,11 @@ class BaseRenderer;
 
 class SimpleApplication final : public BaseApplication {
   public:
-    SimpleApplication(SharedRef<PlatformApplication> const PlatformApplication);
+    SimpleApplication(SharedRef<PlatformApplication> const& PlatformApplication);
     ~SimpleApplication();
 
     static PXFRONTEND_API SimpleApplication& CreateApplication();
-    static PXFRONTEND_API SimpleApplication& CreateApplication(SharedRef<class PlatformApplication> const InPlatformApplication);
+    static PXFRONTEND_API SimpleApplication& CreateApplication(SharedRef<class PlatformApplication> const& InPlatformApplication);
     static PXFRONTEND_API void ShutdownApplication();
     static PXFRONTEND_API bool IsInitialized();
 

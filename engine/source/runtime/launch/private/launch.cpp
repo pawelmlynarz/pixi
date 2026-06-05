@@ -64,13 +64,14 @@ struct EngineExitGuard {
 
 } // namespace
 
+// NOLINTNEXTLINE(todo)
 int32 EngineMain() {
-    EngineExitGuard ExitGuard;
+    EngineExitGuard const ExitGuard;
 
     InitGameThreadId(Platform::GetCurrentThreadId());
 
     int32 ErrorLevel{EnginePreInit()};
-    if (ErrorLevel != 0 || IsEngineExitRequested()){
+    if (ErrorLevel != 0 || IsEngineExitRequested()) {
         return ErrorLevel;
     }
 
@@ -80,10 +81,10 @@ int32 EngineMain() {
     ErrorLevel = EngineInit();
 #endif
 
-    if (ErrorLevel != 0 || IsEngineExitRequested()){
+    if (ErrorLevel != 0 || IsEngineExitRequested()) {
         return ErrorLevel;
     }
-    
+
     while (!IsEngineExitRequested()) {
         EngineTick();
     }

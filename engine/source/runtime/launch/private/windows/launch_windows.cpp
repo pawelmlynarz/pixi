@@ -10,11 +10,12 @@ extern int32 EngineMain();
 namespace {
 
 int32 LaunchWindowsStartup(
-    [[maybe_unused]] HINSTANCE Instance, 
-    [[maybe_unused]] HINSTANCE PrevInstance, 
-    [[maybe_unused]] char* CmdLine, 
-    [[maybe_unused]] int32 ShowCmd) {
-    
+    [[maybe_unused]] HINSTANCE Instance,
+    [[maybe_unused]] HINSTANCE PrevInstance,
+    [[maybe_unused]] char* CmdLine,
+    [[maybe_unused]] int32 ShowCmd
+) {
+
     return EngineMain();
 }
 

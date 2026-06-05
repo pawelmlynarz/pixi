@@ -35,20 +35,19 @@ SharedRef<GenericWindow> CreatePlatformWindow(SharedRef<SWindow> const& SWindow,
 
 } // namespace
 
-SimpleApplication::SimpleApplication(SharedRef<PlatformApplication> const PlatformApplication)
+SimpleApplication::SimpleApplication(SharedRef<PlatformApplication> const& PlatformApplication)
     : PlatformApplication_(PlatformApplication) {
     PlatformApplication_->Initialize();
     PlatformApplication_->SetMessageHandler(MakeShared<EngineInputSystem>(PlatformApplication_));
 }
 
-SimpleApplication::~SimpleApplication() {
-}
+SimpleApplication::~SimpleApplication() = default;
 
 SimpleApplication& SimpleApplication::CreateApplication() {
     return CreateApplication(SharedRef<PlatformApplication>(PlatformApplicationMisc::CreateApplication()));
 }
 
-SimpleApplication& SimpleApplication::CreateApplication(SharedRef<class PlatformApplication> const PlatformApplication) {
+SimpleApplication& SimpleApplication::CreateApplication(SharedRef<class PlatformApplication> const& PlatformApplication) {
     ApplicationInstance_ = MakeShared<SimpleApplication>(PlatformApplication);
     BaseApplicationInstance_ = ApplicationInstance_;
     return *ApplicationInstance_;
@@ -67,8 +66,9 @@ bool SimpleApplication::IsInitialized() {
 void SimpleApplication::Tick(float const Dt) {
     PlatformApplication_->PollMessages();
 
-    if (Renderer_)
+    if (Renderer_) {
         Renderer_->Tick(Dt);
+    }
 
     DrawWindows();
 }
@@ -77,14 +77,15 @@ bool SimpleApplication::AddWindow(SharedRef<SWindow> SWindow, bool const bShowIm
     Windows_.emplace_back(SWindow);
     SharedRef const Window{CreatePlatformWindow(SWindow, PlatformApplication_)};
 
-    if (bShowImmediately)
+    if (bShowImmediately) {
         SWindow->ShowWindow();
+    }
 
     return true;
 }
 
 void SimpleApplication::DrawWindows() const {
-    for (auto& Window : Windows_) {
+    for (auto const& Window : Windows_) {
         Window->PaintWindow();
     }
 }

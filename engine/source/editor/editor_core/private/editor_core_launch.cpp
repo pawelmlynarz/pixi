@@ -21,7 +21,7 @@ class SEditorMainFrame final : public SWindow {
     SEditorMainFrame() = default;
 
   protected:
-    virtual void DrawImGui() override {
+    void DrawImGui() override {
         auto& EdEngine{GetEditorEngine()};
 
         ImGui::Begin("Hello", nullptr, ImGuiWindowFlags_NoResize);
@@ -49,8 +49,9 @@ bool CreateEditorMainFrame() {
 } // namespace
 
 int32 EditorInit() {
-    if (!CreateEditorMainFrame())
+    if (!CreateEditorMainFrame()) {
         return -1;
+    }
     return 0;
 }
 

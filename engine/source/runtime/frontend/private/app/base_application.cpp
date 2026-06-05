@@ -19,8 +19,9 @@ bool BaseApplication::InitializeRenderer(SharedPtr<BaseRenderer> Renderer) {
 }
 
 void BaseApplication::DestoryRenderer() {
-    if (Renderer_)
+    if (Renderer_) {
         Renderer_->Shutdown();
+    }
     Renderer_.reset();
 }
 

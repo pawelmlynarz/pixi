@@ -42,10 +42,10 @@ void ImGuiRenderer::Initialize(nri::Device* const Device) {
 }
 
 void ImGuiRenderer::Shutdown() {
-    if (!HasUserInterface()){
+    if (!HasUserInterface()) {
         return;
     }
-    
+
     ImguiInterface_.DestroyImgui(ImguiRenderer_);
     ImGui::DestroyContext();
 
@@ -54,7 +54,7 @@ void ImGuiRenderer::Shutdown() {
 
 // NOLINTNEXTLINE(readability-make-member-function-const)
 void ImGuiRenderer::Tick([[maybe_unused]] float const Dt) {
-    if (!HasUserInterface()){
+    if (!HasUserInterface()) {
         return;
     }
 
@@ -64,7 +64,7 @@ void ImGuiRenderer::Tick([[maybe_unused]] float const Dt) {
 }
 
 void ImGuiRenderer::CmdCopyImguiData(nri::CommandBuffer& CmdBuffer, nri::Streamer& Streamer) const {
-    if (!HasUserInterface()){
+    if (!HasUserInterface()) {
         return;
     }
 
@@ -81,7 +81,7 @@ void ImGuiRenderer::CmdCopyImguiData(nri::CommandBuffer& CmdBuffer, nri::Streame
 }
 
 void ImGuiRenderer::CmdDrawImgui(nri::CommandBuffer& CmdBuffer, nri::Format const AttachmentFormat, float const SdrScale, bool const bIsSrgb) const {
-    if (!HasUserInterface()){
+    if (!HasUserInterface()) {
         return;
     }
 

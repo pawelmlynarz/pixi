@@ -17,7 +17,7 @@ namespace {
 struct EditorCoreModule {
     static void StartupModule() {
         using namespace px;
-    
+
         CoreDelegates::OnEngineLoopInitComplete.AddLambda([]() {
             // Init ImGuiContext for this module.
             auto& PixiRenderer{dynamic_cast<Renderer&>(SimpleApplication::Get().GetRenderer())};

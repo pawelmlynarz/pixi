@@ -27,7 +27,7 @@ constexpr std::array ShaderExtensions{
     ShaderMeta(".cs.", nri::StageBits::COMPUTE_SHADER),
 };
 
-inline constexpr std::string_view GetShaderIntmdExtension(nri::GraphicsAPI const Backend) {
+constexpr std::string_view GetShaderIntmdExtension(nri::GraphicsAPI const Backend) {
     switch (Backend) {
     case nri::GraphicsAPI::D3D11:
         return ".dxbc";
@@ -44,8 +44,9 @@ inline constexpr std::string_view GetShaderIntmdExtension(nri::GraphicsAPI const
 
 std::string_view GetFileName(std::string const& Path) {
     size_t const SlashPos{Path.find_last_of("\\/")};
-    if (SlashPos != std::string::npos)
+    if (SlashPos != std::string::npos) {
         return Path.c_str() + SlashPos + 1;
+    }
     return "";
 }
 
@@ -56,12 +57,14 @@ enum class DataFolder : uint8_t {
 
 std::string GetFullPath(std::string const& LocalPath, DataFolder const DataFolder) {
     std::string Path{};
-    if (DataFolder == DataFolder::SHADERS)
+    if (DataFolder == DataFolder::SHADERS) {
         Path = "_Shaders/";
+    }
 
-    for (uint32_t i{0}; i < 4; ++i) {
-        if (std::filesystem::exists(Path))
+    for (uint32_t I{0}; I < 4; ++I) {
+        if (std::filesystem::exists(Path)) {
             break;
+        }
         Path = "../" + Path;
     }
     return Path + LocalPath;
@@ -102,16 +105,17 @@ nri::ShaderDesc LoadShader(nri::GraphicsAPI const Backend, std::string const& Sh
     std::string const Path{GetFullPath(ShaderName + std::string(Extension), DataFolder::SHADERS)};
     nri::ShaderDesc ShaderDesc{};
 
-    size_t i{1};
-    for (; i < ShaderExtensions.size(); ++i) {
-        if (Path.rfind(ShaderExtensions[i].Extension) == std::string::npos)
+    size_t I{1};
+    for (; I < ShaderExtensions.size(); ++I) {
+        if (Path.rfind(ShaderExtensions[I].Extension) == std::string::npos) {
             continue;
+        }
 
         Storage.emplace_back();
         std::vector<uint8>& Code{Storage.back()};
 
         if (LoadFile(Path, Code)) {
-            ShaderDesc.stage = ShaderExtensions[i].Stage;
+            ShaderDesc.stage = ShaderExtensions[I].Stage;
             ShaderDesc.bytecode = Code.data();
             ShaderDesc.size = Code.size();
             ShaderDesc.entryPointName = EntryPointName.data();
@@ -119,7 +123,7 @@ nri::ShaderDesc LoadShader(nri::GraphicsAPI const Backend, std::string const& Sh
         break;
     }
 
-    if (i == ShaderExtensions.size()) {
+    if (I == ShaderExtensions.size()) {
         RHI_ABORT_ON_FALSE(false)
     }
 

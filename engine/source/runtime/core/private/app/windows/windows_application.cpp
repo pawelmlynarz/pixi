@@ -43,8 +43,9 @@ void WindowsApplication::CloseWindow(SharedRef<GenericWindow> const& Window) {
     (*FoundWindow)->DestroyWindow();
     Windows_.erase(FoundWindow);
 
-    if (Windows_.empty())
+    if (Windows_.empty()) {
         RequestEngineExit();
+    }
 }
 
 void WindowsApplication::PollMessages() {
