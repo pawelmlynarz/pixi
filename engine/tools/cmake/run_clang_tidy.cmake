@@ -19,7 +19,15 @@ endif()
 # --------------------------------------------------
 # Run clang-tidy
 # --------------------------------------------------
-execute_process(COMMAND ${Python_EXECUTABLE} ${RUN_CLANG_TIDY} -clang-tidy-binary ${CLANG_TIDY_EXE} -p ${PROJECT_BINARY_DIR} RESULT_VARIABLE EXIT_CODE)
+execute_process(
+    COMMAND 
+        ${Python_EXECUTABLE}
+        ${RUN_CLANG_TIDY} 
+        -clang-tidy-binary ${CLANG_TIDY_EXE} 
+        -p ${PROJECT_BINARY_DIR}
+        "^(?!.*[\\\\/]third_party[\\\\/]).*"
+    RESULT_VARIABLE EXIT_CODE)
+
 if (NOT EXIT_CODE STREQUAL 0)
     message(FATAL_ERROR "clang-tidy code analysis failed.")
 endif()

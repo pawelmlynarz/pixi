@@ -34,9 +34,9 @@ class ClangTidyRunner:
         
         with open(compile_commands_filepath, 'r') as file:
             data = file.read()
-        
+
         from re import sub
-        modified_data = sub(r"(-I)([^ ]*third_party[^ ]*include\b)", r"-isystem \2", data)
+        modified_data = sub(r"(-I)([^ ]*third_party[/\\][^ ]*)", r"-isystem \2", data)
 
         with open(compile_commands_filepath, 'w') as file:
             file.write(modified_data)

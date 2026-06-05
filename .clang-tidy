@@ -37,12 +37,12 @@ WarningsAsErrors: '*'
 CheckOptions:
   - { key: readability-identifier-naming.ClassCase,               value: CamelCase }
   - { key: readability-identifier-naming.StructCase,              value: CamelCase }
-  - { key: readability-identifier-naming.FunctionCase,            value: camelBack }
-  - { key: readability-identifier-naming.ParameterCase,           value: camelBack }
-  - { key: readability-identifier-naming.LocalVariableCase,       value: camelBack }
-  - { key: readability-identifier-naming.ConstexprVariableCase,   value: camelBack }
-  - { key: readability-identifier-naming.ClassMethodCase,         value: camelBack }
-  - { key: readability-identifier-naming.MethodCase,              value: camelBack }
-  - { key: readability-identifier-naming.ClassMemberCase,         value: camelBack }
-  - { key: readability-identifier-naming.ClassMemberPrefix,       value: m_        }
+  - { key: readability-identifier-naming.FunctionCase,            value: CamelCase }
+  - { key: readability-identifier-naming.ParameterCase,           value: CamelCase }
+  - { key: readability-identifier-naming.LocalVariableCase,       value: CamelCase }
+  - { key: readability-identifier-naming.ConstexprVariableCase,   value: CamelCase }
+  - { key: readability-identifier-naming.ClassMethodCase,         value: CamelCase }
+  - { key: readability-identifier-naming.MethodCase,              value: CamelCase }
+  - { key: readability-identifier-naming.ClassMemberCase,         value: CamelCase }
+  - { key: readability-identifier-naming.ClassMemberPostfix,       value: _        }
 ...

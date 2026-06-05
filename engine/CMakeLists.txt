@@ -4,9 +4,7 @@ set(ENGINE_ROOT "${CMAKE_CURRENT_LIST_DIR}")
 # Engine Third Party Fetch
 # --------------------------------------------------
 
-if(NOT BUILD_CLANG_TIDY)
-    include(fetch_third_party)
-endif()
+include(fetch_third_party)
 
 # --------------------------------------------------
 # Engine Target(s) Configuration
