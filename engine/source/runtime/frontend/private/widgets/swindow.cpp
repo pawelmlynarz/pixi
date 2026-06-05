@@ -37,12 +37,12 @@ void SWindow::RenderImGui_Internal() {
 }
 
 void SWindow::RenderFrame_Internal() {
-    RHIContext& C{GetRHIContext()};
+    RHIContext const& C{GetRHIContext()};
     Renderer& R{dynamic_cast<Renderer&>(BaseApplication::Get().GetRenderer())};
-    SharedPtr Viewport{R.GetViewportResource(SharedThis(this))};
-    SharedPtr RHISwapChain{Viewport->GetSwapChain()};
+    SharedPtr const Viewport{R.GetViewportResource(SharedThis(this))};
+    SharedPtr const RHISwapChain{Viewport->GetSwapChain()};
 
-    RHIInterface& RHI{C.GetRHI()};
+    RHIInterface const& RHI{C.GetRHI()};
 
     uint32_t QueuedFrameIndex{FrameIdx_ % C.GetQueuedFrameNum()};
     RHIQueuedFrame const& QueuedFrame{C.GetQueuedFrames()[QueuedFrameIndex]};

@@ -12,7 +12,7 @@ class PlatformApplication;
 
 class EngineInputSystem final : NonCopyableNonMovable, public IGenericApplicationMessageHandler {
   public:
-    PXCORE_API EngineInputSystem(SharedRef<PlatformApplication> const OwningApplication);
+    PXCORE_API EngineInputSystem(SharedRef<PlatformApplication> OwningApplication);
 
     virtual bool OnKeyDown(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) override;
     virtual bool OnKeyUp(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) override;

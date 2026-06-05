@@ -40,8 +40,9 @@ void EngineExit() {
 [[nodiscard]]
 int32 EditorInit() {
     int32 const Result{EngineInit()};
-    if (Result != 0)
+    if (Result != 0) {
         return Result;
+    }
     return ed::EditorInit();
 }
 
@@ -69,8 +70,9 @@ int32 EngineMain() {
     InitGameThreadId(Platform::GetCurrentThreadId());
 
     int32 ErrorLevel{EnginePreInit()};
-    if (ErrorLevel != 0 || IsEngineExitRequested())
+    if (ErrorLevel != 0 || IsEngineExitRequested()){
         return ErrorLevel;
+    }
 
 #if WITH_EDITOR
     ErrorLevel = EditorInit();
@@ -78,9 +80,10 @@ int32 EngineMain() {
     ErrorLevel = EngineInit();
 #endif
 
-    if (ErrorLevel != 0 || IsEngineExitRequested())
+    if (ErrorLevel != 0 || IsEngineExitRequested()){
         return ErrorLevel;
-
+    }
+    
     while (!IsEngineExitRequested()) {
         EngineTick();
     }

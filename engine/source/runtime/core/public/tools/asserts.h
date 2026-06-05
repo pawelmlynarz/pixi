@@ -2,6 +2,9 @@
 
 #pragma once
 
+// NOLINTBEGIN
+// clang-format off
+
 #include "core_module.h"
 #include "common/types.h"
 
@@ -120,3 +123,6 @@ PXCORE_API bool ExecAssertCheck(std::string const& TranslationUnitInfo, std::str
 #define Assert(Expression) PX_ASSERT_IMPL(Expression)
 
 #define AssertMsgf(Expression, Fmt, ...) PX_ASSERT_IMPL(Expression, std::format(Fmt, __VA_ARGS__))
+
+// NOLINTEND
+// clang-format on

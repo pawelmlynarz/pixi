@@ -1,5 +1,7 @@
 // © 2026 Pawel Mlynarz
 
+// NOLINTBEGIN
+
 #include "rhi_context.h"
 #include "rhi_asserts.h"
 
@@ -161,3 +163,5 @@ void RHIContext::Shutdown() {
 }
 
 } // namespace px
+
+// NOLINTEND

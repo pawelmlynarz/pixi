@@ -2,6 +2,7 @@
 
 #pragma once
 
+// NOLINTBEGIN
 // clang-format off
 
 //
@@ -29,3 +30,4 @@
 #endif
 
 // clang-format on
+// NOLINTEND

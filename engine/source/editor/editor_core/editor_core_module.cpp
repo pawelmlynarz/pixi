@@ -9,10 +9,15 @@
 #include "rendering/renderer.h"
 #include "rendering/imgui_renderer.h"
 
-namespace px {
+// imgui
+#include "imgui.h"
+
+namespace {
 
 struct EditorCoreModule {
-    void StartupModule() {
+    static void StartupModule() {
+        using namespace px;
+    
         CoreDelegates::OnEngineLoopInitComplete.AddLambda([]() {
             // Init ImGuiContext for this module.
             auto& PixiRenderer{dynamic_cast<Renderer&>(SimpleApplication::Get().GetRenderer())};
@@ -20,9 +25,9 @@ struct EditorCoreModule {
         });
     }
 
-    void ShutdownModule() {}
+    static void ShutdownModule() {}
 };
 
-IMPLEMENT_MODULE(EditorCoreModule);
+px::IMPLEMENT_MODULE(EditorCoreModule);
 
-} // namespace px
+} // namespace

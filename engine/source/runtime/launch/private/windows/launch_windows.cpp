@@ -1,21 +1,28 @@
 // © 2026 Pawel Mlynarz
 
-// core
+// pxcore
 #include "common/platform.h"
 
 namespace px {
 
 extern int32 EngineMain();
 
-int32 LaunchWindowsStartup(HINSTANCE, HINSTANCE, char*, int32, const TCHAR*) {
+namespace {
+
+int32 LaunchWindowsStartup(
+    [[maybe_unused]] HINSTANCE Instance, 
+    [[maybe_unused]] HINSTANCE PrevInstance, 
+    [[maybe_unused]] char* CmdLine, 
+    [[maybe_unused]] int32 ShowCmd) {
+    
     return EngineMain();
 }
 
+} // namespace
+
 } // namespace px
 
-using namespace px;
-
-int32 WINAPI WinMain(_In_ HINSTANCE hInInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ char* pCmdLine, _In_ int nCmdShow) {
-    int32 const Result{LaunchWindowsStartup(hInInstance, hPrevInstance, pCmdLine, nCmdShow, nullptr)};
+int WINAPI WinMain(_In_ HINSTANCE Instance, _In_opt_ HINSTANCE PrevInstance, _In_ char* CmdLine, _In_ int ShowCmd) {
+    int const Result{px::LaunchWindowsStartup(Instance, PrevInstance, CmdLine, ShowCmd)};
     return Result;
 }
