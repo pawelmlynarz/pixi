@@ -1,5 +1,7 @@
 // © 2026 Pawel Mlynarz
 
+// NOLINTBEGIN
+
 #include "rhi_context.h"
 #include "rhi_asserts.h"
 
@@ -31,8 +33,8 @@ void RHICreateDevice(RHIContext const& Context, AdaptersDescList const& Adapters
         .graphicsAPI = Context.GetBackend(),
         .adapterDesc = &AdaptersDesc[BestAdapterIdx],
         .vkBindingOffsets = RHIStaticContext::VkBindingOffsets,
-        .enableNRIValidation = RHIStaticContext::bDebugNRI,
-        .enableGraphicsAPIValidation = RHIStaticContext::bDebugAPI,
+        .enableNRIValidation = RHIStaticContext::bDebugNri,
+        .enableGraphicsAPIValidation = RHIStaticContext::bDebugApi,
         .enableD3D11CommandBufferEmulation = RHIStaticContext::bD3D11EnableCommandBufferEmulation,
         .disableD3D12EnhancedBarriers = RHIStaticContext::bD3D12DisableEnhancedBarriers,
     };
@@ -161,3 +163,5 @@ void RHIContext::Shutdown() {
 }
 
 } // namespace px
+
+// NOLINTEND

@@ -18,7 +18,7 @@ class BaseRenderer;
 class BaseApplication : NonCopyableNonMovable {
   public:
     PXFRONTEND_API BaseApplication() = default;
-    PXFRONTEND_API virtual ~BaseApplication();
+    PXFRONTEND_API virtual ~BaseApplication() = default;
 
     /**
      * Returns the current instance of the application. The application should have been initialized before
@@ -58,7 +58,7 @@ class BaseApplication : NonCopyableNonMovable {
      *
      * @return True if operation successful.
      */
-    virtual bool AddWindow(SharedRef<class SWindow> SWindow, bool const bShowImmediately = true) = 0;
+    virtual bool AddWindow(SharedRef<class SWindow> SWindow, bool bShowImmediately = true) = 0;
 
   protected:
     // Holds a pointer to the current application.

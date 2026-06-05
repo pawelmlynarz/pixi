@@ -15,10 +15,14 @@
 
 namespace px {
 
+namespace {
+
 struct RenderViewportInfo : public RenderResource {
     void* OSWindow{nullptr};
     SharedPtr<RHIViewport> RHIViewport{nullptr};
 };
+
+} // namespace
 
 struct Renderer::Impl {
     ~Impl() = default;
@@ -34,8 +38,7 @@ Renderer::Renderer()
     : Impl_(MakeUnique<Impl>()) {
 }
 
-Renderer::~Renderer() {
-}
+Renderer::~Renderer() = default;
 
 bool Renderer::Initialize() {
 #if WITH_IMGUI

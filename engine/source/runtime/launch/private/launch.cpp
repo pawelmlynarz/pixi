@@ -16,32 +16,31 @@ namespace px {
 
 namespace {
 
-EngineLoop EngineLoop;
-
 [[nodiscard]]
 int32 EnginePreInit() {
-    return EngineLoop.PreInit();
+    return EngineLoop::PreInit();
 }
 
 [[nodiscard]]
 int32 EngineInit() {
-    return EngineLoop.Init();
+    return EngineLoop::Init();
 }
 
 void EngineTick() {
-    EngineLoop.Tick();
+    EngineLoop::Tick();
 }
 
 void EngineExit() {
-    EngineLoop.Exit();
+    EngineLoop::Exit();
 }
 
 #if WITH_EDITOR
 [[nodiscard]]
 int32 EditorInit() {
     int32 const Result{EngineInit()};
-    if (Result != 0)
+    if (Result != 0) {
         return Result;
+    }
     return ed::EditorInit();
 }
 
@@ -63,14 +62,16 @@ struct EngineExitGuard {
 
 } // namespace
 
+// NOLINTNEXTLINE(misc-use-internal-linkage)
 int32 EngineMain() {
-    EngineExitGuard ExitGuard;
+    EngineExitGuard const ExitGuard;
 
     InitGameThreadId(Platform::GetCurrentThreadId());
 
     int32 ErrorLevel{EnginePreInit()};
-    if (ErrorLevel != 0 || IsEngineExitRequested())
+    if (ErrorLevel != 0 || IsEngineExitRequested()) {
         return ErrorLevel;
+    }
 
 #if WITH_EDITOR
     ErrorLevel = EditorInit();
@@ -78,8 +79,9 @@ int32 EngineMain() {
     ErrorLevel = EngineInit();
 #endif
 
-    if (ErrorLevel != 0 || IsEngineExitRequested())
+    if (ErrorLevel != 0 || IsEngineExitRequested()) {
         return ErrorLevel;
+    }
 
     while (!IsEngineExitRequested()) {
         EngineTick();

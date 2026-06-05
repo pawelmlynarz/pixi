@@ -12,15 +12,15 @@ class PlatformApplication;
 
 class EngineInputSystem final : NonCopyableNonMovable, public IGenericApplicationMessageHandler {
   public:
-    PXCORE_API EngineInputSystem(SharedRef<PlatformApplication> const OwningApplication);
+    PXCORE_API EngineInputSystem(SharedRef<PlatformApplication> OwningApplication);
 
-    virtual bool OnKeyDown(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) override;
-    virtual bool OnKeyUp(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) override;
+    bool OnKeyDown(int32 KeyCode, uint32 CharacterCode, bool IsRepeat) override;
+    bool OnKeyUp(int32 KeyCode, uint32 CharacterCode, bool IsRepeat) override;
 
-    virtual bool OnMouseDown(SharedRef<GenericWindow> const& Window, EMouseButton const Button, Vector2 const& MousePos) override;
-    virtual bool OnMouseUp(SharedRef<GenericWindow> const& Window, EMouseButton const Button, Vector2 const& MousePos) override;
+    bool OnMouseDown(SharedRef<GenericWindow> const& Window, EMouseButton Button, Vector2 const& MousePos) override;
+    bool OnMouseUp(SharedRef<GenericWindow> const& Window, EMouseButton Button, Vector2 const& MousePos) override;
 
-    virtual void OnWindowClose(SharedRef<GenericWindow> const& Window) override;
+    void OnWindowClose(SharedRef<GenericWindow> const& Window) override;
 
   private:
     SharedRef<PlatformApplication> OwningApplication_;

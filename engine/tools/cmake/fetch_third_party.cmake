@@ -72,17 +72,19 @@ list(APPEND DEPS glfw)
 
 # third_party/ShaderMake
 
-if(NOT TARGET ShaderMake)
-    # could be already added by NRI
-    option(SHADERMAKE_TOOL "" ON)
-
-    fetchcontent_declare(
-            shadermake
-            DOWNLOAD_EXTRACT_TIMESTAMP 1
-            DOWNLOAD_NO_PROGRESS 1
-            URL https://github.com/NVIDIA-RTX/ShaderMake/archive/18f5a344e7ca8fa65daaf079d07bc8ce38453e05.zip
-    )
-    list(APPEND DEPS shadermake)
+if(NOT BUILD_CLANG_TIDY)
+    if(NOT TARGET ShaderMake)
+        # could be already added by NRI
+        option(SHADERMAKE_TOOL "" ON)
+    
+        fetchcontent_declare(
+                shadermake
+                DOWNLOAD_EXTRACT_TIMESTAMP 1
+                DOWNLOAD_NO_PROGRESS 1
+                URL https://github.com/NVIDIA-RTX/ShaderMake/archive/18f5a344e7ca8fa65daaf079d07bc8ce38453e05.zip
+        )
+        list(APPEND DEPS shadermake)
+    endif()
 endif()
 
 if(DEPS)
@@ -103,9 +105,11 @@ function(set_third_party_filter target additional_filter)
     endif()
 endfunction()
 
+if(NOT BUILD_CLANG_TIDY)
 set_third_party_filter(ShaderMake "ShaderMake")
 set_third_party_filter(ShaderMakeBlob "ShaderMake")
 set_third_party_filter(ShaderMake-build "ShaderMake")
+endif()
 set_third_party_filter(glfw "GLFW3")
 set_third_party_filter(update_mappings "GLFW3")
 set_third_party_filter(MathLib "")

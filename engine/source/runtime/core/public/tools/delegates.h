@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include <utility>
+#include "tools/utility.h"
+
 #include <vector>
 
 namespace px {
@@ -29,7 +30,7 @@ class CallableStaticFunctionWrapper<TRetVal(TArgs...)> final : public CallableWr
     explicit CallableStaticFunctionWrapper(TRetVal (*StaticFuncPtr)(TArgs...)) noexcept
         : StaticFuncPtr_(StaticFuncPtr) {}
 
-    virtual void Execute(TArgs&&... Args) override {
+    void Execute(TArgs&&... Args) override {
         if (StaticFuncPtr_) {
             m_StaticFuncPtr(std::forward<TArgs>(Args)...);
         }
@@ -64,7 +65,7 @@ class CallableMethodWrapper<IsConst, TClass, TRetVal(TArgs...)> final : public C
         : Instance_(Instance),
           ClassMemFuncPtr_(ClassMemFuncPtr) {}
 
-    virtual void Execute(TArgs&&... Args) override {
+    void Execute(TArgs&&... Args) override {
         if (Instance_ != nullptr) {
             (Instance_->*ClassMemFuncPtr_)(std::forward<TArgs>(Args)...);
         }
@@ -80,11 +81,11 @@ class CallableLambdaWrapper<TLambda, TRetVal(TArgs...)> final : public CallableW
 
   public:
     explicit CallableLambdaWrapper(TLambda&& FunctorObject) noexcept
-        : LambdaObject_(std::forward<TLambda>(FunctorObject)) {
+        : LambdaObject_(std::move(FunctorObject)) {
         static_assert(std::is_invocable_v<TLambda, TArgs...>);
     }
 
-    virtual TRetVal Execute(TArgs&&... Args) override {
+    TRetVal Execute(TArgs&&... Args) override {
         return LambdaObject_(std::forward<TArgs>(Args)...);
     }
 };

@@ -33,7 +33,7 @@ class BaseRenderer {
      *
      * @param Dt Delta Time.
      */
-    virtual void Tick(float const Dt) = 0;
+    virtual void Tick(float Dt) = 0;
 
     /**
      * @brief Retrieves the viewport RHI resource.
@@ -42,14 +42,14 @@ class BaseRenderer {
      *
      * @return RHIViewport associated with the SWindow provided.
      */
-    virtual SharedPtr<struct RHIViewport> GetViewportResource(SharedRef<SWindow> const SWindow) const = 0;
+    virtual SharedPtr<struct RHIViewport> GetViewportResource(SharedRef<SWindow> SWindow) const = 0;
 
     /**
      * Creates a rendering viewport
      *
      * @param SWindow The window to create the viewport for.
      */
-    virtual void CreateViewport(SharedRef<SWindow> const SWindow) = 0;
+    virtual void CreateViewport(SharedRef<SWindow> SWindow) = 0;
 };
 
 } // namespace px

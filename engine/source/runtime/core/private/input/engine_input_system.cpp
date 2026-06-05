@@ -6,23 +6,23 @@
 
 namespace px {
 
-EngineInputSystem::EngineInputSystem(SharedRef<PlatformApplication> const OwningApplication)
-    : OwningApplication_(OwningApplication) {
+EngineInputSystem::EngineInputSystem(SharedRef<PlatformApplication> OwningApplication)
+    : OwningApplication_(std::move(OwningApplication)) {
 }
 
-bool EngineInputSystem::OnKeyDown(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) {
+bool EngineInputSystem::OnKeyDown([[maybe_unused]] int32 const KeyCode, [[maybe_unused]] uint32 const CharacterCode, [[maybe_unused]] bool const IsRepeat) {
     return true;
 }
 
-bool EngineInputSystem::OnKeyUp(int32 const KeyCode, uint32 const CharacterCode, bool const IsRepeat) {
+bool EngineInputSystem::OnKeyUp([[maybe_unused]] int32 const KeyCode, [[maybe_unused]] uint32 const CharacterCode, [[maybe_unused]] bool const IsRepeat) {
     return true;
 }
 
-bool EngineInputSystem::OnMouseDown(SharedRef<GenericWindow> const& Window, EMouseButton const Button, Vector2 const& MousePos) {
+bool EngineInputSystem::OnMouseDown([[maybe_unused]] SharedRef<GenericWindow> const& Window, [[maybe_unused]] EMouseButton const Button, [[maybe_unused]] Vector2 const& MousePos) {
     return true;
 }
 
-bool EngineInputSystem::OnMouseUp(SharedRef<GenericWindow> const& Window, EMouseButton const Button, Vector2 const& MousePos) {
+bool EngineInputSystem::OnMouseUp([[maybe_unused]] SharedRef<GenericWindow> const& Window, [[maybe_unused]] EMouseButton const Button, [[maybe_unused]] Vector2 const& MousePos) {
     return true;
 }
 

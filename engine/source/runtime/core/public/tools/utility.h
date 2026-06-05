@@ -32,45 +32,53 @@ std::shared_ptr<T> MakeShared(TArgs&&... Args) {
     return std::make_shared<T>(std::forward<TArgs>(Args)...);
 }
 
+constexpr bool SharedRefNoexcept{
+#ifdef DO_CHECK
+    false
+#else
+    true
+#endif
+};
+
 template <typename T>
 class SharedRef {
   public:
     SharedRef() = delete;
 
-    SharedRef(SharedPtr<T> const& Ptr) noexcept
+    SharedRef(SharedPtr<T> const& Ptr) noexcept(SharedRefNoexcept)
         : Ptr_(Ptr) {
         AssertMsgf(Ptr_, "SharedRef constructed with null pointer");
     }
 
-    SharedRef(SharedPtr<T>&& Ptr) noexcept
+    SharedRef(SharedPtr<T>&& Ptr) noexcept(SharedRefNoexcept)
         : Ptr_(std::move(Ptr)) {
         AssertMsgf(Ptr_, "SharedRef constructed with null pointer");
     }
 
     template <typename U>
         requires std::convertible_to<U*, T*>
-    SharedRef(SharedPtr<U> const& Ptr) noexcept
+    SharedRef(SharedPtr<U> const& Ptr) noexcept(SharedRefNoexcept)
         : Ptr_(Ptr) {
         AssertMsgf(Ptr_, "SharedRef constructed with null pointer");
     }
 
     template <typename U>
         requires std::convertible_to<U*, T*>
-    SharedRef(SharedPtr<U>&& Ptr) noexcept
+    SharedRef(SharedPtr<U>&& Ptr) noexcept(SharedRefNoexcept)
         : Ptr_(std::move(Ptr)) {
         AssertMsgf(Ptr_, "SharedRef constructed with null pointer");
     }
 
     template <typename U>
         requires std::convertible_to<U*, T*>
-    SharedRef(SharedRef<U> const& Other) noexcept
+    SharedRef(SharedRef<U> const& Other) noexcept(SharedRefNoexcept)
         : Ptr_(Other.ToPtr()) {
         AssertMsgf(Ptr_, "SharedRef constructed with null pointer");
     }
 
     template <typename U>
         requires std::convertible_to<U*, T*>
-    SharedRef& operator=(SharedRef<U> const& Other) noexcept {
+    SharedRef& operator=(SharedRef<U> const& Other) noexcept(SharedRefNoexcept) {
         Ptr_ = Other.ToPtr();
         AssertMsgf(Ptr_, "SharedRef assigned null pointer");
         return *this;
@@ -117,12 +125,12 @@ template <typename TTo, typename TFrom>
 }
 
 template <typename TTo, typename TFrom>
-[[nodiscard]] SharedRef<TTo> StaticCastSharedRef(SharedPtr<TFrom> const& Ptr) noexcept {
+[[nodiscard]] SharedRef<TTo> StaticCastSharedRef(SharedPtr<TFrom> const& Ptr) noexcept(SharedRefNoexcept) {
     return SharedRef<TTo>(std::static_pointer_cast<TTo>(Ptr));
 }
 
 template <typename TTo, typename TFrom>
-[[nodiscard]] SharedRef<TTo> StaticCastSharedRef(SharedRef<TFrom> const& Ref) noexcept {
+[[nodiscard]] SharedRef<TTo> StaticCastSharedRef(SharedRef<TFrom> const& Ref) noexcept(SharedRefNoexcept) {
     return SharedRef<TTo>(std::static_pointer_cast<TTo>(Ref.ToPtr()));
 }
 
@@ -161,6 +169,8 @@ constexpr size_t GetByteSizeOf(std::vector<T> const& Vec) noexcept {
 
 } // namespace px
 
+// NOLINTBEGIN
+
 namespace std {
 
 template <typename T>
@@ -169,5 +179,7 @@ struct hash<px::SharedRef<T>> {
         return std::hash<T*>{}(Ref.Get());
     }
 };
+
+// NOLINTEND
 
 } // namespace std

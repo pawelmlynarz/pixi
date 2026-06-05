@@ -17,17 +17,17 @@ namespace px {
 
 class ImGuiRenderer : NonCopyableNonMovable {
   public:
-    void Initialize(nri::Device* const Device);
+    void Initialize(nri::Device* Device);
 
     void Shutdown();
 
-    void Tick(float const Dt);
+    void Tick(float Dt);
 
     inline bool HasUserInterface() const;
 
     PXFRONTEND_API void CmdCopyImguiData(nri::CommandBuffer& CmdBuffer, nri::Streamer& Streamer) const;
 
-    PXFRONTEND_API void CmdDrawImgui(nri::CommandBuffer& CmdBuffer, nri::Format const AttachmentFormat, float const SdrScale, bool const bIsSrgb) const;
+    PXFRONTEND_API void CmdDrawImgui(nri::CommandBuffer& CmdBuffer, nri::Format AttachmentFormat, float SdrScale, bool bIsSrgb) const;
 
     PXFRONTEND_API void* GetImguiContext();
 

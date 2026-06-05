@@ -22,7 +22,7 @@ class PlatformApplication : NonCopyableNonMovable,
     SharedRef<IGenericApplicationMessageHandler> GetMessageHandler() { return MessageHandler_; }
 
     virtual UniquePtr<GenericWindow> CreatePlatformWindow();
-    virtual void InitializeWindow(SharedRef<GenericWindow> const&, GenericWindowDefinition const&) {}
+    virtual void InitializeWindow(SharedRef<GenericWindow> const& Window, GenericWindowDefinition const& WindowDefinition) {}
     virtual void CloseWindow(SharedRef<GenericWindow> const& Window) {}
 
     virtual void PollMessages() {}

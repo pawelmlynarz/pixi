@@ -37,13 +37,14 @@ void ImGuiRenderer::Initialize(nri::Device* const Device) {
 
     RHI_ABORT_ON_FAILURE(nri::nriGetInterface(*Device_, NRI_INTERFACE(nri::ImguiInterface), &ImguiInterface_))
 
-    nri::ImguiDesc ImguiDesc{};
+    nri::ImguiDesc constexpr ImguiDesc{};
     RHI_ABORT_ON_FAILURE(ImguiInterface_.CreateImgui(*Device_, ImguiDesc, ImguiRenderer_))
 }
 
 void ImGuiRenderer::Shutdown() {
-    if (!HasUserInterface())
+    if (!HasUserInterface()) {
         return;
+    }
 
     ImguiInterface_.DestroyImgui(ImguiRenderer_);
     ImGui::DestroyContext();
@@ -51,9 +52,11 @@ void ImGuiRenderer::Shutdown() {
     ImguiRenderer_ = nullptr;
 }
 
-void ImGuiRenderer::Tick(float const Dt) {
-    if (!HasUserInterface())
+// NOLINTNEXTLINE(readability-make-member-function-const)
+void ImGuiRenderer::Tick([[maybe_unused]] float const Dt) {
+    if (!HasUserInterface()) {
         return;
+    }
 
     PX_TODO("ImGui Display Size.");
     ImGuiIO& IO{ImGui::GetIO()};
@@ -61,12 +64,13 @@ void ImGuiRenderer::Tick(float const Dt) {
 }
 
 void ImGuiRenderer::CmdCopyImguiData(nri::CommandBuffer& CmdBuffer, nri::Streamer& Streamer) const {
-    if (!HasUserInterface())
+    if (!HasUserInterface()) {
         return;
+    }
 
     ImDrawData const& DrawData{*ImGui::GetDrawData()};
 
-    nri::CopyImguiDataDesc CopyImguiDataDesc{
+    nri::CopyImguiDataDesc const CopyImguiDataDesc{
         .drawLists = DrawData.CmdLists.Data,
         .drawListNum = static_cast<uint32>(DrawData.CmdLists.Size),
         .textures = DrawData.Textures->Data,
@@ -77,12 +81,13 @@ void ImGuiRenderer::CmdCopyImguiData(nri::CommandBuffer& CmdBuffer, nri::Streame
 }
 
 void ImGuiRenderer::CmdDrawImgui(nri::CommandBuffer& CmdBuffer, nri::Format const AttachmentFormat, float const SdrScale, bool const bIsSrgb) const {
-    if (!HasUserInterface())
+    if (!HasUserInterface()) {
         return;
+    }
 
     ImDrawData const& DrawData{*ImGui::GetDrawData()};
 
-    nri::DrawImguiDesc DrawImguiDesc{
+    nri::DrawImguiDesc const DrawImguiDesc{
         .drawLists = DrawData.CmdLists.Data,
         .drawListNum = static_cast<uint32>(DrawData.CmdLists.Size),
         .displaySize = {.w = static_cast<nri::Dim_t>(DrawData.DisplaySize.x), .h = static_cast<nri::Dim_t>(DrawData.DisplaySize.y)},

@@ -25,7 +25,7 @@ class GenericWindow : NonCopyableNonMovable, public EnableSharedFromThis<Generic
     virtual ~GenericWindow() = default;
 
   public:
-    virtual void InitializeWindow(SharedPtr<PlatformApplication> const OwningApplication, GenericWindowDefinition const& WindowDefinition);
+    virtual void InitializeWindow(SharedPtr<PlatformApplication> OwningApplication, GenericWindowDefinition const& WindowDefinition);
     virtual void DestroyWindow() {}
 
     virtual SharedRef<PlatformApplication> GetOwningApplication() const { return OwningApplication_; }

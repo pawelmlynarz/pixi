@@ -7,6 +7,6 @@
 
 namespace px {
 
-PXCORE_API void InitGameThreadId(uint32 const ThreadId);
+PXCORE_API void InitGameThreadId(uint32 ThreadId);
 
 } // namespace px

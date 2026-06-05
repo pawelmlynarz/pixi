@@ -16,8 +16,9 @@ WeakPtr<PixiEditorEngine> PixiEditorEngineInst;
 
 int32 InitializeEditorEngine(SharedPtr<PixiEditorEngine> const& EditorEngine) {
     int32 const Result{InitializeEngine(EditorEngine)};
-    if (Result != 0)
+    if (Result != 0) {
         return Result;
+    }
     PixiEditorEngineInst = EditorEngine;
 
     return 0;

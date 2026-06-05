@@ -14,14 +14,14 @@ class GenericWindow;
 
 class WindowsApplication final : public PlatformApplication {
   public:
-    virtual void Initialize() override;
-    virtual void Shutdown() override;
+    void Initialize() override;
+    void Shutdown() override;
 
-    virtual UniquePtr<GenericWindow> CreatePlatformWindow() override;
-    virtual void InitializeWindow(SharedRef<GenericWindow> const& Window, GenericWindowDefinition const& WindowDefinition) override;
-    virtual void CloseWindow(SharedRef<GenericWindow> const& Window) override;
+    UniquePtr<GenericWindow> CreatePlatformWindow() override;
+    void InitializeWindow(SharedRef<GenericWindow> const& Window, GenericWindowDefinition const& WindowDefinition) override;
+    void CloseWindow(SharedRef<GenericWindow> const& Window) override;
 
-    virtual void PollMessages() override;
+    void PollMessages() override;
 
   private:
     std::vector<SharedRef<class WindowsWindow>> Windows_;

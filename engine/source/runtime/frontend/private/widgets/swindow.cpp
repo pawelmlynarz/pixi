@@ -21,11 +21,11 @@
 namespace px {
 
 void SWindow::PaintWindow() {
-    RenderImGui_Internal();
-    RenderFrame_Internal();
+    RenderImGuiInternal();
+    RenderFrameInternal();
 }
 
-void SWindow::RenderImGui_Internal() {
+void SWindow::RenderImGuiInternal() {
 #if WITH_IMGUI
     ImGui::NewFrame();
     {
@@ -36,18 +36,21 @@ void SWindow::RenderImGui_Internal() {
 #endif
 }
 
-void SWindow::RenderFrame_Internal() {
-    RHIContext& C{GetRHIContext()};
+void SWindow::RenderFrameInternal() {
+    // NOLINTBEGIN
+    PX_TODO("Rewrite");
+
+    RHIContext const& C{GetRHIContext()};
     Renderer& R{dynamic_cast<Renderer&>(BaseApplication::Get().GetRenderer())};
-    SharedPtr Viewport{R.GetViewportResource(SharedThis(this))};
-    SharedPtr RHISwapChain{Viewport->GetSwapChain()};
+    SharedPtr const Viewport{R.GetViewportResource(SharedThis(this))};
+    SharedPtr const RHISwapChain{Viewport->GetSwapChain()};
 
-    RHIInterface& RHI{C.GetRHI()};
+    RHIInterface const& RHI{C.GetRHI()};
 
-    uint32_t QueuedFrameIndex{FrameIdx_ % C.GetQueuedFrameNum()};
+    uint32_t const QueuedFrameIndex{FrameIdx_ % C.GetQueuedFrameNum()};
     RHIQueuedFrame const& QueuedFrame{C.GetQueuedFrames()[QueuedFrameIndex]};
 
-    uint32_t RecycledSemaphoreIndex{FrameIdx_ % (uint32_t)RHISwapChain->SwapChainTexturesRHI.size()};
+    uint32_t const RecycledSemaphoreIndex{FrameIdx_ % static_cast<uint32_t>(RHISwapChain->SwapChainTexturesRHI.size())};
     nri::Fence* SwapChainAcquireSemaphore{RHISwapChain->SwapChainTexturesRHI[RecycledSemaphoreIndex].AcquireSemaphore};
 
     uint32_t CurrentSwapChainTextureIndex{0};
@@ -59,7 +62,7 @@ void SWindow::RenderFrame_Internal() {
     {
         nri::TextureBarrierDesc TextureBarriers{};
         TextureBarriers.texture = SwapChainTexture.Texture;
-        TextureBarriers.after = {nri::AccessBits::COLOR_ATTACHMENT, nri::Layout::COLOR_ATTACHMENT};
+        TextureBarriers.after = {.access = nri::AccessBits::COLOR_ATTACHMENT, .layout = nri::Layout::COLOR_ATTACHMENT};
 
         nri::BarrierDesc BarrierDesc{};
         BarrierDesc.textureNum = 1;
@@ -78,11 +81,11 @@ void SWindow::RenderFrame_Internal() {
         // Clear
         RHI.CmdBeginRendering(*CommandBuffer, RenderingDesc);
         {
-            nri::ClearAttachmentDesc clearDesc = {};
-            clearDesc.planes = nri::PlaneBits::COLOR;
-            clearDesc.value.color.f = {1.0f, 1.0f, 0.0f, 1.0f};
+            nri::ClearAttachmentDesc ClearDesc = {};
+            ClearDesc.planes = nri::PlaneBits::COLOR;
+            ClearDesc.value.color.f = {.x = 1.0f, .y = 1.0f, .z = 0.0f, .w = 1.0f};
 
-            RHI.CmdClearAttachments(*CommandBuffer, &clearDesc, 1, nullptr, 0);
+            RHI.CmdClearAttachments(*CommandBuffer, &ClearDesc, 1, nullptr, 0);
         }
         RHI.CmdEndRendering(*CommandBuffer);
 
@@ -98,7 +101,7 @@ void SWindow::RenderFrame_Internal() {
 #endif
 
         TextureBarriers.before = TextureBarriers.after;
-        TextureBarriers.after = {nri::AccessBits::NONE, nri::Layout::PRESENT, nri::StageBits::NONE};
+        TextureBarriers.after = {.access = nri::AccessBits::NONE, .layout = nri::Layout::PRESENT, .stages = nri::StageBits::NONE};
 
         RHI.CmdBarrier(*CommandBuffer, BarrierDesc);
     }
@@ -137,6 +140,7 @@ void SWindow::RenderFrame_Internal() {
 
         RHI.QueueSubmit(*C.GetGraphicsQueue(), QueueSubmitDesc);
     }
+    // NOLINTEND
 }
 
 void SWindow::SetNativeWindow(WeakPtr<GenericWindow> const& NativeWindow) {
@@ -160,13 +164,13 @@ void SWindow::ShowWindow() {
 }
 
 void SWindow::HideWindow() {
-    if (SharedPtr Window{NativeWindow_.lock()}) {
+    if (SharedPtr const Window{NativeWindow_.lock()}) {
         Window->Hide();
     }
 }
 
 void SWindow::DestoryNativeWindow() {
-    if (SharedPtr Window{NativeWindow_.lock()}) {
+    if (SharedPtr const Window{NativeWindow_.lock()}) {
         Window->DestroyWindow();
     }
 }

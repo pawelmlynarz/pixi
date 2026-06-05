@@ -19,8 +19,9 @@ void GLFWErrorCallback([[maybe_unused]] int const ErrorCode, [[maybe_unused]] ch
 }
 
 void EnsureGLFWInitialized() {
-    if (bGLFWInitialized)
+    if (bGLFWInitialized) {
         return;
+    }
 
     glfwSetErrorCallback(GLFWErrorCallback);
     Assert(glfwInit());
@@ -28,8 +29,8 @@ void EnsureGLFWInitialized() {
     bGLFWInitialized = true;
 }
 
-void GLFWKeyCallback(GLFWwindow* const Window, int32_t const Key, int32_t const Scancode, int32_t const Action, int32_t const Mods) {
-    WindowsWindow* const WinWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(Window))};
+void GLFWKeyCallback(GLFWwindow* const Window, int32_t const Key, int32_t const Scancode, int32_t const Action, [[maybe_unused]] int32_t const Mods) {
+    WindowsWindow const* const WinWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(Window))};
     SharedRef const MessageHandler{WinWindow->GetOwningApplication()->GetMessageHandler()};
 
     switch (uint32 const CharacterCode{static_cast<uint32>(Scancode)}; Action) {
@@ -52,7 +53,7 @@ void GLFWKeyCallback(GLFWwindow* const Window, int32_t const Key, int32_t const 
 void GLFWCharCallback(GLFWwindow* const Window, uint32_t const Codepoint) {
 }
 
-void GLFWMouseButtonCallback(GLFWwindow* const Window, int32_t const Button, int32_t const Action, int32_t const Mods) {
+void GLFWMouseButtonCallback(GLFWwindow* const Window, int32_t const Button, int32_t const Action, [[maybe_unused]] int32_t const Mods) {
     WindowsWindow* const WinWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(Window))};
     SharedRef const MessageHandler{WinWindow->GetOwningApplication()->GetMessageHandler()};
 
@@ -70,9 +71,12 @@ void GLFWMouseButtonCallback(GLFWwindow* const Window, int32_t const Button, int
     case GLFW_MOUSE_BUTTON_RIGHT:
         ButtonEnum = EMouseButton::Right;
         break;
+
+    default: break;
     }
 
-    double MouseX{}, MouseY{};
+    double MouseX{};
+    double MouseY{};
     glfwGetCursorPos(Window, &MouseX, &MouseY);
     Vector2 const MousePos{static_cast<float>(MouseX), static_cast<float>(MouseY)};
 
@@ -128,8 +132,9 @@ void WindowsWindow::InitializeWindow(SharedPtr<PlatformApplication> OwningApplic
 }
 
 void WindowsWindow::DestroyWindow() {
-    if (!Handle_)
+    if (!Handle_) {
         return;
+    }
 
     glfwDestroyWindow(Handle_);
     Handle_ = nullptr;
@@ -138,7 +143,7 @@ void WindowsWindow::DestroyWindow() {
 
 SharedRef<PlatformApplication> WindowsWindow::GetOwningApplication() const {
     Assert(OwningApplication_);
-    return SharedRef(OwningApplication_);
+    return OwningApplication_;
 }
 
 GenericOSWindowHandle WindowsWindow::GetOSWindowHandle() const {
@@ -156,8 +161,9 @@ void WindowsWindow::Hide() {
 }
 
 bool WindowsWindow::IsVisible() const {
-    if (!Handle_)
+    if (!Handle_) {
         return false;
+    }
     return glfwGetWindowAttrib(Handle_, GLFW_VISIBLE) == GLFW_TRUE;
 }
 

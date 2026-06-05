@@ -23,7 +23,7 @@ class SWidget : public EnableSharedFromThis<SWidget> {
                                             \
   public:                                   \
     auto& Name(Type const& value) {         \
-        Field = value;                      \
+        (Field) = value;                    \
         return *this;                       \
     }                                       \
                                             \

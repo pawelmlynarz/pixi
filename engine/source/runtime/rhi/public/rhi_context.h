@@ -24,12 +24,12 @@ struct RHIQueuedFrame {
 };
 
 struct RHIStaticContext {
-    static constexpr bool bDebugAPI{false};
-    static constexpr bool bDebugNRI{false};
+    static constexpr bool bDebugApi{false};
+    static constexpr bool bDebugNri{false};
     static constexpr bool bD3D11EnableCommandBufferEmulation{false};
     static constexpr bool bD3D12DisableEnhancedBarriers{false};
     static constexpr bool bVSync{false};
-    static constexpr nri::VKBindingOffsets VkBindingOffsets{0, 128, 32, 64};
+    static constexpr nri::VKBindingOffsets VkBindingOffsets{.sRegister = 0, .tRegister = 128, .bRegister = 32, .uRegister = 64};
 };
 
 struct RHIContextResources {
@@ -43,7 +43,7 @@ struct RHIContextResources {
 
 class RHIContext {
   public:
-    explicit RHIContext(nri::GraphicsAPI const Backend);
+    explicit RHIContext(nri::GraphicsAPI Backend);
 
     void Initialize();
     void Shutdown();
@@ -65,7 +65,7 @@ class RHIContext {
 
     inline std::vector<RHIQueuedFrame>& GetQueuedFrames() const;
 
-    inline uint8 GetQueuedFrameNum() const;
+    static inline uint8 GetQueuedFrameNum();
 
     /* temp shit code {
     nri::PipelineLayout* PipelineLayout{nullptr};
@@ -96,7 +96,7 @@ inline nri::Device*& RHIContext::GetDevice() const {
     return Resources_->Device;
 }
 
-inline uint8 RHIContext::GetQueuedFrameNum() const {
+inline uint8 RHIContext::GetQueuedFrameNum() {
     return RHIStaticContext::bVSync ? 2 : 3;
 }
 
