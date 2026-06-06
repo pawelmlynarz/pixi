@@ -3,12 +3,12 @@
 #include "app/pixi_application.h"
 #include "base_renderer.h"
 #include "widgets/swindow.h"
+#include "input/input_system.h"
 
 // pxcore
 #include "platform/generic_platform/generic_application.h"
 #include "platform/generic_platform/generic_window.h"
 #include "hal/platform_application_misc.h"
-#include "input/engine_input_system.h"
 
 namespace px {
 
@@ -38,7 +38,7 @@ SharedRef<GenericWindow> CreatePlatformWindow(SharedRef<SWindow> const& SWindow,
 SimpleApplication::SimpleApplication(SharedRef<PlatformApplication> const& PlatformApplication)
     : PlatformApplication_(PlatformApplication) {
     PlatformApplication_->Initialize();
-    PlatformApplication_->SetMessageHandler(MakeShared<EngineInputSystem>(PlatformApplication_));
+    PlatformApplication_->SetMessageHandler(MakeShared<InputSystem>(PlatformApplication_));
 }
 
 SimpleApplication::~SimpleApplication() = default;

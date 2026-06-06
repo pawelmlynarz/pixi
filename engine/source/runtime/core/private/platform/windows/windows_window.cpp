@@ -88,13 +88,17 @@ void GLFWMouseButtonCallback(GLFWwindow* const Window, int32_t const Button, int
 }
 
 void GLFWCursorPosCallback(GLFWwindow* Window, double const X, double const Y) {
+    WindowsWindow* const WinWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(Window))};
+    SharedRef const MessageHandler{WinWindow->GetOwningApplication()->GetMessageHandler()};
+
+    MessageHandler->OnMouseMoved(SharedThis(WinWindow), {X, Y});
 }
 
 void GLFWScrollCallback(GLFWwindow* const Window, double const XOffset, double const YOffset) {
 }
 
 void GLFWCloseCallback(GLFWwindow* const Window) {
-    WindowsWindow* const WinWindow{reinterpret_cast<WindowsWindow*>(glfwGetWindowUserPointer(Window))};
+    WindowsWindow* const WinWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(Window))};
     SharedRef const MessageHandler{WinWindow->GetOwningApplication()->GetMessageHandler()};
     MessageHandler->OnWindowClose(SharedThis(WinWindow));
 }

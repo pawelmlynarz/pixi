@@ -13,7 +13,8 @@ class NullApplicationMessageHandler final : public IGenericApplicationMessageHan
 
     bool OnMouseDown(SharedRef<GenericWindow> const& /*Window*/, EMouseButton const /*Button*/, Vector2 const& /*MousePos*/) override { return false; };
     bool OnMouseUp(SharedRef<GenericWindow> const& /*Window*/, EMouseButton const /*Button*/, Vector2 const& /*MousePos*/) override { return false; };
-
+    bool OnMouseMoved(SharedRef<GenericWindow> const& /*Window*/, Vector2 const& /*MousePos*/) override { return false; };
+    
     void OnWindowClose(SharedRef<GenericWindow> const& Window) override {};
 };
 
