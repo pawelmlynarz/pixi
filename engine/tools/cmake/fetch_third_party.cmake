@@ -51,7 +51,7 @@ fetchcontent_declare(
         DOWNLOAD_EXTRACT_TIMESTAMP 1
         DOWNLOAD_NO_PROGRESS 1
         SOURCE_SUBDIR "ignore CMakeLists.txt"
-        URL https://github.com/ocornut/imgui/archive/refs/tags/v1.92.6.zip
+        URL https://github.com/ocornut/imgui/archive/refs/tags/v1.92.8-docking.zip
 )
 list(APPEND DEPS imgui)
 
