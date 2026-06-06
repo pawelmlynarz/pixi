@@ -108,7 +108,7 @@ PXCORE_API bool ExecAssertCheck(std::string const& TranslationUnitInfo, std::str
     }
 
 #define EnsureNoEntry(Fmt, ...) \
-    EnsureMsgf(false, Fmt, __VA_ARGS__);
+    EnsureAlwaysMsgf(false, Fmt, __VA_ARGS__);
 
 #define PX_ASSERT_IMPL(Expression, ...)                \
     if (!(Expression)) {                               \

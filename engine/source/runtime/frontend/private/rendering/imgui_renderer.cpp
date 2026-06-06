@@ -28,6 +28,7 @@ void ImGuiRenderer::Initialize(nri::Device* const Device) {
     IO.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
     IO.BackendFlags |= ImGuiBackendFlags_RendererHasVtxOffset;
     IO.BackendFlags |= ImGuiBackendFlags_RendererHasTextures;
+    IO.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     IO.IniFilename = nullptr;
 
     ImFontConfig FontConfig{};

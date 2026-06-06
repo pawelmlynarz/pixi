@@ -14,7 +14,7 @@
 
 namespace {
 
-struct EditorCoreModule {
+struct EditorFrontendModule {
     static void StartupModule() {
         using namespace px;
 
@@ -28,6 +28,6 @@ struct EditorCoreModule {
     static void ShutdownModule() {}
 };
 
-px::IMPLEMENT_MODULE(EditorCoreModule);
+px::IMPLEMENT_MODULE(EditorFrontendModule);
 
 } // namespace
