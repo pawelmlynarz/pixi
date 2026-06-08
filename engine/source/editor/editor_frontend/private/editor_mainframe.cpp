@@ -3,7 +3,7 @@
 #include "editor_mainframe.h"
 
 // pxfrontend
-#include "pixi_editor_engine.h"
+#include "imgui/imgui_draw_utils.h"
 
 // imgui
 #include "imgui.h"
@@ -42,7 +42,7 @@ ImGuiID CreateDockSpace(ImGuiViewport const* const Viewport) {
 
     ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(5.0f, 5.0f));
     ImGui::Begin("MainFrameDockSpace", nullptr, HostWindowFlags);
     {
         ImGuiIO& IO{ImGui::GetIO()};
@@ -78,6 +78,7 @@ void SetDefaultDockSpaceLayout(ImGuiViewport* const Viewport, ImGuiID const Dock
         nullptr,
         &DockCenterID
     )};
+    ImGui::DockBuilderSetNodeSize(DockFooterID, ImVec2(Viewport->Size.x, 50));
 
     ImGuiID DockRightID{ImGui::DockBuilderSplitNode(
         DockCenterID,
@@ -121,20 +122,20 @@ void SetDefaultDockSpaceLayout(ImGuiViewport* const Viewport, ImGuiID const Dock
 
     ImGui::DockBuilderDockWindow(NameAssetBrowser, DockBottomLeftID);
     ImGui::DockBuilderGetNode(DockBottomLeftID)->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
-    
+
     ImGui::DockBuilderDockWindow(NameConsole, DockBottomRightID);
     ImGui::DockBuilderGetNode(DockBottomRightID)->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
-    
+
     ImGui::DockBuilderDockWindow(NameFooter, DockFooterID);
     ImGui::DockBuilderGetNode(DockFooterID)->LocalFlags |=
         ImGuiDockNodeFlags_NoTabBar | ImGuiDockNodeFlags_NoResizeX | ImGuiDockNodeFlags_NoResizeY;
 
     ImGui::DockBuilderDockWindow(NameSceneHierarchy, DockLeftID);
     ImGui::DockBuilderGetNode(DockLeftID)->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
-    
+
     ImGui::DockBuilderDockWindow(NameViewport, DockCenterID);
     ImGui::DockBuilderGetNode(DockCenterID)->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
-    
+
     ImGui::DockBuilderFinish(DockspaceID);
 }
 
@@ -156,38 +157,65 @@ void SEditorMainFrame::DrawImGui() {
         ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus
     };
 
+    ImGui::GetStyle().Colors[ImGuiCol_Border] = ImVec4(0, 0, 0, 0);
+    ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0, 0, 0, 255);
+
     ImGui::Begin(NameHeader, nullptr, WindowFlags);
     {
+        imgui::DrawDashedWindowBorder();
     }
     ImGui::End();
 
     ImGui::Begin(NameSceneHierarchy, nullptr, WindowFlags);
     {
+        imgui::DrawDashedWindowBorder();
+        imgui::PushFont(imgui::EImGuiFontSize::Large);
+        imgui::DrawDashedHeader("[SCENE HIERARCHY]", {24.f, 24.f}, 25);
+        imgui::PopFont();
     }
     ImGui::End();
 
-    ImGui::Begin(NameViewport, nullptr, WindowFlags);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(124, 124));
+    ImGui::Begin(NameViewport, nullptr);
     {
+        imgui::DrawDashedWindowBorder();
+        imgui::PushFont(imgui::EImGuiFontSize::Large);
+        imgui::DrawDashedHeader("[VIEWPORT]", {24.f, 24.f}, 25);
+        imgui::PopFont();
     }
     ImGui::End();
+    ImGui::PopStyleVar();
 
     ImGui::Begin(NameInspector, nullptr, WindowFlags);
     {
+        imgui::DrawDashedWindowBorder();
+        imgui::PushFont(imgui::EImGuiFontSize::Large);
+        imgui::DrawDashedHeader("[INSPECTOR]", {24.f, 24.f}, 25);
+        imgui::PopFont();
     }
     ImGui::End();
 
     ImGui::Begin(NameAssetBrowser, nullptr, WindowFlags);
     {
+        imgui::DrawDashedWindowBorder();
+        imgui::PushFont(imgui::EImGuiFontSize::Large);
+        imgui::DrawDashedHeader("[ASSET BROWSER]", {24.f, 24.f}, 25);
+        imgui::PopFont();
     }
     ImGui::End();
 
     ImGui::Begin(NameConsole, nullptr, WindowFlags);
     {
+        imgui::DrawDashedWindowBorder();
+        imgui::PushFont(imgui::EImGuiFontSize::Large);
+        imgui::DrawDashedHeader("[CONSOLE]", {24.f, 24.f}, 25);
+        imgui::PopFont();
     }
     ImGui::End();
 
     ImGui::Begin(NameFooter, nullptr, WindowFlags);
     {
+        imgui::DrawDashedWindowBorder();
     }
     ImGui::End();
 }

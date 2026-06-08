@@ -83,7 +83,7 @@ void SWindow::RenderFrameInternal() {
         {
             nri::ClearAttachmentDesc ClearDesc = {};
             ClearDesc.planes = nri::PlaneBits::COLOR;
-            ClearDesc.value.color.f = {.x = 1.0f, .y = 1.0f, .z = 0.0f, .w = 1.0f};
+            ClearDesc.value.color.f = {.x = 0.0f, .y = 0.0f, .z = 0.0f, .w = 1.0f};
 
             RHI.CmdClearAttachments(*CommandBuffer, &ClearDesc, 1, nullptr, 0);
         }
