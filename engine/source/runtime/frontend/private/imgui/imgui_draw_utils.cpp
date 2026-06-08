@@ -4,10 +4,39 @@
 
 #if WITH_IMGUI
 
+// pxcore
+#include "tools/utility.h"
+
+// imgui
 #include "imgui.h"
 #include "imgui_internal.h"
 
 namespace px::imgui {
+
+namespace {
+
+ImFont* AddDefaultFont(float const Size) {
+    ImGuiIO& IO{ImGui::GetIO()};
+    ImFontConfig Config;
+    Config.SizePixels = Size;
+    Config.OversampleH = Config.OversampleV = 1;
+    Config.PixelSnapH = true;
+    
+    return IO.Fonts->AddFontDefault(&Config);
+}
+
+struct StaticFontHub {
+    static void EnsureInitialized() {
+        if (FontStorage[0] != nullptr)
+            return;
+        FontStorage[EnumCast(EImGuiFontSize::Small)] = AddDefaultFont(14.0f);
+        FontStorage[EnumCast(EImGuiFontSize::Medium)] = AddDefaultFont(18.0f);
+        FontStorage[EnumCast(EImGuiFontSize::Large)] = AddDefaultFont(22.0f);
+    }
+    static inline std::array<ImFont*, EnumCast<EImGuiFontSize>(EImGuiFontSize::Max)> FontStorage;
+};
+
+} // namespace
 
 void DrawDashedLine(
     ImDrawList* const DrawList, ImVec2 const& A, ImVec2 const& B, ImU32 const Color,
@@ -72,8 +101,8 @@ void DrawDashedWindowBorder(
 }
 
 void DrawDashedHeader(
-    char const* const Text, ImVec2 const& Padding, ImColor const LineColor, ImColor const TextColor, 
-    float const DashLength, float const GapLength, float const Thickness, float TextPaddingLeft
+    char const* const Text, ImVec2 const& Padding, float TextPaddingLeft, ImColor const LineColor, ImColor const TextColor, 
+    float const DashLength, float const GapLength, float const Thickness
 ) {
     ImVec2 p0{ImGui::GetWindowPos()};
     ImVec2 p1{ImVec2(p0.x + ImGui::GetWindowSize().x, p0.y)};
@@ -102,6 +131,15 @@ void DrawDashedHeader(
     DrawDashedLine(
         dl, ImVec2(RightLineStart, y), ImVec2(p1.x, y), LineColor, DashLength, GapLength, Thickness
     );
+}
+
+void PushFont(EImGuiFontSize FontSize) {
+    StaticFontHub::EnsureInitialized();
+    ImGui::PushFont(StaticFontHub::FontStorage[EnumCast(FontSize)]);
+}
+
+void PopFont() {
+    ImGui::PopFont();
 }
 
 } // namespace px::imgui

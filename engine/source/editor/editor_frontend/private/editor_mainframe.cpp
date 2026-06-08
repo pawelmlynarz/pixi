@@ -169,7 +169,9 @@ void SEditorMainFrame::DrawImGui() {
     ImGui::Begin(NameSceneHierarchy, nullptr, WindowFlags);
     {
         imgui::DrawDashedWindowBorder();
+        imgui::PushFont(imgui::EImGuiFontSize::Large);
         imgui::DrawDashedHeader("[SCENE HIERARCHY]", {24.f, 24.f}, 25);
+        imgui::PopFont();
     }
     ImGui::End();
 
@@ -177,7 +179,9 @@ void SEditorMainFrame::DrawImGui() {
     ImGui::Begin(NameViewport, nullptr);
     {
         imgui::DrawDashedWindowBorder();
+        imgui::PushFont(imgui::EImGuiFontSize::Large);
         imgui::DrawDashedHeader("[VIEWPORT]", {24.f, 24.f}, 25);
+        imgui::PopFont();
     }
     ImGui::End();
     ImGui::PopStyleVar();
@@ -185,21 +189,27 @@ void SEditorMainFrame::DrawImGui() {
     ImGui::Begin(NameInspector, nullptr, WindowFlags);
     {
         imgui::DrawDashedWindowBorder();
+        imgui::PushFont(imgui::EImGuiFontSize::Large);
         imgui::DrawDashedHeader("[INSPECTOR]", {24.f, 24.f}, 25);
+        imgui::PopFont();
     }
     ImGui::End();
 
     ImGui::Begin(NameAssetBrowser, nullptr, WindowFlags);
     {
         imgui::DrawDashedWindowBorder();
+        imgui::PushFont(imgui::EImGuiFontSize::Large);
         imgui::DrawDashedHeader("[ASSET BROWSER]", {24.f, 24.f}, 25);
+        imgui::PopFont();
     }
     ImGui::End();
 
     ImGui::Begin(NameConsole, nullptr, WindowFlags);
     {
         imgui::DrawDashedWindowBorder();
+        imgui::PushFont(imgui::EImGuiFontSize::Large);
         imgui::DrawDashedHeader("[CONSOLE]", {24.f, 24.f}, 25);
+        imgui::PopFont();
     }
     ImGui::End();
 
