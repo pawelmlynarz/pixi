@@ -69,7 +69,7 @@ bool ImGuiInputHandler::ProcessMouseButtonDownEvent(PointerEvent const& MouseEve
     ImGuiIO& IO{ImGui::GetIO()};
     int32 const RemappedButton{RemapMouseButton(MouseEvent.GetButton())};
     IO.AddMouseButtonEvent(RemappedButton, true);
-    
+
     return true;
 }
 
@@ -77,7 +77,7 @@ bool ImGuiInputHandler::ProcessMouseButtonUpEvent(PointerEvent const& MouseEvent
     ImGuiIO& IO{ImGui::GetIO()};
     int32 const RemappedButton{RemapMouseButton(MouseEvent.GetButton())};
     IO.AddMouseButtonEvent(RemappedButton, false);
-    
+
     return true;
 }
 
@@ -85,7 +85,7 @@ bool ImGuiInputHandler::ProcessMouseMovedEvent(PointerEvent const& MouseEvent) {
     ImGuiIO& IO{ImGui::GetIO()};
     Vector2 const Pos{MouseEvent.GetScreenPos()};
     IO.AddMousePosEvent(Pos.x, Pos.y);
-    
+
     return true;
 }
 

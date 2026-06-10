@@ -21,20 +21,20 @@ class InputSystem final : NonCopyableNonMovable, public IGenericApplicationMessa
     PXFRONTEND_API InputSystem(SharedRef<PlatformApplication> OwningApplication);
 
     bool OnKeyDown(int32 KeyCode, uint32 CharacterCode, bool IsRepeat) override;
-    bool ProcessKeyDownEvent( KeyEvent const& KeyEvent );
-    
+    bool ProcessKeyDownEvent(KeyEvent const& KeyEvent);
+
     bool OnKeyUp(int32 KeyCode, uint32 CharacterCode, bool IsRepeat) override;
-    bool ProcessKeyUpEvent( KeyEvent const& KeyEvent );
-    
+    bool ProcessKeyUpEvent(KeyEvent const& KeyEvent);
+
     bool OnMouseDown(SharedRef<GenericWindow> const& Window, EMouseButton Button, Vector2 const& MousePos) override;
-    bool ProcessMouseButtonDownEvent( PointerEvent const& MouseEvent );
-    
+    bool ProcessMouseButtonDownEvent(PointerEvent const& MouseEvent);
+
     bool OnMouseUp(SharedRef<GenericWindow> const& Window, EMouseButton Button, Vector2 const& MousePos) override;
-    bool ProcessMouseButtonUpEvent( PointerEvent const& MouseEvent );
-    
+    bool ProcessMouseButtonUpEvent(PointerEvent const& MouseEvent);
+
     bool OnMouseMoved(SharedRef<GenericWindow> const& Window, Vector2 const& MousePos) override;
-    bool ProcessMouseMovedEvent( PointerEvent const& MouseEvent );
-    
+    bool ProcessMouseMovedEvent(PointerEvent const& MouseEvent);
+
     void OnWindowClose(SharedRef<GenericWindow> const& Window) override;
 
   private:

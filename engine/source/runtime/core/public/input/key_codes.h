@@ -13,8 +13,9 @@ enum class EMouseButton : uint8 {
     Right
 };
 
-enum class EKeyCode : uint16
-{
+enum class EKeyCode : uint16 {
+    // clang-format off
+    
     None,
     A = 65, B = 66, C = 67, D = 68, E = 69, F = 70,
     G = 71, H = 72, I = 73, J = 74, K = 75, L = 76,
@@ -23,6 +24,8 @@ enum class EKeyCode : uint16
     Y = 89, Z = 90,
 
     LeftShift = 340, LeftCtrl = 341, LeftAlt = 342,
+
+    // clang-format on
 };
 
 } // namespace px

@@ -7,14 +7,25 @@
 // pxfrontend
 #include "widgets/swindow.h"
 
-namespace px::ed {
+namespace px {
+
+class ImGuiWidget;
+
+namespace ed {
 
 class SEditorMainFrame final : public SWindow {
-public:
-    PXEDITOR_FRONTEND_API SEditorMainFrame() = default;
+  public:
+    PXEDITOR_FRONTEND_API SEditorMainFrame();
+    PXEDITOR_FRONTEND_API ~SEditorMainFrame() override;
 
-protected:
+  protected:
     void DrawImGui() override;
+
+  private:
+    using WidgetsVector = std::vector<std::unique_ptr<ImGuiWidget>>;
+    WidgetsVector Widgets_;
 };
 
-} // namespace px::ed
+} // namespace ed
+
+} // namespace px

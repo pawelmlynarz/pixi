@@ -41,7 +41,7 @@ struct PointerEvent : public InputEvent {
     EMouseButton GetButton() const { return MouseButton_; }
     Vector2 GetScreenPos() const { return ScreenPos_; }
 
-private:
+  private:
     EMouseButton MouseButton_{EMouseButton::None};
     Vector2 ScreenPos_;
 };
