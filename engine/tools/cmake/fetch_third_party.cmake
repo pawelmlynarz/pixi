@@ -55,6 +55,16 @@ fetchcontent_declare(
 )
 list(APPEND DEPS imgui)
 
+# third_party/spdlog
+
+fetchcontent_declare(
+        spdlog
+        DOWNLOAD_EXTRACT_TIMESTAMP 1
+        DOWNLOAD_NO_PROGRESS 1
+        URL https://github.com/gabime/spdlog/archive/refs/tags/v1.17.0.zip
+)
+list(APPEND DEPS spdlog)
+
 # third_party/GLFW
 
 option(GLFW_BUILD_EXAMPLES "" OFF)
@@ -118,6 +128,7 @@ set_third_party_filter(NRI_Shared "NRI")
 set_third_party_filter(NRI_Validation "NRI")
 set_third_party_filter(NRI_VK "NRI")
 set_third_party_filter(glm "")
+set_third_party_filter(spdlog "")
 
 # --------------------------------------------------
 # Manual Third Party Building (ignored CMakeLists)

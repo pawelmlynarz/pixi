@@ -40,10 +40,10 @@ void DrawVersionInfo() {
 
     float X{StartPos.x};
     float Y{StartPos.y};
-    
+
     char Buf[2]{0, 0};
     for (int i{0}; i < 4; i++) {
-        constexpr std::string_view Prefix {"Pixi"};
+        constexpr std::string_view Prefix{"Pixi"};
         *Buf = Prefix[i];
         DrawList->AddText(Font, FontSize, ImVec2(X, Y), Colors[i], Buf);
         X += ImGui::CalcTextSize(Buf).x;
