@@ -2,8 +2,6 @@
 
 #include "imgui/imgui_draw_utils.h"
 
-#if WITH_IMGUI
-
 // pxcore
 #include "tools/utility.h"
 
@@ -11,7 +9,7 @@
 #include "imgui.h"
 #include "imgui_internal.h"
 
-namespace px::imgui {
+namespace px::edimgui {
 
 namespace {
 
@@ -21,7 +19,7 @@ ImFont* AddDefaultFont(float const Size) {
     Config.SizePixels = Size;
     Config.OversampleH = Config.OversampleV = 1;
     Config.PixelSnapH = true;
-    
+
     return IO.Fonts->AddFontDefault(&Config);
 }
 
@@ -101,7 +99,7 @@ void DrawDashedWindowBorder(
 }
 
 void DrawDashedHeader(
-    char const* const Text, ImVec2 const& Padding, float TextPaddingLeft, ImColor const LineColor, ImColor const TextColor, 
+    char const* const Text, ImVec2 const& Padding, float TextPaddingLeft, ImColor const LineColor, ImColor const TextColor,
     float const DashLength, float const GapLength, float const Thickness
 ) {
     ImVec2 p0{ImGui::GetWindowPos()};
@@ -142,6 +140,4 @@ void PopFont() {
     ImGui::PopFont();
 }
 
-} // namespace px::imgui
-
-#endif
+} // namespace px::edimgui

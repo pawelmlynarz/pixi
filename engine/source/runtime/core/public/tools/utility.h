@@ -169,14 +169,12 @@ constexpr size_t GetByteSizeOf(std::vector<T> const& Vec) noexcept {
 }
 
 template <typename TEnum>
-constexpr auto EnumCast(const TEnum EnumValue) noexcept
-{
+constexpr auto EnumCast(TEnum const EnumValue) noexcept {
     return static_cast<__underlying_type(TEnum)>(EnumValue);
 }
 
 template <typename TEnum>
-constexpr auto AsEnum(const auto EnumValueInt) noexcept
-{
+constexpr auto AsEnum(auto const EnumValueInt) noexcept {
     return static_cast<TEnum>(EnumValueInt);
 }
 
