@@ -4,6 +4,7 @@
 
 // pxcore
 #include "core_globals.h"
+#include "log/log.h"
 #include "misc/core_delegates.h"
 
 // pxfrontend
@@ -27,6 +28,7 @@ namespace px {
 
 [[nodiscard]]
 int32 EngineLoop::PreInit() {
+    LogManager::Initialize();
     InitializeRHI();
 
     auto& Application{SimpleApplication::CreateApplication()};
@@ -44,6 +46,7 @@ int32 EngineLoop::Init() {
 #endif
     CoreDelegates::OnEngineLoopInitComplete.Broadcast();
 
+    Log(Launch, Trace, "Engine loop initialized.");
     return Result;
 }
 

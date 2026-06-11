@@ -24,6 +24,7 @@ target_link_libraries(${MODULE_TARGET_NAME}
         glfw
         PUBLIC
         glm
+        spdlog
 )
 
 #
