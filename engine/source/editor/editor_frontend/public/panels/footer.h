@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "editor_widget.h"
+#include "widgets/panel.h"
 
 namespace px::ed {
 
-class ImAssetBrowser : public ImGuiEditorWidget {
+class ImFooter : public ImGuiEditorPanel {
   public:
     void Draw() override;
 };

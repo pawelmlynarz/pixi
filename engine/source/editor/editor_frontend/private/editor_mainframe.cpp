@@ -1,14 +1,14 @@
 // © 2026 Pawel Mlynarz
 
 #include "editor_mainframe.h"
-#include "gui/gui_const.h"
-#include "gui/asset_browser.h"
-#include "gui/console.h"
-#include "gui/footer.h"
-#include "gui/header.h"
-#include "gui/inspector.h"
-#include "gui/scene_hierarchy.h"
-#include "gui/viewport.h"
+#include "editor_const.h"
+#include "panels/asset_browser.h"
+#include "panels/console.h"
+#include "panels/footer.h"
+#include "panels/header.h"
+#include "panels/inspector.h"
+#include "panels/scene_hierarchy.h"
+#include "panels/viewport.h"
 #include "imgui/imgui_draw_utils.h"
 #include "imgui/imgui_dockspace.h"
 

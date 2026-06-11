@@ -1,19 +1,19 @@
 // © 2026 Pawel Mlynarz
 
-#include "gui/scene_hierarchy.h"
-#include "gui/gui_const.h"
+#include "panels/inspector.h"
+#include "editor_const.h"
 
 #include "imgui/imgui_draw_utils.h"
 #include "imgui/imgui_editor_helper.h"
 
 namespace px::ed {
 
-void ImSceneHierarchy::Draw() {
-    ImGui::Begin(NameSceneHierarchy, nullptr, edimgui::GetEditorWidgetFlags());
+void ImInspector::Draw() {
+    ImGui::Begin(NameInspector, nullptr, edimgui::GetEditorWidgetFlags());
     {
         edimgui::DrawDashedWindowBorder();
         edimgui::PushFont(edimgui::EImGuiFontSize::Large);
-        edimgui::DrawDashedHeader("[SCENE HIERARCHY]", {24.f, 24.f}, 25);
+        edimgui::DrawDashedHeader("[INSPECTOR]", {24.f, 24.f}, 25);
         edimgui::PopFont();
     }
     ImGui::End();

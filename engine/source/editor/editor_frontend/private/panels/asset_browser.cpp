@@ -1,7 +1,7 @@
 // © 2026 Pawel Mlynarz
 
-#include "gui/asset_browser.h"
-#include "gui/gui_const.h"
+#include "panels/asset_browser.h"
+#include "editor_const.h"
 
 #include "imgui/imgui_draw_utils.h"
 #include "imgui/imgui_editor_helper.h"
