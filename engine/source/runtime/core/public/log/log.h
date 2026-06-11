@@ -15,16 +15,26 @@ namespace px {
 
 enum class ELogVerbosity : uint8_t {
     Trace,
+    Debug,
     Info,
     Warning,
     Error,
-    MAX
+    Critical,
+    Off
 };
+
+constexpr spdlog::level::level_enum ToNative(ELogVerbosity const Verbosity) {
+    return static_cast<spdlog::level::level_enum>(Verbosity);
+}
+
+constexpr ELogVerbosity FromNative(spdlog::level::level_enum const Level) {
+    return static_cast<ELogVerbosity>(Level);
+}
 
 using Logger = spdlog::logger;
 
 struct LogManager {
-    static constexpr ELogVerbosity sGlobalLogLevel{ELogVerbosity::MAX};
+    static constexpr ELogVerbosity sGlobalLogLevel{ELogVerbosity::Trace};
 
     static PXCORE_API void Initialize();
 
@@ -37,7 +47,7 @@ struct LogManager {
 
 template <ELogVerbosity Verbosity, typename... TArgs>
 void LogImpl(std::string_view const Category, TArgs&&... Args) {
-    if constexpr (Verbosity < LogManager::sGlobalLogLevel) {
+    if constexpr (Verbosity >= LogManager::sGlobalLogLevel) {
         auto& Logger{LogManager::GetLogger(Category)};
 
         if constexpr (Verbosity == ELogVerbosity::Trace) {
@@ -48,6 +58,8 @@ void LogImpl(std::string_view const Category, TArgs&&... Args) {
             Logger.warn(std::forward<TArgs>(Args)...);
         } else if constexpr (Verbosity == ELogVerbosity::Error) {
             Logger.error(std::forward<TArgs>(Args)...);
+        } else {
+            static_assert(false, "Requested verbosity currently disabled.");
         }
     }
 }

@@ -4,6 +4,8 @@
 
 #include "common/types.h"
 
+#include "log/log.h"
+
 #include "tools/asserts.h"
 #include "tools/compiler.h"
 #include "tools/utility.h"

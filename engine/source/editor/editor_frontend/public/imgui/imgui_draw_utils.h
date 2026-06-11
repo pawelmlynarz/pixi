@@ -39,4 +39,6 @@ enum class EImGuiFontSize : uint8 {
 PXEDITOR_FRONTEND_API void PushFont(EImGuiFontSize FontSize);
 PXEDITOR_FRONTEND_API void PopFont();
 
+PXEDITOR_FRONTEND_API bool BeginChildPadded(char const* StrId, ImVec2 const& Size = ImVec2(0, 0), ImVec2 const& Padding = ImVec2(0, 0), ImGuiChildFlags ChildFlags = 0, ImGuiWindowFlags WindowFlags = 0);
+
 } // namespace px::edimgui

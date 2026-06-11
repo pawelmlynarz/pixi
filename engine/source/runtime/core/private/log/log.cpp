@@ -9,7 +9,7 @@ namespace px {
 
 namespace {
 
-constexpr std::string_view DefaultPattern{"%^[%T][%n][%L]:  %v%$"};
+constexpr std::string_view DefaultPattern{"%^[%T][%n][%L]: %v%$"};
 
 using LoggersMap = std::unordered_map<std::string_view, SharedPtr<Logger>>;
 LoggersMap RegisteredLoggers;
@@ -35,6 +35,12 @@ struct LevelFormatter : spdlog::custom_flag_formatter {
     std::unique_ptr<custom_flag_formatter> clone() const override {
         return spdlog::details::make_unique<LevelFormatter>();
     }
+
+    static UniquePtr<spdlog::pattern_formatter> CreateFormatter() {
+        auto Formatter{MakeUnique<spdlog::pattern_formatter>()};
+        Formatter->add_flag<LevelFormatter>('L').set_pattern(DefaultPattern.data());
+        return Formatter;
+    }
 };
 
 void RegisterEngineLoggers() {
@@ -55,20 +61,16 @@ void LogManager::RegisterLogger(std::string_view const& CategoryName, std::share
 
     RegisteredLoggers[CategoryName] = std::move(Logger);
     RegisteredLoggers[CategoryName]->set_pattern(DefaultPattern.data());
-
-    auto Formatter{std::make_unique<spdlog::pattern_formatter>()};
-    Formatter->add_flag<LevelFormatter>('L').set_pattern(DefaultPattern.data());
-    RegisteredLoggers[CategoryName]->set_formatter(std::move(Formatter));
-
+    RegisteredLoggers[CategoryName]->set_formatter(LevelFormatter::CreateFormatter());
     RegisteredLoggers[CategoryName]->set_level(spdlog::level::trace);
 }
 
 void LogManager::RegisterOutputLogSinkMT(SharedPtr<OutputLogSinkMT> OutputLogSinkMT) {
     for (auto& Logger : std::views::values(RegisteredLoggers)) {
-        OutputLogSinkMT->set_pattern(DefaultPattern.data());
-        OutputLogSinkMT->set_level(spdlog::level::trace);
-
         Logger->sinks().emplace_back(OutputLogSinkMT);
+        OutputLogSinkMT->set_pattern(DefaultPattern.data());
+        OutputLogSinkMT->set_formatter(LevelFormatter::CreateFormatter());
+        OutputLogSinkMT->set_level(ToNative(sGlobalLogLevel));
     }
 }
 

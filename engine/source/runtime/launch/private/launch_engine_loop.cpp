@@ -45,7 +45,7 @@ int32 EngineLoop::Init() {
     int32 const Result{InitializeEngine(MakeShared<Engine>())};
 #endif
     CoreDelegates::OnEngineLoopInitComplete.Broadcast();
-    
+
     Log(Launch, Trace, "Engine loop initialized.");
     return Result;
 }
