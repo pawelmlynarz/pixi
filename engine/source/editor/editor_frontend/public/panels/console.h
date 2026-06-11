@@ -2,14 +2,14 @@
 
 #pragma once
 
-#include "editor_widget.h"
+#include "widgets/panel.h"
 
 // pxcore
 #include "log/log.h"
 
 namespace px::ed {
 
-class ImConsole : public ImGuiEditorWidget {
+class ImConsole : public ImGuiEditorPanel {
   public:
     ImConsole();
 
