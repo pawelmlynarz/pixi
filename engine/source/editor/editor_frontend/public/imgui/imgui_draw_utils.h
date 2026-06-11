@@ -29,6 +29,11 @@ PXEDITOR_FRONTEND_API void DrawDashedHeader(
     float DashLength = 10.0f, float GapLength = 2.0f, float Thickness = 2.f
 );
 
+PXEDITOR_FRONTEND_API void DrawDashedLineWithGaps(
+    ImDrawList* DrawList, ImVec2 A, ImVec2 B,
+    ImU32 Color, float DashLen, float GapLen, float Thickness, std::vector<ImVec2> const& Gaps
+);
+
 enum class EImGuiFontSize : uint8 {
     Small,
     Medium,

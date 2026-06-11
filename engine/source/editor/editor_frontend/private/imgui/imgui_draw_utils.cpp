@@ -131,6 +131,48 @@ void DrawDashedHeader(
     );
 }
 
+void DrawDashedLineWithGaps(
+    ImDrawList* DrawList, ImVec2 A, ImVec2 B, ImU32 Color,
+    float DashLen, float GapLen, float Thickness, std::vector<ImVec2> const& Gaps
+) {
+    float const Dx{B.x - A.x};
+    float const Dy{B.y - A.y};
+    float const Len{std::sqrt(Dx * Dx + Dy * Dy)};
+
+    if (Len <= 0.001f) {
+        return;
+    }
+    float const Dirx{Dx / Len};
+    float const Diry{Dy / Len};
+    float const Step{DashLen + GapLen};
+
+    for (float t{0}; t < Len; t += Step) {
+        float const Start{t};
+        float const End{std::min(t + DashLen, Len)};
+
+        float const Sx{A.x + Dirx * Start};
+        float const Sy{A.y + Diry * Start};
+        float const Ex{A.x + Dirx * End};
+        float const Ey{A.y + Diry * End};
+
+        float const MidX1{Sx};
+        float const MidX2{Ex};
+
+        bool bSkip{false};
+
+        for (auto const& g : Gaps) {
+            if (MidX2 >= g.x && MidX1 <= g.y) {
+                bSkip = true;
+                break;
+            }
+        }
+
+        if (!bSkip) {
+            DrawList->AddLine(ImVec2(Sx, Sy), ImVec2(Ex, Ey), Color, Thickness);
+        }
+    }
+}
+
 void PushFont(EImGuiFontSize const FontSize) {
     StaticFontHub::EnsureInitialized();
     ImGui::PushFont(StaticFontHub::FontStorage[EnumCast(FontSize)]);

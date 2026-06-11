@@ -8,6 +8,7 @@
 
 // pxcore
 #include "log/log_sink.h"
+#include "widgets/panel_header.h"
 
 namespace px::ed {
 
@@ -34,12 +35,23 @@ void ImConsole::Draw() {
     {
         edimgui::DrawDashedWindowBorder();
         edimgui::PushFont(edimgui::EImGuiFontSize::Large);
+        
+        ImEditorPanelHeader PanelHeader;
+        PanelHeader.Begin(24);
+        
+        PanelHeader.AddWidget(0, [] {
+            ImGui::Text("[CONSOLE / LOG]");
+        });
+        PanelHeader.AddWidget(0, [] {
+            ImGui::Text("[CONSOLE / LOG]");
+        });
+        
+        PanelHeader.End(24, IM_COL32(255,0,0,255),10, 4,2);
+        
         edimgui::DrawDashedHeader("[CONSOLE / LOG]", {24.f, 24.f}, 25);
         edimgui::PopFont();
 
         bool AutoScroll{true};
-
-        ImGui::Separator();
 
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(100, 100));
 

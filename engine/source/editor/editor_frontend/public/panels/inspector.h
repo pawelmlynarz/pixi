@@ -6,7 +6,7 @@
 
 namespace px::ed {
 
-class ImInspector : public ImGuiEditorPanel {
+class ImInspector : public ImEditorPanel {
   public:
     void Draw() override;
 };

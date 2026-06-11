@@ -9,7 +9,7 @@
 
 namespace px::ed {
 
-class ImConsole : public ImGuiEditorPanel {
+class ImConsole : public ImEditorPanel {
   public:
     ImConsole();
 
