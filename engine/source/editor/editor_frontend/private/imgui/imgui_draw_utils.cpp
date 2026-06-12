@@ -132,8 +132,8 @@ void DrawDashedHeader(
 }
 
 void DrawDashedLineWithGaps(
-    ImDrawList* DrawList, ImVec2 A, ImVec2 B, ImU32 Color,
-    float DashLen, float GapLen, float Thickness, std::vector<ImVec2> const& Gaps
+    ImDrawList* const DrawList, ImVec2 const& A, ImVec2 const& B, std::vector<ImVec2> const& Gaps,
+    ImColor LineColor, float const DashLength, float const GapLength, float const Thickness
 ) {
     float const Dx{B.x - A.x};
     float const Dy{B.y - A.y};
@@ -144,31 +144,41 @@ void DrawDashedLineWithGaps(
     }
     float const Dirx{Dx / Len};
     float const Diry{Dy / Len};
-    float const Step{DashLen + GapLen};
+    float const Step{DashLength + GapLength};
 
     for (float t{0}; t < Len; t += Step) {
         float const Start{t};
-        float const End{std::min(t + DashLen, Len)};
+        float const End{std::min(t + DashLength, Len)};
 
         float const Sx{A.x + Dirx * Start};
         float const Sy{A.y + Diry * Start};
         float const Ex{A.x + Dirx * End};
-        float const Ey{A.y + Diry * End};
 
-        float const MidX1{Sx};
-        float const MidX2{Ex};
-
-        bool bSkip{false};
+        float DrawStart{Sx};
+        float const DrawEnd{Ex};
 
         for (auto const& g : Gaps) {
-            if (MidX2 >= g.x && MidX1 <= g.y) {
-                bSkip = true;
-                break;
+            if (DrawEnd <= g.x || DrawStart >= g.y) {
+                continue;
             }
+            if (DrawStart < g.x) {
+                DrawList->AddLine(
+                    ImVec2(DrawStart, Sy),
+                    ImVec2(g.x, Sy),
+                    LineColor,
+                    Thickness
+                );
+            }
+            DrawStart = g.y;
         }
 
-        if (!bSkip) {
-            DrawList->AddLine(ImVec2(Sx, Sy), ImVec2(Ex, Ey), Color, Thickness);
+        if (DrawStart < DrawEnd) {
+            DrawList->AddLine(
+                ImVec2(DrawStart, Sy),
+                ImVec2(DrawEnd, Sy),
+                LineColor,
+                Thickness
+            );
         }
     }
 }
@@ -182,7 +192,7 @@ void PopFont() {
     ImGui::PopFont();
 }
 
-bool BeginChildPadded(char const* StrId, ImVec2 const& Size, ImVec2 const& Padding, ImGuiChildFlags const ChildFlags, ImGuiWindowFlags const WindowFlags) {
+bool BeginChildPadded(char const* const StrId, ImVec2 const& Size, ImVec2 const& Padding, ImGuiChildFlags const ChildFlags, ImGuiWindowFlags const WindowFlags) {
     ImVec2 const RegionAvail{ImGui::GetContentRegionAvail()};
     ImVec2 Cursor{ImGui::GetCursorPos()};
 
@@ -193,6 +203,42 @@ bool BeginChildPadded(char const* StrId, ImVec2 const& Size, ImVec2 const& Paddi
     );
 
     return ImGui::BeginChild(StrId, ChildSize, ChildFlags, WindowFlags);
+}
+
+bool UnderlineButton(char const* const Label, ImColor Color, ImColor HoveredColor, ImColor PressedColor) {
+    ImGuiWindow* const Window{ImGui::GetCurrentWindow()};
+
+    if (Window->SkipItems) {
+        return false;
+    }
+    ImGuiID const ID{Window->GetID(Label)};
+
+    ImVec2 const TextSize{ImGui::CalcTextSize(Label)};
+    ImVec2 const Pos{ImGui::GetCursorScreenPos()};
+    ImRect const BB(Pos, ImVec2(Pos.x + TextSize.x, Pos.y + TextSize.y));
+
+    ImGui::ItemSize(BB);
+    if (!ImGui::ItemAdd(BB, ID)) {
+        return false;
+    }
+    bool const bHovered{ImGui::ItemHoverable(BB, ID, 0)};
+    bool const bClicked{bHovered && ImGui::IsMouseReleased(0)};
+    bool const bPressed{bHovered && ImGui::IsMouseDown(0)};
+
+    ImU32 TextColor{Color};
+    if (bPressed) {
+        TextColor = PressedColor;
+    } else if (bHovered) {
+        TextColor = HoveredColor;
+    }
+    Window->DrawList->AddText(Pos, TextColor, Label);
+
+    ImVec2 const UnderlineStart(Pos.x, Pos.y + TextSize.y);
+    ImVec2 const UnderlineEnd(Pos.x + TextSize.x, Pos.y + TextSize.y);
+
+    Window->DrawList->AddLine(UnderlineStart, UnderlineEnd, TextColor, .1f);
+
+    return bClicked;
 }
 
 } // namespace px::edimgui

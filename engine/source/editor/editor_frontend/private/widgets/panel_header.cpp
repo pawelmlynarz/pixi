@@ -1,4 +1,4 @@
-// © 2026 Pawel Mlynarz
+//// © 2026 Pawel Mlynarz
 
 #include "widgets/panel_header.h"
 
@@ -6,34 +6,64 @@
 
 namespace px::ed {
 
-void ImEditorPanelHeader::Begin(float const PaddingY) {
-    StartCursor_ = ImGui::GetCursorScreenPos();
-    Y_ = StartCursor_.y + PaddingY;
-    Gaps_.clear();
+void ImEditorPanelHeader::Begin(ImEditorPanelHeaderConfig const& Config) {
+    Config_ = Config;
+    State_.OrygCursorPos_ = ImGui::GetCursorPos();
+
+    ImVec2 const Pos{ImGui::GetCursorScreenPos()};
+    ImVec2 const Avail{ImGui::GetContentRegionAvail()};
+
+    State_.StartX_ = Pos.x + Config_.HeaderPadding.x;
+    State_.EndX_ = Pos.x + Avail.x - Config_.HeaderPadding.x;
+
+    State_.CursorXLeft_ = State_.StartX_;
+    State_.CursorXRight_ = State_.EndX_;
+
+    State_.CursorXLeft_ = State_.CursorXLeft_ + Config_.FirstWidgetPadding;
+    State_.CursorXRight_ = State_.CursorXRight_ - Config_.FirstWidgetPadding;
+
+    State_.Y_ = Pos.y + Config_.HeaderPadding.y;
+
+    State_.Gaps_.clear();
 }
 
-void ImEditorPanelHeader::AddWidget(float const WidgetPadding, std::function<void()> WidgetDrawStrategy) {
-    ImGui::SameLine();
+void ImEditorPanelHeader::AddWidget(
+    EEditorPanelHeaderItemAlignment const Alignment, CalculateExtentStrategy const& CalculateExtentStrategy, DrawStrategy const& DrawStrategy
+) {
+    ImDrawList* const DrawList{ImGui::GetWindowDrawList()};
+    ImVec2 const Extent{CalculateExtentStrategy()};
 
-    float const BeforeX{ImGui::GetCursorScreenPos().x};
-    WidgetDrawStrategy();
-    Y_ = ImGui::GetItemRectMin().y + ImGui::GetItemRectSize().y * 0.5f;
-    float const AfterX{ImGui::GetItemRectMax().x};
+    if (Alignment == EEditorPanelHeaderItemAlignment::Left) {
+        ImGui::SetCursorScreenPos(ImVec2(State_.CursorXLeft_, State_.Y_));
 
-    Gaps_.emplace_back(ImVec2(BeforeX - WidgetPadding, AfterX + WidgetPadding));
+        float const Before{State_.CursorXLeft_};
+        DrawStrategy(DrawList, ImVec2(State_.CursorXLeft_, State_.Y_), Extent);
+        float const After{Before + Extent.x};
+
+        State_.CursorXLeft_ = After + Config_.NextWidgetPadding;
+
+        State_.Gaps_.emplace_back(Before - Config_.GapExtraPadding, After + Config_.GapExtraPadding);
+    } else {
+        ImGui::SetCursorScreenPos(ImVec2(State_.CursorXRight_ - Extent.x, State_.Y_));
+
+        DrawStrategy(DrawList, ImVec2(State_.CursorXRight_ - Extent.x, State_.Y_), Extent);
+        float const Before{State_.CursorXRight_ - Extent.x};
+        float const After{State_.CursorXRight_};
+
+        State_.CursorXRight_ = Before - Config_.NextWidgetPadding;
+
+        State_.Gaps_.emplace_back(Before - Config_.GapExtraPadding, After + Config_.GapExtraPadding);
+    }
 }
 
-void ImEditorPanelHeader::End(float PaddingX, ImU32 LineColor, float DashLen, float GapLen, float Thickness) const {
-    ImVec2 const p0{ImGui::GetWindowPos()};
-    ImVec2 const p1{ImVec2(p0.x + ImGui::GetWindowSize().x, p0.y)};
+void ImEditorPanelHeader::End() const {
+    ImDrawList* const dl{ImGui::GetWindowDrawList()};
 
-    float const x1{p0.x + PaddingX};
-    float const x2{p1.x - PaddingX};
+    ImVec2 const a(State_.StartX_, State_.Y_);
+    ImVec2 const b(State_.EndX_, State_.Y_);
+    edimgui::DrawDashedLineWithGaps(dl, a, b, State_.Gaps_, Config_.LineColor, Config_.DashLength, Config_.GapLength, Config_.Thickness);
 
-    edimgui::DrawDashedLineWithGaps(
-        ImGui::GetWindowDrawList(), ImVec2(x1, Y_), ImVec2(x2, Y_),
-        LineColor, DashLen, GapLen, Thickness, Gaps_
-    );
+    ImGui::SetCursorPos(State_.OrygCursorPos_);
 }
 
 } // namespace px::ed

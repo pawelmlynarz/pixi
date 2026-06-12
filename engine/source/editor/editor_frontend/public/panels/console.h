@@ -9,6 +9,13 @@
 
 namespace px::ed {
 
+struct ConsoleTextBuffer {
+    using TextLine = std::pair<std::string, ImVec4>;
+
+    std::list<TextLine> Lines;
+    void Clear() { Lines.clear(); }
+};
+
 class ImConsole : public ImEditorPanel {
   public:
     ImConsole();
@@ -17,16 +24,15 @@ class ImConsole : public ImEditorPanel {
 
     void OnLogPushed(LogMsg const& LogMsg, std::string const& FormattedMessage);
 
+    ConsoleTextBuffer& GetTextBuf();
+
   private:
-    struct ConsoleTextBuffer {
-        using TextLine = std::pair<std::string, ImVec4>;
-
-        std::list<TextLine> Lines;
-        void Clear() { Lines.clear(); }
-    };
-
     ConsoleTextBuffer TextBuf_;
     ImGuiTextFilter TextFilter_;
 };
+
+inline ConsoleTextBuffer& ImConsole::GetTextBuf() {
+    return TextBuf_;
+}
 
 } // namespace px::ed
