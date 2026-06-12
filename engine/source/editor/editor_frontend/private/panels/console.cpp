@@ -6,8 +6,14 @@
 #include "imgui/imgui_draw_utils.h"
 #include "imgui/imgui_editor_helper.h"
 
+// pxfrontend
+#include "imgui/imgui_math.h"
+
 // pxcore
 #include "log/log_sink.h"
+#include "widgets/panel_header.h"
+
+#include "imgui_internal.h"
 
 namespace px::ed {
 
@@ -23,6 +29,40 @@ void RegisterLoggerSink(ImConsole* const Console) {
     DEFINE_OUTPUT_LOG_SINK(std::move(OutputLogSink));
 }
 
+void DrawHeader(ImConsole& Console) {
+    edimgui::PushFont(edimgui::EImGuiFontSize::Large);
+
+    ImEditorPanelHeader PanelHeader;
+    PanelHeader.Begin({});
+
+    PanelHeader.AddWidget(
+        EEditorPanelHeaderItemAlignment::Left,
+        [] {
+            return ImGui::CalcTextSize("[CONSOLE / LOG]");
+        },
+        [](ImDrawList* DrawList, ImVec2 CursorPos, ImVec2 Extent) {
+            DrawList->AddText(ImVec2(CursorPos.x, CursorPos.y - Extent.y * .5f), IM_COL32(220, 220, 220, 255), "[CONSOLE / LOG]");
+        }
+    );
+
+    PanelHeader.AddWidget(
+        EEditorPanelHeaderItemAlignment::Right,
+        [] {
+            return ImGui::CalcTextSize("Clear");
+        },
+        [&Console](ImDrawList*, ImVec2, ImVec2 Extent) {
+            ImGui::SetCursorPosY(ImGui::GetCursorPos().y - Extent.y * .5f);
+            if (edimgui::UnderlineButton("Clear")) {
+                Console.GetTextBuf().Clear();
+            }
+        }
+    );
+
+    PanelHeader.End();
+
+    edimgui::PopFont();
+}
+
 } // namespace
 
 ImConsole::ImConsole() {
@@ -33,13 +73,10 @@ void ImConsole::Draw() {
     ImGui::Begin(NameConsole, nullptr, edimgui::GetEditorWidgetFlags());
     {
         edimgui::DrawDashedWindowBorder();
-        edimgui::PushFont(edimgui::EImGuiFontSize::Large);
-        edimgui::DrawDashedHeader("[CONSOLE / LOG]", {24.f, 24.f}, 25);
-        edimgui::PopFont();
+
+        DrawHeader(*this);
 
         bool AutoScroll{true};
-
-        ImGui::Separator();
 
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(100, 100));
 

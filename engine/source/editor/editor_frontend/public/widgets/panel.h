@@ -7,7 +7,7 @@
 
 namespace px::ed {
 
-class ImGuiEditorPanel : public ImGuiWidget {
+class ImEditorPanel : public ImGuiWidget {
   public:
     virtual void Draw() = 0;
 };
