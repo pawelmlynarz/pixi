@@ -10,7 +10,7 @@
 namespace px::ed {
 
 struct ImLabelConfig {
-    std::string_view Text{"None"};
+    std::string_view Text{"Label"};
     edimgui::EImGuiFontSize FontSize{edimgui::EImGuiFontSize::Medium};
     ImU32 Color{IM_COL32(220, 220, 220, 255)};
 };

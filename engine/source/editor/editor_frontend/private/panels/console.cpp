@@ -25,8 +25,7 @@ void RegisterLoggerSink(ImConsole* const Console) {
 
 void DrawHeader(ImConsole& Console) {
     ImPanelHeader PanelHeader;
-
-    PanelHeader.Begin({});
+    PanelHeader.Begin({.NextWidgetPadding = 50.f});
 
     PanelHeader.AddWidget(
         EWidgetAlignment::Left,
@@ -36,6 +35,11 @@ void DrawHeader(ImConsole& Console) {
     PanelHeader.AddWidget(
         EWidgetAlignment::Right,
         ImButton({.Text = "Clear", .FontSize = edimgui::EImGuiFontSize::Large, .bUnderline = true, .OnPressed = [&Console] { Console.GetTextBuf().Clear(); }})
+    );
+
+    PanelHeader.AddWidget(
+        EWidgetAlignment::Right,
+        ImTextFilter({.TextFilterRef = Console.GetTextFilter(), .FontSize = edimgui::EImGuiFontSize::Medium, .Width = 300})
     );
 
     PanelHeader.End();

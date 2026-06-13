@@ -2,30 +2,21 @@
 
 #pragma once
 
-#include "core_minimal.h"
-#include "common/callbacks.h"
-
 #include "imgui/imgui_draw_utils.h"
 #include "imgui/imgui_widget.h"
 
 namespace px::ed {
 
-struct ImButtonConfig {
-    std::string_view Text{"Button"};
+struct ImTextFilterConfig {
+    ImGuiTextFilter& TextFilterRef;
+    std::string_view Label{""};
     edimgui::EImGuiFontSize FontSize{edimgui::EImGuiFontSize::Medium};
-
-    ImU32 Color{IM_COL32(200, 200, 200, 255)};
-    ImU32 HoveredColor{IM_COL32(220, 220, 220, 255)};
-    ImU32 PressedColor{IM_COL32(200, 200, 200, 255)};
-
-    bool bUnderline{false};
-
-    ButtonPressedCallback OnPressed;
+    float Width{100.f};
 };
 
-class ImButton : public ImPrecomputedExtentWidget {
+class ImTextFilter : public ImPrecomputedExtentWidget {
   public:
-    ImButton(ImButtonConfig const& Config);
+    ImTextFilter(ImTextFilterConfig const& Config);
 
     // ~ImPrecomputedExtentWidget Begin
 
@@ -35,7 +26,7 @@ class ImButton : public ImPrecomputedExtentWidget {
     // ~ImPrecomputedExtentWidget End
 
   private:
-    ImButtonConfig Config_;
+    ImTextFilterConfig Config_;
 };
 
 } // namespace px::ed

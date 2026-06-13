@@ -25,6 +25,7 @@ class ImConsole : public ImPanel {
     void OnLogPushed(LogMsg const& LogMsg, std::string const& FormattedMessage);
 
     ConsoleTextBuffer& GetTextBuf();
+    ImGuiTextFilter& GetTextFilter();
 
   private:
     ConsoleTextBuffer TextBuf_;
@@ -33,6 +34,10 @@ class ImConsole : public ImPanel {
 
 inline ConsoleTextBuffer& ImConsole::GetTextBuf() {
     return TextBuf_;
+}
+
+inline ImGuiTextFilter& ImConsole::GetTextFilter() {
+    return TextFilter_;
 }
 
 } // namespace px::ed

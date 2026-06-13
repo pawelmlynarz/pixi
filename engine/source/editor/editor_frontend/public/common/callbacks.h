@@ -8,4 +8,4 @@ namespace px::ed {
 
 using ButtonPressedCallback = std::function<void()>;
 
-} // namespace
+} // namespace px::ed

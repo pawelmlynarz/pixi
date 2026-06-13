@@ -9,4 +9,5 @@
 
 #include "widgets/button.h"
 #include "widgets/label.h"
+#include "widgets/text_filter.h"
 #include "widgets/panel_header.h"
