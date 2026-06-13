@@ -4,14 +4,17 @@
 
 #include "core_minimal.h"
 
+namespace px {
+
+class ImPrecomputedExtentWidget;
+
+} // namespace px
+
 namespace px::ed {
 
-enum class EEditorPanelHeaderItemAlignment : uint8 {
-    Left,
-    Right
-};
+enum class EWidgetAlignment : uint8;
 
-struct ImEditorPanelHeaderConfig {
+struct ImPanelHeaderConfig {
     ImU32 LineColor{IM_COL32(160, 160, 160, 180)};
     ImVec2 HeaderPadding{ImVec2(24, 16.5)};
 
@@ -26,7 +29,7 @@ struct ImEditorPanelHeaderConfig {
 /**
  * Class that manages constructing and drawing of a dashed header with possible embedded widgets.
  */
-class ImEditorPanelHeader {
+class ImPanelHeader {
   public:
     using CalculateExtentStrategy = std::function<ImVec2()>;
     using DrawStrategy = std::function<void(ImDrawList* DrawList, ImVec2 CursorPos, ImVec2 Extent)>;
@@ -36,10 +39,20 @@ class ImEditorPanelHeader {
      *
      * @param Config Configuration.
      */
-    void Begin(ImEditorPanelHeaderConfig const& Config);
+    void Begin(ImPanelHeaderConfig const& Config);
 
     /**
-     * @brief Adds a widget to the header. You must provide a strategy for drawing it
+     * @brief Adds a widget to the header.
+     *
+     * @param Alignment Left or Right.
+     * @param Widget Widget implementing ImPrecomputedExtentWidget interface.
+     */
+    void AddWidget(
+        EWidgetAlignment Alignment, ImPrecomputedExtentWidget const& Widget
+    );
+
+    /**
+     * @brief Adds a custom widget to the header. You must provide a strategy for drawing it
      *        and calculating its extent up front to align it properly.
      *
      * @param Alignment Left or Right.
@@ -47,7 +60,7 @@ class ImEditorPanelHeader {
      * @param DrawStrategy Drawing strategy. Supports both drawing using fixed functions as well as draw list.
      */
     void AddWidget(
-        EEditorPanelHeaderItemAlignment Alignment,
+        EWidgetAlignment Alignment,
         CalculateExtentStrategy const& CalculateExtentStrategy, DrawStrategy const& DrawStrategy
     );
 
@@ -57,7 +70,7 @@ class ImEditorPanelHeader {
     void End() const;
 
   private:
-    ImEditorPanelHeaderConfig Config_;
+    ImPanelHeaderConfig Config_;
 
     struct StateData {
         ImVec2 OrygCursorPos_;

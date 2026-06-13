@@ -1,19 +1,13 @@
 // © 2026 Pawel Mlynarz
 
 #include "panels/console.h"
-#include "editor_const.h"
+#include "common/common_widgets.h"
 
 #include "imgui/imgui_draw_utils.h"
 #include "imgui/imgui_editor_helper.h"
 
-// pxfrontend
-#include "imgui/imgui_math.h"
-
 // pxcore
 #include "log/log_sink.h"
-#include "widgets/panel_header.h"
-
-#include "imgui_internal.h"
 
 namespace px::ed {
 
@@ -30,37 +24,25 @@ void RegisterLoggerSink(ImConsole* const Console) {
 }
 
 void DrawHeader(ImConsole& Console) {
-    edimgui::PushFont(edimgui::EImGuiFontSize::Large);
-
-    ImEditorPanelHeader PanelHeader;
-    PanelHeader.Begin({});
+    ImPanelHeader PanelHeader;
+    PanelHeader.Begin({.NextWidgetPadding = 50.f});
 
     PanelHeader.AddWidget(
-        EEditorPanelHeaderItemAlignment::Left,
-        [] {
-            return ImGui::CalcTextSize("[CONSOLE / LOG]");
-        },
-        [](ImDrawList* DrawList, ImVec2 CursorPos, ImVec2 Extent) {
-            DrawList->AddText(ImVec2(CursorPos.x, CursorPos.y - Extent.y * .5f), IM_COL32(220, 220, 220, 255), "[CONSOLE / LOG]");
-        }
+        EWidgetAlignment::Left,
+        ImLabel({.Text = "[CONSOLE / LOG]", .FontSize = edimgui::EImGuiFontSize::Large})
     );
 
     PanelHeader.AddWidget(
-        EEditorPanelHeaderItemAlignment::Right,
-        [] {
-            return ImGui::CalcTextSize("Clear");
-        },
-        [&Console](ImDrawList*, ImVec2, ImVec2 Extent) {
-            ImGui::SetCursorPosY(ImGui::GetCursorPos().y - Extent.y * .5f);
-            if (edimgui::UnderlineButton("Clear")) {
-                Console.GetTextBuf().Clear();
-            }
-        }
+        EWidgetAlignment::Right,
+        ImButton({.Text = "Clear", .FontSize = edimgui::EImGuiFontSize::Large, .bUnderline = true, .OnPressed = [&Console] { Console.GetTextBuf().Clear(); }})
+    );
+
+    PanelHeader.AddWidget(
+        EWidgetAlignment::Right,
+        ImTextFilter({.TextFilterRef = Console.GetTextFilter(), .FontSize = edimgui::EImGuiFontSize::Medium, .Width = 300})
     );
 
     PanelHeader.End();
-
-    edimgui::PopFont();
 }
 
 } // namespace

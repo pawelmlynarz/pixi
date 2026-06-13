@@ -16,7 +16,7 @@ struct ConsoleTextBuffer {
     void Clear() { Lines.clear(); }
 };
 
-class ImConsole : public ImEditorPanel {
+class ImConsole : public ImPanel {
   public:
     ImConsole();
 
@@ -25,6 +25,7 @@ class ImConsole : public ImEditorPanel {
     void OnLogPushed(LogMsg const& LogMsg, std::string const& FormattedMessage);
 
     ConsoleTextBuffer& GetTextBuf();
+    ImGuiTextFilter& GetTextFilter();
 
   private:
     ConsoleTextBuffer TextBuf_;
@@ -33,6 +34,10 @@ class ImConsole : public ImEditorPanel {
 
 inline ConsoleTextBuffer& ImConsole::GetTextBuf() {
     return TextBuf_;
+}
+
+inline ImGuiTextFilter& ImConsole::GetTextFilter() {
+    return TextFilter_;
 }
 
 } // namespace px::ed

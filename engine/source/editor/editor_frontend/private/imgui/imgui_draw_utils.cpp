@@ -205,7 +205,7 @@ bool BeginChildPadded(char const* const StrId, ImVec2 const& Size, ImVec2 const&
     return ImGui::BeginChild(StrId, ChildSize, ChildFlags, WindowFlags);
 }
 
-bool UnderlineButton(char const* const Label, ImColor Color, ImColor HoveredColor, ImColor PressedColor) {
+bool Button(char const* const Label, bool const bUnderline, ImColor Color, ImColor HoveredColor, ImColor PressedColor) {
     ImGuiWindow* const Window{ImGui::GetCurrentWindow()};
 
     if (Window->SkipItems) {
@@ -233,11 +233,12 @@ bool UnderlineButton(char const* const Label, ImColor Color, ImColor HoveredColo
     }
     Window->DrawList->AddText(Pos, TextColor, Label);
 
-    ImVec2 const UnderlineStart(Pos.x, Pos.y + TextSize.y);
-    ImVec2 const UnderlineEnd(Pos.x + TextSize.x, Pos.y + TextSize.y);
+    if (bUnderline) {
+        ImVec2 const UnderlineStart(Pos.x, Pos.y + TextSize.y);
+        ImVec2 const UnderlineEnd(Pos.x + TextSize.x, Pos.y + TextSize.y);
 
-    Window->DrawList->AddLine(UnderlineStart, UnderlineEnd, TextColor, .1f);
-
+        Window->DrawList->AddLine(UnderlineStart, UnderlineEnd, TextColor, 1.f);
+    }
     return bClicked;
 }
 

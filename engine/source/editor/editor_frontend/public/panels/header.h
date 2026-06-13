@@ -6,7 +6,7 @@
 
 namespace px::ed {
 
-class ImHeader : public ImEditorPanel {
+class ImHeader : public ImPanel {
   public:
     void Draw() override;
 };
