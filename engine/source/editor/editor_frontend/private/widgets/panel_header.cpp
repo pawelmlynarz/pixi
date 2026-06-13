@@ -1,12 +1,14 @@
 //// © 2026 Pawel Mlynarz
 
 #include "widgets/panel_header.h"
+#include "common/formatting.h"
 
 #include "imgui/imgui_draw_utils.h"
+#include "imgui/imgui_widget.h"
 
 namespace px::ed {
 
-void ImEditorPanelHeader::Begin(ImEditorPanelHeaderConfig const& Config) {
+void ImPanelHeader::Begin(ImPanelHeaderConfig const& Config) {
     Config_ = Config;
     State_.OrygCursorPos_ = ImGui::GetCursorPos();
 
@@ -27,13 +29,21 @@ void ImEditorPanelHeader::Begin(ImEditorPanelHeaderConfig const& Config) {
     State_.Gaps_.clear();
 }
 
-void ImEditorPanelHeader::AddWidget(
-    EEditorPanelHeaderItemAlignment const Alignment, CalculateExtentStrategy const& CalculateExtentStrategy, DrawStrategy const& DrawStrategy
+void ImPanelHeader::AddWidget(EWidgetAlignment Alignment, ImPrecomputedExtentWidget const& Widget) {
+    AddWidget(
+        Alignment,
+        [&]() { return Widget.ComputeExtent(); },
+        [&](ImDrawList* DrawList, ImVec2 CursorPos, ImVec2 Extent) { return Widget.DrawInExtent(DrawList, CursorPos, Extent); }
+    );
+}
+
+void ImPanelHeader::AddWidget(
+    EWidgetAlignment const Alignment, CalculateExtentStrategy const& CalculateExtentStrategy, DrawStrategy const& DrawStrategy
 ) {
     ImDrawList* const DrawList{ImGui::GetWindowDrawList()};
     ImVec2 const Extent{CalculateExtentStrategy()};
 
-    if (Alignment == EEditorPanelHeaderItemAlignment::Left) {
+    if (Alignment == EWidgetAlignment::Left) {
         ImGui::SetCursorScreenPos(ImVec2(State_.CursorXLeft_, State_.Y_));
 
         float const Before{State_.CursorXLeft_};
@@ -56,7 +66,7 @@ void ImEditorPanelHeader::AddWidget(
     }
 }
 
-void ImEditorPanelHeader::End() const {
+void ImPanelHeader::End() const {
     ImDrawList* const dl{ImGui::GetWindowDrawList()};
 
     ImVec2 const a(State_.StartX_, State_.Y_);

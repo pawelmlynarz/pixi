@@ -16,7 +16,7 @@ struct ConsoleTextBuffer {
     void Clear() { Lines.clear(); }
 };
 
-class ImConsole : public ImEditorPanel {
+class ImConsole : public ImPanel {
   public:
     ImConsole();
 

@@ -14,4 +14,13 @@ class PXFRONTEND_API ImGuiWidget {
     virtual void Draw() = 0;
 };
 
+class PXFRONTEND_API ImPrecomputedExtentWidget {
+  public:
+    virtual ~ImPrecomputedExtentWidget() = default;
+
+    virtual ImVec2 ComputeExtent() const = 0;
+
+    virtual void DrawInExtent(ImDrawList* DrawList, ImVec2 CursorPos, ImVec2 Extent) const = 0;
+};
+
 } // namespace px

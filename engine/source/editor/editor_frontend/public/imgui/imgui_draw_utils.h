@@ -74,10 +74,10 @@ PXEDITOR_FRONTEND_API void PopFont();
 PXEDITOR_FRONTEND_API bool BeginChildPadded(char const* StrId, ImVec2 const& Size = ImVec2(0, 0), ImVec2 const& Padding = ImVec2(0, 0), ImGuiChildFlags ChildFlags = 0, ImGuiWindowFlags WindowFlags = 0);
 
 /**
- * Button that has no background and an underline.
+ * Button that has no background and an optional underline.
  */
-PXEDITOR_FRONTEND_API bool UnderlineButton(
-    char const* Label,
+PXEDITOR_FRONTEND_API bool Button(
+    char const* Label, bool bUnderline,
     ImColor Color = IM_COL32(200, 200, 200, 255), ImColor HoveredColor = IM_COL32(220, 220, 220, 255), ImColor PressedColor = IM_COL32(200, 200, 200, 255)
 );
 
