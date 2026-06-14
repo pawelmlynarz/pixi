@@ -2,14 +2,18 @@
 
 #pragma once
 
-// pxfrontend
-#include "imgui/imgui_widget.h"
+#include "widget.h"
 
 namespace px::ed {
 
-class ImPanel : public ImGuiWidget {
+class ImPanel : public ImContainerWidget {
   public:
-    virtual void Draw() = 0;
+    using ImContainerWidget::ImContainerWidget;
+
+    void Draw() override;
+
+  protected:
+    virtual void DrawPanelContent() {};
 };
 
 } // namespace px::ed

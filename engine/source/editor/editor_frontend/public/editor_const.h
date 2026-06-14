@@ -2,16 +2,16 @@
 
 #pragma once
 
+#include "widgets/widget.h"
+
 namespace px::ed {
 
-using WidgetName = char const*;
-
-inline constexpr WidgetName NameHeader{"Header"};
-inline constexpr WidgetName NameInspector{"Inspector"};
-inline constexpr WidgetName NameAssetBrowser{"AssetBrowser"};
-inline constexpr WidgetName NameConsole{"Console"};
-inline constexpr WidgetName NameFooter{"Footer"};
-inline constexpr WidgetName NameSceneHierarchy{"SceneHierarchy"};
-inline constexpr WidgetName NameViewport{"Viewport"};
+inline constexpr ImWidgetId WID_Header{"Header"};
+inline constexpr ImWidgetId WID_Inspector{"Inspector"};
+inline constexpr ImWidgetId WID_AssetBrowser{"AssetBrowser"};
+inline constexpr ImWidgetId WID_Console{"Console"};
+inline constexpr ImWidgetId WID_Footer{"Footer"};
+inline constexpr ImWidgetId WID_SceneHierarchy{"SceneHierarchy"};
+inline constexpr ImWidgetId WID_Viewport{"Viewport"};
 
 } // namespace px::ed

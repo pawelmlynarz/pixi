@@ -2,18 +2,8 @@
 
 #include "editor_mainframe.h"
 #include "editor_const.h"
-#include "panels/asset_browser.h"
-#include "panels/console.h"
-#include "panels/footer.h"
-#include "panels/header.h"
-#include "panels/inspector.h"
-#include "panels/scene_hierarchy.h"
-#include "panels/viewport.h"
-#include "imgui/imgui_draw_utils.h"
-#include "imgui/imgui_dockspace.h"
-
-// pxfrontend
-#include "imgui/imgui_widget.h"
+#include "widgets/dockspace.h"
+#include "widgets/panels/common_panels.h"
 
 // imgui
 #include "imgui.h"
@@ -40,7 +30,7 @@ void BuildMainFrameDockSpaceLayout(ImGuiViewport* const Viewport, ImGuiID const 
             ImGui::DockBuilderSplitNode(DockCenterID, ImGuiDir_Up, 0.1f, nullptr, &DockCenterID)
         };
         ImGui::DockBuilderSetNodeSize(DockHeaderID, ImVec2(Viewport->Size.x, 50));
-        ImGui::DockBuilderDockWindow(NameHeader, DockHeaderID);
+        ImGui::DockBuilderDockWindow(CStr(WID_Header), DockHeaderID);
         ImGui::DockBuilderGetNode(DockHeaderID)->LocalFlags |= ImGuiDockNodeFlags_NoResizeX | ImGuiDockNodeFlags_NoResizeY;
         DockNodes.emplace_back(DockHeaderID);
     }
@@ -50,7 +40,7 @@ void BuildMainFrameDockSpaceLayout(ImGuiViewport* const Viewport, ImGuiID const 
             ImGui::DockBuilderSplitNode(DockCenterID, ImGuiDir_Down, 0.1f, nullptr, &DockCenterID)
         };
         ImGui::DockBuilderSetNodeSize(DockFooterID, ImVec2(Viewport->Size.x, 50));
-        ImGui::DockBuilderDockWindow(NameFooter, DockFooterID);
+        ImGui::DockBuilderDockWindow(CStr(WID_Footer), DockFooterID);
         ImGui::DockBuilderGetNode(DockFooterID)->LocalFlags |= ImGuiDockNodeFlags_NoResizeX | ImGuiDockNodeFlags_NoResizeY;
         DockNodes.emplace_back(DockFooterID);
     }
@@ -59,7 +49,7 @@ void BuildMainFrameDockSpaceLayout(ImGuiViewport* const Viewport, ImGuiID const 
         ImGuiID const DockInspectorID{
             ImGui::DockBuilderSplitNode(DockCenterID, ImGuiDir_Right, 0.2f, nullptr, &DockCenterID)
         };
-        ImGui::DockBuilderDockWindow(NameInspector, DockInspectorID);
+        ImGui::DockBuilderDockWindow(CStr(WID_Inspector), DockInspectorID);
         DockNodes.emplace_back(DockInspectorID);
     }
 
@@ -72,10 +62,10 @@ void BuildMainFrameDockSpaceLayout(ImGuiViewport* const Viewport, ImGuiID const 
         ImGuiID const DockAssetBrowserID{
             ImGui::DockBuilderSplitNode(DockBottomID, ImGuiDir_Left, 0.25f, nullptr, &DockConsoleID)
         };
-        ImGui::DockBuilderDockWindow(NameAssetBrowser, DockAssetBrowserID);
+        ImGui::DockBuilderDockWindow(CStr(WID_AssetBrowser), DockAssetBrowserID);
         DockNodes.emplace_back(DockAssetBrowserID);
 
-        ImGui::DockBuilderDockWindow(NameConsole, DockConsoleID);
+        ImGui::DockBuilderDockWindow(CStr(WID_Console), DockConsoleID);
         DockNodes.emplace_back(DockConsoleID);
     }
 
@@ -83,10 +73,10 @@ void BuildMainFrameDockSpaceLayout(ImGuiViewport* const Viewport, ImGuiID const 
         ImGuiID const DockSceneHierarchyID{
             ImGui::DockBuilderSplitNode(DockCenterID, ImGuiDir_Left, 0.25f, nullptr, &DockCenterID)
         };
-        ImGui::DockBuilderDockWindow(NameSceneHierarchy, DockSceneHierarchyID);
+        ImGui::DockBuilderDockWindow(CStr(WID_SceneHierarchy), DockSceneHierarchyID);
         DockNodes.emplace_back(DockSceneHierarchyID);
 
-        ImGui::DockBuilderDockWindow(NameViewport, DockCenterID);
+        ImGui::DockBuilderDockWindow(CStr(WID_Viewport), DockCenterID);
         DockNodes.emplace_back(DockCenterID);
     }
 
@@ -115,16 +105,13 @@ void CreateMainFrameDockSpace(ImGuiViewport* const Viewport) {
 } // namespace
 
 SEditorMainFrame::SEditorMainFrame() {
-    Widgets_.emplace_back(MakeUnique<ImHeader>());
-    Widgets_.emplace_back(MakeUnique<ImFooter>());
-    Widgets_.emplace_back(MakeUnique<ImAssetBrowser>());
-    Widgets_.emplace_back(MakeUnique<ImInspector>());
-    Widgets_.emplace_back(MakeUnique<ImConsole>());
-    Widgets_.emplace_back(MakeUnique<ImSceneHierarchy>());
-    Widgets_.emplace_back(MakeUnique<ImViewport>());
-
-    ImGui::GetStyle().Colors[ImGuiCol_Border] = ImVec4(0, 0, 0, 0);
-    ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0, 0, 0, 255);
+    Widgets_.emplace_back(MakeUnique<ImHeader>(WID_Header));
+    Widgets_.emplace_back(MakeUnique<ImFooter>(WID_Footer));
+    Widgets_.emplace_back(MakeUnique<ImAssetBrowser>(WID_AssetBrowser));
+    Widgets_.emplace_back(MakeUnique<ImInspector>(WID_Inspector));
+    Widgets_.emplace_back(MakeUnique<ImConsole>(WID_Console));
+    Widgets_.emplace_back(MakeUnique<ImSceneHierarchy>(WID_SceneHierarchy));
+    Widgets_.emplace_back(MakeUnique<ImViewport>(WID_Viewport));
 }
 
 SEditorMainFrame::~SEditorMainFrame() = default;
