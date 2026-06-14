@@ -122,9 +122,6 @@ SEditorMainFrame::SEditorMainFrame() {
     Widgets_.emplace_back(MakeUnique<ImConsole>());
     Widgets_.emplace_back(MakeUnique<ImSceneHierarchy>());
     Widgets_.emplace_back(MakeUnique<ImViewport>());
-
-    ImGui::GetStyle().Colors[ImGuiCol_Border] = ImVec4(0, 0, 0, 0);
-    ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0, 0, 0, 255);
 }
 
 SEditorMainFrame::~SEditorMainFrame() = default;

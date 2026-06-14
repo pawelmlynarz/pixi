@@ -11,7 +11,7 @@ namespace px::edimgui {
  * Draws dashed line.
  */
 PXEDITOR_FRONTEND_API void DrawDashedLine(
-    ImDrawList* DrawList, ImVec2 const& A, ImVec2 const& B, ImU32 Color,
+    ImDrawList* DrawList, ImVec2 const& A, ImVec2 const& B,
     float DashLength = 6.0f, float GapLength = 4.0f, float Thickness = 2.f
 );
 
@@ -19,7 +19,7 @@ PXEDITOR_FRONTEND_API void DrawDashedLine(
  * Draws dashed rectangle (4 dashed lines).
  */
 PXEDITOR_FRONTEND_API void DrawDashedRect(
-    ImDrawList* DrawList, ImVec2 const& Min, ImVec2 const& Max, ImU32 Color,
+    ImDrawList* DrawList, ImVec2 const& Min, ImVec2 const& Max,
     float DashLength = 6.0f, float GapLength = 4.0f, float Thickness = 2.f
 );
 
@@ -28,7 +28,6 @@ PXEDITOR_FRONTEND_API void DrawDashedRect(
  */
 PXEDITOR_FRONTEND_API void DrawDashedWindowBorder(
     ImVec2 const& Padding = {6.f, 6.f},
-    ImColor Color = IM_COL32(160, 160, 160, 180),
     float DashLength = 10.0f, float GapLength = 2.0f, float Thickness = 2.f
 );
 
@@ -38,7 +37,6 @@ PXEDITOR_FRONTEND_API void DrawDashedWindowBorder(
  */
 PXEDITOR_FRONTEND_API void DrawDashedHeader(
     char const* Text, ImVec2 const& Padding = {6.f, 6.f}, float TextPaddingLeft = 0.0f,
-    ImColor LineColor = IM_COL32(160, 160, 160, 180), ImColor TextColor = IM_COL32(220, 220, 220, 255),
     float DashLength = 10.0f, float GapLength = 2.0f, float Thickness = 2.f
 );
 
@@ -48,7 +46,7 @@ PXEDITOR_FRONTEND_API void DrawDashedHeader(
  */
 PXEDITOR_FRONTEND_API void DrawDashedLineWithGaps(
     ImDrawList* DrawList, ImVec2 const& A, ImVec2 const& B, std::vector<ImVec2> const& Gaps,
-    ImColor LineColor = IM_COL32(160, 160, 160, 180), float DashLength = 10.0f, float GapLength = 2.0f, float Thickness = 2.f
+    float DashLength = 10.0f, float GapLength = 2.0f, float Thickness = 2.f
 );
 
 enum class EImGuiFontSize : uint8 {
@@ -76,9 +74,6 @@ PXEDITOR_FRONTEND_API bool BeginChildPadded(char const* StrId, ImVec2 const& Siz
 /**
  * Button that has no background and an optional underline.
  */
-PXEDITOR_FRONTEND_API bool Button(
-    char const* Label, bool bUnderline,
-    ImColor Color = IM_COL32(200, 200, 200, 255), ImColor HoveredColor = IM_COL32(220, 220, 220, 255), ImColor PressedColor = IM_COL32(200, 200, 200, 255)
-);
+PXEDITOR_FRONTEND_API bool Button(char const* Label, bool bUnderline);
 
 } // namespace px::edimgui

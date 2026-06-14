@@ -13,11 +13,7 @@ namespace px::ed {
 struct ImButtonConfig {
     std::string_view Text{"Button"};
     edimgui::EImGuiFontSize FontSize{edimgui::EImGuiFontSize::Medium};
-
-    ImU32 Color{IM_COL32(200, 200, 200, 255)};
-    ImU32 HoveredColor{IM_COL32(220, 220, 220, 255)};
-    ImU32 PressedColor{IM_COL32(200, 200, 200, 255)};
-
+    
     bool bUnderline{false};
 
     ButtonPressedCallback OnPressed;

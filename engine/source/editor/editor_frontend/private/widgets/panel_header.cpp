@@ -71,7 +71,7 @@ void ImPanelHeader::End() const {
 
     ImVec2 const a(State_.StartX_, State_.Y_);
     ImVec2 const b(State_.EndX_, State_.Y_);
-    edimgui::DrawDashedLineWithGaps(dl, a, b, State_.Gaps_, Config_.LineColor, Config_.DashLength, Config_.GapLength, Config_.Thickness);
+    edimgui::DrawDashedLineWithGaps(dl, a, b, State_.Gaps_, Config_.DashLength, Config_.GapLength, Config_.Thickness);
 
     ImGui::SetCursorPos(State_.OrygCursorPos_);
 }

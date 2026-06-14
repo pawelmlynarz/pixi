@@ -1,6 +1,7 @@
 // © 2026 Pawel Mlynarz
 
 #include "imgui/imgui_draw_utils.h"
+#include "styles/editor_style.h"
 
 // pxcore
 #include "tools/utility.h"
@@ -37,7 +38,7 @@ struct StaticFontHub {
 } // namespace
 
 void DrawDashedLine(
-    ImDrawList* const DrawList, ImVec2 const& A, ImVec2 const& B, ImU32 const Color,
+    ImDrawList* const DrawList, ImVec2 const& A, ImVec2 const& B,
     float const DashLength, float const GapLength, float const Thickness
 ) {
     ImVec2 Dir{ImVec2(B.x - A.x, B.y - A.y)};
@@ -62,7 +63,7 @@ void DrawDashedLine(
         if (Draw) {
             ImVec2 const p1{ImVec2(A.x + Dir.x * Pos, A.y + Dir.y * Pos)};
             ImVec2 const p2{ImVec2(A.x + Dir.x * End, A.y + Dir.y * End)};
-            DrawList->AddLine(p1, p2, Color, Thickness);
+            DrawList->AddLine(p1, p2, ed::EdStyle::GetColorU32(ed::PxGuiCol_FrameBorder), Thickness);
         }
 
         Pos = End;
@@ -71,17 +72,17 @@ void DrawDashedLine(
 }
 
 void DrawDashedRect(
-    ImDrawList* const DrawList, ImVec2 const& Min, ImVec2 const& Max, ImU32 const Color,
+    ImDrawList* const DrawList, ImVec2 const& Min, ImVec2 const& Max, 
     float const DashLength, float const GapLength, float const Thickness
 ) {
-    DrawDashedLine(DrawList, ImVec2(Min.x, Min.y), ImVec2(Max.x, Min.y), Color, DashLength, GapLength, Thickness);
-    DrawDashedLine(DrawList, ImVec2(Max.x, Min.y), ImVec2(Max.x, Max.y), Color, DashLength, GapLength, Thickness);
-    DrawDashedLine(DrawList, ImVec2(Max.x, Max.y), ImVec2(Min.x, Max.y), Color, DashLength, GapLength, Thickness);
-    DrawDashedLine(DrawList, ImVec2(Min.x, Max.y), ImVec2(Min.x, Min.y), Color, DashLength, GapLength, Thickness);
+    DrawDashedLine(DrawList, ImVec2(Min.x, Min.y), ImVec2(Max.x, Min.y), DashLength, GapLength, Thickness);
+    DrawDashedLine(DrawList, ImVec2(Max.x, Min.y), ImVec2(Max.x, Max.y), DashLength, GapLength, Thickness);
+    DrawDashedLine(DrawList, ImVec2(Max.x, Max.y), ImVec2(Min.x, Max.y), DashLength, GapLength, Thickness);
+    DrawDashedLine(DrawList, ImVec2(Min.x, Max.y), ImVec2(Min.x, Min.y), DashLength, GapLength, Thickness);
 }
 
 void DrawDashedWindowBorder(
-    ImVec2 const& Padding, ImColor const Color, float const DashLength, float const GapLength, float const Thickness
+    ImVec2 const& Padding, float const DashLength, float const GapLength, float const Thickness
 ) {
     ImVec2 p0{ImGui::GetWindowPos()};
     ImVec2 p1{ImVec2(p0.x + ImGui::GetWindowSize().x, p0.y + ImGui::GetWindowSize().y)};
@@ -94,12 +95,12 @@ void DrawDashedWindowBorder(
     ImDrawList* const dl{ImGui::GetWindowDrawList()};
 
     DrawDashedRect(
-        dl, p0, p1, Color, DashLength, GapLength, Thickness
+        dl, p0, p1, DashLength, GapLength, Thickness
     );
 }
 
 void DrawDashedHeader(
-    char const* const Text, ImVec2 const& Padding, float TextPaddingLeft, ImColor const LineColor, ImColor const TextColor,
+    char const* const Text, ImVec2 const& Padding, float TextPaddingLeft,
     float const DashLength, float const GapLength, float const Thickness
 ) {
     ImVec2 p0{ImGui::GetWindowPos()};
@@ -120,20 +121,20 @@ void DrawDashedHeader(
     float const LeftLineEnd{ImClamp(TextX - Spacing, p0.x, p1.x)};
     float const RightLineStart{ImClamp(TextEnd + Spacing, p0.x, p1.x)};
 
-    DrawDashedLine(dl, ImVec2(p0.x, y), ImVec2(LeftLineEnd, y), LineColor, DashLength, GapLength, Thickness);
+    DrawDashedLine(dl, ImVec2(p0.x, y), ImVec2(LeftLineEnd, y), DashLength, GapLength, Thickness);
 
     dl->AddText(
-        ImVec2(TextX, y - TextSize.y * 0.5f), TextColor, Text
+        ImVec2(TextX, y - TextSize.y * 0.5f), ed::EdStyle::GetColorU32(ed::PxGuiCol_Text), Text
     );
 
     DrawDashedLine(
-        dl, ImVec2(RightLineStart, y), ImVec2(p1.x, y), LineColor, DashLength, GapLength, Thickness
+        dl, ImVec2(RightLineStart, y), ImVec2(p1.x, y), DashLength, GapLength, Thickness
     );
 }
 
 void DrawDashedLineWithGaps(
     ImDrawList* const DrawList, ImVec2 const& A, ImVec2 const& B, std::vector<ImVec2> const& Gaps,
-    ImColor LineColor, float const DashLength, float const GapLength, float const Thickness
+    float const DashLength, float const GapLength, float const Thickness
 ) {
     float const Dx{B.x - A.x};
     float const Dy{B.y - A.y};
@@ -165,7 +166,7 @@ void DrawDashedLineWithGaps(
                 DrawList->AddLine(
                     ImVec2(DrawStart, Sy),
                     ImVec2(g.x, Sy),
-                    LineColor,
+                    ed::EdStyle::GetColorU32(ed::PxGuiCol_FrameBorder),
                     Thickness
                 );
             }
@@ -176,7 +177,7 @@ void DrawDashedLineWithGaps(
             DrawList->AddLine(
                 ImVec2(DrawStart, Sy),
                 ImVec2(DrawEnd, Sy),
-                LineColor,
+                ed::EdStyle::GetColorU32(ed::PxGuiCol_FrameBorder),
                 Thickness
             );
         }
@@ -205,7 +206,7 @@ bool BeginChildPadded(char const* const StrId, ImVec2 const& Size, ImVec2 const&
     return ImGui::BeginChild(StrId, ChildSize, ChildFlags, WindowFlags);
 }
 
-bool Button(char const* const Label, bool const bUnderline, ImColor Color, ImColor HoveredColor, ImColor PressedColor) {
+bool Button(char const* const Label, bool const bUnderline) {
     ImGuiWindow* const Window{ImGui::GetCurrentWindow()};
 
     if (Window->SkipItems) {
@@ -225,11 +226,11 @@ bool Button(char const* const Label, bool const bUnderline, ImColor Color, ImCol
     bool const bClicked{bHovered && ImGui::IsMouseReleased(0)};
     bool const bPressed{bHovered && ImGui::IsMouseDown(0)};
 
-    ImU32 TextColor{Color};
+    ImU32 TextColor{ed::EdStyle::GetColorU32(ed::PxGuiCol_Text)};
     if (bPressed) {
-        TextColor = PressedColor;
+        TextColor = ed::EdStyle::GetColorU32(ed::PxGuiCol_TextActive);
     } else if (bHovered) {
-        TextColor = HoveredColor;
+        TextColor = ed::EdStyle::GetColorU32(ed::PxGuiCol_TextHovered);
     }
     Window->DrawList->AddText(Pos, TextColor, Label);
 

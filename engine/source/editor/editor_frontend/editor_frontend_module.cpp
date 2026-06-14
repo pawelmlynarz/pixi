@@ -3,6 +3,7 @@
 // pxcore
 #include "misc/core_delegates.h"
 #include "modules/module_interface.h"
+#include "styles/editor_style.h"
 
 // pxfrontend
 #include "app/pixi_application.h"
@@ -14,20 +15,29 @@
 
 namespace {
 
+using namespace px;
+using namespace px::ed;
+
+void InitializeImGuiContext() {
+    auto& PixiRenderer{dynamic_cast<Renderer&>(SimpleApplication::Get().GetRenderer())};
+    ImGui::SetCurrentContext(static_cast<ImGuiContext*>(PixiRenderer.GetImGuiRenderer().GetImguiContext()));
+}
+
+void InitializeImGuiEditorStyleSet() {
+    EdStyle::SetDefaultStyle();
+}
+
 struct EditorFrontendModule {
     static void StartupModule() {
-        using namespace px;
-
         CoreDelegates::OnEngineLoopInitComplete.AddLambda([]() {
-            // Init ImGuiContext for this module.
-            auto& PixiRenderer{dynamic_cast<Renderer&>(SimpleApplication::Get().GetRenderer())};
-            ImGui::SetCurrentContext(static_cast<ImGuiContext*>(PixiRenderer.GetImGuiRenderer().GetImguiContext()));
+            InitializeImGuiContext();
+            InitializeImGuiEditorStyleSet();
         });
     }
 
     static void ShutdownModule() {}
 };
 
-px::IMPLEMENT_MODULE(EditorFrontendModule);
+IMPLEMENT_MODULE(EditorFrontendModule);
 
 } // namespace

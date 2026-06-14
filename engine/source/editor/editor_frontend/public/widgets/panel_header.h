@@ -15,7 +15,6 @@ namespace px::ed {
 enum class EWidgetAlignment : uint8;
 
 struct ImPanelHeaderConfig {
-    ImU32 LineColor{IM_COL32(160, 160, 160, 180)};
     ImVec2 HeaderPadding{ImVec2(24, 16.5)};
 
     float FirstWidgetPadding{24.f};
