@@ -54,7 +54,7 @@ void EdStyle::SetDefaultStyle() {
     DefaultConfig[ImGuiCol_Border] = ImVec4{0.f, 0., 0., 0.};
     DefaultConfig[ImGuiCol_Text] = ImVec4{0.7843f, 0.7843f, 0.7843f, 1.0f};
     DefaultConfig[ImGuiCol_WindowBg] = ImVec4(0, 0, 0, 1.f);
-    
+
     DefaultConfig[ImGuiCol_ResizeGrip] = ImVec4(0.627451f, 0.627451f, 0.627451f, 0.15f);
     DefaultConfig[ImGuiCol_ResizeGripHovered] = ImVec4(0.627451f, 0.627451f, 0.627451f, 0.3f);
     DefaultConfig[ImGuiCol_ResizeGripActive] = ImVec4(0.627451f, 0.627451f, 0.627451f, 0.3f);

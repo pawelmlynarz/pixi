@@ -9,7 +9,7 @@
 
 namespace px {
 
-class ImGuiWidget;
+class ImContainerWidget;
 
 namespace ed {
 
@@ -22,8 +22,7 @@ class SEditorMainFrame final : public SWindow {
     void DrawImGui() override;
 
   private:
-    using WidgetsVector = std::vector<std::unique_ptr<ImGuiWidget>>;
-    WidgetsVector Widgets_;
+    std::vector<std::unique_ptr<ImContainerWidget>> Widgets_;
 };
 
 } // namespace ed

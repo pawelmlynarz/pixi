@@ -25,7 +25,7 @@ struct StyleConfig {
     ImVec4& operator[](int32 Idx);
     ImVec4 const& operator[](int32 Idx) const;
 
-private:
+  private:
     std::span<ImVec4, ImGuiCol_COUNT> NativeColors;
     std::array<ImVec4, static_cast<int>(PxGuiCol_Count) - static_cast<int>(ImGuiCol_COUNT)> PxColors;
 };
