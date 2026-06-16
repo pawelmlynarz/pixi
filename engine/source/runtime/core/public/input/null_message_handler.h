@@ -8,6 +8,8 @@ namespace px {
 
 class NullApplicationMessageHandler final : public IGenericApplicationMessageHandler {
   public:
+    bool OnKeyChar(uint32 /*Character*/, bool /*IsRepeat*/) override { return false; };
+
     bool OnKeyDown(int32 const /*KeyCode*/, uint32 const /*CharacterCode*/, bool const /*IsRepeat*/) override { return false; };
     bool OnKeyUp(int32 const /*KeyCode*/, uint32 const /*CharacterCode*/, bool const /*IsRepeat*/) override { return false; };
 

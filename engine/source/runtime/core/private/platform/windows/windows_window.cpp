@@ -51,6 +51,10 @@ void GLFWKeyCallback(GLFWwindow* const Window, int32_t const Key, int32_t const 
 }
 
 void GLFWCharCallback(GLFWwindow* const Window, uint32_t const Codepoint) {
+    WindowsWindow const* const WinWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(Window))};
+    SharedRef const MessageHandler{WinWindow->GetOwningApplication()->GetMessageHandler()};
+
+    MessageHandler->OnKeyChar(Codepoint, false);
 }
 
 void GLFWMouseButtonCallback(GLFWwindow* const Window, int32_t const Button, int32_t const Action, [[maybe_unused]] int32_t const Mods) {

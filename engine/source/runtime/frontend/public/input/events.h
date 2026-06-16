@@ -33,6 +33,18 @@ struct KeyEvent : public InputEvent {
 };
 
 /**
+ * CharacterEvent describes a keyboard action where the utf-16 code is given (keyboard/controller key/button pressed or released).
+ */
+struct CharacterEvent : public InputEvent {
+    CharacterEvent(uint32 Character, bool bIsRepeat);
+
+    uint32 GetCharacter() const { return Character_; }
+
+  private:
+    uint32 Character_{0};
+};
+
+/**
  * PointerEvent describes a pointer action (mouse).
  */
 struct PointerEvent : public InputEvent {
