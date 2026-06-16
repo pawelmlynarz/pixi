@@ -14,6 +14,7 @@ enum PxGuiCol {
     PxGuiCol_Text = ImGuiCol_COUNT,
     PxGuiCol_TextHovered,
     PxGuiCol_TextActive,
+    PxGuiCol_DashedFrameBorder,
     PxGuiCol_FrameBorder,
 
     PxGuiCol_Count

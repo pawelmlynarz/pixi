@@ -2,14 +2,14 @@
 
 #include "widgets/dockspace.h"
 
-namespace px::edimgui {
+namespace px::ed {
 
 namespace {
 
 using DockSpaceLayoutHash = size_t;
 std::vector<DockSpaceLayoutHash> InitializedLayoutsList;
 
-ImGuiID CreateDockSpace(ImGuiViewport const* const Viewport, ImGuiDockSpaceConfig const& Config) {
+ImGuiID CreateDockSpace(ImGuiViewport const* const Viewport, ImDockSpaceConfig const& Config) {
     ImGui::SetNextWindowPos(Viewport->WorkPos);
     ImGui::SetNextWindowSize(Viewport->WorkSize);
     ImGui::SetNextWindowViewport(Viewport->ID);
@@ -38,7 +38,7 @@ ImGuiID CreateDockSpace(ImGuiViewport const* const Viewport, ImGuiDockSpaceConfi
 
 } // namespace
 
-ImGuiDockSpace::ImGuiDockSpace(ImGuiViewport* Viewport, ImGuiDockSpaceConfig const& Config)
+ImDockSpace::ImDockSpace(ImGuiViewport* Viewport, ImDockSpaceConfig const& Config)
     : Viewport_(Viewport), Config_(Config) {
     ImGuiIO& IO{ImGui::GetIO()};
     Assert(IO.ConfigFlags & ImGuiConfigFlags_DockingEnable);
@@ -55,4 +55,4 @@ ImGuiDockSpace::ImGuiDockSpace(ImGuiViewport* Viewport, ImGuiDockSpaceConfig con
     }
 }
 
-} // namespace px::edimgui
+} // namespace px::ed

@@ -62,7 +62,8 @@ void EdStyle::SetDefaultStyle() {
     DefaultConfig[PxGuiCol_Text] = ImVec4{0.7843f, 0.7843f, 0.7843f, 1.0f};
     DefaultConfig[PxGuiCol_TextActive] = ImVec4{0.7843f, 0.7843f, 0.7843f, 1.0f};
     DefaultConfig[PxGuiCol_TextHovered] = ImVec4{0.8627f, 0.8627f, 0.8627f, 1.0f};
-    DefaultConfig[PxGuiCol_FrameBorder] = ImVec4{0.627451f, 0.627451f, 0.627451f, 0.7f};
+    DefaultConfig[PxGuiCol_DashedFrameBorder] = ImVec4{0.627451f, 0.627451f, 0.627451f, 0.7f};
+    DefaultConfig[PxGuiCol_FrameBorder] = ImVec4{0.427451f, 0.427451f, 0.427451f, 0.55f};
 
     CurrentStyle = DefaultConfig;
 }

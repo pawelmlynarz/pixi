@@ -46,34 +46,23 @@ void DrawHeader(ImConsole& Console) {
     PanelHeader.End();
 }
 
-} // namespace
-
-ImConsole::ImConsole(std::string_view StrId) : ImPanel(StrId) {
-    RegisterLoggerSink(this);
-}
-
-void ImConsole::DrawPanelContent() {
-    DrawDashedWindowBorder();
-
-    DrawHeader(*this);
-
+void DrawConsoleScrollView(ImConsole& Console) {
     bool AutoScroll{true};
 
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(100, 100));
-
-    BeginChildPadded("Scrolling", ImVec2(0, 0), ImVec2(10, 30), 0, ImGuiWindowFlags_HorizontalScrollbar);
+    BeginChildPadded("Scrolling", ImVec2(0, 0), ImVec2(10, 40), 0, ImGuiWindowFlags_HorizontalScrollbar);
     {
         ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
+        ImGuiTextFilter const& TextFilter{Console.GetTextFilter()};
 
         PushFont(EImFontSize::Medium);
-        for (auto const& [logMsg, color] : TextBuf_.Lines) {
-            ImGui::PushStyleColor(ImGuiCol_Text, color);
-            if (TextFilter_.IsActive()) {
-                if (TextFilter_.PassFilter(logMsg.c_str(), logMsg.c_str() + logMsg.length())) {
-                    ImGui::Text(logMsg.c_str());
+        for (auto const& [LogMsg, Color] : Console.GetTextBuf().Lines) {
+            ImGui::PushStyleColor(ImGuiCol_Text, Color);
+            if (TextFilter.IsActive()) {
+                if (TextFilter.PassFilter(LogMsg.c_str(), LogMsg.c_str() + LogMsg.length())) {
+                    ImGui::Text(LogMsg.c_str());
                 }
             } else {
-                ImGui::Text(logMsg.c_str());
+                ImGui::Text(LogMsg.c_str());
             }
             ImGui::PopStyleColor();
         }
@@ -86,8 +75,38 @@ void ImConsole::DrawPanelContent() {
         }
     }
     ImGui::EndChild();
+}
 
-    ImGui::PopStyleVar();
+void DrawConsoleInputField() {
+    ImGui::Dummy({0.f, 3.f});
+    ImGui::Dummy({10.f, 0.f});
+    ImGui::SameLine();
+
+    float const CachedCursorY{ImGui::GetCursorPosY()};
+    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 3.f);
+    PushFont(EImFontSize::Medium);
+    ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.8f, 0.8f, 0.0f, 1.0f));
+    ImGui::Text(">");
+    ImGui::PopStyleColor();
+    PopFont();
+    ImGui::SetCursorPosY(CachedCursorY);
+    ImGui::SameLine();
+
+    ImInputField InputField{{.Width = ImGui::GetContentRegionAvail().x - 10.f}};
+    InputField.Draw();
+}
+
+} // namespace
+
+ImConsole::ImConsole(std::string_view StrId) : ImPanel(StrId) {
+    RegisterLoggerSink(this);
+}
+
+void ImConsole::DrawPanelContent() {
+    DrawDashedWindowBorder();
+    DrawHeader(*this);
+    DrawConsoleScrollView(*this);
+    DrawConsoleInputField();
 }
 
 void ImConsole::OnLogPushed(LogMsg const& LogMsg, std::string const& FormattedMessage) {

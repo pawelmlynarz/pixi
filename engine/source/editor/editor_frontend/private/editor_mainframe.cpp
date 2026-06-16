@@ -90,7 +90,7 @@ void BuildMainFrameDockSpaceLayout(ImGuiViewport* const Viewport, ImGuiID const 
 }
 
 void CreateMainFrameDockSpace(ImGuiViewport* const Viewport) {
-    edimgui::ImGuiDockSpaceConfig const DockSpaceConfig{
+    ImDockSpaceConfig const DockSpaceConfig{
         .Name = "MainFrameDockSpace",
         .WindowPadding{ImVec2(5.0f, 5.0f)},
         .DockSpaceFlags = ImGuiDockNodeFlags_PassthruCentralNode,
@@ -99,7 +99,7 @@ void CreateMainFrameDockSpace(ImGuiViewport* const Viewport) {
             ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus,
         .BuildDockSpaceLayoutStrategy = BuildMainFrameDockSpaceLayout
     };
-    edimgui::ImGuiDockSpace const DockSpace{Viewport, DockSpaceConfig};
+    ImDockSpace const DockSpace{Viewport, DockSpaceConfig};
 }
 
 } // namespace

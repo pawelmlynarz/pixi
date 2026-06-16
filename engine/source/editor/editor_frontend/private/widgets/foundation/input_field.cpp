@@ -1,37 +1,43 @@
 //// © 2026 Pawel Mlynarz
 
-#include "widgets/foundation/text_filter.h"
+#include "widgets/foundation/input_field.h"
 #include "common/font.h"
 #include "styles/editor_style.h"
 
 namespace px::ed {
 
-ImVec2 ImTextFilter::ComputeExtent() const {
-    ScopeFontOverride const ScopeFont{ScopeFontOverride(Config_.FontSize)};
-    ImVec2 const LabelSize{ImGui::CalcTextSize(Config_.Label.data())};
-
-    return ImVec2(Config_.Width + LabelSize.x, LabelSize.y);
+void ImInputField::Draw() const {
+    ImVec2 const Extent{ComputeExtent()};
+    DrawInExtent(nullptr, ImGui::GetCursorPos(), Extent);
 }
 
-void ImTextFilter::DrawInExtent(ImDrawList* DrawList, ImVec2 CursorPos, ImVec2 Extent) const {
+ImVec2 ImInputField::ComputeExtent() const {
     ScopeFontOverride const ScopeFont{ScopeFontOverride(Config_.FontSize)};
-    ImGui::SetCursorPosY(ImGui::GetCursorPos().y - Extent.y * .5f);
+    ImVec2 const LabelSize{ImGui::CalcTextSize(Config_.Label.data())};
+    return {LabelSize.x + Config_.Width, LabelSize.y};
+}
+
+void ImInputField::DrawInExtent(ImDrawList* DrawList, ImVec2 CursorPos, ImVec2 Extent) const {
+    ScopeFontOverride const ScopeFont{ScopeFontOverride(Config_.FontSize)};
+
+    char Buf[256] = "";
 
     int32 PushedStylesCount{0};
-    if (!HasFlag(Config_.Flags, EImTextFilterFlags::HasBackground)) {
+    if (!HasFlag(Config_.Flags, EImInputFieldFlags::HasBackground)) {
         ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(0, 0, 0, 0));
         ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, IM_COL32(0, 0, 0, 0));
         ImGui::PushStyleColor(ImGuiCol_FrameBgActive, IM_COL32(0, 0, 0, 0));
         PushedStylesCount += 3;
     }
 
-    if (HasFlag(Config_.Flags, EImTextFilterFlags::HasBorder)) {
+    if (HasFlag(Config_.Flags, EImInputFieldFlags::HasBorder)) {
         ImGui::PushStyleColor(ImGuiCol_Border, EdStyle::GetColorU32(PxGuiCol_FrameBorder));
         PushedStylesCount += 1;
     }
-
-    std::string_view const Label{Config_.Label.empty() ? "##Filter" : Config_.Label.data()};
-    Config_.TextFilterRef.Draw(Label.data(), Config_.Width);
+    if (Config_.Width > 0) {
+        ImGui::SetNextItemWidth(Config_.Width);
+    }
+    ImGui::InputText("##", Buf, sizeof(Buf));
 
     if (PushedStylesCount > 0) {
         ImGui::PopStyleColor(PushedStylesCount);
