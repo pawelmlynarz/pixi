@@ -4,28 +4,25 @@
 
 #include "widgets/widget.h"
 #include "common/font.h"
-#include "utils/imgui_draw_utils.h"
-
-// pxcore
 #include "tools/flags.h"
+#include "utils/imgui_draw_utils.h"
 
 namespace px::ed {
 
-enum class EImTextFilterFlags : uint8 {
+enum class EImInputFieldFlags : uint8 {
     None,
     HasBackground = 1 << 0,
     HasBorder = 1 << 1,
-} BitmaskEnum(EImTextFilterFlags);
+} BitmaskEnum(EImInputFieldFlags);
 
-struct ImTextFilterConfig {
-    ImGuiTextFilter& TextFilterRef;
+struct ImInputFieldConfig {
     std::string_view Label{""};
     EImFontSize FontSize{EImFontSize::Medium};
-    float Width{100.f};
-    EImTextFilterFlags Flags{EImTextFilterFlags::HasBorder};
+    float Width{300.f};
+    EImInputFieldFlags Flags{EImInputFieldFlags::HasBorder};
 };
 
-class ImTextFilter : public ImWidgetWithConfig<ImTextFilterConfig>,
+class ImInputField : public ImWidgetWithConfig<ImInputFieldConfig>,
                      public IPrecomputedExtentWidget {
   public:
     using ImWidgetWithConfig::ImWidgetWithConfig;
@@ -36,6 +33,8 @@ class ImTextFilter : public ImWidgetWithConfig<ImTextFilterConfig>,
     void DrawInExtent(ImDrawList* DrawList, ImVec2 CursorPos, ImVec2 Extent) const override;
 
     // ~IPrecomputedExtentWidget End
+
+    void Draw() const;
 };
 
 } // namespace px::ed

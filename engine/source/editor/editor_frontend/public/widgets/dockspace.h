@@ -2,14 +2,12 @@
 
 #pragma once
 
-#include "editor_frontend_module.h"
-
 // imgui
 #include "imgui.h"
 
-namespace px::edimgui {
+namespace px::ed {
 
-struct ImGuiDockSpaceConfig {
+struct ImDockSpaceConfig {
     std::string_view Name{"DockSpace"};
 
     float WindowRounding{0.0f};
@@ -22,14 +20,14 @@ struct ImGuiDockSpaceConfig {
     std::function<void(ImGuiViewport*, ImGuiID)> BuildDockSpaceLayoutStrategy;
 };
 
-class ImGuiDockSpace {
+class ImDockSpace {
   public:
-    ImGuiDockSpace(ImGuiViewport* Viewport, ImGuiDockSpaceConfig const& Config);
+    ImDockSpace(ImGuiViewport* Viewport, ImDockSpaceConfig const& Config);
 
   private:
     ImGuiID DockSpaceID_;
     ImGuiViewport* Viewport_{nullptr};
-    ImGuiDockSpaceConfig Config_;
+    ImDockSpaceConfig Config_;
 };
 
-} // namespace px::edimgui
+} // namespace px::ed

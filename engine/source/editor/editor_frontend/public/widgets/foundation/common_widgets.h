@@ -10,5 +10,6 @@
 
 #include "widgets/foundation/button.h"
 #include "widgets/foundation/label.h"
+#include "widgets/foundation/input_field.h"
 #include "widgets/foundation/text_filter.h"
 #include "widgets/foundation/panel_header.h"

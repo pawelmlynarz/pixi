@@ -35,7 +35,7 @@ void DrawDashedLine(
         if (Draw) {
             ImVec2 const p1{ImVec2(A.x + Dir.x * Pos, A.y + Dir.y * Pos)};
             ImVec2 const p2{ImVec2(A.x + Dir.x * End, A.y + Dir.y * End)};
-            DrawList->AddLine(p1, p2, EdStyle::GetColorU32(PxGuiCol_FrameBorder), Thickness);
+            DrawList->AddLine(p1, p2, EdStyle::GetColorU32(PxGuiCol_DashedFrameBorder), Thickness);
         }
 
         Pos = End;
@@ -138,7 +138,7 @@ void DrawDashedLineWithGaps(
                 DrawList->AddLine(
                     ImVec2(DrawStart, Sy),
                     ImVec2(g.x, Sy),
-                    EdStyle::GetColorU32(PxGuiCol_FrameBorder),
+                    EdStyle::GetColorU32(PxGuiCol_DashedFrameBorder),
                     Thickness
                 );
             }
@@ -149,7 +149,7 @@ void DrawDashedLineWithGaps(
             DrawList->AddLine(
                 ImVec2(DrawStart, Sy),
                 ImVec2(DrawEnd, Sy),
-                EdStyle::GetColorU32(PxGuiCol_FrameBorder),
+                EdStyle::GetColorU32(PxGuiCol_DashedFrameBorder),
                 Thickness
             );
         }

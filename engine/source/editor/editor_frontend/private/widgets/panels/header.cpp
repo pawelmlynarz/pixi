@@ -22,7 +22,7 @@ void DrawVersionInfo() {
 
     ImVec2 const StartPos{
         (WindowSize.x - TextSize.x) * 0.5f,
-        (WindowSize.y - TextSize.y) * 0.5f
+        (WindowSize.y - TextSize.y) * 0.5f + 5.f
     };
 
     ImDrawList* const DrawList{ImGui::GetWindowDrawList()};

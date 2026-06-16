@@ -71,8 +71,6 @@ class ImPanelHeader : public ImWidgetWithConfig<ImPanelHeaderConfig> {
     void End() const;
 
   private:
-    ImPanelHeaderConfig Config_;
-
     struct StateData {
         ImVec2 OrygCursorPos_;
 
