@@ -9,6 +9,7 @@
 
 namespace px {
 
+struct CharacterEvent;
 struct KeyEvent;
 struct PointerEvent;
 class PlatformApplication;
@@ -19,6 +20,9 @@ class PlatformApplication;
 class InputSystem final : NonCopyableNonMovable, public IGenericApplicationMessageHandler {
   public:
     PXFRONTEND_API InputSystem(SharedRef<PlatformApplication> OwningApplication);
+
+    bool OnKeyChar(uint32 Character, bool IsRepeat) override;
+    bool ProcessKeyCharEvent(CharacterEvent const& CharEvent);
 
     bool OnKeyDown(int32 KeyCode, uint32 CharacterCode, bool IsRepeat) override;
     bool ProcessKeyDownEvent(KeyEvent const& KeyEvent);

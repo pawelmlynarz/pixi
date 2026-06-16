@@ -14,6 +14,8 @@ class IGenericApplicationMessageHandler {
   public:
     virtual ~IGenericApplicationMessageHandler() = default;
 
+    virtual bool OnKeyChar(uint32 Character, bool IsRepeat) = 0;
+
     virtual bool OnKeyDown(int32 KeyCode, uint32 CharacterCode, bool IsRepeat) = 0;
     virtual bool OnKeyUp(int32 KeyCode, uint32 CharacterCode, bool IsRepeat) = 0;
 
