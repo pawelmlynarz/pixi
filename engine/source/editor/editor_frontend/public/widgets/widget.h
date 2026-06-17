@@ -2,8 +2,10 @@
 
 #pragma once
 
-#include "frontend_module.h"
 #include "core_minimal.h"
+
+// imgui
+#include "imgui.h"
 
 #include <string_view>
 
@@ -37,7 +39,7 @@ class ImContainerWidget {
 template <typename TConfig>
 class ImWidgetWithConfig {
   public:
-    explicit ImWidgetWithConfig(TConfig const& Config) : Config_(Config) {}
+    explicit ImWidgetWithConfig(TConfig Config) : Config_(std::move(Config)) {}
     virtual ~ImWidgetWithConfig() = default;
 
   protected:

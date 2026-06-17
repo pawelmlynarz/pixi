@@ -16,7 +16,7 @@ enum class EMouseButton : uint8 {
 enum class EKeyCode : uint16 {
     // clang-format off
     
-    None,
+    None = 0,
     
     A = 65, B = 66, C = 67, D = 68, E = 69, F = 70,
     G = 71, H = 72, I = 73, J = 74, K = 75, L = 76,

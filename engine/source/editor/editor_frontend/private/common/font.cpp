@@ -25,8 +25,9 @@ ImFont* AddDefaultFont(float const Size) {
 
 struct StaticFontHub {
     static void EnsureInitialized() {
-        if (FontStorage[0] != nullptr)
+        if (FontStorage[0] != nullptr) {
             return;
+        }
         FontStorage[EnumCast(EImFontSize::Small)] = AddDefaultFont(14.0f);
         FontStorage[EnumCast(EImFontSize::Medium)] = AddDefaultFont(18.0f);
         FontStorage[EnumCast(EImFontSize::Large)] = AddDefaultFont(22.0f);

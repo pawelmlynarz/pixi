@@ -21,6 +21,7 @@ bool InputSystem::OnKeyChar(uint32 Character, bool IsRepeat) {
     return ProcessKeyCharEvent(CharEvent);
 }
 
+// NOLINTNEXTLINE(*)
 bool InputSystem::ProcessKeyCharEvent(CharacterEvent const& CharEvent) {
 #if WITH_IMGUI
     ImGuiInputHandler::ProcessCharEvent(CharEvent);
@@ -35,6 +36,7 @@ bool InputSystem::OnKeyDown(int32 const KeyCode, [[maybe_unused]] uint32 const C
     return ProcessKeyDownEvent(KeyEvent);
 }
 
+// NOLINTNEXTLINE(*)
 bool InputSystem::ProcessKeyDownEvent(KeyEvent const& KeyEvent) {
 #if WITH_IMGUI
     ImGuiInputHandler::ProcessKeyDownEvent(KeyEvent);
@@ -49,6 +51,7 @@ bool InputSystem::OnKeyUp(int32 const KeyCode, [[maybe_unused]] uint32 const Cha
     return ProcessKeyUpEvent(KeyEvent);
 }
 
+// NOLINTNEXTLINE(*)
 bool InputSystem::ProcessKeyUpEvent(KeyEvent const& KeyEvent) {
 #if WITH_IMGUI
     ImGuiInputHandler::ProcessKeyUpEvent(KeyEvent);
@@ -61,6 +64,7 @@ bool InputSystem::OnMouseDown([[maybe_unused]] SharedRef<GenericWindow> const& W
     return ProcessMouseButtonDownEvent(PointerEvent);
 }
 
+// NOLINTNEXTLINE(*)
 bool InputSystem::ProcessMouseButtonDownEvent(PointerEvent const& MouseEvent) {
 #if WITH_IMGUI
     ImGuiInputHandler::ProcessMouseButtonDownEvent(MouseEvent);
@@ -73,6 +77,7 @@ bool InputSystem::OnMouseUp([[maybe_unused]] SharedRef<GenericWindow> const& Win
     return ProcessMouseButtonUpEvent(PointerEvent);
 }
 
+// NOLINTNEXTLINE(*)
 bool InputSystem::ProcessMouseButtonUpEvent(PointerEvent const& MouseEvent) {
 #if WITH_IMGUI
     ImGuiInputHandler::ProcessMouseButtonUpEvent(MouseEvent);
@@ -80,11 +85,12 @@ bool InputSystem::ProcessMouseButtonUpEvent(PointerEvent const& MouseEvent) {
     return true;
 }
 
-bool InputSystem::OnMouseMoved(SharedRef<GenericWindow> const& Window, Vector2 const& MousePos) {
+bool InputSystem::OnMouseMoved([[maybe_unused]] SharedRef<GenericWindow> const& Window, Vector2 const& MousePos) {
     PointerEvent const PointerEvent{EMouseButton::None, MousePos};
     return ProcessMouseMovedEvent(PointerEvent);
 }
 
+// NOLINTNEXTLINE(*)
 bool InputSystem::ProcessMouseMovedEvent(PointerEvent const& MouseEvent) {
 #if WITH_IMGUI
     ImGuiInputHandler::ProcessMouseMovedEvent(MouseEvent);

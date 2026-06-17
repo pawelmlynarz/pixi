@@ -2,6 +2,9 @@
 
 #pragma once
 
+// pxcore
+#include "common/types.h"
+
 namespace px::ed {
 
 enum class EImFontSize : uint8 {

@@ -2,6 +2,9 @@
 
 #include "widgets/dockspace.h"
 
+#include <vector>
+#include <algorithm>
+
 namespace px::ed {
 
 namespace {
@@ -40,7 +43,7 @@ ImGuiID CreateDockSpace(ImGuiViewport const* const Viewport, ImDockSpaceConfig c
 
 ImDockSpace::ImDockSpace(ImGuiViewport* Viewport, ImDockSpaceConfig const& Config)
     : Viewport_(Viewport), Config_(Config) {
-    ImGuiIO& IO{ImGui::GetIO()};
+    ImGuiIO const& IO{ImGui::GetIO()};
     Assert(IO.ConfigFlags & ImGuiConfigFlags_DockingEnable);
 
     DockSpaceID_ = CreateDockSpace(Viewport_, Config_);

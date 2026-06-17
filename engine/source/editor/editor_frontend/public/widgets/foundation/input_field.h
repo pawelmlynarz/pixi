@@ -5,18 +5,17 @@
 #include "widgets/widget.h"
 #include "common/font.h"
 #include "tools/flags.h"
-#include "utils/imgui_draw_utils.h"
 
 namespace px::ed {
 
 enum class EImInputFieldFlags : uint8 {
-    None,
+    None = 0,
     HasBackground = 1 << 0,
     HasBorder = 1 << 1,
-} BitmaskEnum(EImInputFieldFlags);
+};
 
 struct ImInputFieldConfig {
-    std::string_view Label{""};
+    std::string_view Label;
     EImFontSize FontSize{EImFontSize::Medium};
     float Width{300.f};
     EImInputFieldFlags Flags{EImInputFieldFlags::HasBorder};
@@ -38,3 +37,5 @@ class ImInputField : public ImWidgetWithConfig<ImInputFieldConfig>,
 };
 
 } // namespace px::ed
+
+BitmaskEnum(px::ed::EImInputFieldFlags);

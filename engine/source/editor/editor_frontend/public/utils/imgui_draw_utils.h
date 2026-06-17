@@ -3,7 +3,11 @@
 #pragma once
 
 #include "editor_frontend_module.h"
+
+// imgui
 #include "imgui.h"
+
+#include <vector>
 
 namespace px::ed {
 

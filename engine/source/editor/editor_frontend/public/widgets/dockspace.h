@@ -2,8 +2,13 @@
 
 #pragma once
 
+#include "core_minimal.h"
+
 // imgui
 #include "imgui.h"
+
+#include <string_view>
+#include <functional>
 
 namespace px::ed {
 
