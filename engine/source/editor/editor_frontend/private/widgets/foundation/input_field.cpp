@@ -17,10 +17,10 @@ ImVec2 ImInputField::ComputeExtent() const {
     return {LabelSize.x + Config_.Width, LabelSize.y};
 }
 
-void ImInputField::DrawInExtent(ImDrawList* DrawList, ImVec2 CursorPos, ImVec2 Extent) const {
+void ImInputField::DrawInExtent(ImDrawList*, ImVec2, [[maybe_unused]] ImVec2 Extent) const {
     ScopeFontOverride const ScopeFont{ScopeFontOverride(Config_.FontSize)};
 
-    char Buf[256] = "";
+    std::array<char, 256> Buf{};
 
     int32 PushedStylesCount{0};
     if (!HasFlag(Config_.Flags, EImInputFieldFlags::HasBackground)) {
@@ -37,7 +37,7 @@ void ImInputField::DrawInExtent(ImDrawList* DrawList, ImVec2 CursorPos, ImVec2 E
     if (Config_.Width > 0) {
         ImGui::SetNextItemWidth(Config_.Width);
     }
-    ImGui::InputText("##", Buf, sizeof(Buf));
+    ImGui::InputText("##", Buf.data(), sizeof(Buf));
 
     if (PushedStylesCount > 0) {
         ImGui::PopStyleColor(PushedStylesCount);

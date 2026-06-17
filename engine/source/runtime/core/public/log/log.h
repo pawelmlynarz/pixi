@@ -41,7 +41,7 @@ struct LogManager {
 
     static PXCORE_API Logger& GetLogger(std::string_view const& CategoryName);
 
-    static PXCORE_API void RegisterOutputLogSinkMT(SharedPtr<OutputLogSinkMT> OutputLogSinkMT);
+    static PXCORE_API void RegisterOutputLogSinkMT(SharedPtr<OutputLogSinkMT> const& OutputLogSinkMT);
 };
 
 template <ELogVerbosity Verbosity, typename... TArgs>

@@ -37,21 +37,21 @@ void DrawVersionInfo() {
     };
 
     float X{StartPos.x};
-    float Y{StartPos.y};
+    float const Y{StartPos.y};
 
-    char Buf[2]{0, 0};
+    std::array<char,2> Buf{0, 0};
     for (int i{0}; i < 4; i++) {
         constexpr std::string_view Prefix{"Pixi"};
-        *Buf = Prefix[i];
-        DrawList->AddText(Font, FontSize, ImVec2(X, Y), Colors[i], Buf);
-        X += ImGui::CalcTextSize(Buf).x;
+        Buf[0] = Prefix[i];
+        DrawList->AddText(Font, FontSize, ImVec2(X, Y), Colors[i], Buf.data());
+        X += ImGui::CalcTextSize(Buf.data()).x;
     }
 
     std::string_view const Rest{Version.data() + 4, Version.size() - 4};
     DrawList->AddText(Font, FontSize, ImVec2(X, Y), IM_COL32_WHITE, Rest.data());
 
     PopFont();
-}
+} 
 
 } // namespace
 

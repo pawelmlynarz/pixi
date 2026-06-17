@@ -30,7 +30,7 @@ void ImPanelHeader::AddWidget(EWidgetAlignment Alignment, IPrecomputedExtentWidg
     AddWidget(
         Alignment,
         [&]() { return Widget.ComputeExtent(); },
-        [&](ImDrawList* DrawList, ImVec2 CursorPos, ImVec2 Extent) { return Widget.DrawInExtent(DrawList, CursorPos, Extent); }
+        [&](ImDrawList* DrawList, ImVec2 CursorPos, ImVec2 Extent) { Widget.DrawInExtent(DrawList, CursorPos, Extent); }
     );
 }
 

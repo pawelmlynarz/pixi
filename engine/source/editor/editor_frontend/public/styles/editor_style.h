@@ -2,7 +2,14 @@
 
 #pragma once
 
+#include "core_minimal.h"
 #include "editor_frontend_module.h"
+
+// imgui
+#include "imgui.h"
+
+#include <span>
+#include <array>
 
 namespace px::ed {
 
@@ -10,7 +17,8 @@ namespace px::ed {
  * Possible to add custom pixi color styles here,
  * provided that the first entry starts with ImGuiCol_COUNT value.
  */
-enum PxGuiCol {
+// NOLINTNEXTLINE(cppcoreguidelines-use-enum-class)
+enum PxGuiCol : uint8 {
     PxGuiCol_Text = ImGuiCol_COUNT,
     PxGuiCol_TextHovered,
     PxGuiCol_TextActive,

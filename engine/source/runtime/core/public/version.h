@@ -3,7 +3,10 @@
 #pragma once
 
 #include "tools/compiler.h"
-#include "common/types.h"
+
+#include <string_view>
+
+// NOLINTBEGIN
 
 #define PX_VERSION_MAJOR 0
 #define PX_VERSION_MINOR 0
@@ -20,3 +23,5 @@ constexpr std::string_view VersionString() {
 }
 
 } // namespace px
+
+// NOLINTEND

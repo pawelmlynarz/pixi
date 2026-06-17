@@ -119,6 +119,7 @@ void DrawDashedLineWithGaps(
     float const Diry{Dy / Len};
     float const Step{DashLength + GapLength};
 
+    // NOLINTNEXTLINE(*)
     for (float t{0}; t < Len; t += Step) {
         float const Start{t};
         float const End{std::min(t + DashLength, Len)};
@@ -154,19 +155,6 @@ void DrawDashedLineWithGaps(
             );
         }
     }
-}
-
-bool BeginChildPadded(char const* const StrId, ImVec2 const& Size, ImVec2 const& Padding, ImGuiChildFlags const ChildFlags, ImGuiWindowFlags const WindowFlags) {
-    ImVec2 const RegionAvail{ImGui::GetContentRegionAvail()};
-    ImVec2 Cursor{ImGui::GetCursorPos()};
-
-    ImGui::SetCursorPos(ImVec2(Cursor.x + Padding.x, Cursor.y + Padding.y));
-
-    ImVec2 const ChildSize(
-        (Size.x == 0.f && Size.y == 0.f) ? ImVec2(RegionAvail.x - Padding.x * 2.0f, RegionAvail.y - Padding.y * 2.0f) : Size
-    );
-
-    return ImGui::BeginChild(StrId, ChildSize, ChildFlags, WindowFlags);
 }
 
 } // namespace px::ed

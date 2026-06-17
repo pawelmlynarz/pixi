@@ -15,13 +15,13 @@ namespace px::ed {
 namespace {
 
 void RegisterLoggerSink(ImConsole* const Console) {
-    SharedPtr OutputLogSink{MakeShared<OutputLogSinkMT>()};
+    SharedPtr const OutputLogSink{MakeShared<OutputLogSinkMT>()};
 
     CustomLoggerSinkCallback CustomSinkCallback;
     CustomSinkCallback.BindRaw(Console, &ImConsole::OnLogPushed);
     OutputLogSink->SetCustomCallback(std::move(CustomSinkCallback));
 
-    DEFINE_OUTPUT_LOG_SINK(std::move(OutputLogSink));
+    DEFINE_OUTPUT_LOG_SINK(OutputLogSink);
 }
 
 void DrawHeader(ImConsole& Console) {
@@ -47,7 +47,7 @@ void DrawHeader(ImConsole& Console) {
 }
 
 void DrawConsoleScrollView(ImConsole& Console) {
-    bool AutoScroll{true};
+    bool constexpr AutoScroll{true};
 
     BeginChildPadded("Scrolling", ImVec2(0, 0), ImVec2(10, 40), 0, ImGuiWindowFlags_HorizontalScrollbar);
     {
@@ -92,7 +92,7 @@ void DrawConsoleInputField() {
     ImGui::SetCursorPosY(CachedCursorY);
     ImGui::SameLine();
 
-    ImInputField InputField{{.Width = ImGui::GetContentRegionAvail().x - 10.f}};
+    ImInputField const InputField{{.Width = ImGui::GetContentRegionAvail().x - 10.f}};
     InputField.Draw();
 }
 

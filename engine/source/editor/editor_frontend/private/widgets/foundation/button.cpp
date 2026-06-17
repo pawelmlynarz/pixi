@@ -52,7 +52,7 @@ ImVec2 ImButton::ComputeExtent() const {
     return ImGui::CalcTextSize(Config_.Text.data());
 }
 
-void ImButton::DrawInExtent(ImDrawList* const DrawList, ImVec2 const CursorPos, ImVec2 const Extent) const {
+void ImButton::DrawInExtent(ImDrawList* const, ImVec2 const, ImVec2 const Extent) const {
     ScopeFontOverride const ScopeFont{ScopeFontOverride(Config_.FontSize)};
     ImGui::SetCursorPosY(ImGui::GetCursorPos().y - Extent.y * .5f);
 

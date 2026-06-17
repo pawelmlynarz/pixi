@@ -65,7 +65,7 @@ void LogManager::RegisterLogger(std::string_view const& CategoryName, std::share
     RegisteredLoggers[CategoryName]->set_level(spdlog::level::trace);
 }
 
-void LogManager::RegisterOutputLogSinkMT(SharedPtr<OutputLogSinkMT> OutputLogSinkMT) {
+void LogManager::RegisterOutputLogSinkMT(SharedPtr<OutputLogSinkMT> const& OutputLogSinkMT) {
     for (auto& Logger : std::views::values(RegisteredLoggers)) {
         Logger->sinks().emplace_back(OutputLogSinkMT);
         OutputLogSinkMT->set_pattern(DefaultPattern.data());

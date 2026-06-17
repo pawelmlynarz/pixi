@@ -58,7 +58,7 @@ void BuildMainFrameDockSpaceLayout(ImGuiViewport* const Viewport, ImGuiID const 
     };
 
     { // Console & Asset Browser
-        ImGuiID DockConsoleID;
+        ImGuiID DockConsoleID{};
         ImGuiID const DockAssetBrowserID{
             ImGui::DockBuilderSplitNode(DockBottomID, ImGuiDir_Left, 0.25f, nullptr, &DockConsoleID)
         };
