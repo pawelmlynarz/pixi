@@ -2,8 +2,6 @@
 
 #pragma once
 
-#define WITH_IMGUI 1
-
 #if WITH_IMGUI
 
 #include "frontend_module.h"
