@@ -42,7 +42,7 @@ int32 EngineLoop::Init() {
 #if WITH_EDITOR
     int32 const Result{InitializeEditorEngine(MakeShared<ed::PixiEditorEngine>())};
 #else
-    int32 const Result{InitializeEngine(MakeShared<Engine>())};
+    int32 const Result{InitializeEngine(MakeShared<PixiEngine>())};
 #endif
     CoreDelegates::OnEngineLoopInitComplete.Broadcast();
 
