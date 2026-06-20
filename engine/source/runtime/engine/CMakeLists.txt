@@ -4,6 +4,7 @@
 # --------------------------------------------------
 
 include(utils)
+include(build)
 
 set(MODULE_NAME engine)
 set(MODULE_TARGET_NAME px${MODULE_NAME})
@@ -44,12 +45,9 @@ target_precompile_headers(${MODULE_TARGET_NAME} PRIVATE
 )
 endif()
 
-set(MODULE_COMPILE_DEFINITIONS ${PX_ENGINE_COMPILE_DEFINITIONS})
-list(APPEND MODULE_COMPILE_DEFINITIONS PX_BUILD_ENGINE)
-target_compile_definitions(${MODULE_TARGET_NAME} PRIVATE ${MODULE_COMPILE_DEFINITIONS})
-target_compile_options(${MODULE_TARGET_NAME} PRIVATE ${GLOB_COMPILE_OPTIONS})
+set_engine_module_properties(${MODULE_NAME})
 
 #
 # IDE grouping
 set_target_properties(${MODULE_TARGET_NAME} PROPERTIES FOLDER "engine/runtime/")
-group_sources_for_target(${MODULE_TARGET_NAME})
+group_sources_for_target(${MODULE_SOURCES})

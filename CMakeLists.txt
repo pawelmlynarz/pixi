@@ -2,13 +2,16 @@ cmake_minimum_required(VERSION 4.3 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/engine/tools/cmake")
 
+# Configure this project environment.
 include(project_config.cmake)
-include(platform_check)
 
 # --------------------------------------------------
 # Project Setup
 # --------------------------------------------------
 project(${PROJECT_NAME} C CXX)
+
+# Check host & target platform.
+include(platform/platform_check)
 
 # --------------------------------------------------
 # Environment Configuration
@@ -20,16 +23,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP OFF)
 
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    set(GLOB_COMPILE_OPTIONS -mssse3 -Wextra)
-elseif(MSVC)
-    set(GLOB_COMPILE_OPTIONS /W4 /WX
-            /wd4324
-            /wd4100 # unintialized variables
-    )
-else()
-    message(WARNING "Unknown compiler!")
-endif()
+include(build)
+set_compiler_options()
 
 # --------------------------------------------------
 # Build Targets
@@ -38,6 +33,7 @@ endif()
 add_subdirectory(engine)
 
 if(BUILD_SANDBOX)
+	set(SANDBOX_TARGET_NAME sandbox)
     add_subdirectory("${SANDBOX_TARGET_NAME}")
 endif()
 
