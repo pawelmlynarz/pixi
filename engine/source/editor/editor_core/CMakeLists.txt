@@ -3,7 +3,9 @@
 # Default Type:     Dynamic
 # --------------------------------------------------
 
+include(build)
 include(utils)
+include(modules/engine_module)
 
 set(MODULE_NAME editor_core)
 set(MODULE_TARGET_NAME px${MODULE_NAME})
@@ -35,6 +37,7 @@ file(GLOB_RECURSE MODULE_SOURCES CONFIGURE_DEPENDS
 #
 # Configuration
 target_sources(${MODULE_TARGET_NAME} PRIVATE ${MODULE_SOURCES})
+
 target_include_directories(${MODULE_TARGET_NAME}
         PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
@@ -46,12 +49,11 @@ target_precompile_headers(${MODULE_TARGET_NAME} PRIVATE
 )
 endif()
 
-set(MODULE_COMPILE_DEFINITIONS ${PX_ENGINE_COMPILE_DEFINITIONS})
-list(APPEND MODULE_COMPILE_DEFINITIONS PX_BUILD_EDITOR_CORE)
-target_compile_definitions(${MODULE_TARGET_NAME} PRIVATE ${MODULE_COMPILE_DEFINITIONS})
-target_compile_options(${MODULE_TARGET_NAME} PRIVATE ${GLOB_COMPILE_OPTIONS})
+set_engine_module_properties(${MODULE_NAME})
 
 #
 # IDE grouping
 set_target_properties(${MODULE_TARGET_NAME} PROPERTIES FOLDER "engine/editor/")
-group_sources_for_target(${MODULE_TARGET_NAME})
+group_sources_for_target(${MODULE_SOURCES})
+
+exclude_target_from_default_build_except(${MODULE_TARGET_NAME} DebugEditor)

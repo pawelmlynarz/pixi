@@ -15,10 +15,6 @@ include(fetch_third_party)
 # An exception is Launch module which is obligatory to be static.
 option(PX_BUILD_SHARED "Builds engine modules as separate dlls." ON)
 
-#
-# Builds engine with editor
-option(PX_WITH_EDITOR "Builds engine with development editor." ON)
-
 set(PX_ENGINE_COMPILE_DEFINITIONS)
 
 if(PX_BUILD_SHARED)
@@ -27,9 +23,8 @@ else()
     list(APPEND PX_ENGINE_COMPILE_DEFINITIONS PX_BUILD_STATIC)
 endif()
 
-if(PX_WITH_EDITOR)
-    list(APPEND PX_ENGINE_COMPILE_DEFINITIONS WITH_EDITOR)   
-    list(APPEND PX_ENGINE_COMPILE_DEFINITIONS WITH_IMGUI)   
+if(TARGET_PLATFORM STREQUAL "Windows")
+	list(APPEND PX_ENGINE_COMPILE_DEFINITIONS "PLATFORM_WINDOWS")
 endif()
 
 if(PLATFORM_WINDOWS)

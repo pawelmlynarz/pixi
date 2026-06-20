@@ -2,13 +2,16 @@ cmake_minimum_required(VERSION 4.3 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/engine/tools/cmake")
 
+# Configure this project environment.
 include(project_config.cmake)
-include(platform_check)
 
 # --------------------------------------------------
 # Project Setup
 # --------------------------------------------------
 project(${PROJECT_NAME} C CXX)
+
+# Check host & target platform.
+include(platform/platform_check)
 
 # --------------------------------------------------
 # Environment Configuration
@@ -38,6 +41,7 @@ endif()
 add_subdirectory(engine)
 
 if(BUILD_SANDBOX)
+	set(SANDBOX_TARGET_NAME sandbox)
     add_subdirectory("${SANDBOX_TARGET_NAME}")
 endif()
 

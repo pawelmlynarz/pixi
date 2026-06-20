@@ -46,14 +46,4 @@ if(PX_BUILD_SHARED)
             COMMENT "Copying engine dlls into sandbox executable directory."
             COMMAND_EXPAND_LISTS
     )
-
-if(PX_WITH_EDITOR)
-    add_custom_command(TARGET ${SANDBOX_TARGET_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE:pxeditor_frontend>
-            $<TARGET_FILE_DIR:${SANDBOX_TARGET_NAME}>
-            COMMENT "Copying editor dlls into sandbox executable directory."
-            COMMAND_EXPAND_LISTS
-    )
-endif()
 endif()

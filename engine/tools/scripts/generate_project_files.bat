@@ -52,7 +52,7 @@ if not exist %ENGINE_ROOT%/../build  (
 
 echo Generating project files..
 
-cmake .. -G "%GENERATOR%"
+cmake .. --preset vs2022
 if %ERRORLEVEL% NEQ 0 goto FAIL_PROJECT_GENERATION
 
 echo [32mSuccessfully generated project files.[0m
