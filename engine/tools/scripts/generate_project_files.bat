@@ -2,10 +2,10 @@
 :: Script: generate_project_files.bat
 ::
 :: Description:
-::   Generates project files using any supported generator.
+::   Generates project files using any supported preset.
 ::
 :: Usage:
-::   generate_project_files.bat <GENERATOR_NAME>
+::   generate_project_files.bat <PRESET_NAME>
 ::
 :: --------------------------------------------------
 
@@ -16,7 +16,7 @@
 :: --------------------------------------------------
 
 if "%~1"=="" goto FAIL_INVALID_ARGS
-set "GENERATOR=%~1"
+set "PRESET=%~1"
 
 :: --------------------------------------------------
 :: Prerequisites Check
@@ -52,7 +52,7 @@ if not exist %ENGINE_ROOT%/../build  (
 
 echo Generating project files..
 
-cmake .. --preset vs2022
+cmake .. --preset %PRESET%
 if %ERRORLEVEL% NEQ 0 goto FAIL_PROJECT_GENERATION
 
 echo [32mSuccessfully generated project files.[0m
@@ -61,7 +61,7 @@ exit /b 0
 
 :FAIL_INVALID_ARGS
 echo [31mError: Invalid arguments.[0m
-echo Usage: %~nx0 GENERATOR_NAME
+echo Usage: %~nx0 PRESET_NAME
 pause
 exit /b 1
 

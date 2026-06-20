@@ -32,7 +32,7 @@ target_sources(${SANDBOX_TARGET_NAME} PRIVATE
 
 #
 # Configuration
-target_compile_options(${SANDBOX_TARGET_NAME} PRIVATE ${GLOB_COMPILE_OPTIONS})
+set_module_properties(${SANDBOX_TARGET_NAME})
 
 # --------------------------------------------------
 # Post Build

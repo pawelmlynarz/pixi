@@ -4,7 +4,7 @@
 # --------------------------------------------------
 
 include(utils)
-include(modules/engine_module)
+include(build)
 
 set(MODULE_NAME rhi)
 set(MODULE_TARGET_NAME px${MODULE_NAME})

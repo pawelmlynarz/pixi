@@ -5,7 +5,6 @@
 
 include(build)
 include(utils)
-include(modules/engine_module)
 
 set(MODULE_NAME editor_core)
 set(MODULE_TARGET_NAME px${MODULE_NAME})
@@ -56,4 +55,4 @@ set_engine_module_properties(${MODULE_NAME})
 set_target_properties(${MODULE_TARGET_NAME} PROPERTIES FOLDER "engine/editor/")
 group_sources_for_target(${MODULE_SOURCES})
 
-exclude_target_from_default_build_except(${MODULE_TARGET_NAME} DebugEditor)
+exclude_module_from_default_build_except(${MODULE_TARGET_NAME} DebugEditor)

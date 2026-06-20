@@ -1,7 +1,5 @@
 # t-x64-msvc.cmake
 
-message("Configuring for x64-msvc toolchain.")
-
 set(CMAKE_SYSTEM_NAME Windows)
 set(CMAKE_SYSTEM_PROCESSOR x86_64)
 
