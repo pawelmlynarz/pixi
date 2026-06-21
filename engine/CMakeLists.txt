@@ -11,11 +11,19 @@ include(fetch_third_party)
 # --------------------------------------------------
 
 #
-# Builds engine modules as dynamic libraries .
+# Builds engine module(s) as dynamic libraries.
 # An exception is Launch module which is obligatory to be static.
-option(PX_BUILD_SHARED "Builds engine modules as separate dlls." ON)
+option(PX_BUILD_SHARED "Builds engine modules as dll(s)." ON)
 
-option(PX_BUILD_MONOLITHIC "Mono" ON)
+#
+# Whether to build engine as separate dll per module or single dll.
+option(PX_BUILD_MONOLITHIC "Engine monolithic dll build." ON)
+
+# Force MONOLITHIC in static mode as it doesn't make any sense to build separate static libs.
+if(NOT PX_BUILD_SHARED)
+	set(PX_BUILD_MONOLITHIC ON CACHE BOOL "Engine monolithic dll build." FORCE)
+endif()
+
 
 if(PX_BUILD_MONOLITHIC)
     set(MONO_MODULE_NAME engine)
@@ -28,6 +36,14 @@ if(PX_BUILD_MONOLITHIC)
     endif()
 
     add_library(px::mono::engine ALIAS ${MODULE_TARGET_NAME})
+	
+	file(GLOB_RECURSE ENGINE_CMAKE_FILES
+        "CMakeLists.txt"
+        tools/cmake/*.cmake
+	)
+	target_sources(${MODULE_TARGET_NAME} PRIVATE
+        ${ENGINE_CMAKE_FILES}
+	)
 endif()
 
 set(PX_ENGINE_COMPILE_DEFINITIONS)

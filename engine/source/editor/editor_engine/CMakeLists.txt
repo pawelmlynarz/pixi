@@ -55,7 +55,9 @@ set_engine_module_properties(${MODULE_NAME})
 
 #
 # IDE grouping
-set_target_properties(${MODULE_TARGET_NAME} PROPERTIES FOLDER "engine/editor/")
-group_sources_for_target(${MODULE_SOURCES})
+if(NOT PX_BUILD_MONOLITHIC)
+    set_target_properties(${MODULE_TARGET_NAME} PROPERTIES FOLDER "engine/editor/")
+    group_sources_for_target(${MODULE_SOURCES})
+endif()
 
 exclude_module_from_default_build_except(${MODULE_TARGET_NAME} DebugEditor)

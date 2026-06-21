@@ -23,7 +23,6 @@ target_link_libraries(${SANDBOX_TARGET_NAME} PRIVATE
 # Common Sources
 file(GLOB_RECURSE SANDBOX_CMAKE_FILES
         "${SANDBOX_ROOT}/CMakeLists.txt"
-        "${SANDBOX_ROOT}/source/CMakeLists.txt"
 )
 
 target_sources(${SANDBOX_TARGET_NAME} PRIVATE
@@ -38,12 +37,10 @@ set_module_properties(${SANDBOX_TARGET_NAME})
 # Post Build
 # --------------------------------------------------
 
-if(PX_BUILD_SHARED)
-    add_custom_command(TARGET ${SANDBOX_TARGET_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_RUNTIME_DLLS:${SANDBOX_TARGET_NAME}>
-            $<TARGET_FILE_DIR:${SANDBOX_TARGET_NAME}>
-            COMMENT "Copying engine dlls into sandbox executable directory."
-            COMMAND_EXPAND_LISTS
-    )
-endif()
+add_custom_command(TARGET ${SANDBOX_TARGET_NAME} POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different
+		$<TARGET_RUNTIME_DLLS:${SANDBOX_TARGET_NAME}>
+		$<TARGET_FILE_DIR:${SANDBOX_TARGET_NAME}>
+		COMMENT "Copying engine dlls into sandbox executable directory."
+		COMMAND_EXPAND_LISTS
+)
