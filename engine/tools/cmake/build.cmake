@@ -45,9 +45,13 @@ endfunction()
 # Sets compilation properties for an engine module.
 function(set_engine_module_properties module_name)
     string(TOUPPER "${module_name}" MODULE_NAME_UPPER)
-
-	set_module_properties("px${module_name}")
-
+    
+    if (PX_BUILD_MONOLITHIC)
+	    set_module_properties("px${MONO_MODULE_NAME}")
+    else()
+        set_module_properties("px${module_name}")
+    endif()
+    
     # Engine only compile definitions.
     set(MODULE_COMPILE_DEFINITIONS ${PX_ENGINE_COMPILE_DEFINITIONS})
     list(APPEND MODULE_COMPILE_DEFINITIONS "PX_BUILD_${MODULE_NAME_UPPER}")

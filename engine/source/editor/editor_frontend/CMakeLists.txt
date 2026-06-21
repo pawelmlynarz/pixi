@@ -7,25 +7,29 @@ include(build)
 include(utils)
 
 set(MODULE_NAME editor_frontend)
-set(MODULE_TARGET_NAME px${MODULE_NAME})
-
-#
-# Library
-if(PX_BUILD_SHARED)
-    add_library(${MODULE_TARGET_NAME} SHARED "")
-else()
-    add_library(${MODULE_TARGET_NAME} STATIC "")
+if(NOT PX_BUILD_MONOLITHIC)
+    set(MODULE_TARGET_NAME px${MODULE_NAME})
+    
+    #
+    # Library
+    if(PX_BUILD_SHARED)
+        add_library(${MODULE_TARGET_NAME} SHARED "")
+    else()
+        add_library(${MODULE_TARGET_NAME} STATIC "")
+    endif()
+    add_library(px::editor::frontend ALIAS ${MODULE_TARGET_NAME})
 endif()
-add_library(px::editor::frontend ALIAS ${MODULE_TARGET_NAME})
 
 #
 # Dependencies
-target_link_libraries(${MODULE_TARGET_NAME}
-        PRIVATE
-        px::editor::engine
-        PUBLIC
-        px::frontend
-)
+if(NOT PX_BUILD_MONOLITHIC)
+    target_link_libraries(${MODULE_TARGET_NAME}
+            PRIVATE
+            px::editor::engine
+            PUBLIC
+            px::frontend
+    )
+endif()
 
 #
 # Common Sources                                         
@@ -52,7 +56,9 @@ set_engine_module_properties(${MODULE_NAME})
 
 #
 # IDE grouping
-set_target_properties(${MODULE_TARGET_NAME} PROPERTIES FOLDER "engine/editor/")
-group_sources_for_target(${MODULE_SOURCES})
+if(NOT PX_BUILD_MONOLITHIC)
+    set_target_properties(${MODULE_TARGET_NAME} PROPERTIES FOLDER "engine/editor/")
+    group_sources_for_target(${MODULE_SOURCES})
+endif()
 
 exclude_module_from_default_build_except(${MODULE_TARGET_NAME} DebugEditor)

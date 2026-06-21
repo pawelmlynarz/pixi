@@ -16,19 +16,23 @@ add_library(px::launch ALIAS ${MODULE_TARGET_NAME})
 
 #
 # Dependencies
-target_link_libraries(${MODULE_TARGET_NAME} 
-        PRIVATE
-        px::core
-        px::engine
-        px::rhi
-        px::frontend
-)
-
-target_link_libraries(${MODULE_TARGET_NAME}
-        PRIVATE
-        $<$<CONFIG:DebugEditor>:px::editor::core>
-        $<$<CONFIG:DebugEditor>:px::editor::engine>
-)
+if(NOT PX_BUILD_MONOLITHIC)
+    target_link_libraries(${MODULE_TARGET_NAME} 
+            PRIVATE
+            px::core
+            px::engine
+            px::rhi
+            px::frontend
+    )
+    
+    target_link_libraries(${MODULE_TARGET_NAME}
+            PRIVATE
+            $<$<CONFIG:DebugEditor>:px::editor::core>
+            $<$<CONFIG:DebugEditor>:px::editor::engine>
+    )
+else()
+    target_link_libraries(${MODULE_TARGET_NAME} PRIVATE px::mono::engine)
+endif()
 
 #
 # Common Sources
@@ -66,5 +70,7 @@ set_engine_module_properties(${MODULE_NAME})
 
 #
 # IDE grouping
-set_target_properties(${MODULE_TARGET_NAME} PROPERTIES FOLDER "engine/runtime/")
-group_sources_for_target(${MODULE_SOURCES})
+if(NOT PX_BUILD_MONOLITHIC)
+    set_target_properties(${MODULE_TARGET_NAME} PROPERTIES FOLDER "engine/runtime/")
+    group_sources_for_target(${MODULE_SOURCES})
+endif()

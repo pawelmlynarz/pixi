@@ -109,7 +109,7 @@ endif()
 
 function(set_third_party_filter target additional_filter)
     if(TARGET ${target})
-        set_target_properties(${target} PROPERTIES FOLDER "engine/third_party/${additional_filter}")
+        set_target_properties(${target} PROPERTIES FOLDER "third_party/${additional_filter}")
     else()
         message(NOTICE "Target ${target} not specified.")    
     endif()
