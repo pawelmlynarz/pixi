@@ -12,37 +12,37 @@ namespace px::ed {
 
 namespace {
 
-ImFont* AddDefaultFont(float const Size) {
-    ImGuiIO& IO{ImGui::GetIO()};
+ImFont* addDefaultFont(float const size) {
+    ImGuiIO& io{ImGui::GetIO()};
 
-    ImFontConfig Config;
-    Config.SizePixels = Size;
-    Config.OversampleH = Config.OversampleV = 1;
-    Config.PixelSnapH = true;
+    ImFontConfig config;
+    config.SizePixels = size;
+    config.OversampleH = config.OversampleV = 1;
+    config.PixelSnapH = true;
 
-    return IO.Fonts->AddFontDefault(&Config);
+    return io.Fonts->AddFontDefault(&config);
 }
 
 struct StaticFontHub {
-    static void EnsureInitialized() {
-        if (FontStorage[0] != nullptr) {
+    static void ensureInitialized() {
+        if (fontStorage[0] != nullptr) {
             return;
         }
-        FontStorage[EnumCast(EImFontSize::Small)] = AddDefaultFont(14.0f);
-        FontStorage[EnumCast(EImFontSize::Medium)] = AddDefaultFont(18.0f);
-        FontStorage[EnumCast(EImFontSize::Large)] = AddDefaultFont(22.0f);
+        fontStorage[enumCast(EImFontSize::Small)] = addDefaultFont(14.0f);
+        fontStorage[enumCast(EImFontSize::Medium)] = addDefaultFont(18.0f);
+        fontStorage[enumCast(EImFontSize::Large)] = addDefaultFont(22.0f);
     }
-    static inline std::array<ImFont*, EnumCast<EImFontSize>(EImFontSize::Max)> FontStorage;
+    static inline std::array<ImFont*, enumCast<EImFontSize>(EImFontSize::Max)> fontStorage;
 };
 
 } // namespace
 
-void PushFont(EImFontSize const FontSize) {
-    StaticFontHub::EnsureInitialized();
-    ImGui::PushFont(StaticFontHub::FontStorage[EnumCast(FontSize)]);
+void pushFont(EImFontSize const fontSize) {
+    StaticFontHub::ensureInitialized();
+    ImGui::PushFont(StaticFontHub::fontStorage[enumCast(fontSize)]);
 }
 
-void PopFont() {
+void popFont() {
     ImGui::PopFont();
 }
 

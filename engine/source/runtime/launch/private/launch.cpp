@@ -17,36 +17,36 @@ namespace px {
 namespace {
 
 [[nodiscard]]
-int32 EnginePreInit() {
-    return EngineLoop::PreInit();
+int32 enginePreInit() {
+    return EngineLoop::preInit();
 }
 
 [[nodiscard]]
-int32 EngineInit() {
-    return EngineLoop::Init();
+int32 engineInit() {
+    return EngineLoop::init();
 }
 
-void EngineTick() {
-    EngineLoop::Tick();
+void engineTick() {
+    EngineLoop::tick();
 }
 
-void EngineExit() {
-    EngineLoop::Exit();
+void engineExit() {
+    EngineLoop::exit();
 }
 
 #if WITH_EDITOR
 [[nodiscard]]
 int32 EditorInit() {
-    int32 const Result{EngineInit()};
+    int32 const Result{engineInit()};
     if (Result != 0) {
         return Result;
     }
-    return ed::EditorInit();
+    return ed::editorInit();
 }
 
 void EditorExit() {
-    ed::EditorExit();
-    EngineExit();
+    ed::editorExit();
+    engineExit();
 }
 #endif // WITH_EDITOR
 
@@ -55,7 +55,7 @@ struct EngineExitGuard {
 #if WITH_EDITOR
         EditorExit();
 #else
-        EngineExit();
+        engineExit();
 #endif
     }
 };
@@ -63,31 +63,31 @@ struct EngineExitGuard {
 } // namespace
 
 // NOLINTNEXTLINE(misc-use-internal-linkage)
-int32 EngineMain() {
-    EngineExitGuard const ExitGuard;
+int32 engineMain() {
+    EngineExitGuard const exitGuard;
 
-    InitGameThreadId(PlatformTLS::GetCurrentThreadId());
+    initGameThreadId(PlatformTLS::getCurrentThreadId());
 
-    int32 ErrorLevel{EnginePreInit()};
-    if (ErrorLevel != 0 || IsEngineExitRequested()) {
-        return ErrorLevel;
+    int32 errorLevel{enginePreInit()};
+    if (errorLevel != 0 || isEngineExitRequested()) {
+        return errorLevel;
     }
 
 #if WITH_EDITOR
-    ErrorLevel = EditorInit();
+    errorLevel = EditorInit();
 #else
-    ErrorLevel = EngineInit();
+    errorLevel = engineInit();
 #endif
 
-    if (ErrorLevel != 0 || IsEngineExitRequested()) {
-        return ErrorLevel;
+    if (errorLevel != 0 || isEngineExitRequested()) {
+        return errorLevel;
     }
 
-    while (!IsEngineExitRequested()) {
-        EngineTick();
+    while (!isEngineExitRequested()) {
+        engineTick();
     }
 
-    return ErrorLevel;
+    return errorLevel;
 }
 
 } // namespace px

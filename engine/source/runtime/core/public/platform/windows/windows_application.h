@@ -14,22 +14,22 @@ class GenericWindow;
 
 class WindowsApplication final : public PlatformApplication {
   public:
-    void Initialize() override;
-    void Shutdown() override;
+    void initialize() override;
+    void shutdown() override;
 
-    UniquePtr<GenericWindow> CreatePlatformWindow() override;
-    void InitializeWindow(SharedRef<GenericWindow> const& Window, GenericWindowDefinition const& WindowDefinition) override;
-    void CloseWindow(SharedRef<GenericWindow> const& Window) override;
+    UniquePtr<GenericWindow> createPlatformWindow() override;
+    void initializeWindow(SharedRef<GenericWindow> const& window, GenericWindowDefinition const& windowDefinition) override;
+    void closeWindow(SharedRef<GenericWindow> const& window) override;
 
-    void PollMessages() override;
+    void pollMessages() override;
 
   private:
-    std::vector<SharedRef<class WindowsWindow>> Windows_;
+    std::vector<SharedRef<class WindowsWindow>> windows_;
 };
 
 struct WindowsApplicationFactory {
     [[nodiscard]]
-    static PXCORE_API UniquePtr<WindowsApplication> Create();
+    static PXCORE_API UniquePtr<WindowsApplication> create();
 };
 
 } // namespace px

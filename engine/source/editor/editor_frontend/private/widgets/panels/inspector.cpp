@@ -6,11 +6,11 @@
 
 namespace px::ed {
 
-void ImInspector::DrawPanelContent() {
-    DrawDashedWindowBorder();
-    PushFont(EImFontSize::Large);
-    DrawDashedHeader("[INSPECTOR]", {24.f, 24.f}, 25);
-    PopFont();
+void ImInspector::drawPanelContent() {
+    drawDashedWindowBorder();
+    pushFont(EImFontSize::Large);
+    drawDashedHeader("[INSPECTOR]", {24.f, 24.f}, 25);
+    popFont();
 };
 
 } // namespace px::ed

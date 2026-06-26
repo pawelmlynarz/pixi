@@ -33,14 +33,14 @@ class ImPanelHeader : public ImWidgetWithConfig<ImPanelHeaderConfig> {
     using ImWidgetWithConfig::ImWidgetWithConfig;
 
     using CalculateExtentStrategy = std::function<ImVec2()>;
-    using DrawStrategy = std::function<void(ImDrawList* DrawList, ImVec2 CursorPos, ImVec2 Extent)>;
+    using DrawStrategy = std::function<void(ImDrawList* drawList, ImVec2 cursorPos, ImVec2 extent)>;
 
     /**
      * @brief Begins the header drawing section.
      *
      * @param Config Configuration.
      */
-    void Begin();
+    void begin();
 
     /**
      * @brief Adds a widget to the header.
@@ -48,8 +48,8 @@ class ImPanelHeader : public ImWidgetWithConfig<ImPanelHeaderConfig> {
      * @param Alignment Left or Right.
      * @param Widget Widget implementing IPrecomputedExtentWidget interface.
      */
-    void AddWidget(
-        EWidgetAlignment Alignment, IPrecomputedExtentWidget const& Widget
+    void addWidget(
+        EWidgetAlignment alignment, IPrecomputedExtentWidget const& widget
     );
 
     /**
@@ -60,15 +60,15 @@ class ImPanelHeader : public ImWidgetWithConfig<ImPanelHeaderConfig> {
      * @param CalculateExtentStrategy Calculating widget extent strategy.
      * @param DrawStrategy Drawing strategy. Supports both drawing using fixed functions as well as draw list.
      */
-    void AddWidget(
-        EWidgetAlignment Alignment,
-        CalculateExtentStrategy const& CalculateExtentStrategy, DrawStrategy const& DrawStrategy
+    void addWidget(
+        EWidgetAlignment alignment,
+        CalculateExtentStrategy const& calculateExtentStrategy, DrawStrategy const& drawStrategy
     );
 
     /**
      * @brief Ends the header drawing section.
      */
-    void End() const;
+    void end() const;
 
   private:
     struct StateData {
@@ -81,7 +81,7 @@ class ImPanelHeader : public ImWidgetWithConfig<ImPanelHeaderConfig> {
         float CursorXRight_{0.f};
 
         std::vector<ImVec2> Gaps_;
-    } State_;
+    } state_;
 };
 
 } // namespace px::ed

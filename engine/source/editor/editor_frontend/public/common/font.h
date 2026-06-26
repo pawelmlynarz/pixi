@@ -17,19 +17,19 @@ enum class EImFontSize : uint8 {
 /**
  * Pushes engine font of a predefined size for text rendering.
  */
-void PushFont(EImFontSize FontSize);
+void pushFont(EImFontSize fontSize);
 
 /**
  * Pops engine font.
  */
-void PopFont();
+void popFont();
 
 struct ScopeFontOverride {
-    ScopeFontOverride(EImFontSize const Size) {
-        PushFont(Size);
+    ScopeFontOverride(EImFontSize const size) {
+        pushFont(size);
     }
     ~ScopeFontOverride() {
-        PopFont();
+        popFont();
     }
 };
 

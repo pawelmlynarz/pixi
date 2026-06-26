@@ -6,7 +6,7 @@
 
 namespace px {
 
-uint32 WindowsPlatformTLS::GetCurrentThreadId() {
+uint32 WindowsPlatformTLS::getCurrentThreadId() {
     return ::GetCurrentThreadId();
 }
 

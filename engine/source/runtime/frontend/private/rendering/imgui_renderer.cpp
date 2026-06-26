@@ -12,96 +12,96 @@
 
 namespace px {
 
-void ImGuiRenderer::Initialize(nri::Device* const Device) {
-    Device_ = Device;
-    Assert(Device_);
+void ImGuiRenderer::initialize(nri::Device* const device) {
+    device_ = device;
+    pxAssert(device_);
 
     IMGUI_CHECKVERSION();
-    ImguiContext_ = ImGui::CreateContext();
+    imguiContext_ = ImGui::CreateContext();
     ImGui::StyleColorsDark();
 
-    ImGuiStyle& Style{ImGui::GetStyle()};
-    Style.FrameBorderSize = 1;
-    Style.WindowBorderSize = 1;
+    ImGuiStyle& style{ImGui::GetStyle()};
+    style.FrameBorderSize = 1;
+    style.WindowBorderSize = 1;
 
-    ImGuiIO& IO{ImGui::GetIO()};
-    IO.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
-    IO.BackendFlags |= ImGuiBackendFlags_RendererHasVtxOffset;
-    IO.BackendFlags |= ImGuiBackendFlags_RendererHasTextures;
-    IO.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    IO.IniFilename = nullptr;
+    ImGuiIO& io{ImGui::GetIO()};
+    io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
+    io.BackendFlags |= ImGuiBackendFlags_RendererHasVtxOffset;
+    io.BackendFlags |= ImGuiBackendFlags_RendererHasTextures;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.IniFilename = nullptr;
 
-    ImFontConfig FontConfig{};
-    FontConfig.SizePixels = 13.f;
+    ImFontConfig fontConfig{};
+    fontConfig.SizePixels = 13.f;
 
-    IO.Fonts->AddFontDefaultVector(&FontConfig);
+    io.Fonts->AddFontDefaultVector(&fontConfig);
 
-    RHI_ABORT_ON_FAILURE(nri::nriGetInterface(*Device_, NRI_INTERFACE(nri::ImguiInterface), &ImguiInterface_))
+    RHI_ABORT_ON_FAILURE(nri::nriGetInterface(*device_, NRI_INTERFACE(nri::ImguiInterface), &imguiInterface_))
 
-    nri::ImguiDesc constexpr ImguiDesc{};
-    RHI_ABORT_ON_FAILURE(ImguiInterface_.CreateImgui(*Device_, ImguiDesc, ImguiRenderer_))
+    nri::ImguiDesc constexpr imguiDesc{};
+    RHI_ABORT_ON_FAILURE(imguiInterface_.CreateImgui(*device_, imguiDesc, imguiRenderer_))
 }
 
-void ImGuiRenderer::Shutdown() {
-    if (!HasUserInterface()) {
+void ImGuiRenderer::shutdown() {
+    if (!hasUserInterface()) {
         return;
     }
 
-    ImguiInterface_.DestroyImgui(ImguiRenderer_);
+    imguiInterface_.DestroyImgui(imguiRenderer_);
     ImGui::DestroyContext();
 
-    ImguiRenderer_ = nullptr;
+    imguiRenderer_ = nullptr;
 }
 
 // NOLINTNEXTLINE(readability-make-member-function-const)
-void ImGuiRenderer::Tick([[maybe_unused]] float const Dt) {
-    if (!HasUserInterface()) {
+void ImGuiRenderer::tick([[maybe_unused]] float const dt) {
+    if (!hasUserInterface()) {
         return;
     }
 
-    PX_TODO("ImGui Display Size.");
-    ImGuiIO& IO{ImGui::GetIO()};
-    IO.DisplaySize = ImVec2(1920.f, 1080.f);
+    pxToDo("ImGui Display Size.");
+    ImGuiIO& io{ImGui::GetIO()};
+    io.DisplaySize = ImVec2(1920.f, 1080.f);
 }
 
-void ImGuiRenderer::CmdCopyImguiData(nri::CommandBuffer& CmdBuffer, nri::Streamer& Streamer) const {
-    if (!HasUserInterface()) {
+void ImGuiRenderer::cmdCopyImguiData(nri::CommandBuffer& cmdBuffer, nri::Streamer& streamer) const {
+    if (!hasUserInterface()) {
         return;
     }
 
-    ImDrawData const& DrawData{*ImGui::GetDrawData()};
+    ImDrawData const& drawData{*ImGui::GetDrawData()};
 
-    nri::CopyImguiDataDesc const CopyImguiDataDesc{
-        .drawLists = DrawData.CmdLists.Data,
-        .drawListNum = static_cast<uint32>(DrawData.CmdLists.Size),
-        .textures = DrawData.Textures->Data,
-        .textureNum = static_cast<uint32>(DrawData.Textures->Size)
+    nri::CopyImguiDataDesc const copyImguiDataDesc{
+        .drawLists = drawData.CmdLists.Data,
+        .drawListNum = static_cast<uint32>(drawData.CmdLists.Size),
+        .textures = drawData.Textures->Data,
+        .textureNum = static_cast<uint32>(drawData.Textures->Size)
     };
 
-    ImguiInterface_.CmdCopyImguiData(CmdBuffer, Streamer, *ImguiRenderer_, CopyImguiDataDesc);
+    imguiInterface_.CmdCopyImguiData(cmdBuffer, streamer, *imguiRenderer_, copyImguiDataDesc);
 }
 
-void ImGuiRenderer::CmdDrawImgui(nri::CommandBuffer& CmdBuffer, nri::Format const AttachmentFormat, float const SdrScale, bool const bIsSrgb) const {
-    if (!HasUserInterface()) {
+void ImGuiRenderer::cmdDrawImgui(nri::CommandBuffer& cmdBuffer, nri::Format const attachmentFormat, float const sdrScale, bool const bIsSrgb) const {
+    if (!hasUserInterface()) {
         return;
     }
 
-    ImDrawData const& DrawData{*ImGui::GetDrawData()};
+    ImDrawData const& drawData{*ImGui::GetDrawData()};
 
-    nri::DrawImguiDesc const DrawImguiDesc{
-        .drawLists = DrawData.CmdLists.Data,
-        .drawListNum = static_cast<uint32>(DrawData.CmdLists.Size),
-        .displaySize = {.w = static_cast<nri::Dim_t>(DrawData.DisplaySize.x), .h = static_cast<nri::Dim_t>(DrawData.DisplaySize.y)},
-        .hdrScale = SdrScale,
-        .attachmentFormat = AttachmentFormat,
+    nri::DrawImguiDesc const drawImguiDesc{
+        .drawLists = drawData.CmdLists.Data,
+        .drawListNum = static_cast<uint32>(drawData.CmdLists.Size),
+        .displaySize = {.w = static_cast<nri::Dim_t>(drawData.DisplaySize.x), .h = static_cast<nri::Dim_t>(drawData.DisplaySize.y)},
+        .hdrScale = sdrScale,
+        .attachmentFormat = attachmentFormat,
         .linearColor = !bIsSrgb
     };
 
-    ImguiInterface_.CmdDrawImgui(CmdBuffer, *ImguiRenderer_, DrawImguiDesc);
+    imguiInterface_.CmdDrawImgui(cmdBuffer, *imguiRenderer_, drawImguiDesc);
 }
 
-void* ImGuiRenderer::GetImguiContext() {
-    return ImguiContext_;
+void* ImGuiRenderer::getImguiContext() {
+    return imguiContext_;
 }
 
 } // namespace px

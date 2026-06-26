@@ -9,7 +9,7 @@
 
 namespace px::ed {
 
-PXEDITOR_CORE_API int32 EditorInit();
-PXEDITOR_CORE_API void EditorExit();
+PXEDITOR_CORE_API int32 editorInit();
+PXEDITOR_CORE_API void editorExit();
 
 } // namespace px::ed

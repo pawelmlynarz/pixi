@@ -27,53 +27,53 @@
 namespace px {
 
 [[nodiscard]]
-int32 EngineLoop::PreInit() {
-    LogManager::Initialize();
-    InitializeRHI();
+int32 EngineLoop::preInit() {
+    LogManager::initialize();
+    initializeRhi();
 
-    auto& Application{SimpleApplication::CreateApplication()};
-    Application.InitializeRenderer(MakeShared<Renderer>());
+    auto& application{SimpleApplication::createApplication()};
+    application.initializeRenderer(makeShared<Renderer>());
 
     return 0;
 }
 
 [[nodiscard]]
-int32 EngineLoop::Init() {
+int32 EngineLoop::init() {
 #if WITH_EDITOR
-    int32 const Result{InitializeEditorEngine(MakeShared<ed::PixiEditorEngine>())};
+    int32 const result{initializeEditorEngine(makeShared<ed::PixiEditorEngine>())};
 #else
-    int32 const Result{InitializeEngine(MakeShared<PixiEngine>())};
+    int32 const result{initializeEngine(makeShared<PixiEngine>())};
 #endif
-    CoreDelegates::OnEngineLoopInitComplete.Broadcast();
+    CoreDelegates::onEngineLoopInitComplete.broadcast();
 
-    Log(Launch, Trace, "Engine loop initialized.");
-    return Result;
+    pxLog(Launch, Trace, "Engine loop initialized.");
+    return result;
 }
 
-void EngineLoop::Tick() {
-    PixiEngine& Engine{GetEngine()};
+void EngineLoop::tick() {
+    PixiEngine& engine{getEngine()};
 
-    Engine.UpdateTimeAndHandleMaxTickRate();
+    engine.updateTimeAndHandleMaxTickRate();
 
-    PX_TODO("StartFrame for active scenes");
-    PX_TODO("Calculate FPS timings");
-    PX_TODO("PollMessages");
-    PX_TODO("Engine tick");
-    PX_TODO("Platform and input tick");
-    PX_TODO("Time and widgets(paint) tick");
-    SimpleApplication::Get().Tick(Engine.GetDeltaTime());
-    PX_TODO("EndFrame for active scenes");
+    pxToDo("StartFrame for active scenes");
+    pxToDo("Calculate FPS timings");
+    pxToDo("PollMessages");
+    pxToDo("Engine tick");
+    pxToDo("Platform and input tick");
+    pxToDo("Time and widgets(paint) tick");
+    SimpleApplication::get().tick(engine.getDeltaTime());
+    pxToDo("EndFrame for active scenes");
 
-    PX_TODO("Game & Render thread sync");
+    pxToDo("Game & Render thread sync");
 
-    GFrameCounter++;
+    gFrameCounter++;
 }
 
-void EngineLoop::Exit() {
-    DestroyEngine();
+void EngineLoop::exit() {
+    destroyEngine();
 
-    SimpleApplication::ShutdownApplication();
-    ShutdownRHI();
+    SimpleApplication::shutdownApplication();
+    shutdownRhi();
 }
 
 } // namespace px

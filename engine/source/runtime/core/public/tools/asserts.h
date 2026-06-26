@@ -12,7 +12,7 @@
 #include <format>
 #include <source_location>
 
-#define PX_TODO(Msg) void(Msg)
+#define pxToDo(Msg) void(Msg)
 
 #if defined(_MSC_VER)
 #define DEBUG_BREAK() (__nop(), __debugbreak())
@@ -32,25 +32,25 @@ namespace px::asserts {
 using namespace px;
 
 template <uint64 UID>
-std::atomic_bool EnsureHasExecuted{false};
+std::atomic_bool ensureHasExecuted{false};
 
-constexpr uint64 FileLineHashForEnsure(std::source_location const& Loc = std::source_location::current()) {
-    uint32 Result{2166136261u};
-    char const* Filename{Loc.file_name()};
-    for (; *Filename; ++Filename) {
-        Result ^= static_cast<uint8>(*Filename);
-        Result *= 16777619u;
+constexpr uint64 fileLineHashForEnsure(std::source_location const& loc = std::source_location::current()) {
+    uint32 result{2166136261u};
+    char const* filename{loc.file_name()};
+    for (; *filename; ++filename) {
+        result ^= static_cast<uint8>(*filename);
+        result *= 16777619u;
     }
-    return (static_cast<uint64>(Result) << 32) | Loc.line();
+    return (static_cast<uint64>(result) << 32) | loc.line();
 }
 
-inline std::string GetTranslationUnitInfo(std::source_location const& Loc = std::source_location::current()) {
+inline std::string getTranslationUnitInfo(std::source_location const& Loc = std::source_location::current()) {
     return std::format("In function {} on line {}", Loc.function_name(), Loc.line());
 }
 
-PXCORE_API bool ExecEnsureCheck(bool const bAlways, std::atomic_bool& bExecuted, std::string const& TranslationUnitInfo, std::string const& Message = {});
+PXCORE_API bool execEnsureCheck(bool const bAlways, std::atomic_bool& bExecuted, std::string const& translationUnitInfo, std::string const& message = {});
 
-PXCORE_API bool ExecAssertCheck(std::string const& TranslationUnitInfo, std::string const& Message = {});
+PXCORE_API bool execAssertCheck(std::string const& translationUnitInfo, std::string const& message = {});
 
 } // namespace px::asserts
 
@@ -62,67 +62,67 @@ PXCORE_API bool ExecAssertCheck(std::string const& TranslationUnitInfo, std::str
 #define DO_CHECK defined(_DEBUG)
 #endif
 
-#define PX_ENSURE_IMPL(Always, Expression, ...)                                    \
-    (                                                                              \
-        !!(Expression) ||                                                          \
-        (px::asserts::ExecEnsureCheck(                                             \
-             Always,                                                               \
-             px::asserts::EnsureHasExecuted<px::asserts::FileLineHashForEnsure()>, \
-             px::asserts::GetTranslationUnitInfo(),                                \
-             ##__VA_ARGS__                                                         \
-         ) &&                                                                      \
+#define PX_ENSURE_IMPL(always, expr, ...)                                           \
+    (                                                                               \
+        !!(expr) ||                                                                 \
+        (px::asserts::execEnsureCheck(                                              \
+             always,                                                                \
+             px::asserts::ensureHasExecuted<px::asserts::fileLineHashForEnsure()>,  \
+             px::asserts::getTranslationUnitInfo(),                                 \
+             ##__VA_ARGS__                                                          \
+         ) &&                                                                       \
          BREAK_AND_RETURN_FALSE()))
 
-#define Ensure(Expression) \
-    PX_ENSURE_IMPL(false, Expression)
+#define pxEnsure(expr) \
+    PX_ENSURE_IMPL(false, expr)
 
-#define EnsureAlways(Expression) \
-    PX_ENSURE_IMPL(true, Expression)
+#define pxEnsureAlways(expr) \
+    PX_ENSURE_IMPL(true, expr)
 
-#define EnsureMsgf(Expression, Fmt, ...) \
-    PX_ENSURE_IMPL(false, Expression, std::format(Fmt, __VA_ARGS__))
+#define pxEnsureMsgf(expr, fmt, ...) \
+    PX_ENSURE_IMPL(false, expr, std::format(fmt, __VA_ARGS__))
 
-#define EnsureAlwaysMsgf(Expression, Fmt, ...) \
-    PX_ENSURE_IMPL(true, Expression, Fmt, __VA_ARGS__)
+#define pxEnsureAlwaysMsgf(expr, fmt, ...) \
+    PX_ENSURE_IMPL(true, expr, fmt, __VA_ARGS__)
 
-#define EnsureReturnIfFalse(Condition, ...) \
-    if (!(Condition)) {                     \
+#define pxEnsureReturnIfFalse(condition, ...) \
+    if (!(condition)) {                     \
         Ensure(false);                      \
         return __VA_OPT__(__VA_ARGS__);     \
     }
 
-#define ReturnIfFalse(Condition, ...)   \
-    if (!(Condition)) {                 \
+#define pxReturnIfFalse(condition, ...)   \
+    if (!(condition)) {                 \
         return __VA_OPT__(__VA_ARGS__); \
     }
 
-#define EnsureContinueIfFalse(Condition) \
-    if (!(Condition)) {                  \
+#define pxEnsureContinueIfFalse(condition) \
+    if (!(condition)) {                  \
         Ensure(false);                   \
         continue;                        \
     }
 
-#define ContinueIfFalse(Condition) \
-    if (!(Condition)) {            \
+#define pxContinueIfFalse(condition) \
+    if (!(condition)) {            \
         continue;                  \
     }
 
-#define EnsureNoEntry(Fmt, ...) \
-    EnsureAlwaysMsgf(false, Fmt, __VA_ARGS__);
+#define pxEnsureNoEntry(fmt, ...) \
+    pxEnsureAlwaysMsgf(false, fmt, __VA_ARGS__);
 
-#define PX_ASSERT_IMPL(Expression, ...)                \
-    if (!(Expression)) {                               \
-        if (px::asserts::ExecAssertCheck(              \
-                px::asserts::GetTranslationUnitInfo(), \
-                ##__VA_ARGS__                          \
-            ))                                         \
-            BREAK_AND_ABORT();                         \
-    }                                                  \
+#define PX_ASSERT_IMPL(expr, ...)                       \
+    if (!(expr)) {                                      \
+        if (px::asserts::execAssertCheck(               \
+                px::asserts::getTranslationUnitInfo(),  \
+                ##__VA_ARGS__                           \
+            ))                                          \
+            BREAK_AND_ABORT();                          \
+    }                                                   \
     (void)0
 
-#define Assert(Expression) PX_ASSERT_IMPL(Expression)
+#define pxAssert(expr) PX_ASSERT_IMPL(expr)
 
-#define AssertMsgf(Expression, Fmt, ...) PX_ASSERT_IMPL(Expression, std::format(Fmt, __VA_ARGS__))
+#define pxAssertMsgf(expr, fmt, ...) PX_ASSERT_IMPL(expr, std::format(fmt, __VA_ARGS__))
 
 // NOLINTEND
 // clang-format on

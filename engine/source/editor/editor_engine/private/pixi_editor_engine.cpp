@@ -10,24 +10,24 @@ namespace px::ed {
 
 namespace {
 
-WeakPtr<PixiEditorEngine> PixiEditorEngineInst;
+WeakPtr<PixiEditorEngine> pixiEditorEngineInst;
 
 } // namespace
 
-int32 InitializeEditorEngine(SharedPtr<PixiEditorEngine> const& EditorEngine) {
-    int32 const Result{InitializeEngine(EditorEngine)};
-    if (Result != 0) {
-        return Result;
+int32 initializeEditorEngine(SharedPtr<PixiEditorEngine> const& editorEngine) {
+    int32 const result{initializeEngine(editorEngine)};
+    if (result != 0) {
+        return result;
     }
-    PixiEditorEngineInst = EditorEngine;
+    pixiEditorEngineInst = editorEngine;
 
     return 0;
 }
 
-PixiEditorEngine& GetEditorEngine() {
-    auto const SharedEditorEngine{PixiEditorEngineInst.lock()};
-    Assert(SharedEditorEngine != nullptr);
-    return *SharedEditorEngine;
+PixiEditorEngine& getEditorEngine() {
+    auto const sharedEditorEngine{pixiEditorEngineInst.lock()};
+    pxAssert(sharedEditorEngine != nullptr);
+    return *sharedEditorEngine;
 }
 
 } // namespace px::ed

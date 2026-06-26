@@ -35,59 +35,59 @@ struct Renderer::Impl {
 };
 
 Renderer::Renderer()
-    : Impl_(MakeUnique<Impl>()) {
+    : impl_(makeUnique<Impl>()) {
 }
 
 Renderer::~Renderer() = default;
 
-bool Renderer::Initialize() {
+bool Renderer::initialize() {
 #if WITH_IMGUI
-    Impl_->ImGuiRenderer.Initialize(GetRHIContext().GetDevice());
+    impl_->ImGuiRenderer.initialize(getRhiContext().getDevice());
 #endif
     return true;
 }
 
-void Renderer::Shutdown() {
+void Renderer::shutdown() {
 #if WITH_IMGUI
-    Impl_->ImGuiRenderer.Shutdown();
+    impl_->ImGuiRenderer.shutdown();
 #endif
-    Impl_->WindowToViewportInfo.clear();
+    impl_->WindowToViewportInfo.clear();
 }
 
-void Renderer::Tick(float const Dt) {
+void Renderer::tick(float const dt) {
 #if WITH_IMGUI
-    Impl_->ImGuiRenderer.Tick(Dt);
+    impl_->ImGuiRenderer.tick(dt);
 #endif
 }
 
-SharedPtr<RHIViewport> Renderer::GetViewportResource(SharedRef<SWindow> Window) const {
-    auto const& Map{Impl_->WindowToViewportInfo};
+SharedPtr<RHIViewport> Renderer::getViewportResource(SharedRef<SWindow> window) const {
+    auto const& map{impl_->WindowToViewportInfo};
 
-    if (auto It{Map.find(Window)}; It != Map.end()) {
-        return It->second->RHIViewport;
+    if (auto it{map.find(window)}; it != map.end()) {
+        return it->second->RHIViewport;
     }
     return nullptr;
 }
 
-void Renderer::CreateViewport(SharedRef<SWindow> Window) {
-    UniquePtr ViewInfo{MakeUnique<RenderViewportInfo>()};
+void Renderer::createViewport(SharedRef<SWindow> window) {
+    UniquePtr viewInfo{makeUnique<RenderViewportInfo>()};
 
-    void* const OSWindow{Window->GetNativeWindow()->GetOSWindowHandle().Handle};
-    Assert(OSWindow != nullptr);
+    void* const osWindow{window->getNativeWindow()->getOsWindowHandle().Handle};
+    pxAssert(osWindow != nullptr);
 
-    ViewInfo->OSWindow = OSWindow;
-    ViewInfo->RHIViewport = RHICreateViewport(
-        GetRHIContext(),
-        ViewInfo->OSWindow,
-        static_cast<uint16>(Window->GetSize().x), static_cast<uint16>(Window->GetSize().y)
+    viewInfo->OSWindow = osWindow;
+    viewInfo->RHIViewport = rhiCreateViewport(
+        getRhiContext(),
+        viewInfo->OSWindow,
+        static_cast<uint16>(window->getSize().x), static_cast<uint16>(window->getSize().y)
     );
 
-    Impl_->WindowToViewportInfo.emplace(Window, std::move(ViewInfo));
+    impl_->WindowToViewportInfo.emplace(window, std::move(viewInfo));
 }
 
 #if WITH_IMGUI
-ImGuiRenderer& Renderer::GetImGuiRenderer() {
-    return Impl_->ImGuiRenderer;
+ImGuiRenderer& Renderer::getImGuiRenderer() {
+    return impl_->ImGuiRenderer;
 }
 #endif
 

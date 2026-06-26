@@ -14,51 +14,51 @@ namespace px::ed {
 
 namespace {
 
-void RegisterLoggerSink(ImConsole* const Console) {
-    SharedPtr const OutputLogSink{MakeShared<OutputLogSinkMT>()};
+void registerLoggerSink(ImConsole* const console) {
+    SharedPtr const outputLogSink{makeShared<OutputLogSinkMT>()};
 
-    CustomLoggerSinkCallback CustomSinkCallback;
-    CustomSinkCallback.BindRaw(Console, &ImConsole::OnLogPushed);
-    OutputLogSink->SetCustomCallback(std::move(CustomSinkCallback));
+    CustomLoggerSinkCallback customSinkCallback;
+    customSinkCallback.bindRaw(console, &ImConsole::onLogPushed);
+    outputLogSink->setCustomCallback(std::move(customSinkCallback));
 
-    DEFINE_OUTPUT_LOG_SINK(OutputLogSink);
+    DEFINE_OUTPUT_LOG_SINK(outputLogSink);
 }
 
-void DrawHeader(ImConsole& Console) {
-    ImPanelHeader PanelHeader{{.NextWidgetPadding = 50.f}};
-    PanelHeader.Begin();
+void drawHeader(ImConsole& console) {
+    ImPanelHeader panelHeader{{.NextWidgetPadding = 50.f}};
+    panelHeader.begin();
 
-    PanelHeader.AddWidget(
+    panelHeader.addWidget(
         EWidgetAlignment::Left,
         ImLabel({.Text = "[CONSOLE / LOG]", .FontSize = EImFontSize::Large})
     );
 
-    PanelHeader.AddWidget(
+    panelHeader.addWidget(
         EWidgetAlignment::Right,
-        ImButton({.Text = "Clear", .FontSize = EImFontSize::Large, .bUnderline = true, .OnPressed = [&Console] { Console.GetTextBuf().Clear(); }})
+        ImButton({.Text = "Clear", .FontSize = EImFontSize::Large, .bUnderline = true, .OnPressed = [&console] { console.getTextBuf().clear(); }})
     );
 
-    PanelHeader.AddWidget(
+    panelHeader.addWidget(
         EWidgetAlignment::Right,
-        ImTextFilter({.TextFilterRef = Console.GetTextFilter(), .FontSize = EImFontSize::Medium, .Width = 300})
+        ImTextFilter({.TextFilterRef = console.getTextFilter(), .FontSize = EImFontSize::Medium, .Width = 300})
     );
 
-    PanelHeader.End();
+    panelHeader.end();
 }
 
-void DrawConsoleScrollView(ImConsole& Console) {
-    bool constexpr AutoScroll{true};
+void drawConsoleScrollView(ImConsole& console) {
+    bool constexpr autoScroll{true};
 
-    BeginChildPadded("Scrolling", ImVec2(0, 0), ImVec2(10, 40), 0, ImGuiWindowFlags_HorizontalScrollbar);
+    beginChildPadded("Scrolling", ImVec2(0, 0), ImVec2(10, 40), 0, ImGuiWindowFlags_HorizontalScrollbar);
     {
         ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
-        ImGuiTextFilter const& TextFilter{Console.GetTextFilter()};
+        ImGuiTextFilter const& textFilter{console.getTextFilter()};
 
-        PushFont(EImFontSize::Medium);
-        for (auto const& [LogMsg, Color] : Console.GetTextBuf().Lines) {
+        pushFont(EImFontSize::Medium);
+        for (auto const& [LogMsg, Color] : console.getTextBuf().Lines) {
             ImGui::PushStyleColor(ImGuiCol_Text, Color);
-            if (TextFilter.IsActive()) {
-                if (TextFilter.PassFilter(LogMsg.c_str(), LogMsg.c_str() + LogMsg.length())) {
+            if (textFilter.IsActive()) {
+                if (textFilter.PassFilter(LogMsg.c_str(), LogMsg.c_str() + LogMsg.length())) {
                     ImGui::Text(LogMsg.c_str());
                 }
             } else {
@@ -66,59 +66,59 @@ void DrawConsoleScrollView(ImConsole& Console) {
             }
             ImGui::PopStyleColor();
         }
-        PopFont();
+        popFont();
 
         ImGui::PopStyleVar();
 
-        if (AutoScroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY()) {
+        if (autoScroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY()) {
             ImGui::SetScrollHereY(1.0f);
         }
     }
     ImGui::EndChild();
 }
 
-void DrawConsoleInputField() {
+void drawConsoleInputField() {
     ImGui::Dummy({0.f, 3.f});
     ImGui::Dummy({10.f, 0.f});
     ImGui::SameLine();
 
-    float const CachedCursorY{ImGui::GetCursorPosY()};
+    float const cachedCursorY{ImGui::GetCursorPosY()};
     ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 3.f);
-    PushFont(EImFontSize::Medium);
+    pushFont(EImFontSize::Medium);
     ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.8f, 0.8f, 0.0f, 1.0f));
     ImGui::Text(">");
     ImGui::PopStyleColor();
-    PopFont();
-    ImGui::SetCursorPosY(CachedCursorY);
+    popFont();
+    ImGui::SetCursorPosY(cachedCursorY);
     ImGui::SameLine();
 
-    ImInputField const InputField{{.Width = ImGui::GetContentRegionAvail().x - 10.f}};
-    InputField.Draw();
+    ImInputField const inputField{{.Width = ImGui::GetContentRegionAvail().x - 10.f}};
+    inputField.draw();
 }
 
 } // namespace
 
-ImConsole::ImConsole(std::string_view StrId) : ImPanel(StrId) {
-    RegisterLoggerSink(this);
+ImConsole::ImConsole(std::string_view strId) : ImPanel(strId) {
+    registerLoggerSink(this);
 }
 
-void ImConsole::DrawPanelContent() {
-    DrawDashedWindowBorder();
-    DrawHeader(*this);
-    DrawConsoleScrollView(*this);
-    DrawConsoleInputField();
+void ImConsole::drawPanelContent() {
+    drawDashedWindowBorder();
+    drawHeader(*this);
+    drawConsoleScrollView(*this);
+    drawConsoleInputField();
 }
 
-void ImConsole::OnLogPushed(LogMsg const& LogMsg, std::string const& FormattedMessage) {
-    static std::unordered_map<ELogVerbosity, ImVec4> Colors{
+void ImConsole::onLogPushed(LogMsg const& logMsg, std::string const& formattedMessage) {
+    static std::unordered_map<ELogVerbosity, ImVec4> colors{
         {{ELogVerbosity::Trace, ImVec4(.65f, .65f, .65f, 1.f)},
          {ELogVerbosity::Info, ImVec4(.9f, .9f, 0.9f, 1.f)},
          {ELogVerbosity::Warning, ImVec4(.8f, .8f, 0, 1.f)},
          {ELogVerbosity::Error, ImVec4(.8f, 0, 0, 1.f)}}
     };
 
-    ImVec4 const Color{Colors[FromNative(LogMsg.level)]};
-    TextBuf_.Lines.emplace_back(FormattedMessage, Color);
+    ImVec4 const color{colors[fromNative(logMsg.level)]};
+    textBuf_.Lines.emplace_back(formattedMessage, color);
 };
 
 } // namespace px::ed

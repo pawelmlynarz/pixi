@@ -14,11 +14,11 @@ namespace px {
 
 namespace {
 
-UniquePtr<RHIContext> RHIContextInst{nullptr};
+UniquePtr<RHIContext> rhiContextInst{nullptr};
 
-nri::GraphicsAPI GetBackendForPlatform() {
+nri::GraphicsAPI getBackendForPlatform() {
 #if PLATFORM_WINDOWS
-    PX_TODO("Make possible to override via command line.");
+    pxToDo("Make possible to override via command line.");
     return nri::GraphicsAPI::VK;
 #else
 #error Unsupported platform: no RHI specified.
@@ -26,24 +26,24 @@ nri::GraphicsAPI GetBackendForPlatform() {
 }
 } // namespace
 
-void InitializeRHI() {
-    Assert(!RHIContextInst);
-    RHIContextInst = MakeUnique<RHIContext>(GetBackendForPlatform());
-    RHIContextInst->Initialize();
+void initializeRhi() {
+    pxAssert(!rhiContextInst);
+    rhiContextInst = makeUnique<RHIContext>(getBackendForPlatform());
+    rhiContextInst->initialize();
 }
 
-RHIContext& GetRHIContext() {
-    Assert(RHIContextInst);
-    return *RHIContextInst;
+RHIContext& getRhiContext() {
+    pxAssert(rhiContextInst);
+    return *rhiContextInst;
 }
 
-void ShutdownRHI() {
-    Assert(RHIContextInst);
-    RHIContextInst->Shutdown();
+void shutdownRhi() {
+    pxAssert(rhiContextInst);
+    rhiContextInst->shutdown();
 }
 
-nri::GraphicsAPI GetBackend() {
-    return RHIContextInst->GetBackend();
+nri::GraphicsAPI getBackend() {
+    return rhiContextInst->getBackend();
 }
 
 } // namespace px

@@ -11,8 +11,8 @@ namespace px {
 
 namespace {
 
-constexpr ImGuiKey RemapKey(EKeyCode const KeyCode) {
-    switch (KeyCode) {
+constexpr ImGuiKey remapKey(EKeyCode const keyCode) {
+    switch (keyCode) {
     case EKeyCode::A: return ImGuiKey_A;
     case EKeyCode::B: return ImGuiKey_B;
     case EKeyCode::C: return ImGuiKey_C;
@@ -111,70 +111,70 @@ constexpr ImGuiKey RemapKey(EKeyCode const KeyCode) {
     case EKeyCode::RightSuper: return ImGuiKey_RightSuper;
     case EKeyCode::None:
     default:
-        EnsureNoEntry("Key not mapped.");
+        pxEnsureNoEntry("Key not mapped.");
         return ImGuiKey_None;
     }
 }
 
-int32 RemapMouseButton(EMouseButton const MouseButton) {
-    if (MouseButton == EMouseButton::Left) {
+int32 remapMouseButton(EMouseButton const mouseButton) {
+    if (mouseButton == EMouseButton::Left) {
         return 0;
     }
-    if (MouseButton == EMouseButton::Middle) {
+    if (mouseButton == EMouseButton::Middle) {
         return 2;
     }
-    if (MouseButton == EMouseButton::Right) {
+    if (mouseButton == EMouseButton::Right) {
         return 1;
     }
-    EnsureNoEntry("Mouse button not mapped.");
+    pxEnsureNoEntry("Mouse button not mapped.");
     return 0;
 }
 
 } // namespace
 
-bool ImGuiInputHandler::ProcessCharEvent(CharacterEvent const& CharEvent) {
-    ImGuiIO& IO{ImGui::GetIO()};
-    IO.AddInputCharacter(CharEvent.GetCharacter());
+bool ImGuiInputHandler::processCharEvent(CharacterEvent const& charEvent) {
+    ImGuiIO& io{ImGui::GetIO()};
+    io.AddInputCharacter(charEvent.getCharacter());
 
     return true;
 }
 
-bool ImGuiInputHandler::ProcessKeyDownEvent(KeyEvent const& KeyEvent) {
-    ImGuiIO& IO{ImGui::GetIO()};
-    ImGuiKey const RemappedKey{RemapKey(KeyEvent.GetKeyCode())};
-    IO.AddKeyEvent(RemappedKey, true);
+bool ImGuiInputHandler::processKeyDownEvent(KeyEvent const& keyEvent) {
+    ImGuiIO& io{ImGui::GetIO()};
+    ImGuiKey const remappedKey{remapKey(keyEvent.getKeyCode())};
+    io.AddKeyEvent(remappedKey, true);
 
     return true;
 }
 
-bool ImGuiInputHandler::ProcessKeyUpEvent(KeyEvent const& KeyEvent) {
-    ImGuiIO& IO{ImGui::GetIO()};
-    ImGuiKey const RemappedKey{RemapKey(KeyEvent.GetKeyCode())};
-    IO.AddKeyEvent(RemappedKey, false);
+bool ImGuiInputHandler::processKeyUpEvent(KeyEvent const& keyEvent) {
+    ImGuiIO& io{ImGui::GetIO()};
+    ImGuiKey const remappedKey{remapKey(keyEvent.getKeyCode())};
+    io.AddKeyEvent(remappedKey, false);
 
     return true;
 }
 
-bool ImGuiInputHandler::ProcessMouseButtonDownEvent(PointerEvent const& MouseEvent) {
-    ImGuiIO& IO{ImGui::GetIO()};
-    int32 const RemappedButton{RemapMouseButton(MouseEvent.GetButton())};
-    IO.AddMouseButtonEvent(RemappedButton, true);
+bool ImGuiInputHandler::processMouseButtonDownEvent(PointerEvent const& mouseEvent) {
+    ImGuiIO& io{ImGui::GetIO()};
+    int32 const remappedButton{remapMouseButton(mouseEvent.getButton())};
+    io.AddMouseButtonEvent(remappedButton, true);
 
     return true;
 }
 
-bool ImGuiInputHandler::ProcessMouseButtonUpEvent(PointerEvent const& MouseEvent) {
-    ImGuiIO& IO{ImGui::GetIO()};
-    int32 const RemappedButton{RemapMouseButton(MouseEvent.GetButton())};
-    IO.AddMouseButtonEvent(RemappedButton, false);
+bool ImGuiInputHandler::processMouseButtonUpEvent(PointerEvent const& mouseEvent) {
+    ImGuiIO& io{ImGui::GetIO()};
+    int32 const remappedButton{remapMouseButton(mouseEvent.getButton())};
+    io.AddMouseButtonEvent(remappedButton, false);
 
     return true;
 }
 
-bool ImGuiInputHandler::ProcessMouseMovedEvent(PointerEvent const& MouseEvent) {
-    ImGuiIO& IO{ImGui::GetIO()};
-    Vector2 const Pos{MouseEvent.GetScreenPos()};
-    IO.AddMousePosEvent(Pos.x, Pos.y);
+bool ImGuiInputHandler::processMouseMovedEvent(PointerEvent const& mouseEvent) {
+    ImGuiIO& io{ImGui::GetIO()};
+    Vector2 const pos{mouseEvent.getScreenPos()};
+    io.AddMousePosEvent(pos.x, pos.y);
 
     return true;
 }

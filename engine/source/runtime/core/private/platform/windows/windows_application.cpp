@@ -12,49 +12,49 @@
 
 namespace px {
 
-void WindowsApplication::Initialize() {
+void WindowsApplication::initialize() {
 }
 
-void WindowsApplication::Shutdown() {
-    for (auto const& Window : Windows_) {
-        Window->DestroyWindow();
+void WindowsApplication::shutdown() {
+    for (auto const& window : windows_) {
+        window->destroyWindow();
     }
 }
 
-UniquePtr<GenericWindow> WindowsApplication::CreatePlatformWindow() {
-    return WindowsWindowFactory::Create();
+UniquePtr<GenericWindow> WindowsApplication::createPlatformWindow() {
+    return WindowsWindowFactory::create();
 }
 
-void WindowsApplication::InitializeWindow(SharedRef<GenericWindow> const& Window, GenericWindowDefinition const& WindowDefinition) {
-    SharedRef const WindowsWindowRef{StaticCastSharedRef<WindowsWindow>(Window)};
-    WindowsWindowRef->InitializeWindow(SharedThis(this).ToPtr(), WindowDefinition);
+void WindowsApplication::initializeWindow(SharedRef<GenericWindow> const& window, GenericWindowDefinition const& windowDefinition) {
+    SharedRef const windowsWindowRef{staticCastSharedRef<WindowsWindow>(window)};
+    windowsWindowRef->initializeWindow(sharedThis(this).toPtr(), windowDefinition);
 
-    Windows_.emplace_back(WindowsWindowRef);
+    windows_.emplace_back(windowsWindowRef);
 }
 
-void WindowsApplication::CloseWindow(SharedRef<GenericWindow> const& Window) {
-    auto FoundWindow{std::ranges::find_if(
-        Windows_,
-        [&Window](auto const& W) {
-            return W.Get() == Window.Get();
+void WindowsApplication::closeWindow(SharedRef<GenericWindow> const& window) {
+    auto foundWindow{std::ranges::find_if(
+        windows_,
+        [&window](auto const& w) {
+            return w.get() == window.get();
         }
     )};
 
-    Assert(FoundWindow != Windows_.end());
-    (*FoundWindow)->DestroyWindow();
-    Windows_.erase(FoundWindow);
+    pxAssert(foundWindow != windows_.end());
+    (*foundWindow)->destroyWindow();
+    windows_.erase(foundWindow);
 
-    if (Windows_.empty()) {
-        RequestEngineExit();
+    if (windows_.empty()) {
+        requestEngineExit();
     }
 }
 
-void WindowsApplication::PollMessages() {
+void WindowsApplication::pollMessages() {
     glfwPollEvents();
 }
 
-UniquePtr<WindowsApplication> WindowsApplicationFactory::Create() {
-    return MakeUnique<WindowsApplication>();
+UniquePtr<WindowsApplication> WindowsApplicationFactory::create() {
+    return makeUnique<WindowsApplication>();
 }
 
 } // namespace px

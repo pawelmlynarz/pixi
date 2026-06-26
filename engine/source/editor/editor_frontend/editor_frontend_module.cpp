@@ -18,24 +18,24 @@ namespace {
 using namespace px;
 using namespace px::ed;
 
-void InitializeImGuiContext() {
-    auto& PixiRenderer{dynamic_cast<Renderer&>(SimpleApplication::Get().GetRenderer())};
-    ImGui::SetCurrentContext(static_cast<ImGuiContext*>(PixiRenderer.GetImGuiRenderer().GetImguiContext()));
+void initializeImGuiContext() {
+    auto& pixiRenderer{dynamic_cast<Renderer&>(SimpleApplication::get().getRenderer())};
+    ImGui::SetCurrentContext(static_cast<ImGuiContext*>(pixiRenderer.getImGuiRenderer().getImguiContext()));
 }
 
-void InitializeImGuiEditorStyleSet() {
-    EdStyle::SetDefaultStyle();
+void initializeImGuiEditorStyleSet() {
+    EdStyle::setDefaultStyle();
 }
 
 struct EditorFrontendModule {
-    static void StartupModule() {
-        CoreDelegates::OnEngineLoopInitComplete.AddLambda([]() {
-            InitializeImGuiContext();
-            InitializeImGuiEditorStyleSet();
+    static void startupModule() {
+        CoreDelegates::onEngineLoopInitComplete.addLambda([]() {
+            initializeImGuiContext();
+            initializeImGuiEditorStyleSet();
         });
     }
 
-    static void ShutdownModule() {}
+    static void shutdownModule() {}
 };
 
 IMPLEMENT_MODULE(EditorFrontendModule);

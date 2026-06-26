@@ -12,14 +12,14 @@ struct PointerEvent;
 
 class ImGuiInputHandler {
   public:
-    static bool ProcessCharEvent(CharacterEvent const& CharEvent);
+    static bool processCharEvent(CharacterEvent const& charEvent);
 
-    static bool ProcessKeyDownEvent(KeyEvent const& KeyEvent);
-    static bool ProcessKeyUpEvent(KeyEvent const& KeyEvent);
+    static bool processKeyDownEvent(KeyEvent const& keyEvent);
+    static bool processKeyUpEvent(KeyEvent const& keyEvent);
 
-    static bool ProcessMouseButtonDownEvent(PointerEvent const& MouseEvent);
-    static bool ProcessMouseButtonUpEvent(PointerEvent const& MouseEvent);
-    static bool ProcessMouseMovedEvent(PointerEvent const& MouseEvent);
+    static bool processMouseButtonDownEvent(PointerEvent const& mouseEvent);
+    static bool processMouseButtonUpEvent(PointerEvent const& mouseEvent);
+    static bool processMouseMovedEvent(PointerEvent const& mouseEvent);
 };
 
 } // namespace px

@@ -22,12 +22,12 @@ enum class ELogVerbosity : uint8_t {
     Off
 };
 
-constexpr spdlog::level::level_enum ToNative(ELogVerbosity const Verbosity) {
-    return static_cast<spdlog::level::level_enum>(Verbosity);
+constexpr spdlog::level::level_enum toNative(ELogVerbosity const verbosity) {
+    return static_cast<spdlog::level::level_enum>(verbosity);
 }
 
-constexpr ELogVerbosity FromNative(spdlog::level::level_enum const Level) {
-    return static_cast<ELogVerbosity>(Level);
+constexpr ELogVerbosity fromNative(spdlog::level::level_enum const level) {
+    return static_cast<ELogVerbosity>(level);
 }
 
 using Logger = spdlog::logger;
@@ -35,28 +35,28 @@ using Logger = spdlog::logger;
 struct LogManager {
     static constexpr ELogVerbosity sGlobalLogLevel{ELogVerbosity::Trace};
 
-    static PXCORE_API void Initialize();
+    static PXCORE_API void initialize();
 
-    static PXCORE_API void RegisterLogger(std::string_view const& CategoryName, SharedPtr<Logger> Logger);
+    static PXCORE_API void registerLogger(std::string_view const& categoryName, SharedPtr<Logger> logger);
 
-    static PXCORE_API Logger& GetLogger(std::string_view const& CategoryName);
+    static PXCORE_API Logger& getLogger(std::string_view const& categoryName);
 
-    static PXCORE_API void RegisterOutputLogSinkMT(SharedPtr<OutputLogSinkMT> const& OutputLogSinkMT);
+    static PXCORE_API void registerOutputLogSinkMt(SharedPtr<OutputLogSinkMT> const& outputLogSinkMt);
 };
 
 template <ELogVerbosity Verbosity, typename... TArgs>
-void LogImpl(std::string_view const Category, TArgs&&... Args) {
+void logImpl(std::string_view const category, TArgs&&... args) {
     if constexpr (Verbosity >= LogManager::sGlobalLogLevel) {
-        auto& Logger{LogManager::GetLogger(Category)};
+        auto& logger{LogManager::getLogger(category)};
 
         if constexpr (Verbosity == ELogVerbosity::Trace) {
-            Logger.trace(std::forward<TArgs>(Args)...);
+            logger.trace(std::forward<TArgs>(args)...);
         } else if constexpr (Verbosity == ELogVerbosity::Info) {
-            Logger.info(std::forward<TArgs>(Args)...);
+            logger.info(std::forward<TArgs>(args)...);
         } else if constexpr (Verbosity == ELogVerbosity::Warning) {
-            Logger.warn(std::forward<TArgs>(Args)...);
+            logger.warn(std::forward<TArgs>(args)...);
         } else if constexpr (Verbosity == ELogVerbosity::Error) {
-            Logger.error(std::forward<TArgs>(Args)...);
+            logger.error(std::forward<TArgs>(args)...);
         } else {
             static_assert(false, "Requested verbosity currently disabled.");
         }
@@ -65,11 +65,11 @@ void LogImpl(std::string_view const Category, TArgs&&... Args) {
 
 } // namespace px
 
-#define DEFINE_LOG_CATEGORY(Category) \
-    px::LogManager::RegisterLogger(#Category, spdlog::stdout_color_mt(#Category))
+#define DEFINE_LOG_CATEGORY(category) \
+    px::LogManager::registerLogger(#category, spdlog::stdout_color_mt(#category))
 
-#define DEFINE_OUTPUT_LOG_SINK(OutputLogSink) \
-    px::LogManager::RegisterOutputLogSinkMT(OutputLogSink)
+#define DEFINE_OUTPUT_LOG_SINK(outputLogSink) \
+    px::LogManager::registerOutputLogSinkMt(outputLogSink)
 
-#define Log(Category, Verbosity, ...) \
-    LogImpl<px::ELogVerbosity::Verbosity>(#Category, __VA_ARGS__)
+#define pxLog(category, verbosity, ...) \
+    logImpl<px::ELogVerbosity::verbosity>(#category, __VA_ARGS__)

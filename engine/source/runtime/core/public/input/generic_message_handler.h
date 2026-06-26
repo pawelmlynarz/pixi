@@ -14,16 +14,16 @@ class IGenericApplicationMessageHandler {
   public:
     virtual ~IGenericApplicationMessageHandler() = default;
 
-    virtual bool OnKeyChar(uint32 Character, bool IsRepeat) = 0;
+    virtual bool onKeyChar(uint32 character, bool isRepeat) = 0;
 
-    virtual bool OnKeyDown(int32 KeyCode, uint32 CharacterCode, bool IsRepeat) = 0;
-    virtual bool OnKeyUp(int32 KeyCode, uint32 CharacterCode, bool IsRepeat) = 0;
+    virtual bool onKeyDown(int32 keyCode, uint32 characterCode, bool isRepeat) = 0;
+    virtual bool onKeyUp(int32 keyCode, uint32 characterCode, bool isRepeat) = 0;
 
-    virtual bool OnMouseDown(SharedRef<GenericWindow> const& Window, EMouseButton Button, Vector2 const& MousePos) = 0;
-    virtual bool OnMouseUp(SharedRef<GenericWindow> const& Window, EMouseButton Button, Vector2 const& MousePos) = 0;
-    virtual bool OnMouseMoved(SharedRef<GenericWindow> const& Window, Vector2 const& MousePos) = 0;
+    virtual bool onMouseDown(SharedRef<GenericWindow> const& window, EMouseButton button, Vector2 const& mousePos) = 0;
+    virtual bool onMouseUp(SharedRef<GenericWindow> const& window, EMouseButton button, Vector2 const& mousePos) = 0;
+    virtual bool onMouseMoved(SharedRef<GenericWindow> const& window, Vector2 const& mousePos) = 0;
 
-    virtual void OnWindowClose(SharedRef<GenericWindow> const& Window) = 0;
+    virtual void onWindowClose(SharedRef<GenericWindow> const& window) = 0;
 };
 
 } // namespace px

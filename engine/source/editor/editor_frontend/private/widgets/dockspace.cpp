@@ -10,51 +10,51 @@ namespace px::ed {
 namespace {
 
 using DockSpaceLayoutHash = size_t;
-std::vector<DockSpaceLayoutHash> InitializedLayoutsList;
+std::vector<DockSpaceLayoutHash> initializedLayoutsList;
 
-ImGuiID CreateDockSpace(ImGuiViewport const* const Viewport, ImDockSpaceConfig const& Config) {
-    ImGui::SetNextWindowPos(Viewport->WorkPos);
-    ImGui::SetNextWindowSize(Viewport->WorkSize);
-    ImGui::SetNextWindowViewport(Viewport->ID);
+ImGuiID createDockSpace(ImGuiViewport const* const viewport, ImDockSpaceConfig const& config) {
+    ImGui::SetNextWindowPos(viewport->WorkPos);
+    ImGui::SetNextWindowSize(viewport->WorkSize);
+    ImGui::SetNextWindowViewport(viewport->ID);
 
-    ImGuiWindowFlags HostWindowFlags{Config.HostWindowFlags};
-    ImGuiDockNodeFlags const DockSpaceFlags{Config.DockSpaceFlags};
+    ImGuiWindowFlags hostWindowFlags{config.HostWindowFlags};
+    ImGuiDockNodeFlags const dockSpaceFlags{config.DockSpaceFlags};
 
-    if (DockSpaceFlags & ImGuiDockNodeFlags_PassthruCentralNode) {
-        HostWindowFlags |= ImGuiWindowFlags_NoBackground;
+    if (dockSpaceFlags & ImGuiDockNodeFlags_PassthruCentralNode) {
+        hostWindowFlags |= ImGuiWindowFlags_NoBackground;
     }
 
-    ImGuiID const DockSpaceID{ImGui::GetID(Config.Name.data())};
+    ImGuiID const dockSpaceId{ImGui::GetID(config.Name.data())};
 
     ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(5.0f, 5.0f));
-    ImGui::Begin("MainFrameDockSpace", nullptr, HostWindowFlags);
+    ImGui::Begin("MainFrameDockSpace", nullptr, hostWindowFlags);
     {
-        ImGui::DockSpace(DockSpaceID, ImVec2(0.0f, 0.0f), DockSpaceFlags, nullptr);
+        ImGui::DockSpace(dockSpaceId, ImVec2(0.0f, 0.0f), dockSpaceFlags, nullptr);
     }
     ImGui::End();
     ImGui::PopStyleVar(3);
 
-    return DockSpaceID;
+    return dockSpaceId;
 }
 
 } // namespace
 
-ImDockSpace::ImDockSpace(ImGuiViewport* Viewport, ImDockSpaceConfig const& Config)
-    : Viewport_(Viewport), Config_(Config) {
-    ImGuiIO const& IO{ImGui::GetIO()};
-    Assert(IO.ConfigFlags & ImGuiConfigFlags_DockingEnable);
+ImDockSpace::ImDockSpace(ImGuiViewport* viewport, ImDockSpaceConfig const& config)
+    : viewport_(viewport), config_(config) {
+    ImGuiIO const& io{ImGui::GetIO()};
+    pxAssert(io.ConfigFlags & ImGuiConfigFlags_DockingEnable);
 
-    DockSpaceID_ = CreateDockSpace(Viewport_, Config_);
+    dockSpaceId_ = createDockSpace(viewport_, config_);
 
-    AssertMsgf(Config.BuildDockSpaceLayoutStrategy, "BuildDockSpaceLayoutStrategy must be set.");
+    pxAssertMsgf(config.BuildDockSpaceLayoutStrategy, "BuildDockSpaceLayoutStrategy must be set.");
 
-    DockSpaceLayoutHash const NameHash{std::hash<std::string_view>{}(Config.Name)};
+    DockSpaceLayoutHash const nameHash{std::hash<std::string_view>{}(config.Name)};
 
-    if (!std::ranges::contains(InitializedLayoutsList, NameHash)) {
-        Config.BuildDockSpaceLayoutStrategy(Viewport_, DockSpaceID_);
-        InitializedLayoutsList.emplace_back(NameHash);
+    if (!std::ranges::contains(initializedLayoutsList, nameHash)) {
+        config.BuildDockSpaceLayoutStrategy(viewport_, dockSpaceId_);
+        initializedLayoutsList.emplace_back(nameHash);
     }
 }
 

@@ -9,7 +9,7 @@ namespace px {
 
 struct CoreDelegates {
     DECLARE_MULTICAST_DELEGATE(FOnEngineLoopInitComplete)
-    static PXCORE_API FOnEngineLoopInitComplete OnEngineLoopInitComplete;
+    static PXCORE_API FOnEngineLoopInitComplete onEngineLoopInitComplete;
 };
 
 } // namespace px

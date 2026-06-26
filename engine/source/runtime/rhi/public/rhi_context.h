@@ -29,7 +29,7 @@ struct RHIStaticContext {
     static constexpr bool bD3D11EnableCommandBufferEmulation{false};
     static constexpr bool bD3D12DisableEnhancedBarriers{false};
     static constexpr bool bVSync{false};
-    static constexpr nri::VKBindingOffsets VkBindingOffsets{.sRegister = 0, .tRegister = 128, .bRegister = 32, .uRegister = 64};
+    static constexpr nri::VKBindingOffsets vkBindingOffsets{.sRegister = 0, .tRegister = 128, .bRegister = 32, .uRegister = 64};
 };
 
 struct RHIContextResources {
@@ -43,29 +43,29 @@ struct RHIContextResources {
 
 class RHIContext {
   public:
-    explicit RHIContext(nri::GraphicsAPI Backend);
+    explicit RHIContext(nri::GraphicsAPI backend);
 
-    void Initialize();
-    void Shutdown();
+    void initialize();
+    void shutdown();
 
   public:
-    inline nri::GraphicsAPI GetBackend() const;
+    inline nri::GraphicsAPI getBackend() const;
 
-    inline RHIInterface& GetRHI() const;
+    inline RHIInterface& getRhi() const;
 
-    inline nri::Device*& GetDevice() const;
+    inline nri::Device*& getDevice() const;
 
-    inline nri::Streamer*& GetStreamer() const;
+    inline nri::Streamer*& getStreamer() const;
 
-    inline nri::Queue*& GetGraphicsQueue() const;
+    inline nri::Queue*& getGraphicsQueue() const;
 
-    inline nri::Fence*& GetFrameFence() const;
+    inline nri::Fence*& getFrameFence() const;
 
-    inline nri::DescriptorPool*& GetDescriptorPool() const;
+    inline nri::DescriptorPool*& getDescriptorPool() const;
 
-    inline std::vector<RHIQueuedFrame>& GetQueuedFrames() const;
+    inline std::vector<RHIQueuedFrame>& getQueuedFrames() const;
 
-    static inline uint8 GetQueuedFrameNum();
+    static inline uint8 getQueuedFrameNum();
 
     /* temp shit code {
     nri::PipelineLayout* PipelineLayout{nullptr};
@@ -78,46 +78,46 @@ class RHIContext {
     // temp shit code } */
 
   private:
-    nri::GraphicsAPI Backend_{nri::GraphicsAPI::NONE};
+    nri::GraphicsAPI backend_{nri::GraphicsAPI::NONE};
 
-    UniquePtr<RHIInterface> RHI_{nullptr};
-    UniquePtr<RHIContextResources> Resources_{nullptr};
+    UniquePtr<RHIInterface> rhi_{nullptr};
+    UniquePtr<RHIContextResources> resources_{nullptr};
 };
 
-nri::GraphicsAPI RHIContext::GetBackend() const {
-    return Backend_;
+nri::GraphicsAPI RHIContext::getBackend() const {
+    return backend_;
 }
 
-inline RHIInterface& RHIContext::GetRHI() const {
-    return *RHI_;
+inline RHIInterface& RHIContext::getRhi() const {
+    return *rhi_;
 }
 
-inline nri::Device*& RHIContext::GetDevice() const {
-    return Resources_->Device;
+inline nri::Device*& RHIContext::getDevice() const {
+    return resources_->Device;
 }
 
-inline uint8 RHIContext::GetQueuedFrameNum() {
+inline uint8 RHIContext::getQueuedFrameNum() {
     return RHIStaticContext::bVSync ? 2 : 3;
 }
 
-inline nri::Streamer*& RHIContext::GetStreamer() const {
-    return Resources_->Streamer;
+inline nri::Streamer*& RHIContext::getStreamer() const {
+    return resources_->Streamer;
 }
 
-inline nri::Queue*& RHIContext::GetGraphicsQueue() const {
-    return Resources_->GraphicsQueue;
+inline nri::Queue*& RHIContext::getGraphicsQueue() const {
+    return resources_->GraphicsQueue;
 }
 
-inline nri::Fence*& RHIContext::GetFrameFence() const {
-    return Resources_->FrameFence;
+inline nri::Fence*& RHIContext::getFrameFence() const {
+    return resources_->FrameFence;
 }
 
-inline nri::DescriptorPool*& RHIContext::GetDescriptorPool() const {
-    return Resources_->DescriptorPool;
+inline nri::DescriptorPool*& RHIContext::getDescriptorPool() const {
+    return resources_->DescriptorPool;
 }
 
-inline std::vector<RHIQueuedFrame>& RHIContext::GetQueuedFrames() const {
-    return Resources_->QueuedFrames;
+inline std::vector<RHIQueuedFrame>& RHIContext::getQueuedFrames() const {
+    return resources_->QueuedFrames;
 }
 
 } // namespace px

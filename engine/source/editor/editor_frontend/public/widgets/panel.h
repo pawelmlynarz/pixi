@@ -10,10 +10,10 @@ class ImPanel : public ImContainerWidget {
   public:
     using ImContainerWidget::ImContainerWidget;
 
-    void Draw() override;
+    void draw() override;
 
   protected:
-    virtual void DrawPanelContent() {};
+    virtual void drawPanelContent() {};
 };
 
 } // namespace px::ed

@@ -6,11 +6,11 @@
 
 namespace px::ed {
 
-void ImAssetBrowser::DrawPanelContent() {
-    DrawDashedWindowBorder();
-    PushFont(EImFontSize::Large);
-    DrawDashedHeader("[ASSET BROWSER]", {24.f, 24.f}, 25);
-    PopFont();
+void ImAssetBrowser::drawPanelContent() {
+    drawDashedWindowBorder();
+    pushFont(EImFontSize::Large);
+    drawDashedHeader("[ASSET BROWSER]", {24.f, 24.f}, 25);
+    popFont();
 };
 
 } // namespace px::ed

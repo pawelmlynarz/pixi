@@ -7,11 +7,11 @@
 namespace px {
 
 PlatformApplication::PlatformApplication()
-    : MessageHandler_(MakeShared<NullApplicationMessageHandler>()) {
+    : messageHandler_(makeShared<NullApplicationMessageHandler>()) {
 }
 
-UniquePtr<GenericWindow> PlatformApplication::CreatePlatformWindow() {
-    return MakeUnique<GenericWindow>();
+UniquePtr<GenericWindow> PlatformApplication::createPlatformWindow() {
+    return makeUnique<GenericWindow>();
 }
 
 } // namespace px

@@ -4,15 +4,15 @@
 
 namespace px {
 
-double TimePoint::AsSeconds() const {
+double TimePoint::asSeconds() const {
     return static_cast<double>(Ticks) / 1000000.0;
 }
 
-double TimePoint::AsMilliseconds() const {
+double TimePoint::asMilliseconds() const {
     return static_cast<double>(Ticks) / 1000.0;
 }
 
-double TimePoint::AsMicroseconds() const {
+double TimePoint::asMicroseconds() const {
     return static_cast<double>(Ticks);
 }
 

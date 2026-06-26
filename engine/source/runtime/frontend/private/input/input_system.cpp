@@ -11,95 +11,95 @@
 
 namespace px {
 
-InputSystem::InputSystem(SharedRef<PlatformApplication> OwningApplication)
-    : OwningApplication_(std::move(OwningApplication)) {
+InputSystem::InputSystem(SharedRef<PlatformApplication> owningApplication)
+    : owningApplication_(std::move(owningApplication)) {
 }
 
-bool InputSystem::OnKeyChar(uint32 Character, bool IsRepeat) {
-    CharacterEvent const CharEvent{Character, IsRepeat};
+bool InputSystem::onKeyChar(uint32 character, bool isRepeat) {
+    CharacterEvent const charEvent{character, isRepeat};
 
-    return ProcessKeyCharEvent(CharEvent);
+    return processKeyCharEvent(charEvent);
 }
 
 // NOLINTNEXTLINE(*)
-bool InputSystem::ProcessKeyCharEvent(CharacterEvent const& CharEvent) {
+bool InputSystem::processKeyCharEvent(CharacterEvent const& CharEvent) {
 #if WITH_IMGUI
-    ImGuiInputHandler::ProcessCharEvent(CharEvent);
+    ImGuiInputHandler::processCharEvent(CharEvent);
 #endif
     return true;
 }
 
-bool InputSystem::OnKeyDown(int32 const KeyCode, [[maybe_unused]] uint32 const CharacterCode, bool const IsRepeat) {
-    EKeyCode const Key{AsEnum<EKeyCode>(KeyCode)};
-    KeyEvent const KeyEvent{Key, IsRepeat};
+bool InputSystem::onKeyDown(int32 const keyCode, [[maybe_unused]] uint32 const characterCode, bool const isRepeat) {
+    EKeyCode const key{asEnum<EKeyCode>(keyCode)};
+    KeyEvent const keyEvent{key, isRepeat};
 
-    return ProcessKeyDownEvent(KeyEvent);
+    return processKeyDownEvent(keyEvent);
 }
 
 // NOLINTNEXTLINE(*)
-bool InputSystem::ProcessKeyDownEvent(KeyEvent const& KeyEvent) {
+bool InputSystem::processKeyDownEvent(KeyEvent const& KeyEvent) {
 #if WITH_IMGUI
-    ImGuiInputHandler::ProcessKeyDownEvent(KeyEvent);
+    ImGuiInputHandler::processKeyDownEvent(KeyEvent);
 #endif
     return true;
 }
 
-bool InputSystem::OnKeyUp(int32 const KeyCode, [[maybe_unused]] uint32 const CharacterCode, bool const IsRepeat) {
-    EKeyCode const Key{AsEnum<EKeyCode>(KeyCode)};
-    KeyEvent const KeyEvent{Key, IsRepeat};
+bool InputSystem::onKeyUp(int32 const keyCode, [[maybe_unused]] uint32 const characterCode, bool const isRepeat) {
+    EKeyCode const key{asEnum<EKeyCode>(keyCode)};
+    KeyEvent const keyEvent{key, isRepeat};
 
-    return ProcessKeyUpEvent(KeyEvent);
+    return processKeyUpEvent(keyEvent);
 }
 
 // NOLINTNEXTLINE(*)
-bool InputSystem::ProcessKeyUpEvent(KeyEvent const& KeyEvent) {
+bool InputSystem::processKeyUpEvent(KeyEvent const& KeyEvent) {
 #if WITH_IMGUI
-    ImGuiInputHandler::ProcessKeyUpEvent(KeyEvent);
+    ImGuiInputHandler::processKeyUpEvent(KeyEvent);
 #endif
     return true;
 }
 
-bool InputSystem::OnMouseDown([[maybe_unused]] SharedRef<GenericWindow> const& Window, EMouseButton const Button, Vector2 const& MousePos) {
-    PointerEvent const PointerEvent{Button, MousePos};
-    return ProcessMouseButtonDownEvent(PointerEvent);
+bool InputSystem::onMouseDown([[maybe_unused]] SharedRef<GenericWindow> const& window, EMouseButton const button, Vector2 const& mousePos) {
+    PointerEvent const pointerEvent{button, mousePos};
+    return processMouseButtonDownEvent(pointerEvent);
 }
 
 // NOLINTNEXTLINE(*)
-bool InputSystem::ProcessMouseButtonDownEvent(PointerEvent const& MouseEvent) {
+bool InputSystem::processMouseButtonDownEvent(PointerEvent const& MouseEvent) {
 #if WITH_IMGUI
-    ImGuiInputHandler::ProcessMouseButtonDownEvent(MouseEvent);
+    ImGuiInputHandler::processMouseButtonDownEvent(MouseEvent);
 #endif
     return true;
 }
 
-bool InputSystem::OnMouseUp([[maybe_unused]] SharedRef<GenericWindow> const& Window, EMouseButton const Button, Vector2 const& MousePos) {
-    PointerEvent const PointerEvent{Button, MousePos};
-    return ProcessMouseButtonUpEvent(PointerEvent);
+bool InputSystem::onMouseUp([[maybe_unused]] SharedRef<GenericWindow> const& window, EMouseButton const button, Vector2 const& mousePos) {
+    PointerEvent const pointerEvent{button, mousePos};
+    return processMouseButtonUpEvent(pointerEvent);
 }
 
 // NOLINTNEXTLINE(*)
-bool InputSystem::ProcessMouseButtonUpEvent(PointerEvent const& MouseEvent) {
+bool InputSystem::processMouseButtonUpEvent(PointerEvent const& MouseEvent) {
 #if WITH_IMGUI
-    ImGuiInputHandler::ProcessMouseButtonUpEvent(MouseEvent);
+    ImGuiInputHandler::processMouseButtonUpEvent(MouseEvent);
 #endif
     return true;
 }
 
-bool InputSystem::OnMouseMoved([[maybe_unused]] SharedRef<GenericWindow> const& Window, Vector2 const& MousePos) {
-    PointerEvent const PointerEvent{EMouseButton::None, MousePos};
-    return ProcessMouseMovedEvent(PointerEvent);
+bool InputSystem::onMouseMoved([[maybe_unused]] SharedRef<GenericWindow> const& window, Vector2 const& mousePos) {
+    PointerEvent const pointerEvent{EMouseButton::None, mousePos};
+    return processMouseMovedEvent(pointerEvent);
 }
 
 // NOLINTNEXTLINE(*)
-bool InputSystem::ProcessMouseMovedEvent(PointerEvent const& MouseEvent) {
+bool InputSystem::processMouseMovedEvent(PointerEvent const& MouseEvent) {
 #if WITH_IMGUI
-    ImGuiInputHandler::ProcessMouseMovedEvent(MouseEvent);
+    ImGuiInputHandler::processMouseMovedEvent(MouseEvent);
 #endif
     return true;
 }
 
-void InputSystem::OnWindowClose(SharedRef<GenericWindow> const& Window) {
-    OwningApplication_->CloseWindow(Window);
+void InputSystem::onWindowClose(SharedRef<GenericWindow> const& window) {
+    owningApplication_->closeWindow(window);
 }
 
 } // namespace px

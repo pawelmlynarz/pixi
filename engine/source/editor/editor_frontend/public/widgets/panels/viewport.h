@@ -11,7 +11,7 @@ class ImViewport : public ImPanel {
     using ImPanel::ImPanel;
 
   protected:
-    void DrawPanelContent() override;
+    void drawPanelContent() override;
 };
 
 } // namespace px::ed

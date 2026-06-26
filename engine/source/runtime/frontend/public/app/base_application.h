@@ -26,9 +26,9 @@ class BaseApplication : NonCopyableNonMovable {
      *
      * @return Reference to the application.
      */
-    static BaseApplication& Get() {
-        Assert(BaseApplicationInstance_.get() != nullptr);
-        return *BaseApplicationInstance_;
+    static BaseApplication& get() {
+        pxAssert(baseApplicationInstance.get() != nullptr);
+        return *baseApplicationInstance;
     }
 
     /**
@@ -36,19 +36,19 @@ class BaseApplication : NonCopyableNonMovable {
      *
      * @param Renderer The renderer to use.
      */
-    PXFRONTEND_API bool InitializeRenderer(SharedPtr<BaseRenderer> Renderer);
+    PXFRONTEND_API bool initializeRenderer(SharedPtr<BaseRenderer> renderer);
 
     /**
      * Destroys the renderer.
      */
-    PXFRONTEND_API void DestoryRenderer();
+    PXFRONTEND_API void destoryRenderer();
 
     /**
      * Gets the renderer being used to draw this application.
      *
      * @return The renderer reference.
      */
-    PXFRONTEND_API BaseRenderer& GetRenderer() const;
+    PXFRONTEND_API BaseRenderer& getRenderer() const;
 
     /**
      * Associates a high-level Window with a native window and ensures that it is tracked properly by the application.
@@ -58,11 +58,11 @@ class BaseApplication : NonCopyableNonMovable {
      *
      * @return True if operation successful.
      */
-    virtual bool AddWindow(SharedRef<class SWindow> SWindow, bool bShowImmediately = true) = 0;
+    virtual bool addWindow(SharedRef<class SWindow> window, bool bShowImmediately = true) = 0;
 
   protected:
     // Holds a pointer to the current application.
-    static PXFRONTEND_API SharedPtr<BaseApplication> BaseApplicationInstance_;
+    static PXFRONTEND_API SharedPtr<BaseApplication> baseApplicationInstance;
 
     // A pointer to the renderer used to render this application.
     SharedPtr<BaseRenderer> Renderer_{nullptr};

@@ -9,11 +9,11 @@ namespace px {
 
 class PXCORE_API WindowsPlatformTime final : public GenericPlatformTime {
   public:
-    static TimePoint Initialize() noexcept;
+    static TimePoint initialize() noexcept;
 
-    static TimePoint Now();
-    static TimePoint From(TimePoint StartingTime);
-    static TimePoint Delta(TimePoint StartingTime, TimePoint EndingTime);
+    static TimePoint now();
+    static TimePoint from(TimePoint startingTime);
+    static TimePoint delta(TimePoint startingTime, TimePoint endingTime);
 };
 
 using PlatformTime = WindowsPlatformTime;

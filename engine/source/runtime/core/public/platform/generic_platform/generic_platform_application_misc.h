@@ -8,7 +8,7 @@
 namespace px {
 
 struct GenericPlatformApplicationMisc {
-    static PXCORE_API UniquePtr<class PlatformApplication> CreateApplication();
+    static PXCORE_API UniquePtr<class PlatformApplication> createApplication();
 };
 
 } // namespace px

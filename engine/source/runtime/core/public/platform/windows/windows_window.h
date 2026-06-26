@@ -8,7 +8,7 @@
 struct GLFWwindow;
 
 #ifndef HWND_DEFINED
-// NOLINTNEXTLINE(modernize-use-using)
+// NOLINTNEXTLINE(*)
 typedef struct HWND__* HWND;
 #define HWND_DEFINED
 #endif
@@ -19,25 +19,25 @@ class WindowsWindow final : public GenericWindow {
   public:
     ~WindowsWindow() override = default;
 
-    void InitializeWindow(SharedPtr<PlatformApplication> OwningApplication, GenericWindowDefinition const& WindowDefinition) override;
-    void DestroyWindow() override;
+    void initializeWindow(SharedPtr<PlatformApplication> owningApplication, GenericWindowDefinition const& windowDefinition) override;
+    void destroyWindow() override;
 
-    SharedRef<PlatformApplication> GetOwningApplication() const override;
+    SharedRef<PlatformApplication> getOwningApplication() const override;
 
-    GenericOSWindowHandle GetOSWindowHandle() const override;
+    GenericOSWindowHandle getOsWindowHandle() const override;
 
-    PXCORE_API void Show() override;
-    PXCORE_API void Hide() override;
-    PXCORE_API bool IsVisible() const override;
+    PXCORE_API void show() override;
+    PXCORE_API void hide() override;
+    PXCORE_API bool isVisible() const override;
 
   private:
-    GLFWwindow* Handle_{nullptr};
-    HWND Hwnd_{nullptr};
+    GLFWwindow* handle_{nullptr};
+    HWND hwnd_{nullptr};
 };
 
 struct WindowsWindowFactory {
     [[nodiscard]]
-    static UniquePtr<WindowsWindow> Create();
+    static UniquePtr<WindowsWindow> create();
 };
 
 } // namespace px

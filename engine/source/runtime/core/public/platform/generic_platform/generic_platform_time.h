@@ -9,16 +9,16 @@ namespace px {
 struct TimePoint {
     int64 Ticks;
 
-    PXCORE_API double AsSeconds() const;
-    PXCORE_API double AsMilliseconds() const;
-    PXCORE_API double AsMicroseconds() const;
+    PXCORE_API double asSeconds() const;
+    PXCORE_API double asMilliseconds() const;
+    PXCORE_API double asMicroseconds() const;
 };
 
 class GenericPlatformTime {
 };
 
-inline TimePoint operator-(TimePoint const& Lhs, TimePoint const& Rhs) noexcept {
-    return TimePoint{Lhs.Ticks - Rhs.Ticks};
+inline TimePoint operator-(TimePoint const& lhs, TimePoint const& rhs) noexcept {
+    return TimePoint{lhs.Ticks - rhs.Ticks};
 }
 
 } // namespace px

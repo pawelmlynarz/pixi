@@ -15,29 +15,29 @@ namespace px {
 
 class ImGuiRenderer : NonCopyableNonMovable {
   public:
-    void Initialize(nri::Device* Device);
+    void initialize(nri::Device* device);
 
-    void Shutdown();
+    void shutdown();
 
-    void Tick(float Dt);
+    void tick(float dt);
 
-    inline bool HasUserInterface() const;
+    inline bool hasUserInterface() const;
 
-    PXFRONTEND_API void CmdCopyImguiData(nri::CommandBuffer& CmdBuffer, nri::Streamer& Streamer) const;
+    PXFRONTEND_API void cmdCopyImguiData(nri::CommandBuffer& cmdBuffer, nri::Streamer& streamer) const;
 
-    PXFRONTEND_API void CmdDrawImgui(nri::CommandBuffer& CmdBuffer, nri::Format AttachmentFormat, float SdrScale, bool bIsSrgb) const;
+    PXFRONTEND_API void cmdDrawImgui(nri::CommandBuffer& cmdBuffer, nri::Format attachmentFormat, float sdrScale, bool bIsSrgb) const;
 
-    PXFRONTEND_API void* GetImguiContext();
+    PXFRONTEND_API void* getImguiContext();
 
   private:
-    void* ImguiContext_{nullptr};
-    nri::Device* Device_{nullptr};
-    nri::Imgui* ImguiRenderer_{nullptr};
-    nri::ImguiInterface ImguiInterface_{};
+    void* imguiContext_{nullptr};
+    nri::Device* device_{nullptr};
+    nri::Imgui* imguiRenderer_{nullptr};
+    nri::ImguiInterface imguiInterface_{};
 };
 
-inline bool ImGuiRenderer::HasUserInterface() const {
-    return ImguiRenderer_ != nullptr;
+inline bool ImGuiRenderer::hasUserInterface() const {
+    return imguiRenderer_ != nullptr;
 }
 
 } // namespace px

@@ -8,16 +8,16 @@ namespace px {
 
 class NullApplicationMessageHandler final : public IGenericApplicationMessageHandler {
   public:
-    bool OnKeyChar(uint32 /*Character*/, bool /*IsRepeat*/) override { return false; };
+    bool onKeyChar(uint32 /*Character*/, bool /*IsRepeat*/) override { return false; };
 
-    bool OnKeyDown(int32 const /*KeyCode*/, uint32 const /*CharacterCode*/, bool const /*IsRepeat*/) override { return false; };
-    bool OnKeyUp(int32 const /*KeyCode*/, uint32 const /*CharacterCode*/, bool const /*IsRepeat*/) override { return false; };
+    bool onKeyDown(int32 const /*KeyCode*/, uint32 const /*CharacterCode*/, bool const /*IsRepeat*/) override { return false; };
+    bool onKeyUp(int32 const /*KeyCode*/, uint32 const /*CharacterCode*/, bool const /*IsRepeat*/) override { return false; };
 
-    bool OnMouseDown(SharedRef<GenericWindow> const& /*Window*/, EMouseButton const /*Button*/, Vector2 const& /*MousePos*/) override { return false; };
-    bool OnMouseUp(SharedRef<GenericWindow> const& /*Window*/, EMouseButton const /*Button*/, Vector2 const& /*MousePos*/) override { return false; };
-    bool OnMouseMoved(SharedRef<GenericWindow> const& /*Window*/, Vector2 const& /*MousePos*/) override { return false; };
+    bool onMouseDown(SharedRef<GenericWindow> const& /*Window*/, EMouseButton const /*Button*/, Vector2 const& /*MousePos*/) override { return false; };
+    bool onMouseUp(SharedRef<GenericWindow> const& /*Window*/, EMouseButton const /*Button*/, Vector2 const& /*MousePos*/) override { return false; };
+    bool onMouseMoved(SharedRef<GenericWindow> const& /*Window*/, Vector2 const& /*MousePos*/) override { return false; };
 
-    void OnWindowClose(SharedRef<GenericWindow> const& Window) override {};
+    void onWindowClose(SharedRef<GenericWindow> const& window) override {};
 };
 
 } // namespace px

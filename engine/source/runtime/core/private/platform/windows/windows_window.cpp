@@ -14,107 +14,107 @@ namespace {
 
 bool bGLFWInitialized{false};
 
-void GLFWErrorCallback([[maybe_unused]] int const ErrorCode, [[maybe_unused]] char const* const Description) {
-    PX_TODO("Handle error and implement logger.");
+void glfwErrorCallback([[maybe_unused]] int const errorCode, [[maybe_unused]] char const* const description) {
+    pxToDo("Handle error and implement logger.");
 }
 
-void EnsureGLFWInitialized() {
+void ensureGlfwInitialized() {
     if (bGLFWInitialized) {
         return;
     }
 
-    glfwSetErrorCallback(GLFWErrorCallback);
-    Assert(glfwInit());
+    glfwSetErrorCallback(glfwErrorCallback);
+    pxAssert(glfwInit());
 
     bGLFWInitialized = true;
 }
 
-void GLFWKeyCallback(GLFWwindow* const Window, int32_t const Key, int32_t const Scancode, int32_t const Action, [[maybe_unused]] int32_t const Mods) {
-    WindowsWindow const* const WinWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(Window))};
-    SharedRef const MessageHandler{WinWindow->GetOwningApplication()->GetMessageHandler()};
+void glfwKeyCallback(GLFWwindow* const window, int32_t const key, int32_t const scancode, int32_t const action, [[maybe_unused]] int32_t const mods) {
+    WindowsWindow const* const winWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window))};
+    SharedRef const messageHandler{winWindow->getOwningApplication()->getMessageHandler()};
 
-    switch (uint32 const CharacterCode{static_cast<uint32>(Scancode)}; Action) {
+    switch (uint32 const characterCode{static_cast<uint32>(scancode)}; action) {
     case GLFW_PRESS:
-        MessageHandler->OnKeyDown(Key, CharacterCode, false);
+        messageHandler->onKeyDown(key, characterCode, false);
         break;
 
     case GLFW_REPEAT:
-        MessageHandler->OnKeyDown(Key, CharacterCode, true);
+        messageHandler->onKeyDown(key, characterCode, true);
         break;
 
     case GLFW_RELEASE:
-        MessageHandler->OnKeyUp(Key, CharacterCode, false);
+        messageHandler->onKeyUp(key, characterCode, false);
         break;
 
     default: break;
     }
 }
 
-void GLFWCharCallback(GLFWwindow* const Window, uint32_t const Codepoint) {
-    WindowsWindow const* const WinWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(Window))};
-    SharedRef const MessageHandler{WinWindow->GetOwningApplication()->GetMessageHandler()};
+void glfwCharCallback(GLFWwindow* const window, uint32_t const codepoint) {
+    WindowsWindow const* const winWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window))};
+    SharedRef const messageHandler{winWindow->getOwningApplication()->getMessageHandler()};
 
-    MessageHandler->OnKeyChar(Codepoint, false);
+    messageHandler->onKeyChar(codepoint, false);
 }
 
-void GLFWMouseButtonCallback(GLFWwindow* const Window, int32_t const Button, int32_t const Action, [[maybe_unused]] int32_t const Mods) {
-    WindowsWindow* const WinWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(Window))};
-    SharedRef const MessageHandler{WinWindow->GetOwningApplication()->GetMessageHandler()};
+void glfwMouseButtonCallback(GLFWwindow* const window, int32_t const button, int32_t const action, [[maybe_unused]] int32_t const mods) {
+    WindowsWindow* const winWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window))};
+    SharedRef const messageHandler{winWindow->getOwningApplication()->getMessageHandler()};
 
-    EMouseButton ButtonEnum{EMouseButton::Left};
+    EMouseButton buttonEnum{EMouseButton::Left};
 
-    switch (Button) {
+    switch (button) {
     case GLFW_MOUSE_BUTTON_LEFT:
-        ButtonEnum = EMouseButton::Left;
+        buttonEnum = EMouseButton::Left;
         break;
 
     case GLFW_MOUSE_BUTTON_MIDDLE:
-        ButtonEnum = EMouseButton::Middle;
+        buttonEnum = EMouseButton::Middle;
         break;
 
     case GLFW_MOUSE_BUTTON_RIGHT:
-        ButtonEnum = EMouseButton::Right;
+        buttonEnum = EMouseButton::Right;
         break;
 
     default: break;
     }
 
-    double MouseX{};
-    double MouseY{};
-    glfwGetCursorPos(Window, &MouseX, &MouseY);
-    Vector2 const MousePos{static_cast<float>(MouseX), static_cast<float>(MouseY)};
+    double mouseX{};
+    double mouseY{};
+    glfwGetCursorPos(window, &mouseX, &mouseY);
+    Vector2 const mousePos{static_cast<float>(mouseX), static_cast<float>(mouseY)};
 
-    if (Action == GLFW_PRESS) {
-        MessageHandler->OnMouseDown(SharedThis(WinWindow), ButtonEnum, MousePos);
-    } else if (Action == GLFW_RELEASE) {
-        MessageHandler->OnMouseUp(SharedThis(WinWindow), ButtonEnum, MousePos);
+    if (action == GLFW_PRESS) {
+        messageHandler->onMouseDown(sharedThis(winWindow), buttonEnum, mousePos);
+    } else if (action == GLFW_RELEASE) {
+        messageHandler->onMouseUp(sharedThis(winWindow), buttonEnum, mousePos);
     }
 }
 
-void GLFWCursorPosCallback(GLFWwindow* Window, double const X, double const Y) {
-    WindowsWindow* const WinWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(Window))};
-    SharedRef const MessageHandler{WinWindow->GetOwningApplication()->GetMessageHandler()};
+void glfwCursorPosCallback(GLFWwindow* window, double const x, double const y) {
+    WindowsWindow* const winWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window))};
+    SharedRef const messageHandler{winWindow->getOwningApplication()->getMessageHandler()};
 
-    MessageHandler->OnMouseMoved(SharedThis(WinWindow), {X, Y});
+    messageHandler->onMouseMoved(sharedThis(winWindow), {x, y});
 }
 
-void GLFWScrollCallback(GLFWwindow* const Window, double const XOffset, double const YOffset) {
+void glfwScrollCallback(GLFWwindow* const window, double const xOffset, double const yOffset) {
 }
 
-void GLFWCloseCallback(GLFWwindow* const Window) {
-    WindowsWindow* const WinWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(Window))};
-    SharedRef const MessageHandler{WinWindow->GetOwningApplication()->GetMessageHandler()};
-    MessageHandler->OnWindowClose(SharedThis(WinWindow));
+void glfwCloseCallback(GLFWwindow* const window) {
+    WindowsWindow* const winWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window))};
+    SharedRef const messageHandler{winWindow->getOwningApplication()->getMessageHandler()};
+    messageHandler->onWindowClose(sharedThis(winWindow));
 }
 
 } // namespace
 
-void WindowsWindow::InitializeWindow(SharedPtr<PlatformApplication> OwningApplication, GenericWindowDefinition const& WindowDefinition) {
-    GenericWindow::InitializeWindow(OwningApplication, WindowDefinition);
+void WindowsWindow::initializeWindow(SharedPtr<PlatformApplication> owningApplication, GenericWindowDefinition const& windowDefinition) {
+    GenericWindow::initializeWindow(owningApplication, windowDefinition);
 
-    EnsureGLFWInitialized();
+    ensureGlfwInitialized();
 
-    Definition_ = WindowDefinition;
+    Definition_ = windowDefinition;
 
     glfwDefaultWindowHints();
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -122,61 +122,61 @@ void WindowsWindow::InitializeWindow(SharedPtr<PlatformApplication> OwningApplic
     glfwWindowHint(GLFW_DECORATED, Definition_.bDecorated ? 1 : 0);
     glfwWindowHint(GLFW_RESIZABLE, Definition_.bResizable ? 1 : 0);
 
-    Handle_ = glfwCreateWindow(Definition_.WidthDesired, Definition_.HeightDesired, "Window", nullptr, nullptr);
-    if (!Handle_) {
+    handle_ = glfwCreateWindow(Definition_.WidthDesired, Definition_.HeightDesired, "Window", nullptr, nullptr);
+    if (!handle_) {
         glfwTerminate();
-        Assert(false);
+        pxAssert(false);
     }
 
-    Hwnd_ = glfwGetWin32Window(Handle_);
+    hwnd_ = glfwGetWin32Window(handle_);
 
-    glfwSetWindowUserPointer(Handle_, this);
-    glfwSetKeyCallback(Handle_, GLFWKeyCallback);
-    glfwSetCharCallback(Handle_, GLFWCharCallback);
-    glfwSetMouseButtonCallback(Handle_, GLFWMouseButtonCallback);
-    glfwSetCursorPosCallback(Handle_, GLFWCursorPosCallback);
-    glfwSetScrollCallback(Handle_, GLFWScrollCallback);
-    glfwSetWindowCloseCallback(Handle_, GLFWCloseCallback);
+    glfwSetWindowUserPointer(handle_, this);
+    glfwSetKeyCallback(handle_, glfwKeyCallback);
+    glfwSetCharCallback(handle_, glfwCharCallback);
+    glfwSetMouseButtonCallback(handle_, glfwMouseButtonCallback);
+    glfwSetCursorPosCallback(handle_, glfwCursorPosCallback);
+    glfwSetScrollCallback(handle_, glfwScrollCallback);
+    glfwSetWindowCloseCallback(handle_, glfwCloseCallback);
 }
 
-void WindowsWindow::DestroyWindow() {
-    if (!Handle_) {
+void WindowsWindow::destroyWindow() {
+    if (!handle_) {
         return;
     }
 
-    glfwDestroyWindow(Handle_);
-    Handle_ = nullptr;
-    Hwnd_ = nullptr;
+    glfwDestroyWindow(handle_);
+    handle_ = nullptr;
+    hwnd_ = nullptr;
 }
 
-SharedRef<PlatformApplication> WindowsWindow::GetOwningApplication() const {
-    Assert(OwningApplication_);
+SharedRef<PlatformApplication> WindowsWindow::getOwningApplication() const {
+    pxAssert(OwningApplication_);
     return OwningApplication_;
 }
 
-GenericOSWindowHandle WindowsWindow::GetOSWindowHandle() const {
-    return {static_cast<void*>(Hwnd_)};
+GenericOSWindowHandle WindowsWindow::getOsWindowHandle() const {
+    return {static_cast<void*>(hwnd_)};
 }
 
-void WindowsWindow::Show() {
-    Assert(Handle_ != nullptr);
-    glfwShowWindow(Handle_);
+void WindowsWindow::show() {
+    pxAssert(handle_ != nullptr);
+    glfwShowWindow(handle_);
 }
 
-void WindowsWindow::Hide() {
-    Assert(Handle_ != nullptr);
-    glfwHideWindow(Handle_);
+void WindowsWindow::hide() {
+    pxAssert(handle_ != nullptr);
+    glfwHideWindow(handle_);
 }
 
-bool WindowsWindow::IsVisible() const {
-    if (!Handle_) {
+bool WindowsWindow::isVisible() const {
+    if (!handle_) {
         return false;
     }
-    return glfwGetWindowAttrib(Handle_, GLFW_VISIBLE) == GLFW_TRUE;
+    return glfwGetWindowAttrib(handle_, GLFW_VISIBLE) == GLFW_TRUE;
 }
 
-UniquePtr<WindowsWindow> WindowsWindowFactory::Create() {
-    return MakeUnique<WindowsWindow>();
+UniquePtr<WindowsWindow> WindowsWindowFactory::create() {
+    return makeUnique<WindowsWindow>();
 }
 
 } // namespace px

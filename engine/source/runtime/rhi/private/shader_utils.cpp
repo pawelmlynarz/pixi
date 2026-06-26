@@ -17,7 +17,7 @@ struct ShaderMeta {
     nri::StageBits Stage;
 };
 
-constexpr std::array ShaderExtensions{
+constexpr std::array shaderExtensions{
     ShaderMeta("", nri::StageBits::NONE),
     ShaderMeta(".vs.", nri::StageBits::VERTEX_SHADER),
     ShaderMeta(".tcs.", nri::StageBits::TESS_CONTROL_SHADER),
@@ -27,8 +27,8 @@ constexpr std::array ShaderExtensions{
     ShaderMeta(".cs.", nri::StageBits::COMPUTE_SHADER),
 };
 
-constexpr std::string_view GetShaderIntmdExtension(nri::GraphicsAPI const Backend) {
-    switch (Backend) {
+constexpr std::string_view getShaderIntmdExtension(nri::GraphicsAPI const backend) {
+    switch (backend) {
     case nri::GraphicsAPI::D3D11:
         return ".dxbc";
     case nri::GraphicsAPI::D3D12:
@@ -36,18 +36,18 @@ constexpr std::string_view GetShaderIntmdExtension(nri::GraphicsAPI const Backen
     case nri::GraphicsAPI::VK:
         return ".spirv";
     default: {
-        AssertMsgf(false, "Shader intermediate extension format not specified.");
+        pxAssertMsgf(false, "Shader intermediate extension format not specified.");
         return "";
     }
     }
 }
 
-std::string_view GetFileName(std::string const& Path) {
-    std::string_view const View(Path);
+std::string_view getFileName(std::string const& path) {
+    std::string_view const view(path);
 
-    size_t const SlashPos{Path.find_last_of("\\/")};
-    if (SlashPos != std::string::npos) {
-        return View.substr(SlashPos + 1);
+    size_t const slashPos{path.find_last_of("\\/")};
+    if (slashPos != std::string::npos) {
+        return view.substr(slashPos + 1);
     }
     return "";
 }
@@ -57,44 +57,44 @@ enum class DataFolder : uint8_t {
     SHADERS,
 };
 
-std::string GetFullPath(std::string const& LocalPath, DataFolder const DataFolder) {
-    std::string Path{};
-    if (DataFolder == DataFolder::SHADERS) {
-        Path = "_Shaders/";
+std::string getFullPath(std::string const& localPath, DataFolder const dataFolder) {
+    std::string path{};
+    if (dataFolder == DataFolder::SHADERS) {
+        path = "_Shaders/";
     }
 
-    for (uint32_t I{0}; I < 4; ++I) {
-        if (std::filesystem::exists(Path)) {
+    for (uint32_t i{0}; i < 4; ++i) {
+        if (std::filesystem::exists(path)) {
             break;
         }
-        Path.reserve(Path.size() + 3);
-        Path.insert(0, "../");
+        path.reserve(path.size() + 3);
+        path.insert(0, "../");
     }
-    return Path + LocalPath;
+    return path + localPath;
 }
 
-bool LoadFile(std::string const& Path, std::vector<uint8_t>& Data) {
-    std::ifstream File(Path, std::ios::binary);
+bool loadFile(std::string const& path, std::vector<uint8_t>& data) {
+    std::ifstream file(path, std::ios::binary);
 
-    if (!File) {
-        Assert(false);
-        Data.clear();
+    if (!file) {
+        pxAssert(false);
+        data.clear();
         return false;
     }
 
-    File.seekg(0, std::ios::end);
-    std::streamsize const Size{File.tellg()};
-    File.seekg(0, std::ios::beg);
+    file.seekg(0, std::ios::end);
+    std::streamsize const size{file.tellg()};
+    file.seekg(0, std::ios::beg);
 
-    if (Size <= 0) {
-        Data.clear();
+    if (size <= 0) {
+        data.clear();
         return false;
     }
 
-    Data.resize(static_cast<size_t>(Size));
+    data.resize(static_cast<size_t>(size));
 
-    if (!File.read(reinterpret_cast<char*>(Data.data()), Size)) {
-        Data.clear();
+    if (!file.read(reinterpret_cast<char*>(data.data()), size)) {
+        data.clear();
         return false;
     }
 
@@ -103,30 +103,30 @@ bool LoadFile(std::string const& Path, std::vector<uint8_t>& Data) {
 
 } // namespace
 
-nri::ShaderDesc LoadShader(nri::GraphicsAPI const Backend, std::string const& ShaderName, ShaderStorage& Storage, std::string_view const EntryPointName) {
-    std::string_view const ExtensionStr{GetShaderIntmdExtension(Backend)};
-    std::string const Path{GetFullPath(ShaderName + std::string(ExtensionStr), DataFolder::SHADERS)};
-    nri::ShaderDesc ShaderDesc{};
+nri::ShaderDesc loadShader(nri::GraphicsAPI const backend, std::string const& shaderName, ShaderStorage& storage, std::string_view const entryPointName) {
+    std::string_view const extensionStr{getShaderIntmdExtension(backend)};
+    std::string const path{getFullPath(shaderName + std::string(extensionStr), DataFolder::SHADERS)};
+    nri::ShaderDesc shaderDesc{};
 
-    for (auto const& Extension : ShaderExtensions) {
-        if (Path.rfind(Extension.Extension) == std::string::npos) {
+    for (auto const& extension : shaderExtensions) {
+        if (path.rfind(extension.Extension) == std::string::npos) {
             continue;
         }
 
-        Storage.emplace_back();
-        std::vector<uint8>& Code{Storage.back()};
+        storage.emplace_back();
+        std::vector<uint8>& code{storage.back()};
 
-        if (LoadFile(Path, Code)) {
-            ShaderDesc.stage = Extension.Stage;
-            ShaderDesc.bytecode = Code.data();
-            ShaderDesc.size = Code.size();
-            ShaderDesc.entryPointName = EntryPointName.data();
+        if (loadFile(path, code)) {
+            shaderDesc.stage = extension.Stage;
+            shaderDesc.bytecode = code.data();
+            shaderDesc.size = code.size();
+            shaderDesc.entryPointName = entryPointName.data();
         }
         break;
     }
-    RHI_ABORT_ON_FALSE(ShaderDesc.size != 0);
+    RHI_ABORT_ON_FALSE(shaderDesc.size != 0);
 
-    return ShaderDesc;
+    return shaderDesc;
 }
 
 } // namespace px

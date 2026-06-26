@@ -17,16 +17,16 @@ class SWidget : public EnableSharedFromThis<SWidget> {
 
 } // namespace px
 
-#define SWIDGET_PROPERTY(Type, Name, Field) \
+#define SWIDGET_PROPERTY(type, name)        \
   private:                                  \
-    Type Field{};                           \
+    type name##_{};                         \
                                             \
   public:                                   \
-    auto& Name(Type const& value) {         \
-        (Field) = value;                    \
+    auto& name(type const& value) {         \
+        (name##_) = value;                  \
         return *this;                       \
     }                                       \
                                             \
-    Type const& Get##Name() const {         \
-        return Field;                       \
+    type const& get##name() const {         \
+        return name##_;                     \
     }

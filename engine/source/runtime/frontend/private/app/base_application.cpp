@@ -7,22 +7,22 @@
 
 namespace px {
 
-SharedPtr<BaseApplication> BaseApplication::BaseApplicationInstance_{nullptr};
+SharedPtr<BaseApplication> BaseApplication::baseApplicationInstance{nullptr};
 
-bool BaseApplication::InitializeRenderer(SharedPtr<BaseRenderer> Renderer) {
-    Renderer_ = std::move(Renderer);
-    return Renderer_->Initialize();
+bool BaseApplication::initializeRenderer(SharedPtr<BaseRenderer> renderer) {
+    Renderer_ = std::move(renderer);
+    return Renderer_->initialize();
 }
 
-void BaseApplication::DestoryRenderer() {
+void BaseApplication::destoryRenderer() {
     if (Renderer_) {
-        Renderer_->Shutdown();
+        Renderer_->shutdown();
     }
     Renderer_.reset();
 }
 
-BaseRenderer& BaseApplication::GetRenderer() const {
-    Assert(Renderer_ != nullptr);
+BaseRenderer& BaseApplication::getRenderer() const {
+    pxAssert(Renderer_ != nullptr);
     return *Renderer_;
 }
 

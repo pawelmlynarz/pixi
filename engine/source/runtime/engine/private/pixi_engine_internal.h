@@ -11,7 +11,7 @@
 namespace px {
 
 [[nodiscard]]
-PXENGINE_API int32 InitializeEngine(SharedPtr<PixiEngine> const& Engine);
-PXENGINE_API void DestroyEngine();
+PXENGINE_API int32 initializeEngine(SharedPtr<PixiEngine> const& engine);
+PXENGINE_API void destroyEngine();
 
 } // namespace px

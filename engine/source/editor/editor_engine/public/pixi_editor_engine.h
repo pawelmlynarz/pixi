@@ -12,6 +12,6 @@ namespace px::ed {
 class PixiEditorEngine final : public PixiEngine {
 };
 
-PXEDITOR_ENGINE_API PixiEditorEngine& GetEditorEngine();
+PXEDITOR_ENGINE_API PixiEditorEngine& getEditorEngine();
 
 } // namespace px::ed

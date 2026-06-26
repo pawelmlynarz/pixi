@@ -17,32 +17,32 @@ class BaseRenderer;
 
 class SimpleApplication final : public BaseApplication {
   public:
-    SimpleApplication(SharedRef<PlatformApplication> const& PlatformApplication);
+    SimpleApplication(SharedRef<PlatformApplication> const& platformApplication);
     ~SimpleApplication() override;
 
-    static PXFRONTEND_API SimpleApplication& CreateApplication();
-    static PXFRONTEND_API SimpleApplication& CreateApplication(SharedRef<class PlatformApplication> const& InPlatformApplication);
-    static PXFRONTEND_API void ShutdownApplication();
-    static PXFRONTEND_API bool IsInitialized();
+    static PXFRONTEND_API SimpleApplication& createApplication();
+    static PXFRONTEND_API SimpleApplication& createApplication(SharedRef<class PlatformApplication> const& inPlatformApplication);
+    static PXFRONTEND_API void shutdownApplication();
+    static PXFRONTEND_API bool isInitialized();
 
-    static SimpleApplication& Get() {
-        Assert(ApplicationInstance_.get() != nullptr);
-        return *ApplicationInstance_;
+    static SimpleApplication& get() {
+        pxAssert(applicationInstance.get() != nullptr);
+        return *applicationInstance;
     }
 
-    PXFRONTEND_API void Tick(float Dt);
-    PXFRONTEND_API bool AddWindow(SharedRef<SWindow> SWindow, bool bShowImmediately) override;
+    PXFRONTEND_API void tick(float dt);
+    PXFRONTEND_API bool addWindow(SharedRef<SWindow> window, bool bShowImmediately) override;
 
   private:
-    void DrawWindows() const;
+    void drawWindows() const;
 
   private:
     // Holds a pointer to the current application.
-    static PXFRONTEND_API SharedPtr<SimpleApplication> ApplicationInstance_;
+    static PXFRONTEND_API SharedPtr<SimpleApplication> applicationInstance;
 
-    SharedRef<PlatformApplication> PlatformApplication_;
+    SharedRef<PlatformApplication> platformApplication_;
 
-    std::vector<SharedRef<SWindow>> Windows_;
+    std::vector<SharedRef<SWindow>> windows_;
 };
 
 } // namespace px

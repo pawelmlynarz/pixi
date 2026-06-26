@@ -8,13 +8,13 @@ namespace px {
 
 namespace {
 
-inline uint8 GetOptimalSwapChainTextureNum() {
-    return px::RHIContext::GetQueuedFrameNum() + 1;
+inline uint8 getOptimalSwapChainTextureNum() {
+    return px::RHIContext::getQueuedFrameNum() + 1;
 }
 
-void PrepareNRIWindowHandle(nri::Window& Window, void* OSWindowHandle) {
+void prepareNriWindowHandle(nri::Window& window, void* osWindowHandle) {
 #if PLATFORM_WINDOWS
-    Window.windows.hwnd = OSWindowHandle;
+    window.windows.hwnd = osWindowHandle;
 #else
 #error Unsupported platform: Window handle not mapped.
 #endif
@@ -23,92 +23,92 @@ void PrepareNRIWindowHandle(nri::Window& Window, void* OSWindowHandle) {
 } // namespace
 
 // NOLINTNEXTLINE(readability-function-cognitive-complexity)
-RHISwapChain::RHISwapChain(RHIContext& Context, nri::Window const& Window, uint16 const SizeX, uint16 const SizeY)
-    : RHIContext_(Context) {
+RHISwapChain::RHISwapChain(RHIContext& context, nri::Window const& window, uint16 const sizeX, uint16 const sizeY)
+    : rhiContext_(context) {
 
-    RHIInterface const& RHI{RHIContext_.GetRHI()};
-    nri::Device* Device{Context.GetDevice()};
+    RHIInterface const& rhi{rhiContext_.getRhi()};
+    nri::Device* device{context.getDevice()};
 
-    nri::SwapChainDesc const SwapChainDesc{
-        .window = Window,
-        .queue = RHIContext_.GetGraphicsQueue(),
-        .width = SizeX,
-        .height = SizeY,
-        .textureNum = GetOptimalSwapChainTextureNum(),
+    nri::SwapChainDesc const swapChainDesc{
+        .window = window,
+        .queue = rhiContext_.getGraphicsQueue(),
+        .width = sizeX,
+        .height = sizeY,
+        .textureNum = getOptimalSwapChainTextureNum(),
         .format = nri::SwapChainFormat::BT709_G22_8BIT,
         .flags = (RHIStaticContext::bVSync ? nri::SwapChainBits::VSYNC : nri::SwapChainBits::NONE) | nri::SwapChainBits::ALLOW_TEARING,
-        .queuedFrameNum = px::RHIContext::GetQueuedFrameNum()
+        .queuedFrameNum = px::RHIContext::getQueuedFrameNum()
     };
 
-    RHI_ABORT_ON_FAILURE(RHIContext_.GetRHI().CreateSwapChain(*Device, SwapChainDesc, SwapChain))
+    RHI_ABORT_ON_FAILURE(rhiContext_.getRhi().CreateSwapChain(*device, swapChainDesc, SwapChain))
 
-    uint32_t SwapChainTextureNum{0};
-    nri::Texture* const* SwapChainTextures{RHI.GetSwapChainTextures(*SwapChain, SwapChainTextureNum)};
-    SwapChainFormat = RHI.GetTextureDesc(*SwapChainTextures[0]).format;
+    uint32_t swapChainTextureNum{0};
+    nri::Texture* const* swapChainTextures{rhi.GetSwapChainTextures(*SwapChain, swapChainTextureNum)};
+    SwapChainFormat = rhi.GetTextureDesc(*swapChainTextures[0]).format;
 
-    for (uint32_t Idx{0}; Idx < SwapChainTextureNum; ++Idx) {
-        nri::TextureViewDesc const TextureViewDesc{.texture = SwapChainTextures[Idx], .type = nri::TextureView::COLOR_ATTACHMENT, .format = SwapChainFormat};
+    for (uint32_t idx{0}; idx < swapChainTextureNum; ++idx) {
+        nri::TextureViewDesc const textureViewDesc{.texture = swapChainTextures[idx], .type = nri::TextureView::COLOR_ATTACHMENT, .format = SwapChainFormat};
 
-        nri::Descriptor* ColorAttachment{nullptr};
-        RHI_ABORT_ON_FAILURE(RHI.CreateTextureView(TextureViewDesc, ColorAttachment))
+        nri::Descriptor* colorAttachment{nullptr};
+        RHI_ABORT_ON_FAILURE(rhi.CreateTextureView(textureViewDesc, colorAttachment))
 
-        nri::Fence* AcquireSemaphore{nullptr};
-        RHI_ABORT_ON_FAILURE(RHI.CreateFence(*Device, nri::SWAPCHAIN_SEMAPHORE, AcquireSemaphore))
+        nri::Fence* acquireSemaphore{nullptr};
+        RHI_ABORT_ON_FAILURE(rhi.CreateFence(*device, nri::SWAPCHAIN_SEMAPHORE, acquireSemaphore))
 
-        nri::Fence* ReleaseSemaphore{nullptr};
-        RHI_ABORT_ON_FAILURE(RHI.CreateFence(*Device, nri::SWAPCHAIN_SEMAPHORE, ReleaseSemaphore))
+        nri::Fence* releaseSemaphore{nullptr};
+        RHI_ABORT_ON_FAILURE(rhi.CreateFence(*device, nri::SWAPCHAIN_SEMAPHORE, releaseSemaphore))
 
-        RHISwapChainTexture const Texture{
-            .AcquireSemaphore = AcquireSemaphore,
-            .ReleaseSemaphore = ReleaseSemaphore,
-            .Texture = SwapChainTextures[Idx],
-            .ColorAttachment = ColorAttachment,
+        RHISwapChainTexture const texture{
+            .AcquireSemaphore = acquireSemaphore,
+            .ReleaseSemaphore = releaseSemaphore,
+            .Texture = swapChainTextures[idx],
+            .ColorAttachment = colorAttachment,
             .AttachmentFormat = SwapChainFormat
         };
-        SwapChainTexturesRHI.emplace_back(Texture);
+        SwapChainTexturesRHI.emplace_back(texture);
     }
 }
 
-void RHISwapChain::Destroy() {
-    RHIInterface const& RHI{RHIContext_.GetRHI()};
-    RHI.DeviceWaitIdle(RHIContext_.GetDevice());
+void RHISwapChain::destroy() {
+    RHIInterface const& rhi{rhiContext_.getRhi()};
+    rhi.DeviceWaitIdle(rhiContext_.getDevice());
 
-    for (RHISwapChainTexture const& SwapChainTexture : SwapChainTexturesRHI) {
-        RHI.DestroyFence(SwapChainTexture.AcquireSemaphore);
-        RHI.DestroyFence(SwapChainTexture.ReleaseSemaphore);
-        RHI.DestroyDescriptor(SwapChainTexture.ColorAttachment);
+    for (RHISwapChainTexture const& swapChainTexture : SwapChainTexturesRHI) {
+        rhi.DestroyFence(swapChainTexture.AcquireSemaphore);
+        rhi.DestroyFence(swapChainTexture.ReleaseSemaphore);
+        rhi.DestroyDescriptor(swapChainTexture.ColorAttachment);
     }
 
     if (SwapChain) {
-        RHI.DestroySwapChain(SwapChain);
+        rhi.DestroySwapChain(SwapChain);
         SwapChain = nullptr;
     }
 }
 
-UniquePtr<RHISwapChain> RHICreateSwapchain(RHIContext& Context, nri::Window const& Window, uint16 const SizeX, uint16 const SizeY) {
-    UniquePtr SwapChain{MakeUnique<RHISwapChain>(Context, Window, SizeX, SizeY)};
-    return SwapChain;
+UniquePtr<RHISwapChain> rhiCreateSwapchain(RHIContext& context, nri::Window const& window, uint16 const sizeX, uint16 const sizeY) {
+    UniquePtr swapChain{makeUnique<RHISwapChain>(context, window, sizeX, sizeY)};
+    return swapChain;
 }
 
-RHIViewport::RHIViewport(RHIContext& Context, void* const OSWindowHandle, uint16 const SizeX, uint16 const SizeY)
-    : RHIContext_(Context), OSWindowHandle_(OSWindowHandle), SizeX_(SizeX), SizeY_(SizeY) {
+RHIViewport::RHIViewport(RHIContext& context, void* const osWindowHandle, uint16 const sizeX, uint16 const sizeY)
+    : rhiContext_(context), osWindowHandle_(osWindowHandle), sizeX_(sizeX), sizeY_(sizeY) {
 
-    PrepareNRIWindowHandle(Window_, OSWindowHandle);
+    prepareNriWindowHandle(window_, osWindowHandle);
 
-    Assert(RHIContext_.GetGraphicsQueue() != nullptr);
+    pxAssert(rhiContext_.getGraphicsQueue() != nullptr);
 
-    SwapChainRHI_ = RHICreateSwapchain(RHIContext_, Window_, SizeX_, SizeY_);
+    swapChainRhi_ = rhiCreateSwapchain(rhiContext_, window_, sizeX_, sizeY_);
 }
 
 RHIViewport::~RHIViewport() {
-    if (SwapChainRHI_) {
-        SwapChainRHI_->Destroy();
+    if (swapChainRhi_) {
+        swapChainRhi_->destroy();
     }
 }
 
-UniquePtr<RHIViewport> RHICreateViewport(RHIContext& Context, void* const WindowHandle, uint16 const SizeX, uint16 const SizeY) {
-    UniquePtr Viewport{MakeUnique<RHIViewport>(Context, WindowHandle, SizeX, SizeY)};
-    return Viewport;
+UniquePtr<RHIViewport> rhiCreateViewport(RHIContext& context, void* const windowHandle, uint16 const sizeX, uint16 const sizeY) {
+    UniquePtr viewport{makeUnique<RHIViewport>(context, windowHandle, sizeX, sizeY)};
+    return viewport;
 }
 
 } // namespace px
