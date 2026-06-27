@@ -29,7 +29,7 @@ void initializeImGuiEditorStyleSet() {
 
 struct EditorFrontendModule {
     static void startupModule() {
-        CoreDelegates::onEngineLoopInitComplete.addLambda([]() {
+        CoreDelegates::onEditorInitComplete.addLambda([]() {
             initializeImGuiContext();
             initializeImGuiEditorStyleSet();
         });

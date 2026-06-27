@@ -30,16 +30,17 @@ class InputSystem final : NonCopyableNonMovable, public IGenericApplicationMessa
     bool onKeyUp(int32 keyCode, uint32 characterCode, bool isRepeat) override;
     bool processKeyUpEvent(KeyEvent const& keyEvent);
 
-    bool onMouseDown(SharedRef<GenericWindow> const& window, EMouseButton button, Vector2 const& mousePos) override;
+    bool onMouseDown(SharedRef<GenericWindow> const& platformWindow, EMouseButton button, Vector2 const& mousePos) override;
     bool processMouseButtonDownEvent(PointerEvent const& mouseEvent);
 
-    bool onMouseUp(SharedRef<GenericWindow> const& window, EMouseButton button, Vector2 const& mousePos) override;
+    bool onMouseUp(SharedRef<GenericWindow> const& platformWindow, EMouseButton button, Vector2 const& mousePos) override;
     bool processMouseButtonUpEvent(PointerEvent const& mouseEvent);
 
-    bool onMouseMoved(SharedRef<GenericWindow> const& window, Vector2 const& mousePos) override;
+    bool onMouseMoved(SharedRef<GenericWindow> const& platformWindow, Vector2 const& mousePos) override;
     bool processMouseMovedEvent(PointerEvent const& mouseEvent);
 
-    void onWindowClose(SharedRef<GenericWindow> const& window) override;
+    void onWindowClose(SharedRef<GenericWindow> const& platformWindow) override;
+    void onWindowResized(SharedRef<GenericWindow> const& platformWindow, uint16 width, uint16 height, bool wasMinimized) override;
 
   private:
     SharedRef<PlatformApplication> owningApplication_;

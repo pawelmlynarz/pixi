@@ -12,11 +12,12 @@
 
 namespace px {
 
-void ImGuiRenderer::initialize(nri::Device* const device) {
+void ImGuiRenderer::initialize(nri::Device* const device, UVector2 const& displaySize) {
     device_ = device;
     pxAssert(device_);
 
     IMGUI_CHECKVERSION();
+    displaySize_ = displaySize;
     imguiContext_ = ImGui::CreateContext();
     ImGui::StyleColorsDark();
 
@@ -30,6 +31,7 @@ void ImGuiRenderer::initialize(nri::Device* const device) {
     io.BackendFlags |= ImGuiBackendFlags_RendererHasTextures;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     io.IniFilename = nullptr;
+    io.DisplaySize = ImVec2(static_cast<float>(displaySize_.x), static_cast<float>(displaySize_.y));
 
     ImFontConfig fontConfig{};
     fontConfig.SizePixels = 13.f;
@@ -54,15 +56,7 @@ void ImGuiRenderer::shutdown() {
 }
 
 // NOLINTNEXTLINE(readability-make-member-function-const)
-void ImGuiRenderer::tick([[maybe_unused]] float const dt) {
-    if (!hasUserInterface()) {
-        return;
-    }
-
-    pxToDo("ImGui Display Size.");
-    ImGuiIO& io{ImGui::GetIO()};
-    io.DisplaySize = ImVec2(1920.f, 1080.f);
-}
+void ImGuiRenderer::tick([[maybe_unused]] float const dt) {}
 
 void ImGuiRenderer::cmdCopyImguiData(nri::CommandBuffer& cmdBuffer, nri::Streamer& streamer) const {
     if (!hasUserInterface()) {
@@ -102,6 +96,13 @@ void ImGuiRenderer::cmdDrawImgui(nri::CommandBuffer& cmdBuffer, nri::Format cons
 
 void* ImGuiRenderer::getImguiContext() {
     return imguiContext_;
+}
+
+void ImGuiRenderer::requestResizeDisplaySize(UVector2 const& displaySize) {
+    displaySize_ = displaySize;
+
+    ImGuiIO& io{ImGui::GetIO()};
+    io.DisplaySize = ImVec2(static_cast<float>(displaySize_.x), static_cast<float>(displaySize_.y));
 }
 
 } // namespace px

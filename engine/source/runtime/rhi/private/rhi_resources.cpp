@@ -90,8 +90,8 @@ UniquePtr<RHISwapChain> rhiCreateSwapchain(RHIContext& context, nri::Window cons
     return swapChain;
 }
 
-RHIViewport::RHIViewport(RHIContext& context, void* const osWindowHandle, uint16 const sizeX, uint16 const sizeY)
-    : rhiContext_(context), osWindowHandle_(osWindowHandle), sizeX_(sizeX), sizeY_(sizeY) {
+RHIViewport::RHIViewport(RHIContext& context, void* const osWindowHandle, uint16 const sizeX, uint16 const sizeY, bool const isFullscreen)
+    : rhiContext_(context), osWindowHandle_(osWindowHandle), sizeX_(sizeX), sizeY_(sizeY), isFullscreen_(isFullscreen) {
 
     prepareNriWindowHandle(window_, osWindowHandle);
 
@@ -106,8 +106,17 @@ RHIViewport::~RHIViewport() {
     }
 }
 
-UniquePtr<RHIViewport> rhiCreateViewport(RHIContext& context, void* const windowHandle, uint16 const sizeX, uint16 const sizeY) {
-    UniquePtr viewport{makeUnique<RHIViewport>(context, windowHandle, sizeX, sizeY)};
+void RHIViewport::resize(uint16 sizeX, uint16 sizeY, bool isFullscreen) {
+    sizeX_ = sizeX;
+    sizeY_ = sizeY;
+    isFullscreen_ = isFullscreen;
+
+    swapChainRhi_->destroy();
+    swapChainRhi_ = rhiCreateSwapchain(rhiContext_, window_, sizeX_, sizeY_);
+}
+
+UniquePtr<RHIViewport> rhiCreateViewport(RHIContext& context, void* const windowHandle, uint16 const sizeX, uint16 const sizeY, bool const isFullscreen) {
+    UniquePtr viewport{makeUnique<RHIViewport>(context, windowHandle, sizeX, sizeY, isFullscreen)};
     return viewport;
 }
 

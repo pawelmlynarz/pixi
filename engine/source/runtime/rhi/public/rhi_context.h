@@ -67,6 +67,8 @@ class RHIContext {
 
     static inline uint8 getQueuedFrameNum();
 
+    void waitIdle();
+
     /* temp shit code {
     nri::PipelineLayout* PipelineLayout{nullptr};
     nri::Pipeline* Pipeline{nullptr};

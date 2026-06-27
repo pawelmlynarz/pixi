@@ -12,6 +12,7 @@
 #include "rhi_resources.h"
 #include "widgets/swindow.h"
 #include "platform/generic_platform/generic_window.h"
+#include "hal/platform_properties.h"
 
 namespace px {
 
@@ -21,6 +22,18 @@ struct RenderViewportInfo : public RenderResource {
     void* OSWindow{nullptr};
     SharedPtr<RHIViewport> RHIViewport{nullptr};
 };
+
+bool isViewportFullscreen(SharedRef<SWindow> const& window) {
+    if constexpr (PlatformProperties::supportsWindowedMode()) {
+        if (WITH_EDITOR) {
+            return false;
+        } 
+        pxToDo("&& window.getWindowMode() == EWindowMode::Fullscreen");
+        return window->getNativeWindow()->isFullscreenSupported();
+    } else {
+        return true;
+    }
+}
 
 } // namespace
 
@@ -41,9 +54,6 @@ Renderer::Renderer()
 Renderer::~Renderer() = default;
 
 bool Renderer::initialize() {
-#if WITH_IMGUI
-    impl_->ImGuiRenderer.initialize(getRhiContext().getDevice());
-#endif
     return true;
 }
 
@@ -74,15 +84,38 @@ void Renderer::createViewport(SharedRef<SWindow> window) {
 
     void* const osWindow{window->getNativeWindow()->getOsWindowHandle().Handle};
     pxAssert(osWindow != nullptr);
+    UVector2 const windowSize{window->getSize()};
 
     viewInfo->OSWindow = osWindow;
     viewInfo->RHIViewport = rhiCreateViewport(
         getRhiContext(),
         viewInfo->OSWindow,
-        static_cast<uint16>(window->getSize().x), static_cast<uint16>(window->getSize().y)
+        static_cast<uint16>(windowSize.x), static_cast<uint16>(windowSize.y),
+        isViewportFullscreen(window)
     );
 
     impl_->WindowToViewportInfo.emplace(window, std::move(viewInfo));
+
+#if WITH_IMGUI
+    if (!impl_->ImGuiRenderer.hasUserInterface()) {
+        impl_->ImGuiRenderer.initialize(getRhiContext().getDevice(), windowSize);
+    }
+#endif
+}
+
+void Renderer::requestResizeViewport(SharedRef<SWindow> window, uint16 sizeX, uint16 sizeY) {
+    if (auto& viewInfo{impl_->WindowToViewportInfo.at(window)}) {
+        viewInfo->RHIViewport->resize(
+            sizeX, sizeY, isViewportFullscreen(window)
+        );
+    }
+#if WITH_IMGUI
+    impl_->ImGuiRenderer.requestResizeDisplaySize({sizeX, sizeY});
+#endif
+}
+
+void Renderer::flushCommands() const {
+    getRhiContext().waitIdle();
 }
 
 #if WITH_IMGUI

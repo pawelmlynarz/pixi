@@ -6,9 +6,9 @@ namespace px {
 
 template <typename TModuleClass>
 concept ModuleInterface =
-    requires(TModuleClass Class) {
-        { Class.startupModule() } -> std::same_as<void>;
-        { Class.shutdownModule() } -> std::same_as<void>;
+    requires(TModuleClass instance) {
+        { instance.startupModule() } -> std::same_as<void>;
+        { instance.shutdownModule() } -> std::same_as<void>;
     };
 
 /**
@@ -17,14 +17,14 @@ concept ModuleInterface =
 template <ModuleInterface TModuleClass>
 struct ModuleWrapper {
     // NOLINTBEGIN
-    ModuleWrapper() { Module_.startupModule(); }
-    virtual ~ModuleWrapper() { Module_.shutdownModule(); }
+    ModuleWrapper() { module_.startupModule(); }
+    virtual ~ModuleWrapper() { module_.shutdownModule(); }
 
-    TModuleClass Module_;
+    TModuleClass module_;
     // NOLINTEND
 };
 
 } // namespace px
 
 #define IMPLEMENT_MODULE(ModuleClassName) \
-    ModuleWrapper<ModuleClassName> Module;
+    ModuleWrapper<ModuleClassName> module;

@@ -107,6 +107,12 @@ void glfwCloseCallback(GLFWwindow* const window) {
     messageHandler->onWindowClose(sharedThis(winWindow));
 }
 
+void glfwFramebufferResizeCallback(GLFWwindow* const window, int const width, int const height) {
+    WindowsWindow* const winWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window))};
+    SharedRef const messageHandler{winWindow->getOwningApplication()->getMessageHandler()};
+    messageHandler->onWindowResized(sharedThis(winWindow), static_cast<uint16>(width), static_cast<uint16>(height), false);
+}
+
 } // namespace
 
 void WindowsWindow::initializeWindow(SharedPtr<PlatformApplication> owningApplication, GenericWindowDefinition const& windowDefinition) {
@@ -137,6 +143,7 @@ void WindowsWindow::initializeWindow(SharedPtr<PlatformApplication> owningApplic
     glfwSetCursorPosCallback(handle_, glfwCursorPosCallback);
     glfwSetScrollCallback(handle_, glfwScrollCallback);
     glfwSetWindowCloseCallback(handle_, glfwCloseCallback);
+    glfwSetFramebufferSizeCallback(handle_, glfwFramebufferResizeCallback);
 }
 
 void WindowsWindow::destroyWindow() {
@@ -173,6 +180,10 @@ bool WindowsWindow::isVisible() const {
         return false;
     }
     return glfwGetWindowAttrib(handle_, GLFW_VISIBLE) == GLFW_TRUE;
+}
+
+bool WindowsWindow::isFullscreenSupported() const {
+    return glfwGetPrimaryMonitor() != nullptr;
 }
 
 UniquePtr<WindowsWindow> WindowsWindowFactory::create() {

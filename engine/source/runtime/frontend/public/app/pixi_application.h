@@ -33,6 +33,8 @@ class SimpleApplication final : public BaseApplication {
     PXFRONTEND_API void tick(float dt);
     PXFRONTEND_API bool addWindow(SharedRef<SWindow> window, bool bShowImmediately) override;
 
+    PXFRONTEND_API SharedPtr<SWindow> findWindowByPlatformWindow(SharedRef<class GenericWindow> const& platformWindow);
+
   private:
     void drawWindows() const;
 

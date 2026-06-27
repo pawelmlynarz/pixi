@@ -4,6 +4,7 @@
 #include "core_globals.h"
 #include "hal/platform_tls.h"
 #include "private/core_globals_internal.h"
+#include "misc/core_delegates.h"
 
 // pxeditor
 #if WITH_EDITOR
@@ -36,15 +37,19 @@ void engineExit() {
 
 #if WITH_EDITOR
 [[nodiscard]]
-int32 EditorInit() {
-    int32 const Result{engineInit()};
-    if (Result != 0) {
-        return Result;
+int32 editorInit() {
+    int32 result{engineInit()};
+    if (result != 0) {
+        return result;
     }
-    return ed::editorInit();
+    result = ed::editorInit();
+    if (result == 0) {
+        CoreDelegates::onEditorInitComplete.broadcast();
+    }
+    return result;
 }
 
-void EditorExit() {
+void editorExit() {
     ed::editorExit();
     engineExit();
 }
@@ -53,7 +58,7 @@ void EditorExit() {
 struct EngineExitGuard {
     ~EngineExitGuard() {
 #if WITH_EDITOR
-        EditorExit();
+        editorExit();
 #else
         engineExit();
 #endif
@@ -74,7 +79,7 @@ int32 engineMain() {
     }
 
 #if WITH_EDITOR
-    errorLevel = EditorInit();
+    errorLevel = editorInit();
 #else
     errorLevel = engineInit();
 #endif

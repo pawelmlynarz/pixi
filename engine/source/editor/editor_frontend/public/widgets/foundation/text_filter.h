@@ -2,7 +2,7 @@
 
 #pragma once
 
-     #include "widgets/widget.h"
+#include "widgets/widget.h"
 #include "common/font.h"
 #include "utils/imgui_draw_utils.h"
 

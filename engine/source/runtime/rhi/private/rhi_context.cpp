@@ -162,6 +162,12 @@ void RHIContext::shutdown() {
     RHIDestoryDevice(*this);
 }
 
+void RHIContext::waitIdle() {
+    if (rhi_) {
+        rhi_->DeviceWaitIdle(getDevice());
+    }
+}
+
 } // namespace px
 
 // NOLINTEND
