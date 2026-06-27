@@ -10,8 +10,8 @@ PlatformApplication::PlatformApplication()
     : messageHandler_(makeShared<NullApplicationMessageHandler>()) {
 }
 
-UniquePtr<GenericWindow> PlatformApplication::createPlatformWindow() {
-    return makeUnique<GenericWindow>();
+UniquePtr<PlatformWindow> PlatformApplication::createPlatformWindow() {
+    return makeUnique<PlatformWindow>();
 }
 
 } // namespace px

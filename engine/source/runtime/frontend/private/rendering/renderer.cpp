@@ -10,7 +10,7 @@
 #include "rhi.h"
 #include "rhi_context.h"
 #include "rhi_resources.h"
-#include "widgets/swindow.h"
+#include "window/window.h"
 #include "platform/generic_platform/generic_window.h"
 #include "hal/platform_properties.h"
 
@@ -23,11 +23,11 @@ struct RenderViewportInfo : public RenderResource {
     SharedPtr<RHIViewport> RHIViewport{nullptr};
 };
 
-bool isViewportFullscreen(SharedRef<SWindow> const& window) {
+bool isViewportFullscreen(SharedRef<Window> const& window) {
     if constexpr (PlatformProperties::supportsWindowedMode()) {
         if (WITH_EDITOR) {
             return false;
-        } 
+        }
         pxToDo("&& window.getWindowMode() == EWindowMode::Fullscreen");
         return window->getNativeWindow()->isFullscreenSupported();
     } else {
@@ -40,7 +40,7 @@ bool isViewportFullscreen(SharedRef<SWindow> const& window) {
 struct Renderer::Impl {
     ~Impl() = default;
 
-    using ViewportInfoMap = std::unordered_map<SharedRef<SWindow>, UniquePtr<RenderViewportInfo>>;
+    using ViewportInfoMap = std::unordered_map<SharedRef<Window>, UniquePtr<RenderViewportInfo>>;
     ViewportInfoMap WindowToViewportInfo;
 #if WITH_IMGUI
     ImGuiRenderer ImGuiRenderer;
@@ -70,7 +70,7 @@ void Renderer::tick(float const dt) {
 #endif
 }
 
-SharedPtr<RHIViewport> Renderer::getViewportResource(SharedRef<SWindow> window) const {
+SharedPtr<RHIViewport> Renderer::getViewportResource(SharedRef<Window> window) const {
     auto const& map{impl_->WindowToViewportInfo};
 
     if (auto it{map.find(window)}; it != map.end()) {
@@ -79,7 +79,7 @@ SharedPtr<RHIViewport> Renderer::getViewportResource(SharedRef<SWindow> window) 
     return nullptr;
 }
 
-void Renderer::createViewport(SharedRef<SWindow> window) {
+void Renderer::createViewport(SharedRef<Window> window) {
     UniquePtr viewInfo{makeUnique<RenderViewportInfo>()};
 
     void* const osWindow{window->getNativeWindow()->getOsWindowHandle().Handle};
@@ -103,7 +103,7 @@ void Renderer::createViewport(SharedRef<SWindow> window) {
 #endif
 }
 
-void Renderer::requestResizeViewport(SharedRef<SWindow> window, uint16 sizeX, uint16 sizeY) {
+void Renderer::requestResizeViewport(SharedRef<Window> window, uint16 sizeX, uint16 sizeY) {
     if (auto& viewInfo{impl_->WindowToViewportInfo.at(window)}) {
         viewInfo->RHIViewport->resize(
             sizeX, sizeY, isViewportFullscreen(window)

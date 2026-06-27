@@ -10,16 +10,16 @@
 
 namespace px {
 
-class GenericWindow;
+class PlatformWindow;
 
 class WindowsApplication final : public PlatformApplication {
   public:
     void initialize() override;
     void shutdown() override;
 
-    UniquePtr<GenericWindow> createPlatformWindow() override;
-    void initializeWindow(SharedRef<GenericWindow> const& window, GenericWindowDefinition const& windowDefinition) override;
-    void closeWindow(SharedRef<GenericWindow> const& window) override;
+    UniquePtr<PlatformWindow> createPlatformWindow() override;
+    void initializeWindow(SharedRef<PlatformWindow> const& platformWindow, PlatformWindowDefinition const& windowDefinition) override;
+    void closeWindow(SharedRef<PlatformWindow> const& platformWindow) override;
 
     void pollMessages() override;
 

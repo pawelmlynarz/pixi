@@ -21,22 +21,22 @@ void WindowsApplication::shutdown() {
     }
 }
 
-UniquePtr<GenericWindow> WindowsApplication::createPlatformWindow() {
+UniquePtr<PlatformWindow> WindowsApplication::createPlatformWindow() {
     return WindowsWindowFactory::create();
 }
 
-void WindowsApplication::initializeWindow(SharedRef<GenericWindow> const& window, GenericWindowDefinition const& windowDefinition) {
-    SharedRef const windowsWindowRef{staticCastSharedRef<WindowsWindow>(window)};
+void WindowsApplication::initializeWindow(SharedRef<PlatformWindow> const& platformWindow, PlatformWindowDefinition const& windowDefinition) {
+    SharedRef const windowsWindowRef{staticCastSharedRef<WindowsWindow>(platformWindow)};
     windowsWindowRef->initializeWindow(sharedThis(this).toPtr(), windowDefinition);
 
     windows_.emplace_back(windowsWindowRef);
 }
 
-void WindowsApplication::closeWindow(SharedRef<GenericWindow> const& window) {
+void WindowsApplication::closeWindow(SharedRef<PlatformWindow> const& platformWindow) {
     auto foundWindow{std::ranges::find_if(
         windows_,
-        [&window](auto const& w) {
-            return w.get() == window.get();
+        [&platformWindow](auto const& w) {
+            return w.get() == platformWindow.get();
         }
     )};
 

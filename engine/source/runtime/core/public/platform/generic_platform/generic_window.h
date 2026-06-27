@@ -20,12 +20,12 @@ struct GenericOSWindowHandle {
 
 class PlatformApplication;
 
-class GenericWindow : NonCopyableNonMovable, public EnableSharedFromThis<GenericWindow> {
+class PlatformWindow : NonCopyableNonMovable, public EnableSharedFromThis<PlatformWindow> {
   public:
-    virtual ~GenericWindow() = default;
+    virtual ~PlatformWindow() = default;
 
   public:
-    virtual void initializeWindow(SharedPtr<PlatformApplication> owningApplication, GenericWindowDefinition const& windowDefinition);
+    virtual void initializeWindow(SharedPtr<PlatformApplication> owningApplication, PlatformWindowDefinition const& windowDefinition);
     virtual void destroyWindow() {}
 
     virtual SharedRef<PlatformApplication> getOwningApplication() const { return OwningApplication_; }
@@ -39,7 +39,7 @@ class GenericWindow : NonCopyableNonMovable, public EnableSharedFromThis<Generic
 
   protected:
     SharedPtr<PlatformApplication> OwningApplication_{nullptr};
-    GenericWindowDefinition Definition_;
+    PlatformWindowDefinition Definition_;
 };
 
 } // namespace px

@@ -2,7 +2,7 @@
 
 #include "app/pixi_application.h"
 #include "base_renderer.h"
-#include "widgets/swindow.h"
+#include "window/window.h"
 #include "input/input_system.h"
 
 // pxcore
@@ -16,16 +16,16 @@ SharedPtr<SimpleApplication> SimpleApplication::applicationInstance{nullptr};
 
 namespace {
 
-SharedRef<GenericWindow> createPlatformWindow(SharedRef<SWindow> const& window, SharedRef<PlatformApplication> const& platformApplication) {
-    GenericWindowDefinition const windowDefinition{
-        .Title = window->getTitle(),
-        .WidthDesired = static_cast<uint16>(window->getSize().x),
-        .HeightDesired = static_cast<uint16>(window->getSize().y),
-        .bDecorated = window->getDecorated(),
-        .bResizable = window->getResizable()
+SharedRef<PlatformWindow> createPlatformWindow(SharedRef<Window> const& window, SharedRef<PlatformApplication> const& platformApplication) {
+    PlatformWindowDefinition const windowDefinition{
+        .title = window->getTitle(),
+        .widthDesired = static_cast<uint16>(window->getSize().x),
+        .heightDesired = static_cast<uint16>(window->getSize().y),
+        .decorated = window->getDecorated(),
+        .resizable = window->getResizable()
     };
 
-    SharedRef<GenericWindow> const platformWindow{platformApplication->createPlatformWindow()};
+    SharedRef<PlatformWindow> const platformWindow{platformApplication->createPlatformWindow()};
     platformApplication->initializeWindow(platformWindow, windowDefinition);
 
     window->setNativeWindow(platformWindow.toWeak());
@@ -73,7 +73,7 @@ void SimpleApplication::tick(float const dt) {
     drawWindows();
 }
 
-bool SimpleApplication::addWindow(SharedRef<SWindow> window, bool const bShowImmediately) {
+bool SimpleApplication::addWindow(SharedRef<Window> window, bool const bShowImmediately) {
     windows_.emplace_back(window);
     SharedRef const platformWindow{createPlatformWindow(window, platformApplication_)};
 
@@ -84,13 +84,11 @@ bool SimpleApplication::addWindow(SharedRef<SWindow> window, bool const bShowImm
     return true;
 }
 
-SharedPtr<SWindow> SimpleApplication::findWindowByPlatformWindow(SharedRef<class GenericWindow> const& platformWindow) {
-    for (auto const& window : windows_) {
-        if (window->getNativeWindow() == platformWindow) {
-            return window.toPtr();
-        }
-    }
-    return nullptr;
+SharedPtr<Window> SimpleApplication::findWindowByPlatformWindow(SharedRef<PlatformWindow> const& platformWindow) {
+    auto const it = std::ranges::find_if(windows_, [&](SharedRef<Window> const& window) {
+        return window->getNativeWindow() == platformWindow;
+    });
+    return it != windows_.end() ? it->toPtr() : nullptr;
 }
 
 void SimpleApplication::drawWindows() const {

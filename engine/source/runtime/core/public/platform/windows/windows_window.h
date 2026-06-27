@@ -15,11 +15,11 @@ typedef struct HWND__* HWND;
 
 namespace px {
 
-class WindowsWindow final : public GenericWindow {
+class WindowsWindow final : public PlatformWindow {
   public:
     ~WindowsWindow() override = default;
 
-    void initializeWindow(SharedPtr<PlatformApplication> owningApplication, GenericWindowDefinition const& windowDefinition) override;
+    void initializeWindow(SharedPtr<PlatformApplication> owningApplication, PlatformWindowDefinition const& windowDefinition) override;
     void destroyWindow() override;
 
     SharedRef<PlatformApplication> getOwningApplication() const override;

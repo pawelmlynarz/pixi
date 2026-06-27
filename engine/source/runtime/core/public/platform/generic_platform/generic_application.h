@@ -21,9 +21,9 @@ class PlatformApplication : NonCopyableNonMovable,
     void setMessageHandler(SharedRef<IGenericApplicationMessageHandler> const& inMessageHandler) { messageHandler_ = inMessageHandler; }
     SharedRef<IGenericApplicationMessageHandler> getMessageHandler() { return messageHandler_; }
 
-    virtual UniquePtr<GenericWindow> createPlatformWindow();
-    virtual void initializeWindow(SharedRef<GenericWindow> const& window, GenericWindowDefinition const& windowDefinition) {}
-    virtual void closeWindow(SharedRef<GenericWindow> const& window) {}
+    virtual UniquePtr<PlatformWindow> createPlatformWindow();
+    virtual void initializeWindow(SharedRef<PlatformWindow> const& platformWindow, PlatformWindowDefinition const& windowDefinition) {}
+    virtual void closeWindow(SharedRef<PlatformWindow> const& platformWindow) {}
 
     virtual void pollMessages() {}
 

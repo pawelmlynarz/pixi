@@ -10,7 +10,7 @@ namespace {
 
 LARGE_INTEGER frequency;
 
-inline int64 safeInt64MulDiv(int64 const value, int64 const numer, int64 const denom) {
+int64 safeInt64MulDiv(int64 const value, int64 const numer, int64 const denom) {
     int64 const q{value / denom};
     int64 const r{value % denom};
     return (q * numer) + (r * numer / denom);

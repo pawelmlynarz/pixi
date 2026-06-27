@@ -1,6 +1,6 @@
 // © 2026 Pawel Mlynarz
 
-#include "widgets/swindow.h"
+#include "window/window.h"
 #include "app/base_application.h"
 #include "rendering/renderer.h"
 #include "rendering/imgui_renderer.h"
@@ -20,12 +20,12 @@
 
 namespace px {
 
-void SWindow::paintWindow() {
+void Window::paintWindow() {
     renderImGuiInternal();
     renderFrameInternal();
 }
 
-void SWindow::renderImGuiInternal() {
+void Window::renderImGuiInternal() {
 #if WITH_IMGUI
     ImGui::NewFrame();
     {
@@ -36,7 +36,7 @@ void SWindow::renderImGuiInternal() {
 #endif
 }
 
-void SWindow::renderFrameInternal() {
+void Window::renderFrameInternal() {
     // NOLINTBEGIN
     pxToDo("Rewrite");
 
@@ -143,15 +143,15 @@ void SWindow::renderFrameInternal() {
     // NOLINTEND
 }
 
-void SWindow::setNativeWindow(WeakPtr<GenericWindow> const& nativeWindow) {
-    nativeWindow_ = nativeWindow;
+void Window::setNativeWindow(WeakPtr<PlatformWindow> const& platformWindow) {
+    nativeWindow_ = platformWindow;
 }
 
-SharedPtr<GenericWindow> SWindow::getNativeWindow() const {
+SharedPtr<PlatformWindow> Window::getNativeWindow() const {
     return nativeWindow_.lock();
 }
 
-void SWindow::showWindow() {
+void Window::showWindow() {
     if (!bHasEverBeenShown_) {
         BaseApplication::get().getRenderer().createViewport(sharedThis(this));
     }
@@ -163,13 +163,13 @@ void SWindow::showWindow() {
     bHasEverBeenShown_ = true;
 }
 
-void SWindow::hideWindow() {
+void Window::hideWindow() {
     if (SharedPtr const window{nativeWindow_.lock()}) {
         window->hide();
     }
 }
 
-void SWindow::destoryNativeWindow() {
+void Window::destoryNativeWindow() {
     if (SharedPtr const window{nativeWindow_.lock()}) {
         window->destroyWindow();
     }

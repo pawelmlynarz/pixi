@@ -12,24 +12,24 @@ namespace px::ed {
 
 namespace {
 
-SharedPtr<SEditorMainFrame> editorMainFrameWindow{nullptr};
+SharedPtr<EditorMainFrameWindow> editorMainFrameWindow{nullptr};
 
 bool createEditorMainFrame() {
-    editorMainFrameWindow = {makeShared<SEditorMainFrame>()};
+    editorMainFrameWindow = {makeShared<EditorMainFrameWindow>()};
 
-    editorMainFrameWindow->Title("Pixi Editor")
-        .Size({1920, 1080})
-        .Decorated(true)
-        .Resizable(true);
+    editorMainFrameWindow->title("Pixi Editor")
+        .size({1920, 1080})
+        .decorated(true)
+        .resizable(true);
 
-    pxAssert(SimpleApplication::get().addWindow(editorMainFrameWindow, true));
-
-    return true;
+    return SimpleApplication::get().addWindow(editorMainFrameWindow, true);
 }
 
 } // namespace
 
 int32 editorInit() {
+    pxAssert(!editorMainFrameWindow);
+
     if (!createEditorMainFrame()) {
         return -1;
     }
@@ -37,8 +37,10 @@ int32 editorInit() {
 }
 
 void editorExit() {
-    editorMainFrameWindow->destoryNativeWindow();
-    editorMainFrameWindow.reset();
+    if (editorMainFrameWindow) {
+        editorMainFrameWindow->destoryNativeWindow();
+        editorMainFrameWindow.reset();
+    }
 }
 
 } // namespace px::ed
