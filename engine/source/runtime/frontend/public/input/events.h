@@ -14,7 +14,7 @@ namespace px {
 struct InputEvent {
     explicit InputEvent(bool bIsRepeat);
 
-    bool IsRepeat() const { return bIsRepeat_; }
+    bool isRepeat() const { return bIsRepeat_; }
 
   private:
     bool bIsRepeat_{false};
@@ -24,38 +24,38 @@ struct InputEvent {
  * KeyEvent describes a key action (keyboard/controller key/button pressed or released).
  */
 struct KeyEvent : public InputEvent {
-    KeyEvent(EKeyCode KeyCode, bool bIsRepeat);
+    KeyEvent(EKeyCode keyCode, bool bIsRepeat);
 
-    EKeyCode GetKeyCode() const { return KeyCode_; }
+    EKeyCode getKeyCode() const { return keyCode_; }
 
   private:
-    EKeyCode KeyCode_{EKeyCode::None};
+    EKeyCode keyCode_{EKeyCode::None};
 };
 
 /**
  * CharacterEvent describes a keyboard action where the utf-16 code is given (keyboard/controller key/button pressed or released).
  */
 struct CharacterEvent : public InputEvent {
-    CharacterEvent(uint32 Character, bool bIsRepeat);
+    CharacterEvent(uint32 character, bool bIsRepeat);
 
-    uint32 GetCharacter() const { return Character_; }
+    uint32 getCharacter() const { return character_; }
 
   private:
-    uint32 Character_{0};
+    uint32 character_{0};
 };
 
 /**
  * PointerEvent describes a pointer action (mouse).
  */
 struct PointerEvent : public InputEvent {
-    PointerEvent(EMouseButton MouseButton, Vector2 const& ScreenPos);
+    PointerEvent(EMouseButton mouseButton, Vector2 const& screenPos);
 
-    EMouseButton GetButton() const { return MouseButton_; }
-    Vector2 GetScreenPos() const { return ScreenPos_; }
+    EMouseButton getButton() const { return mouseButton_; }
+    Vector2 getScreenPos() const { return screenPos_; }
 
   private:
-    EMouseButton MouseButton_{EMouseButton::None};
-    Vector2 ScreenPos_;
+    EMouseButton mouseButton_{EMouseButton::None};
+    Vector2 screenPos_;
 };
 
 } // namespace px

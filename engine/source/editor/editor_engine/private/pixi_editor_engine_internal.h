@@ -11,6 +11,6 @@
 namespace px::ed {
 
 [[nodiscard]]
-PXEDITOR_ENGINE_API int32 InitializeEditorEngine(SharedPtr<PixiEditorEngine> const& EditorEngine);
+PXEDITOR_ENGINE_API int32 initializeEditorEngine(SharedPtr<PixiEditorEngine> const& editorEngine);
 
 } // namespace px::ed

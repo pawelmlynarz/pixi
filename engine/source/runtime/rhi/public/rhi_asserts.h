@@ -10,10 +10,10 @@
 
 #define RHI_ABORT_ON_FAILURE(Res)        \
     if ((Res) != nri::Result::SUCCESS) { \
-        Assert(false);                   \
+        pxAssert(false);                 \
     }
 
 #define RHI_ABORT_ON_FALSE(Res) \
     if (!(Res)) {               \
-        Assert(false);          \
+        pxAssert(false);        \
     }

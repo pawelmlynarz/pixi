@@ -5,8 +5,8 @@
 
 namespace px {
 
-UniquePtr<PlatformApplication> GenericPlatformApplicationMisc::CreateApplication() {
-    return MakeUnique<PlatformApplication>();
+UniquePtr<PlatformApplication> GenericPlatformApplicationMisc::createApplication() {
+    return makeUnique<PlatformApplication>();
 }
 
 } // namespace px

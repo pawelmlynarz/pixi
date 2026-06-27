@@ -8,16 +8,16 @@ InputEvent::InputEvent(bool bIsRepeat)
     : bIsRepeat_(bIsRepeat) {
 }
 
-KeyEvent::KeyEvent(EKeyCode KeyCode, bool bIsRepeat)
-    : InputEvent(bIsRepeat), KeyCode_(KeyCode) {
+KeyEvent::KeyEvent(EKeyCode keyCode, bool bIsRepeat)
+    : InputEvent(bIsRepeat), keyCode_(keyCode) {
 }
 
-CharacterEvent::CharacterEvent(uint32 Character, bool bIsRepeat)
-    : InputEvent(bIsRepeat), Character_(Character) {
+CharacterEvent::CharacterEvent(uint32 character, bool bIsRepeat)
+    : InputEvent(bIsRepeat), character_(character) {
 }
 
-PointerEvent::PointerEvent(EMouseButton MouseButton, Vector2 const& ScreenPos)
-    : InputEvent(false), MouseButton_(MouseButton), ScreenPos_(ScreenPos) {
+PointerEvent::PointerEvent(EMouseButton mouseButton, Vector2 const& screenPos)
+    : InputEvent(false), mouseButton_(mouseButton), screenPos_(screenPos) {
 }
 
 } // namespace px

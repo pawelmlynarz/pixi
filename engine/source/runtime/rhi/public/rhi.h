@@ -9,9 +9,9 @@
 
 namespace px {
 
-PXRHI_API void InitializeRHI();
-PXRHI_API class RHIContext& GetRHIContext();
-PXRHI_API void ShutdownRHI();
-PXRHI_API nri::GraphicsAPI GetBackend();
+PXRHI_API void initializeRhi();
+PXRHI_API class RHIContext& getRhiContext();
+PXRHI_API void shutdownRhi();
+PXRHI_API nri::GraphicsAPI getBackend();
 
 } // namespace px

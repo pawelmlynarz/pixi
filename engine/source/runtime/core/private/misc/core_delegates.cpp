@@ -4,6 +4,6 @@
 
 namespace px {
 
-CoreDelegates::FOnEngineLoopInitComplete CoreDelegates::OnEngineLoopInitComplete;
+CoreDelegates::FOnEngineLoopInitComplete CoreDelegates::onEngineLoopInitComplete;
 
 } // namespace px

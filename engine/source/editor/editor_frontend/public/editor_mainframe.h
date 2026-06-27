@@ -19,10 +19,10 @@ class SEditorMainFrame final : public SWindow {
     PXEDITOR_FRONTEND_API ~SEditorMainFrame() override;
 
   protected:
-    void DrawImGui() override;
+    void drawImGui() override;
 
   private:
-    std::vector<std::unique_ptr<ImContainerWidget>> Widgets_;
+    std::vector<std::unique_ptr<ImContainerWidget>> widgets_;
 };
 
 } // namespace ed

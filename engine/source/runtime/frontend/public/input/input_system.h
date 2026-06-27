@@ -19,30 +19,30 @@ class PlatformApplication;
  */
 class InputSystem final : NonCopyableNonMovable, public IGenericApplicationMessageHandler {
   public:
-    PXFRONTEND_API InputSystem(SharedRef<PlatformApplication> OwningApplication);
+    PXFRONTEND_API InputSystem(SharedRef<PlatformApplication> owningApplication);
 
-    bool OnKeyChar(uint32 Character, bool IsRepeat) override;
-    bool ProcessKeyCharEvent(CharacterEvent const& CharEvent);
+    bool onKeyChar(uint32 character, bool isRepeat) override;
+    bool processKeyCharEvent(CharacterEvent const& charEvent);
 
-    bool OnKeyDown(int32 KeyCode, uint32 CharacterCode, bool IsRepeat) override;
-    bool ProcessKeyDownEvent(KeyEvent const& KeyEvent);
+    bool onKeyDown(int32 keyCode, uint32 characterCode, bool isRepeat) override;
+    bool processKeyDownEvent(KeyEvent const& keyEvent);
 
-    bool OnKeyUp(int32 KeyCode, uint32 CharacterCode, bool IsRepeat) override;
-    bool ProcessKeyUpEvent(KeyEvent const& KeyEvent);
+    bool onKeyUp(int32 keyCode, uint32 characterCode, bool isRepeat) override;
+    bool processKeyUpEvent(KeyEvent const& keyEvent);
 
-    bool OnMouseDown(SharedRef<GenericWindow> const& Window, EMouseButton Button, Vector2 const& MousePos) override;
-    bool ProcessMouseButtonDownEvent(PointerEvent const& MouseEvent);
+    bool onMouseDown(SharedRef<GenericWindow> const& window, EMouseButton button, Vector2 const& mousePos) override;
+    bool processMouseButtonDownEvent(PointerEvent const& mouseEvent);
 
-    bool OnMouseUp(SharedRef<GenericWindow> const& Window, EMouseButton Button, Vector2 const& MousePos) override;
-    bool ProcessMouseButtonUpEvent(PointerEvent const& MouseEvent);
+    bool onMouseUp(SharedRef<GenericWindow> const& window, EMouseButton button, Vector2 const& mousePos) override;
+    bool processMouseButtonUpEvent(PointerEvent const& mouseEvent);
 
-    bool OnMouseMoved(SharedRef<GenericWindow> const& Window, Vector2 const& MousePos) override;
-    bool ProcessMouseMovedEvent(PointerEvent const& MouseEvent);
+    bool onMouseMoved(SharedRef<GenericWindow> const& window, Vector2 const& mousePos) override;
+    bool processMouseMovedEvent(PointerEvent const& mouseEvent);
 
-    void OnWindowClose(SharedRef<GenericWindow> const& Window) override;
+    void onWindowClose(SharedRef<GenericWindow> const& window) override;
 
   private:
-    SharedRef<PlatformApplication> OwningApplication_;
+    SharedRef<PlatformApplication> owningApplication_;
 };
 
 } // namespace px

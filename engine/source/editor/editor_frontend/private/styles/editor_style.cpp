@@ -11,61 +11,61 @@ namespace px::ed {
 
 namespace {
 
-std::optional<StyleConfig> CurrentStyle;
+std::optional<StyleConfig> currentStyle;
 
 } // namespace
 
 StyleConfig::StyleConfig()
-    : NativeColors(ImGui::GetStyle().Colors) {
+    : nativeColors_(ImGui::GetStyle().Colors) {
 }
 
-ImVec4& StyleConfig::operator[](int const Idx) {
-    if (Idx < ImGuiCol_COUNT) {
-        Assert(NativeColors.data());
-        return NativeColors[Idx];
+ImVec4& StyleConfig::operator[](int const idx) {
+    if (idx < ImGuiCol_COUNT) {
+        pxAssert(nativeColors_.data());
+        return nativeColors_[idx];
     }
-    return PxColors[Idx - ImGuiCol_COUNT];
+    return pxColors_[idx - ImGuiCol_COUNT];
 }
 
-ImVec4 const& StyleConfig::operator[](int const Idx) const {
-    return const_cast<StyleConfig*>(this)->operator[](Idx);
+ImVec4 const& StyleConfig::operator[](int const idx) const {
+    return const_cast<StyleConfig*>(this)->operator[](idx);
 }
 
-StyleConfig& EdStyle::GetStyle() {
-    Assert(CurrentStyle.has_value());
-    return *CurrentStyle;
+StyleConfig& EdStyle::getStyle() {
+    pxAssert(currentStyle.has_value());
+    return *currentStyle;
 }
 
-ImU32 EdStyle::GetColorU32(ImGuiCol const Idx, float const AlphaMul) {
-    StyleConfig const& Style{GetStyle()};
+ImU32 EdStyle::getColorU32(ImGuiCol const idx, float const alphaMul) {
+    StyleConfig const& style{getStyle()};
 
-    ImVec4 Color{Style[Idx]};
-    Color.w *= GImGui->Style.Alpha * AlphaMul;
+    ImVec4 color{style[idx]};
+    color.w *= GImGui->Style.Alpha * alphaMul;
 
-    return ImGui::ColorConvertFloat4ToU32(Color);
+    return ImGui::ColorConvertFloat4ToU32(color);
 }
 
-void EdStyle::SetDefaultStyle() {
-    StyleConfig DefaultConfig;
+void EdStyle::setDefaultStyle() {
+    StyleConfig defaultConfig;
 
-    DefaultConfig[ImGuiCol_FrameBg] = ImVec4{0.2f, 0.205f, 0.21f, 1.0f};
-    DefaultConfig[ImGuiCol_FrameBgHovered] = ImVec4{0.3f, 0.305f, 0.31f, 1.0f};
-    DefaultConfig[ImGuiCol_FrameBgActive] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
-    DefaultConfig[ImGuiCol_Border] = ImVec4{0.f, 0., 0., 0.};
-    DefaultConfig[ImGuiCol_Text] = ImVec4{0.7843f, 0.7843f, 0.7843f, 1.0f};
-    DefaultConfig[ImGuiCol_WindowBg] = ImVec4(0, 0, 0, 1.f);
+    defaultConfig[ImGuiCol_FrameBg] = ImVec4{0.2f, 0.205f, 0.21f, 1.0f};
+    defaultConfig[ImGuiCol_FrameBgHovered] = ImVec4{0.3f, 0.305f, 0.31f, 1.0f};
+    defaultConfig[ImGuiCol_FrameBgActive] = ImVec4{0.15f, 0.1505f, 0.151f, 1.0f};
+    defaultConfig[ImGuiCol_Border] = ImVec4{0.f, 0., 0., 0.};
+    defaultConfig[ImGuiCol_Text] = ImVec4{0.7843f, 0.7843f, 0.7843f, 1.0f};
+    defaultConfig[ImGuiCol_WindowBg] = ImVec4(0, 0, 0, 1.f);
 
-    DefaultConfig[ImGuiCol_ResizeGrip] = ImVec4(0.627451f, 0.627451f, 0.627451f, 0.15f);
-    DefaultConfig[ImGuiCol_ResizeGripHovered] = ImVec4(0.627451f, 0.627451f, 0.627451f, 0.3f);
-    DefaultConfig[ImGuiCol_ResizeGripActive] = ImVec4(0.627451f, 0.627451f, 0.627451f, 0.3f);
+    defaultConfig[ImGuiCol_ResizeGrip] = ImVec4(0.627451f, 0.627451f, 0.627451f, 0.15f);
+    defaultConfig[ImGuiCol_ResizeGripHovered] = ImVec4(0.627451f, 0.627451f, 0.627451f, 0.3f);
+    defaultConfig[ImGuiCol_ResizeGripActive] = ImVec4(0.627451f, 0.627451f, 0.627451f, 0.3f);
 
-    DefaultConfig[PxGuiCol_Text] = ImVec4{0.7843f, 0.7843f, 0.7843f, 1.0f};
-    DefaultConfig[PxGuiCol_TextActive] = ImVec4{0.7843f, 0.7843f, 0.7843f, 1.0f};
-    DefaultConfig[PxGuiCol_TextHovered] = ImVec4{0.8627f, 0.8627f, 0.8627f, 1.0f};
-    DefaultConfig[PxGuiCol_DashedFrameBorder] = ImVec4{0.627451f, 0.627451f, 0.627451f, 0.7f};
-    DefaultConfig[PxGuiCol_FrameBorder] = ImVec4{0.427451f, 0.427451f, 0.427451f, 0.55f};
+    defaultConfig[PxGuiCol_Text] = ImVec4{0.7843f, 0.7843f, 0.7843f, 1.0f};
+    defaultConfig[PxGuiCol_TextActive] = ImVec4{0.7843f, 0.7843f, 0.7843f, 1.0f};
+    defaultConfig[PxGuiCol_TextHovered] = ImVec4{0.8627f, 0.8627f, 0.8627f, 1.0f};
+    defaultConfig[PxGuiCol_DashedFrameBorder] = ImVec4{0.627451f, 0.627451f, 0.627451f, 0.7f};
+    defaultConfig[PxGuiCol_FrameBorder] = ImVec4{0.427451f, 0.427451f, 0.427451f, 0.55f};
 
-    CurrentStyle = DefaultConfig;
+    currentStyle = defaultConfig;
 }
 
 } // namespace px::ed

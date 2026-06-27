@@ -21,19 +21,19 @@ class BaseRenderer {
      *
      * @return True if successful.
      */
-    virtual bool Initialize() = 0;
+    virtual bool initialize() = 0;
 
     /**
      * @brief Shutdowns the renderer.
      */
-    virtual void Shutdown() = 0;
+    virtual void shutdown() = 0;
 
     /**
      * @brief Ticks the renderer.
      *
      * @param Dt Delta Time.
      */
-    virtual void Tick(float Dt) = 0;
+    virtual void tick(float dt) = 0;
 
     /**
      * @brief Retrieves the viewport RHI resource.
@@ -42,14 +42,14 @@ class BaseRenderer {
      *
      * @return RHIViewport associated with the SWindow provided.
      */
-    virtual SharedPtr<struct RHIViewport> GetViewportResource(SharedRef<SWindow> SWindow) const = 0;
+    virtual SharedPtr<struct RHIViewport> getViewportResource(SharedRef<SWindow> window) const = 0;
 
     /**
      * Creates a rendering viewport
      *
      * @param SWindow The window to create the viewport for.
      */
-    virtual void CreateViewport(SharedRef<SWindow> SWindow) = 0;
+    virtual void createViewport(SharedRef<SWindow> window) = 0;
 };
 
 } // namespace px

@@ -4,17 +4,17 @@
 
 namespace px::ed {
 
-bool BeginChildPadded(char const* const StrId, ImVec2 const& Size, ImVec2 const& Padding, ImGuiChildFlags const ChildFlags, ImGuiWindowFlags const WindowFlags) {
-    ImVec2 const RegionAvail{ImGui::GetContentRegionAvail()};
-    ImVec2 const Cursor{ImGui::GetCursorPos()};
+bool beginChildPadded(char const* const strId, ImVec2 const& size, ImVec2 const& padding, ImGuiChildFlags const childFlags, ImGuiWindowFlags const windowFlags) {
+    ImVec2 const regionAvail{ImGui::GetContentRegionAvail()};
+    ImVec2 const cursor{ImGui::GetCursorPos()};
 
-    ImGui::SetCursorPos(ImVec2(Cursor.x + Padding.x, Cursor.y + Padding.y));
+    ImGui::SetCursorPos(ImVec2(cursor.x + padding.x, cursor.y + padding.y));
 
-    ImVec2 const ChildSize(
-        (Size.x == 0.f && Size.y == 0.f) ? ImVec2(RegionAvail.x - Padding.x * 2.0f, RegionAvail.y - Padding.y * 2.0f) : Size
+    ImVec2 const childSize(
+        (size.x == 0.f && size.y == 0.f) ? ImVec2(regionAvail.x - padding.x * 2.0f, regionAvail.y - padding.y * 2.0f) : size
     );
 
-    return ImGui::BeginChild(StrId, ChildSize, ChildFlags, WindowFlags);
+    return ImGui::BeginChild(strId, childSize, childFlags, windowFlags);
 }
 
 } // namespace px::ed

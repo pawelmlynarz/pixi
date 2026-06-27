@@ -10,7 +10,7 @@ namespace px {
 
 class WindowsPlatformTLS final : public GenericPlatformTLS {
   public:
-    static PXCORE_API uint32 GetCurrentThreadId();
+    static PXCORE_API uint32 getCurrentThreadId();
 };
 
 using PlatformTLS = WindowsPlatformTLS;

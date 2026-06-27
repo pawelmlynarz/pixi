@@ -20,37 +20,37 @@
 
 namespace px {
 
-void SWindow::PaintWindow() {
-    RenderImGuiInternal();
-    RenderFrameInternal();
+void SWindow::paintWindow() {
+    renderImGuiInternal();
+    renderFrameInternal();
 }
 
-void SWindow::RenderImGuiInternal() {
+void SWindow::renderImGuiInternal() {
 #if WITH_IMGUI
     ImGui::NewFrame();
     {
-        DrawImGui();
+        drawImGui();
     }
     ImGui::EndFrame();
     ImGui::Render();
 #endif
 }
 
-void SWindow::RenderFrameInternal() {
+void SWindow::renderFrameInternal() {
     // NOLINTBEGIN
-    PX_TODO("Rewrite");
+    pxToDo("Rewrite");
 
-    RHIContext const& C{GetRHIContext()};
-    Renderer& R{dynamic_cast<Renderer&>(BaseApplication::Get().GetRenderer())};
-    SharedPtr const Viewport{R.GetViewportResource(SharedThis(this))};
-    SharedPtr const RHISwapChain{Viewport->GetSwapChain()};
+    RHIContext const& C{getRhiContext()};
+    Renderer& R{dynamic_cast<Renderer&>(BaseApplication::get().getRenderer())};
+    SharedPtr const Viewport{R.getViewportResource(sharedThis(this))};
+    SharedPtr const RHISwapChain{Viewport->getSwapChain()};
 
-    RHIInterface const& RHI{C.GetRHI()};
+    RHIInterface const& RHI{C.getRhi()};
 
-    uint32_t const QueuedFrameIndex{FrameIdx_ % C.GetQueuedFrameNum()};
-    RHIQueuedFrame const& QueuedFrame{C.GetQueuedFrames()[QueuedFrameIndex]};
+    uint32_t const QueuedFrameIndex{frameIdx_ % C.getQueuedFrameNum()};
+    RHIQueuedFrame const& QueuedFrame{C.getQueuedFrames()[QueuedFrameIndex]};
 
-    uint32_t const RecycledSemaphoreIndex{FrameIdx_ % static_cast<uint32_t>(RHISwapChain->SwapChainTexturesRHI.size())};
+    uint32_t const RecycledSemaphoreIndex{frameIdx_ % static_cast<uint32_t>(RHISwapChain->SwapChainTexturesRHI.size())};
     nri::Fence* SwapChainAcquireSemaphore{RHISwapChain->SwapChainTexturesRHI[RecycledSemaphoreIndex].AcquireSemaphore};
 
     uint32_t CurrentSwapChainTextureIndex{0};
@@ -58,7 +58,7 @@ void SWindow::RenderFrameInternal() {
     RHISwapChainTexture const& SwapChainTexture{RHISwapChain->SwapChainTexturesRHI[CurrentSwapChainTextureIndex]};
 
     nri::CommandBuffer* CommandBuffer{QueuedFrame.CommandBuffer};
-    RHI.BeginCommandBuffer(*CommandBuffer, C.GetDescriptorPool());
+    RHI.BeginCommandBuffer(*CommandBuffer, C.getDescriptorPool());
     {
         nri::TextureBarrierDesc TextureBarriers{};
         TextureBarriers.texture = SwapChainTexture.Texture;
@@ -91,11 +91,11 @@ void SWindow::RenderFrameInternal() {
 
         // ImGui
 #if WITH_IMGUI
-        R.GetImGuiRenderer().CmdCopyImguiData(*CommandBuffer, *C.GetStreamer());
+        R.getImGuiRenderer().cmdCopyImguiData(*CommandBuffer, *C.getStreamer());
 
         RHI.CmdBeginRendering(*CommandBuffer, RenderingDesc);
         {
-            R.GetImGuiRenderer().CmdDrawImgui(*CommandBuffer, SwapChainTexture.AttachmentFormat, 1.0f, true);
+            R.getImGuiRenderer().cmdDrawImgui(*CommandBuffer, SwapChainTexture.AttachmentFormat, 1.0f, true);
         }
         RHI.CmdEndRendering(*CommandBuffer);
 #endif
@@ -123,55 +123,55 @@ void SWindow::RenderFrameInternal() {
         QueueSubmitDesc.signalFences = &RenderingFinishedFence;
         QueueSubmitDesc.signalFenceNum = 1;
 
-        RHI.QueueSubmit(*C.GetGraphicsQueue(), QueueSubmitDesc);
+        RHI.QueueSubmit(*C.getGraphicsQueue(), QueueSubmitDesc);
     }
-    RHI.EndStreamerFrame(*C.GetStreamer());
+    RHI.EndStreamerFrame(*C.getStreamer());
 
     RHI.QueuePresent(*RHISwapChain->SwapChain, *SwapChainTexture.ReleaseSemaphore);
 
     {
         nri::FenceSubmitDesc SignalFence{};
-        SignalFence.fence = C.GetFrameFence();
-        SignalFence.value = 1 + FrameIdx_;
+        SignalFence.fence = C.getFrameFence();
+        SignalFence.value = 1 + frameIdx_;
 
         nri::QueueSubmitDesc QueueSubmitDesc{};
         QueueSubmitDesc.signalFences = &SignalFence;
         QueueSubmitDesc.signalFenceNum = 1;
 
-        RHI.QueueSubmit(*C.GetGraphicsQueue(), QueueSubmitDesc);
+        RHI.QueueSubmit(*C.getGraphicsQueue(), QueueSubmitDesc);
     }
     // NOLINTEND
 }
 
-void SWindow::SetNativeWindow(WeakPtr<GenericWindow> const& NativeWindow) {
-    NativeWindow_ = NativeWindow;
+void SWindow::setNativeWindow(WeakPtr<GenericWindow> const& nativeWindow) {
+    nativeWindow_ = nativeWindow;
 }
 
-SharedPtr<GenericWindow> SWindow::GetNativeWindow() const {
-    return NativeWindow_.lock();
+SharedPtr<GenericWindow> SWindow::getNativeWindow() const {
+    return nativeWindow_.lock();
 }
 
-void SWindow::ShowWindow() {
+void SWindow::showWindow() {
     if (!bHasEverBeenShown_) {
-        BaseApplication::Get().GetRenderer().CreateViewport(SharedThis(this));
+        BaseApplication::get().getRenderer().createViewport(sharedThis(this));
     }
 
-    if (SharedPtr const NativeWindow{NativeWindow_.lock()}; NativeWindow != nullptr) {
-        NativeWindow->Show();
+    if (SharedPtr const nativeWindow{nativeWindow_.lock()}; nativeWindow != nullptr) {
+        nativeWindow->show();
     }
 
     bHasEverBeenShown_ = true;
 }
 
-void SWindow::HideWindow() {
-    if (SharedPtr const Window{NativeWindow_.lock()}) {
-        Window->Hide();
+void SWindow::hideWindow() {
+    if (SharedPtr const window{nativeWindow_.lock()}) {
+        window->hide();
     }
 }
 
-void SWindow::DestoryNativeWindow() {
-    if (SharedPtr const Window{NativeWindow_.lock()}) {
-        Window->DestroyWindow();
+void SWindow::destoryNativeWindow() {
+    if (SharedPtr const window{nativeWindow_.lock()}) {
+        window->destroyWindow();
     }
 }
 

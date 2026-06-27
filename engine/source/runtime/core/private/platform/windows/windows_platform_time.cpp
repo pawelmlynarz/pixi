@@ -8,37 +8,37 @@ namespace px {
 
 namespace {
 
-LARGE_INTEGER Frequency;
+LARGE_INTEGER frequency;
 
-inline int64 SafeInt64MulDiv(int64 const Value, int64 const Numer, int64 const Denom) {
-    int64 const Q{Value / Denom};
-    int64 const R{Value % Denom};
-    return (Q * Numer) + (R * Numer / Denom);
+inline int64 safeInt64MulDiv(int64 const value, int64 const numer, int64 const denom) {
+    int64 const q{value / denom};
+    int64 const r{value % denom};
+    return (q * numer) + (r * numer / denom);
 }
 
 } // namespace
 
-TimePoint WindowsPlatformTime::Initialize() noexcept {
-    QueryPerformanceFrequency(&Frequency);
-    return Now();
+TimePoint WindowsPlatformTime::initialize() noexcept {
+    QueryPerformanceFrequency(&frequency);
+    return now();
 }
 
-TimePoint WindowsPlatformTime::Now() {
-    LARGE_INTEGER Time;
-    QueryPerformanceCounter(&Time);
+TimePoint WindowsPlatformTime::now() {
+    LARGE_INTEGER time;
+    QueryPerformanceCounter(&time);
 
-    int64 constexpr MicrosecondsPerSecond{1000000LL};
-    TimePoint const Microseconds{SafeInt64MulDiv(Time.QuadPart, MicrosecondsPerSecond, Frequency.QuadPart)};
+    int64 constexpr microsecondsPerSecond{1000000LL};
+    TimePoint const microseconds{safeInt64MulDiv(time.QuadPart, microsecondsPerSecond, frequency.QuadPart)};
 
-    return Microseconds;
+    return microseconds;
 }
 
-TimePoint WindowsPlatformTime::From(TimePoint StartingTime) {
-    return Now() - StartingTime;
+TimePoint WindowsPlatformTime::from(TimePoint startingTime) {
+    return now() - startingTime;
 }
 
-TimePoint WindowsPlatformTime::Delta(TimePoint StartingTime, TimePoint EndingTime) {
-    return EndingTime - StartingTime;
+TimePoint WindowsPlatformTime::delta(TimePoint startingTime, TimePoint endingTime) {
+    return endingTime - startingTime;
 }
 
 } // namespace px

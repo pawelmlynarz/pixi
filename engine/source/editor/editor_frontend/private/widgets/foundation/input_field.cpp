@@ -6,41 +6,41 @@
 
 namespace px::ed {
 
-void ImInputField::Draw() const {
-    ImVec2 const Extent{ComputeExtent()};
-    DrawInExtent(nullptr, ImGui::GetCursorPos(), Extent);
+void ImInputField::draw() const {
+    ImVec2 const extent{computeExtent()};
+    drawInExtent(nullptr, ImGui::GetCursorPos(), extent);
 }
 
-ImVec2 ImInputField::ComputeExtent() const {
-    ScopeFontOverride const ScopeFont{ScopeFontOverride(Config_.FontSize)};
-    ImVec2 const LabelSize{ImGui::CalcTextSize(Config_.Label.data())};
-    return {LabelSize.x + Config_.Width, LabelSize.y};
+ImVec2 ImInputField::computeExtent() const {
+    ScopeFontOverride const scopeFont{ScopeFontOverride(Config_.FontSize)};
+    ImVec2 const labelSize{ImGui::CalcTextSize(Config_.Label.data())};
+    return {labelSize.x + Config_.Width, labelSize.y};
 }
 
-void ImInputField::DrawInExtent(ImDrawList*, ImVec2, [[maybe_unused]] ImVec2 Extent) const {
-    ScopeFontOverride const ScopeFont{ScopeFontOverride(Config_.FontSize)};
+void ImInputField::drawInExtent(ImDrawList*, ImVec2, [[maybe_unused]] ImVec2 extent) const {
+    ScopeFontOverride const scopeFont{ScopeFontOverride(Config_.FontSize)};
 
-    std::array<char, 256> Buf{};
+    std::array<char, 256> buf{};
 
-    int32 PushedStylesCount{0};
+    int32 pushedStylesCount{0};
     if (!HasFlag(Config_.Flags, EImInputFieldFlags::HasBackground)) {
         ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(0, 0, 0, 0));
         ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, IM_COL32(0, 0, 0, 0));
         ImGui::PushStyleColor(ImGuiCol_FrameBgActive, IM_COL32(0, 0, 0, 0));
-        PushedStylesCount += 3;
+        pushedStylesCount += 3;
     }
 
     if (HasFlag(Config_.Flags, EImInputFieldFlags::HasBorder)) {
-        ImGui::PushStyleColor(ImGuiCol_Border, EdStyle::GetColorU32(PxGuiCol_FrameBorder));
-        PushedStylesCount += 1;
+        ImGui::PushStyleColor(ImGuiCol_Border, EdStyle::getColorU32(PxGuiCol_FrameBorder));
+        pushedStylesCount += 1;
     }
     if (Config_.Width > 0) {
         ImGui::SetNextItemWidth(Config_.Width);
     }
-    ImGui::InputText("##", Buf.data(), sizeof(Buf));
+    ImGui::InputText("##", buf.data(), sizeof(buf));
 
-    if (PushedStylesCount > 0) {
-        ImGui::PopStyleColor(PushedStylesCount);
+    if (pushedStylesCount > 0) {
+        ImGui::PopStyleColor(pushedStylesCount);
     }
 }
 

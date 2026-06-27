@@ -7,9 +7,9 @@
 
 namespace px {
 
-uint64 GFrameCounter{0};
-uint32 GGameThreadId{0};
-double GStartTime{PlatformTime::Initialize().AsSeconds()};
+uint64 gFrameCounter{0};
+uint32 gGameThreadId{0};
+double gStartTime{PlatformTime::initialize().asSeconds()};
 
 namespace {
 
@@ -17,15 +17,15 @@ bool bEngineExitRequested{false};
 
 } // namespace
 
-void RequestEngineExit() {
+void requestEngineExit() {
     bEngineExitRequested = true;
 }
 
-bool IsEngineExitRequested() {
+bool isEngineExitRequested() {
     return bEngineExitRequested;
 }
 
-bool IsEditor() {
+bool isEditor() {
 #if WITH_EDITOR
     return true;
 #else
@@ -33,12 +33,12 @@ bool IsEditor() {
 #endif
 }
 
-void InitGameThreadId(uint32 const ThreadId) {
-    GGameThreadId = ThreadId;
+void initGameThreadId(uint32 const threadId) {
+    gGameThreadId = threadId;
 }
 
-bool IsInGameThread() {
-    return GGameThreadId == PlatformTLS::GetCurrentThreadId();
+bool isInGameThread() {
+    return gGameThreadId == PlatformTLS::getCurrentThreadId();
 }
 
 } // namespace px

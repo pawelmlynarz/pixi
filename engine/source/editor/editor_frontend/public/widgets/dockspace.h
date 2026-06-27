@@ -27,12 +27,12 @@ struct ImDockSpaceConfig {
 
 class ImDockSpace {
   public:
-    ImDockSpace(ImGuiViewport* Viewport, ImDockSpaceConfig const& Config);
+    ImDockSpace(ImGuiViewport* viewport, ImDockSpaceConfig const& config);
 
   private:
-    ImGuiID DockSpaceID_;
-    ImGuiViewport* Viewport_{nullptr};
-    ImDockSpaceConfig Config_;
+    ImGuiID dockSpaceId_;
+    ImGuiViewport* viewport_{nullptr};
+    ImDockSpaceConfig config_;
 };
 
 } // namespace px::ed

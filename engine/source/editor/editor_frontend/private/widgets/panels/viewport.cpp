@@ -6,13 +6,13 @@
 
 namespace px::ed {
 
-void ImViewport::DrawPanelContent() {
+void ImViewport::drawPanelContent() {
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(124, 124));
 
-    DrawDashedWindowBorder();
-    PushFont(EImFontSize::Large);
-    DrawDashedHeader("[VIEWPORT]", {24.f, 24.f}, 25);
-    PopFont();
+    drawDashedWindowBorder();
+    pushFont(EImFontSize::Large);
+    drawDashedHeader("[VIEWPORT]", {24.f, 24.f}, 25);
+    popFont();
 
     ImGui::PopStyleVar();
 };

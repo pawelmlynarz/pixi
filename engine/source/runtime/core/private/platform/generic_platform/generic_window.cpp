@@ -4,9 +4,9 @@
 
 namespace px {
 
-void GenericWindow::InitializeWindow(SharedPtr<PlatformApplication> OwningApplication, GenericWindowDefinition const& WindowDefinition) {
-    OwningApplication_ = std::move(OwningApplication);
-    Definition_ = WindowDefinition;
+void GenericWindow::initializeWindow(SharedPtr<PlatformApplication> owningApplication, GenericWindowDefinition const& windowDefinition) {
+    OwningApplication_ = std::move(owningApplication);
+    Definition_ = windowDefinition;
 }
 
 } // namespace px

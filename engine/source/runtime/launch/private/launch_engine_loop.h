@@ -8,10 +8,10 @@
 namespace px {
 
 struct EngineLoop {
-    static int32 PreInit();
-    static int32 Init();
-    static void Tick();
-    static void Exit();
+    static int32 preInit();
+    static int32 init();
+    static void tick();
+    static void exit();
 };
 
 } // namespace px

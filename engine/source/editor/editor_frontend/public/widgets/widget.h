@@ -13,8 +13,8 @@ namespace px {
 
 using ImWidgetId = std::string_view;
 
-constexpr char const* CStr(ImWidgetId const WidgetId) {
-    return WidgetId.data();
+constexpr char const* cStr(ImWidgetId const widgetId) {
+    return widgetId.data();
 }
 
 /**
@@ -22,15 +22,15 @@ constexpr char const* CStr(ImWidgetId const WidgetId) {
  */
 class ImContainerWidget {
   public:
-    explicit ImContainerWidget(ImWidgetId StrId) : StrId_(StrId) {}
+    explicit ImContainerWidget(ImWidgetId strId) : strId_(strId) {}
     virtual ~ImContainerWidget() = default;
 
-    ImWidgetId GetId() const { return StrId_; }
+    ImWidgetId getId() const { return strId_; }
 
-    virtual void Draw() = 0;
+    virtual void draw() = 0;
 
   private:
-    ImWidgetId StrId_{};
+    ImWidgetId strId_{};
 };
 
 /**
@@ -39,7 +39,7 @@ class ImContainerWidget {
 template <typename TConfig>
 class ImWidgetWithConfig {
   public:
-    explicit ImWidgetWithConfig(TConfig Config) : Config_(std::move(Config)) {}
+    explicit ImWidgetWithConfig(TConfig config) : Config_(std::move(config)) {}
     virtual ~ImWidgetWithConfig() = default;
 
   protected:
@@ -53,9 +53,9 @@ class IPrecomputedExtentWidget {
   public:
     virtual ~IPrecomputedExtentWidget() = default;
 
-    virtual ImVec2 ComputeExtent() const = 0;
+    virtual ImVec2 computeExtent() const = 0;
 
-    virtual void DrawInExtent(ImDrawList* DrawList, ImVec2 CursorPos, ImVec2 Extent) const = 0;
+    virtual void drawInExtent(ImDrawList* drawList, ImVec2 cursorPos, ImVec2 extent) const = 0;
 };
 
 } // namespace px

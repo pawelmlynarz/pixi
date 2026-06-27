@@ -6,18 +6,18 @@ namespace px::ed {
 
 namespace {
 
-constexpr ImGuiWindowFlags GetDefaultPanelFlags() {
-    ImGuiWindowFlags constexpr WindowFlags{
+constexpr ImGuiWindowFlags getDefaultPanelFlags() {
+    ImGuiWindowFlags constexpr windowFlags{
         ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus
     };
-    return WindowFlags;
+    return windowFlags;
 }
 
 } // namespace
 
-void ImPanel::Draw() {
-    ImGui::Begin(CStr(GetId()), nullptr, GetDefaultPanelFlags());
-    DrawPanelContent();
+void ImPanel::draw() {
+    ImGui::Begin(cStr(getId()), nullptr, getDefaultPanelFlags());
+    drawPanelContent();
     ImGui::End();
 }
 

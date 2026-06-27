@@ -19,27 +19,27 @@ DECLARE_DELEGATE(CustomLoggerSinkCallback, LogMsg const& /*Message*/, std::strin
 template <typename TMutex>
 class OutputLogSink : public spdlog::sinks::base_sink<TMutex> {
   public:
-    void SetCustomCallback(CustomLoggerSinkCallback OnCustomOutputLoggerSink);
+    void setCustomCallback(CustomLoggerSinkCallback onCustomOutputLoggerSink);
 
   protected:
-    void sink_it_(LogMsg const& Msg) override;
+    void sink_it_(LogMsg const& msg) override;
     void flush_() override {}
 
   private:
-    CustomLoggerSinkCallback CustomSinkCallback_;
+    CustomLoggerSinkCallback customSinkCallback_;
 };
 
 template <typename TMutex>
-void OutputLogSink<TMutex>::SetCustomCallback(CustomLoggerSinkCallback OnCustomOutputLoggerSink) {
-    CustomSinkCallback_ = std::move(OnCustomOutputLoggerSink);
+void OutputLogSink<TMutex>::setCustomCallback(CustomLoggerSinkCallback onCustomOutputLoggerSink) {
+    customSinkCallback_ = std::move(onCustomOutputLoggerSink);
 }
 
 template <typename TMutex>
-void OutputLogSink<TMutex>::sink_it_(LogMsg const& Msg) {
-    spdlog::memory_buf_t Formatted;
-    this->formatter_->format(Msg, Formatted);
+void OutputLogSink<TMutex>::sink_it_(LogMsg const& msg) {
+    spdlog::memory_buf_t formatted;
+    this->formatter_->format(msg, formatted);
 
-    CustomSinkCallback_.ExecuteIfBound(Msg, fmt::to_string(Formatted));
+    customSinkCallback_.executeIfBound(msg, fmt::to_string(formatted));
 }
 
 #include "spdlog/details/null_mutex.h"

@@ -6,71 +6,71 @@
 
 namespace px::ed {
 
-void ImPanelHeader::Begin() {
-    State_.OrygCursorPos_ = ImGui::GetCursorPos();
+void ImPanelHeader::begin() {
+    state_.OrygCursorPos_ = ImGui::GetCursorPos();
 
-    ImVec2 const Pos{ImGui::GetCursorScreenPos()};
-    ImVec2 const Avail{ImGui::GetContentRegionAvail()};
+    ImVec2 const pos{ImGui::GetCursorScreenPos()};
+    ImVec2 const avail{ImGui::GetContentRegionAvail()};
 
-    State_.StartX_ = Pos.x + Config_.HeaderPadding.x;
-    State_.EndX_ = Pos.x + Avail.x - Config_.HeaderPadding.x;
+    state_.StartX_ = pos.x + Config_.HeaderPadding.x;
+    state_.EndX_ = pos.x + avail.x - Config_.HeaderPadding.x;
 
-    State_.CursorXLeft_ = State_.StartX_;
-    State_.CursorXRight_ = State_.EndX_;
+    state_.CursorXLeft_ = state_.StartX_;
+    state_.CursorXRight_ = state_.EndX_;
 
-    State_.CursorXLeft_ = State_.CursorXLeft_ + Config_.FirstWidgetPadding;
-    State_.CursorXRight_ = State_.CursorXRight_ - Config_.FirstWidgetPadding;
+    state_.CursorXLeft_ = state_.CursorXLeft_ + Config_.FirstWidgetPadding;
+    state_.CursorXRight_ = state_.CursorXRight_ - Config_.FirstWidgetPadding;
 
-    State_.Y_ = Pos.y + Config_.HeaderPadding.y;
+    state_.Y_ = pos.y + Config_.HeaderPadding.y;
 
-    State_.Gaps_.clear();
+    state_.Gaps_.clear();
 }
 
-void ImPanelHeader::AddWidget(EWidgetAlignment Alignment, IPrecomputedExtentWidget const& Widget) {
-    AddWidget(
-        Alignment,
-        [&]() { return Widget.ComputeExtent(); },
-        [&](ImDrawList* DrawList, ImVec2 CursorPos, ImVec2 Extent) { Widget.DrawInExtent(DrawList, CursorPos, Extent); }
+void ImPanelHeader::addWidget(EWidgetAlignment alignment, IPrecomputedExtentWidget const& widget) {
+    addWidget(
+        alignment,
+        [&]() { return widget.computeExtent(); },
+        [&](ImDrawList* drawList, ImVec2 cursorPos, ImVec2 extent) { widget.drawInExtent(drawList, cursorPos, extent); }
     );
 }
 
-void ImPanelHeader::AddWidget(
-    EWidgetAlignment const Alignment, CalculateExtentStrategy const& CalculateExtentStrategy, DrawStrategy const& DrawStrategy
+void ImPanelHeader::addWidget(
+    EWidgetAlignment const alignment, CalculateExtentStrategy const& calculateExtentStrategy, DrawStrategy const& drawStrategy
 ) {
-    ImDrawList* const DrawList{ImGui::GetWindowDrawList()};
-    ImVec2 const Extent{CalculateExtentStrategy()};
+    ImDrawList* const drawList{ImGui::GetWindowDrawList()};
+    ImVec2 const extent{calculateExtentStrategy()};
 
-    if (Alignment == EWidgetAlignment::Left) {
-        ImGui::SetCursorScreenPos(ImVec2(State_.CursorXLeft_, State_.Y_));
+    if (alignment == EWidgetAlignment::Left) {
+        ImGui::SetCursorScreenPos(ImVec2(state_.CursorXLeft_, state_.Y_));
 
-        float const Before{State_.CursorXLeft_};
-        DrawStrategy(DrawList, ImVec2(State_.CursorXLeft_, State_.Y_), Extent);
-        float const After{Before + Extent.x};
+        float const before{state_.CursorXLeft_};
+        drawStrategy(drawList, ImVec2(state_.CursorXLeft_, state_.Y_), extent);
+        float const after{before + extent.x};
 
-        State_.CursorXLeft_ = After + Config_.NextWidgetPadding;
+        state_.CursorXLeft_ = after + Config_.NextWidgetPadding;
 
-        State_.Gaps_.emplace_back(Before - Config_.GapExtraPadding, After + Config_.GapExtraPadding);
+        state_.Gaps_.emplace_back(before - Config_.GapExtraPadding, after + Config_.GapExtraPadding);
     } else {
-        ImGui::SetCursorScreenPos(ImVec2(State_.CursorXRight_ - Extent.x, State_.Y_));
+        ImGui::SetCursorScreenPos(ImVec2(state_.CursorXRight_ - extent.x, state_.Y_));
 
-        DrawStrategy(DrawList, ImVec2(State_.CursorXRight_ - Extent.x, State_.Y_), Extent);
-        float const Before{State_.CursorXRight_ - Extent.x};
-        float const After{State_.CursorXRight_};
+        drawStrategy(drawList, ImVec2(state_.CursorXRight_ - extent.x, state_.Y_), extent);
+        float const before{state_.CursorXRight_ - extent.x};
+        float const after{state_.CursorXRight_};
 
-        State_.CursorXRight_ = Before - Config_.NextWidgetPadding;
+        state_.CursorXRight_ = before - Config_.NextWidgetPadding;
 
-        State_.Gaps_.emplace_back(Before - Config_.GapExtraPadding, After + Config_.GapExtraPadding);
+        state_.Gaps_.emplace_back(before - Config_.GapExtraPadding, after + Config_.GapExtraPadding);
     }
 }
 
-void ImPanelHeader::End() const {
+void ImPanelHeader::end() const {
     ImDrawList* const dl{ImGui::GetWindowDrawList()};
 
-    ImVec2 const a(State_.StartX_, State_.Y_);
-    ImVec2 const b(State_.EndX_, State_.Y_);
-    DrawDashedLineWithGaps(dl, a, b, State_.Gaps_, Config_.DashLength, Config_.GapLength, Config_.Thickness);
+    ImVec2 const a(state_.StartX_, state_.Y_);
+    ImVec2 const b(state_.EndX_, state_.Y_);
+    drawDashedLineWithGaps(dl, a, b, state_.Gaps_, Config_.DashLength, Config_.GapLength, Config_.Thickness);
 
-    ImGui::SetCursorPos(State_.OrygCursorPos_);
+    ImGui::SetCursorPos(state_.OrygCursorPos_);
 }
 
 } // namespace px::ed

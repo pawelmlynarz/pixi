@@ -18,39 +18,39 @@ class GenericWindow;
 class SWindow : public SWidget {
   public:
     SWIDGET_PROPERTY(
-        std::string, Title, Title_
+        std::string, Title
     )
     SWIDGET_PROPERTY(
-        UVector2, Size, Size_
+        UVector2, Size
     )
     SWIDGET_PROPERTY(
-        bool, Resizable, Resizable_
+        bool, Resizable
     )
     SWIDGET_PROPERTY(
-        bool, Decorated, Decorated_
+        bool, Decorated
     )
 
-    PXFRONTEND_API void PaintWindow();
+    PXFRONTEND_API void paintWindow();
 
-    PXFRONTEND_API void SetNativeWindow(WeakPtr<GenericWindow> const& NativeWindow);
-    PXFRONTEND_API SharedPtr<GenericWindow> GetNativeWindow() const;
-    PXFRONTEND_API void DestoryNativeWindow();
+    PXFRONTEND_API void setNativeWindow(WeakPtr<GenericWindow> const& nativeWindow);
+    PXFRONTEND_API SharedPtr<GenericWindow> getNativeWindow() const;
+    PXFRONTEND_API void destoryNativeWindow();
 
-    PXFRONTEND_API void ShowWindow();
-    PXFRONTEND_API void HideWindow();
+    PXFRONTEND_API void showWindow();
+    PXFRONTEND_API void hideWindow();
 
   protected:
-    PXFRONTEND_API virtual void DrawImGui() = 0;
+    PXFRONTEND_API virtual void drawImGui() = 0;
 
   private:
-    void RenderImGuiInternal();
+    void renderImGuiInternal();
 
-    void RenderFrameInternal();
+    void renderFrameInternal();
 
   private:
-    WeakPtr<GenericWindow> NativeWindow_;
+    WeakPtr<GenericWindow> nativeWindow_;
     bool bHasEverBeenShown_{false};
-    uint32 FrameIdx_{0};
+    uint32 frameIdx_{0};
 };
 
 } // namespace px

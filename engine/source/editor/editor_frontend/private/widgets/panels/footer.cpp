@@ -5,8 +5,8 @@
 
 namespace px::ed {
 
-void ImFooter::DrawPanelContent() {
-    DrawDashedWindowBorder();
+void ImFooter::drawPanelContent() {
+    drawDashedWindowBorder();
 };
 
 } // namespace px::ed

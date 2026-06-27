@@ -12,55 +12,55 @@ namespace px {
 
 namespace {
 
-SharedPtr<PixiEngine> PixiEngineInst{nullptr};
+SharedPtr<PixiEngine> pixiEngineInst{nullptr};
 
-constexpr double MaxTickRate{60.0};
-constexpr double MinFrameTime{1.0 / MaxTickRate};
+constexpr double maxTickRate{60.0};
+constexpr double minFrameTime{1.0 / maxTickRate};
 
 } // namespace
 
-int32 InitializeEngine(SharedPtr<PixiEngine> const& Engine) {
-    PixiEngineInst = Engine;
+int32 initializeEngine(SharedPtr<PixiEngine> const& engine) {
+    pixiEngineInst = engine;
     return 0;
 }
 
-void DestroyEngine() {
-    PixiEngineInst.reset();
+void destroyEngine() {
+    pixiEngineInst.reset();
 }
 
-PixiEngine& GetEngine() {
-    Assert(PixiEngineInst != nullptr);
-    return *PixiEngineInst;
+PixiEngine& getEngine() {
+    pxAssert(pixiEngineInst != nullptr);
+    return *pixiEngineInst;
 }
 
-void PixiEngine::UpdateTimeAndHandleMaxTickRate() {
-    static double LastRealTime{PlatformTime::Now().AsSeconds() - 0.0001};
+void PixiEngine::updateTimeAndHandleMaxTickRate() {
+    static double lastRealTime{PlatformTime::now().asSeconds() - 0.0001};
 
-    TimingInfo& Info{TimingInfo_};
+    TimingInfo& info{TimingInfo_};
 
-    Info.CurrentRealTime = PlatformTime::Now().AsSeconds();
-    Info.CurrentDeltaTime = static_cast<float>(Info.CurrentRealTime - LastRealTime);
+    info.CurrentRealTime = PlatformTime::now().asSeconds();
+    info.CurrentDeltaTime = static_cast<float>(info.CurrentRealTime - lastRealTime);
 
-    Assert(Info.CurrentDeltaTime >= 0);
+    pxAssert(info.CurrentDeltaTime >= 0);
 
-    if (Info.CurrentDeltaTime < MinFrameTime) {
-        double const SleepTime{MinFrameTime - Info.CurrentDeltaTime};
+    if (info.CurrentDeltaTime < minFrameTime) {
+        double const sleepTime{minFrameTime - info.CurrentDeltaTime};
 
-        PX_TODO("Use Platform HAL and improve accuracy");
-        std::this_thread::sleep_for(std::chrono::duration<double>(SleepTime));
+        pxToDo("Use Platform HAL and improve accuracy");
+        std::this_thread::sleep_for(std::chrono::duration<double>(sleepTime));
 
-        Info.CurrentRealTime = PlatformTime::Now().AsSeconds();
-        Info.CurrentDeltaTime = static_cast<float>(Info.CurrentRealTime - LastRealTime);
+        info.CurrentRealTime = PlatformTime::now().asSeconds();
+        info.CurrentDeltaTime = static_cast<float>(info.CurrentRealTime - lastRealTime);
     }
 
-    LastRealTime = Info.CurrentRealTime;
+    lastRealTime = info.CurrentRealTime;
 }
 
-float PixiEngine::GetDeltaTime() const {
+float PixiEngine::getDeltaTime() const {
     return TimingInfo_.CurrentDeltaTime;
 }
 
-float PixiEngine::GetFPS() const {
+float PixiEngine::getFps() const {
     return TimingInfo_.CurrentDeltaTime <= 0.f ? 0.f : 1.0f / TimingInfo_.CurrentDeltaTime;
 }
 

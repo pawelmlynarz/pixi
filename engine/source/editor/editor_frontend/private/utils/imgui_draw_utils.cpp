@@ -9,149 +9,149 @@
 
 namespace px::ed {
 
-void DrawDashedLine(
-    ImDrawList* const DrawList, ImVec2 const& A, ImVec2 const& B,
-    float const DashLength, float const GapLength, float const Thickness
+void drawDashedLine(
+    ImDrawList* const drawList, ImVec2 const& a, ImVec2 const& b,
+    float const dashLength, float const gapLength, float const thickness
 ) {
-    ImVec2 Dir{ImVec2(B.x - A.x, B.y - A.y)};
-    float const Length{sqrtf(Dir.x * Dir.x + Dir.y * Dir.y)};
+    ImVec2 dir{ImVec2(b.x - a.x, b.y - a.y)};
+    float const length{sqrtf(dir.x * dir.x + dir.y * dir.y)};
 
-    if (Length <= 0.0f) {
+    if (length <= 0.0f) {
         return;
     }
 
-    Dir.x /= Length;
-    Dir.y /= Length;
+    dir.x /= length;
+    dir.y /= length;
 
-    float Pos{0.0f};
-    bool Draw{true};
+    float pos{0.0f};
+    bool draw{true};
 
-    while (Pos < Length) {
-        float const Seg{Draw ? DashLength : GapLength};
-        float End{Pos + Seg};
+    while (pos < length) {
+        float const seg{draw ? dashLength : gapLength};
+        float end{pos + seg};
 
-        End = std::min(End, Length);
+        end = std::min(end, length);
 
-        if (Draw) {
-            ImVec2 const p1{ImVec2(A.x + Dir.x * Pos, A.y + Dir.y * Pos)};
-            ImVec2 const p2{ImVec2(A.x + Dir.x * End, A.y + Dir.y * End)};
-            DrawList->AddLine(p1, p2, EdStyle::GetColorU32(PxGuiCol_DashedFrameBorder), Thickness);
+        if (draw) {
+            ImVec2 const p1{ImVec2(a.x + dir.x * pos, a.y + dir.y * pos)};
+            ImVec2 const p2{ImVec2(a.x + dir.x * end, a.y + dir.y * end)};
+            drawList->AddLine(p1, p2, EdStyle::getColorU32(PxGuiCol_DashedFrameBorder), thickness);
         }
 
-        Pos = End;
-        Draw = !Draw;
+        pos = end;
+        draw = !draw;
     }
 }
 
-void DrawDashedRect(
-    ImDrawList* const DrawList, ImVec2 const& Min, ImVec2 const& Max,
-    float const DashLength, float const GapLength, float const Thickness
+void drawDashedRect(
+    ImDrawList* const drawList, ImVec2 const& min, ImVec2 const& max,
+    float const dashLength, float const gapLength, float const thickness
 ) {
-    DrawDashedLine(DrawList, ImVec2(Min.x, Min.y), ImVec2(Max.x, Min.y), DashLength, GapLength, Thickness);
-    DrawDashedLine(DrawList, ImVec2(Max.x, Min.y), ImVec2(Max.x, Max.y), DashLength, GapLength, Thickness);
-    DrawDashedLine(DrawList, ImVec2(Max.x, Max.y), ImVec2(Min.x, Max.y), DashLength, GapLength, Thickness);
-    DrawDashedLine(DrawList, ImVec2(Min.x, Max.y), ImVec2(Min.x, Min.y), DashLength, GapLength, Thickness);
+    drawDashedLine(drawList, ImVec2(min.x, min.y), ImVec2(max.x, min.y), dashLength, gapLength, thickness);
+    drawDashedLine(drawList, ImVec2(max.x, min.y), ImVec2(max.x, max.y), dashLength, gapLength, thickness);
+    drawDashedLine(drawList, ImVec2(max.x, max.y), ImVec2(min.x, max.y), dashLength, gapLength, thickness);
+    drawDashedLine(drawList, ImVec2(min.x, max.y), ImVec2(min.x, min.y), dashLength, gapLength, thickness);
 }
 
-void DrawDashedWindowBorder(
-    ImVec2 const& Padding, float const DashLength, float const GapLength, float const Thickness
+void drawDashedWindowBorder(
+    ImVec2 const& padding, float const dashLength, float const gapLength, float const thickness
 ) {
     ImVec2 p0{ImGui::GetWindowPos()};
     ImVec2 p1{ImVec2(p0.x + ImGui::GetWindowSize().x, p0.y + ImGui::GetWindowSize().y)};
 
-    p0.x += Padding.x;
-    p0.y += Padding.y;
-    p1.x -= Padding.x;
-    p1.y -= Padding.y;
+    p0.x += padding.x;
+    p0.y += padding.y;
+    p1.x -= padding.x;
+    p1.y -= padding.y;
 
     ImDrawList* const dl{ImGui::GetWindowDrawList()};
 
-    DrawDashedRect(
-        dl, p0, p1, DashLength, GapLength, Thickness
+    drawDashedRect(
+        dl, p0, p1, dashLength, gapLength, thickness
     );
 }
 
-void DrawDashedHeader(
-    char const* const Text, ImVec2 const& Padding, float TextPaddingLeft,
-    float const DashLength, float const GapLength, float const Thickness
+void drawDashedHeader(
+    char const* const text, ImVec2 const& padding, float textPaddingLeft,
+    float const dashLength, float const gapLength, float const thickness
 ) {
     ImVec2 p0{ImGui::GetWindowPos()};
     ImVec2 p1{ImVec2(p0.x + ImGui::GetWindowSize().x, p0.y)};
 
-    p0.x += Padding.x;
-    p1.x -= Padding.x;
+    p0.x += padding.x;
+    p1.x -= padding.x;
 
     ImDrawList* const dl{ImGui::GetWindowDrawList()};
-    ImVec2 const TextSize{ImGui::CalcTextSize(Text)};
+    ImVec2 const textSize{ImGui::CalcTextSize(text)};
 
-    float constexpr Spacing{8.0f};
-    float const y{p0.y + Padding.y};
+    float constexpr spacing{8.0f};
+    float const y{p0.y + padding.y};
 
-    float const TextX{ImMax(p0.x + TextPaddingLeft, p0.x)};
-    float const TextEnd{TextX + TextSize.x};
+    float const textX{ImMax(p0.x + textPaddingLeft, p0.x)};
+    float const textEnd{textX + textSize.x};
 
-    float const LeftLineEnd{ImClamp(TextX - Spacing, p0.x, p1.x)};
-    float const RightLineStart{ImClamp(TextEnd + Spacing, p0.x, p1.x)};
+    float const leftLineEnd{ImClamp(textX - spacing, p0.x, p1.x)};
+    float const rightLineStart{ImClamp(textEnd + spacing, p0.x, p1.x)};
 
-    DrawDashedLine(dl, ImVec2(p0.x, y), ImVec2(LeftLineEnd, y), DashLength, GapLength, Thickness);
+    drawDashedLine(dl, ImVec2(p0.x, y), ImVec2(leftLineEnd, y), dashLength, gapLength, thickness);
 
     dl->AddText(
-        ImVec2(TextX, y - TextSize.y * 0.5f), EdStyle::GetColorU32(ed::PxGuiCol_Text), Text
+        ImVec2(textX, y - textSize.y * 0.5f), EdStyle::getColorU32(ed::PxGuiCol_Text), text
     );
 
-    DrawDashedLine(
-        dl, ImVec2(RightLineStart, y), ImVec2(p1.x, y), DashLength, GapLength, Thickness
+    drawDashedLine(
+        dl, ImVec2(rightLineStart, y), ImVec2(p1.x, y), dashLength, gapLength, thickness
     );
 }
 
-void DrawDashedLineWithGaps(
-    ImDrawList* const DrawList, ImVec2 const& A, ImVec2 const& B, std::vector<ImVec2> const& Gaps,
-    float const DashLength, float const GapLength, float const Thickness
+void drawDashedLineWithGaps(
+    ImDrawList* const drawList, ImVec2 const& a, ImVec2 const& b, std::vector<ImVec2> const& gaps,
+    float const dashLength, float const gapLength, float const thickness
 ) {
-    float const Dx{B.x - A.x};
-    float const Dy{B.y - A.y};
-    float const Len{std::sqrt(Dx * Dx + Dy * Dy)};
+    float const dx{b.x - a.x};
+    float const dy{b.y - a.y};
+    float const len{std::sqrt(dx * dx + dy * dy)};
 
-    if (Len <= 0.001f) {
+    if (len <= 0.001f) {
         return;
     }
-    float const Dirx{Dx / Len};
-    float const Diry{Dy / Len};
-    float const Step{DashLength + GapLength};
+    float const dirx{dx / len};
+    float const diry{dy / len};
+    float const step{dashLength + gapLength};
 
     // NOLINTNEXTLINE(*)
-    for (float t{0}; t < Len; t += Step) {
-        float const Start{t};
-        float const End{std::min(t + DashLength, Len)};
+    for (float t{0}; t < len; t += step) {
+        float const start{t};
+        float const end{std::min(t + dashLength, len)};
 
-        float const Sx{A.x + Dirx * Start};
-        float const Sy{A.y + Diry * Start};
-        float const Ex{A.x + Dirx * End};
+        float const sx{a.x + dirx * start};
+        float const sy{a.y + diry * start};
+        float const ex{a.x + dirx * end};
 
-        float DrawStart{Sx};
-        float const DrawEnd{Ex};
+        float drawStart{sx};
+        float const drawEnd{ex};
 
-        for (auto const& g : Gaps) {
-            if (DrawEnd <= g.x || DrawStart >= g.y) {
+        for (auto const& g : gaps) {
+            if (drawEnd <= g.x || drawStart >= g.y) {
                 continue;
             }
-            if (DrawStart < g.x) {
-                DrawList->AddLine(
-                    ImVec2(DrawStart, Sy),
-                    ImVec2(g.x, Sy),
-                    EdStyle::GetColorU32(PxGuiCol_DashedFrameBorder),
-                    Thickness
+            if (drawStart < g.x) {
+                drawList->AddLine(
+                    ImVec2(drawStart, sy),
+                    ImVec2(g.x, sy),
+                    EdStyle::getColorU32(PxGuiCol_DashedFrameBorder),
+                    thickness
                 );
             }
-            DrawStart = g.y;
+            drawStart = g.y;
         }
 
-        if (DrawStart < DrawEnd) {
-            DrawList->AddLine(
-                ImVec2(DrawStart, Sy),
-                ImVec2(DrawEnd, Sy),
-                EdStyle::GetColorU32(PxGuiCol_DashedFrameBorder),
-                Thickness
+        if (drawStart < drawEnd) {
+            drawList->AddLine(
+                ImVec2(drawStart, sy),
+                ImVec2(drawEnd, sy),
+                EdStyle::getColorU32(PxGuiCol_DashedFrameBorder),
+                thickness
             );
         }
     }

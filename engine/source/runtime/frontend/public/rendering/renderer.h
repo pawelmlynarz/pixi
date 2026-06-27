@@ -19,22 +19,22 @@ class Renderer final : public BaseRenderer {
     PXFRONTEND_API Renderer();
     PXFRONTEND_API ~Renderer() override;
 
-    PXFRONTEND_API bool Initialize() override;
-    PXFRONTEND_API void Shutdown() override;
+    PXFRONTEND_API bool initialize() override;
+    PXFRONTEND_API void shutdown() override;
 
-    PXFRONTEND_API void Tick(float Dt) override;
+    PXFRONTEND_API void tick(float dt) override;
 
-    PXFRONTEND_API SharedPtr<RHIViewport> GetViewportResource(SharedRef<SWindow> Window) const override;
+    PXFRONTEND_API SharedPtr<RHIViewport> getViewportResource(SharedRef<SWindow> window) const override;
 
-    PXFRONTEND_API void CreateViewport(SharedRef<SWindow> Window) override;
+    PXFRONTEND_API void createViewport(SharedRef<SWindow> window) override;
 
 #if WITH_IMGUI
-    PXFRONTEND_API class ImGuiRenderer& GetImGuiRenderer();
+    PXFRONTEND_API class ImGuiRenderer& getImGuiRenderer();
 #endif
 
   private:
     struct Impl;
-    UniquePtr<Impl> Impl_{nullptr};
+    UniquePtr<Impl> impl_{nullptr};
 };
 
 } // namespace px

@@ -6,11 +6,11 @@
 
 namespace px::ed {
 
-void ImSceneHierarchy::DrawPanelContent() {
-    DrawDashedWindowBorder();
-    PushFont(EImFontSize::Large);
-    DrawDashedHeader("[SCENE HIERARCHY]", {24.f, 24.f}, 25);
-    PopFont();
+void ImSceneHierarchy::drawPanelContent() {
+    drawDashedWindowBorder();
+    pushFont(EImFontSize::Large);
+    drawDashedHeader("[SCENE HIERARCHY]", {24.f, 24.f}, 25);
+    popFont();
 };
 
 } // namespace px::ed

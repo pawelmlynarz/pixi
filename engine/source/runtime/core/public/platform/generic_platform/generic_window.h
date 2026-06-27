@@ -12,10 +12,10 @@ namespace px {
 struct GenericOSWindowHandle {
     void* Handle{nullptr};
 
-    constexpr bool IsValid() const noexcept { return Handle != nullptr; }
+    constexpr bool isValid() const noexcept { return Handle != nullptr; }
 
     template <typename T>
-    T* As() const { return static_cast<T*>(Handle); }
+    T* as() const { return static_cast<T*>(Handle); }
 };
 
 class PlatformApplication;
@@ -25,16 +25,16 @@ class GenericWindow : NonCopyableNonMovable, public EnableSharedFromThis<Generic
     virtual ~GenericWindow() = default;
 
   public:
-    virtual void InitializeWindow(SharedPtr<PlatformApplication> OwningApplication, GenericWindowDefinition const& WindowDefinition);
-    virtual void DestroyWindow() {}
+    virtual void initializeWindow(SharedPtr<PlatformApplication> owningApplication, GenericWindowDefinition const& windowDefinition);
+    virtual void destroyWindow() {}
 
-    virtual SharedRef<PlatformApplication> GetOwningApplication() const { return OwningApplication_; }
+    virtual SharedRef<PlatformApplication> getOwningApplication() const { return OwningApplication_; }
 
-    virtual GenericOSWindowHandle GetOSWindowHandle() const { return GenericOSWindowHandle(nullptr); }
+    virtual GenericOSWindowHandle getOsWindowHandle() const { return GenericOSWindowHandle(nullptr); }
 
-    PXCORE_API virtual void Show() {}
-    PXCORE_API virtual void Hide() {}
-    PXCORE_API virtual bool IsVisible() const { return false; }
+    PXCORE_API virtual void show() {}
+    PXCORE_API virtual void hide() {}
+    PXCORE_API virtual bool isVisible() const { return false; }
 
   protected:
     SharedPtr<PlatformApplication> OwningApplication_{nullptr};

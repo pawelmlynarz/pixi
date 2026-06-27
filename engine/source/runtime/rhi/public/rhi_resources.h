@@ -24,40 +24,40 @@ struct RHISwapChainTexture {
 };
 
 struct RHISwapChain {
-    RHISwapChain(RHIContext& Context, nri::Window const& Window, uint16 SizeX, uint16 SizeY);
+    RHISwapChain(RHIContext& context, nri::Window const& window, uint16 sizeX, uint16 sizeY);
 
-    void Destroy();
+    void destroy();
 
     nri::SwapChain* SwapChain{nullptr};
     nri::Format SwapChainFormat{nri::Format::UNKNOWN};
     std::vector<RHISwapChainTexture> SwapChainTexturesRHI;
 
   private:
-    RHIContext& RHIContext_;
+    RHIContext& rhiContext_;
 };
 
-PXRHI_API UniquePtr<RHISwapChain> RHICreateSwapchain(RHIContext& Context, nri::Window const& Window, uint16 SizeX, uint16 SizeY);
+PXRHI_API UniquePtr<RHISwapChain> rhiCreateSwapchain(RHIContext& context, nri::Window const& window, uint16 sizeX, uint16 sizeY);
 
 struct RHIViewport {
-    PXRHI_API RHIViewport(RHIContext& Context, void* OSWindowHandle, uint16 SizeX, uint16 SizeY);
+    PXRHI_API RHIViewport(RHIContext& context, void* osWindowHandle, uint16 sizeX, uint16 sizeY);
     PXRHI_API ~RHIViewport();
 
-    PXRHI_API void* GetOSWindowHandle() { return OSWindowHandle_; }
-    PXRHI_API SharedPtr<RHISwapChain> GetSwapChain() { return SwapChainRHI_; }
-    PXRHI_API UVector2 GetSize() const { return {SizeX_, SizeY_}; }
+    PXRHI_API void* getOsWindowHandle() { return osWindowHandle_; }
+    PXRHI_API SharedPtr<RHISwapChain> getSwapChain() { return swapChainRhi_; }
+    PXRHI_API UVector2 getSize() const { return {sizeX_, sizeY_}; }
 
   private:
-    RHIContext& RHIContext_;
+    RHIContext& rhiContext_;
 
-    uint16 SizeX_{0};
-    uint16 SizeY_{0};
+    uint16 sizeX_{0};
+    uint16 sizeY_{0};
 
-    void* OSWindowHandle_{nullptr};
-    nri::Window Window_;
+    void* osWindowHandle_{nullptr};
+    nri::Window window_;
 
-    SharedPtr<RHISwapChain> SwapChainRHI_{nullptr};
+    SharedPtr<RHISwapChain> swapChainRhi_{nullptr};
 };
 
-PXRHI_API UniquePtr<RHIViewport> RHICreateViewport(RHIContext& Context, void* WindowHandle, uint16 SizeX, uint16 SizeY);
+PXRHI_API UniquePtr<RHIViewport> rhiCreateViewport(RHIContext& context, void* windowHandle, uint16 sizeX, uint16 sizeY);
 
 } // namespace px

@@ -15,20 +15,20 @@ class PlatformApplication : NonCopyableNonMovable,
     PlatformApplication();
     virtual ~PlatformApplication() = default;
 
-    virtual void Initialize() {}
-    virtual void Shutdown() {}
+    virtual void initialize() {}
+    virtual void shutdown() {}
 
-    void SetMessageHandler(SharedRef<IGenericApplicationMessageHandler> const& InMessageHandler) { MessageHandler_ = InMessageHandler; }
-    SharedRef<IGenericApplicationMessageHandler> GetMessageHandler() { return MessageHandler_; }
+    void setMessageHandler(SharedRef<IGenericApplicationMessageHandler> const& inMessageHandler) { messageHandler_ = inMessageHandler; }
+    SharedRef<IGenericApplicationMessageHandler> getMessageHandler() { return messageHandler_; }
 
-    virtual UniquePtr<GenericWindow> CreatePlatformWindow();
-    virtual void InitializeWindow(SharedRef<GenericWindow> const& Window, GenericWindowDefinition const& WindowDefinition) {}
-    virtual void CloseWindow(SharedRef<GenericWindow> const& Window) {}
+    virtual UniquePtr<GenericWindow> createPlatformWindow();
+    virtual void initializeWindow(SharedRef<GenericWindow> const& window, GenericWindowDefinition const& windowDefinition) {}
+    virtual void closeWindow(SharedRef<GenericWindow> const& window) {}
 
-    virtual void PollMessages() {}
+    virtual void pollMessages() {}
 
   private:
-    SharedRef<IGenericApplicationMessageHandler> MessageHandler_;
+    SharedRef<IGenericApplicationMessageHandler> messageHandler_;
 };
 
 } // namespace px

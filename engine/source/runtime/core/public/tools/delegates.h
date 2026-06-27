@@ -16,7 +16,7 @@ class CallableWrapper<TRetVal(TArgs...)> {
   public:
     virtual ~CallableWrapper() = default;
 
-    virtual TRetVal Execute(TArgs&&...) = 0;
+    virtual TRetVal execute(TArgs&&...) = 0;
 };
 
 template <typename TSignature>
@@ -24,15 +24,15 @@ class CallableStaticFunctionWrapper;
 
 template <typename TRetVal, typename... TArgs>
 class CallableStaticFunctionWrapper<TRetVal(TArgs...)> final : public CallableWrapper<TRetVal(TArgs...)> {
-    TRetVal (*StaticFuncPtr_)(TArgs...){nullptr};
+    TRetVal (*staticFuncPtr_)(TArgs...){nullptr};
 
   public:
-    explicit CallableStaticFunctionWrapper(TRetVal (*StaticFuncPtr)(TArgs...)) noexcept
-        : StaticFuncPtr_(StaticFuncPtr) {}
+    explicit CallableStaticFunctionWrapper(TRetVal (*staticFuncPtr)(TArgs...)) noexcept
+        : staticFuncPtr_(staticFuncPtr) {}
 
-    void Execute(TArgs&&... Args) override {
-        if (StaticFuncPtr_) {
-            m_StaticFuncPtr(std::forward<TArgs>(Args)...);
+    void Execute(TArgs&&... args) override {
+        if (staticFuncPtr_) {
+            m_StaticFuncPtr(std::forward<TArgs>(args)...);
         }
     }
 };
@@ -57,17 +57,17 @@ class CallableMethodWrapper<IsConst, TClass, TRetVal(TArgs...)> final : public C
 
     using ClassMemberFunction = MemberFunction<IsConst>::Type;
 
-    TClass* Instance_{nullptr};
-    ClassMemberFunction ClassMemFuncPtr_{nullptr};
+    TClass* instance_{nullptr};
+    ClassMemberFunction classMemFuncPtr_{nullptr};
 
   public:
-    CallableMethodWrapper(TClass* Instance, ClassMemberFunction ClassMemFuncPtr) noexcept
-        : Instance_(Instance),
-          ClassMemFuncPtr_(ClassMemFuncPtr) {}
+    CallableMethodWrapper(TClass* instance, ClassMemberFunction classMemFuncPtr) noexcept
+        : instance_(instance),
+          classMemFuncPtr_(classMemFuncPtr) {}
 
-    void Execute(TArgs&&... Args) override {
-        if (Instance_ != nullptr) {
-            (Instance_->*ClassMemFuncPtr_)(std::forward<TArgs>(Args)...);
+    void execute(TArgs&&... args) override {
+        if (instance_ != nullptr) {
+            (instance_->*classMemFuncPtr_)(std::forward<TArgs>(args)...);
         }
     }
 };
@@ -77,16 +77,16 @@ class CallableLambdaWrapper;
 
 template <typename TLambda, typename TRetVal, typename... TArgs>
 class CallableLambdaWrapper<TLambda, TRetVal(TArgs...)> final : public CallableWrapper<TRetVal(TArgs...)> {
-    TLambda LambdaObject_;
+    TLambda lambdaObject_;
 
   public:
-    explicit CallableLambdaWrapper(TLambda&& FunctorObject) noexcept
-        : LambdaObject_(std::move(FunctorObject)) {
+    explicit CallableLambdaWrapper(TLambda&& functorObject) noexcept
+        : lambdaObject_(std::move(functorObject)) {
         static_assert(std::is_invocable_v<TLambda, TArgs...>);
     }
 
-    TRetVal Execute(TArgs&&... Args) override {
-        return LambdaObject_(std::forward<TArgs>(Args)...);
+    TRetVal execute(TArgs&&... args) override {
+        return lambdaObject_(std::forward<TArgs>(args)...);
     }
 };
 
@@ -95,81 +95,81 @@ class Delegate;
 
 template <typename TRetVal, typename... TArgs>
 class Delegate<TRetVal(TArgs...)> {
-    UniquePtr<CallableWrapper<TRetVal(TArgs...)>> CallableWrapper_{nullptr};
+    UniquePtr<CallableWrapper<TRetVal(TArgs...)>> callableWrapper_{nullptr};
 
   public:
     Delegate() = default;
     ~Delegate() = default;
 
-    Delegate(Delegate const& Rhs) = delete;
+    Delegate(Delegate const& rhs) = delete;
 
-    Delegate(Delegate&& Rhs) noexcept
-        : CallableWrapper_(std::move(Rhs.CallableWrapper_)) {}
+    Delegate(Delegate&& rhs) noexcept
+        : callableWrapper_(std::move(rhs.callableWrapper_)) {}
 
-    Delegate& operator=(Delegate const& Rhs) = delete;
+    Delegate& operator=(Delegate const& rhs) = delete;
 
-    Delegate& operator=(Delegate&& Rhs) noexcept {
-        CallableWrapper_ = std::move(Rhs.CallableWrapper_);
+    Delegate& operator=(Delegate&& rhs) noexcept {
+        callableWrapper_ = std::move(rhs.callableWrapper_);
         return *this;
     }
 
-    void BindStatic(TRetVal (*StaticFuncPtr)(TArgs...)) {
-        CallableWrapper_ = MakeUnique<CallableStaticFunctionWrapper<TRetVal(TArgs...)>>(StaticFuncPtr);
+    void bindStatic(TRetVal (*staticFuncPtr)(TArgs...)) {
+        callableWrapper_ = MakeUnique<CallableStaticFunctionWrapper<TRetVal(TArgs...)>>(staticFuncPtr);
     }
 
-    Delegate CreateStatic(TRetVal (*StaticFuncPtr)(TArgs...)) {
-        Delegate<TRetVal(TArgs...)> Delegate_;
-        Delegate_.BindStatic(StaticFuncPtr);
+    Delegate createStatic(TRetVal (*staticFuncPtr)(TArgs...)) {
+        Delegate<TRetVal(TArgs...)> delegate;
+        delegate.bindStatic(staticFuncPtr);
 
-        return Delegate_;
-    }
-
-    template <typename TClass>
-    void BindRaw(TClass* Instance, TRetVal (TClass::*ClassMemFuncPtr)(TArgs...)) {
-        CallableWrapper_ = MakeUnique<CallableMethodWrapper<false, TClass, TRetVal(TArgs...)>>(Instance, ClassMemFuncPtr);
+        return delegate;
     }
 
     template <typename TClass>
-    static Delegate CreateRaw(TClass* Instance, TRetVal (TClass::*ClassMemFuncPtr)(TArgs...)) {
-        Delegate<TRetVal(TArgs...)> Delegate_;
-        Delegate_.BindRaw(Instance, ClassMemFuncPtr);
-
-        return Delegate_;
+    void bindRaw(TClass* instance, TRetVal (TClass::*classMemFuncPtr)(TArgs...)) {
+        callableWrapper_ = makeUnique<CallableMethodWrapper<false, TClass, TRetVal(TArgs...)>>(instance, classMemFuncPtr);
     }
 
     template <typename TClass>
-    void BindRaw(TClass* Instance, TRetVal (TClass::*ClassMemFuncConstPtr)(TArgs...) const) {
-        CallableWrapper_ = MakeUnique<CallableMethodWrapper<true, TClass, TRetVal(TArgs...)>>(Instance, ClassMemFuncConstPtr);
+    static Delegate createRaw(TClass* instance, TRetVal (TClass::*classMemFuncPtr)(TArgs...)) {
+        Delegate<TRetVal(TArgs...)> delegate;
+        delegate.BindRaw(instance, classMemFuncPtr);
+
+        return delegate;
     }
 
     template <typename TClass>
-    static Delegate CreateRaw(TClass* Instance, TRetVal (TClass::*ClassMemFuncPtr)(TArgs...) const) {
-        Delegate<TRetVal(TArgs...)> Delegate_;
-        Delegate_.BindRaw(Instance, ClassMemFuncPtr);
+    void bindRaw(TClass* instance, TRetVal (TClass::*classMemFuncConstPtr)(TArgs...) const) {
+        callableWrapper_ = MakeUnique<CallableMethodWrapper<true, TClass, TRetVal(TArgs...)>>(instance, classMemFuncConstPtr);
+    }
 
-        return Delegate_;
+    template <typename TClass>
+    static Delegate createRaw(TClass* instance, TRetVal (TClass::*classMemFuncPtr)(TArgs...) const) {
+        Delegate<TRetVal(TArgs...)> delegate;
+        delegate.BindRaw(instance, classMemFuncPtr);
+
+        return delegate;
     }
 
     template <typename TLambda>
-    void BindLambda(TLambda&& LambdaObject) {
-        CallableWrapper_ = MakeUnique<CallableLambdaWrapper<std::decay_t<TLambda>, TRetVal(TArgs...)>>(std::forward<TLambda>(LambdaObject));
+    void bindLambda(TLambda&& lambdaObject) {
+        callableWrapper_ = makeUnique<CallableLambdaWrapper<std::decay_t<TLambda>, TRetVal(TArgs...)>>(std::forward<TLambda>(lambdaObject));
     }
 
     template <typename TLambda>
-    static Delegate CreateLambda(TLambda&& LambdaObject) {
-        Delegate<TRetVal(TArgs...)> Delegate_;
-        Delegate_.BindLambda(std::forward<TLambda>(LambdaObject));
+    static Delegate createLambda(TLambda&& lambdaObject) {
+        Delegate<TRetVal(TArgs...)> delegate;
+        delegate.BindLambda(std::forward<TLambda>(lambdaObject));
 
-        return Delegate_;
+        return delegate;
     }
 
     explicit operator bool() const {
-        return CallableWrapper_ != nullptr;
+        return callableWrapper_ != nullptr;
     }
 
-    void ExecuteIfBound(TArgs&&... Args) {
-        if (CallableWrapper_) {
-            CallableWrapper_->Execute(std::forward<TArgs>(Args)...);
+    void executeIfBound(TArgs&&... args) {
+        if (callableWrapper_) {
+            callableWrapper_->execute(std::forward<TArgs>(args)...);
         }
     }
 };
@@ -179,48 +179,48 @@ class MulticastDelegate;
 
 template <typename TRetVal, typename... TArgs>
 class MulticastDelegate<TRetVal(TArgs...)> {
-    std::vector<Delegate<TRetVal(TArgs...)>> Delegates_;
+    std::vector<Delegate<TRetVal(TArgs...)>> delegates_;
 
   public:
-    void AddStatic(TRetVal (*StaticFuncPtr)(TArgs...)) {
-        Delegate<TRetVal(TArgs...)> Delegate_;
-        Delegate_.BindStatic(StaticFuncPtr);
+    void addStatic(TRetVal (*staticFuncPtr)(TArgs...)) {
+        Delegate<TRetVal(TArgs...)> delegate;
+        delegate.BindStatic(staticFuncPtr);
 
-        Delegates_.emplace_back(std::move(Delegate_));
+        delegates_.emplace_back(std::move(delegate));
     }
 
     template <typename TClass>
-    void AddRaw(TClass* Instance, TRetVal (TClass::*ClassMemFuncPtr)(TArgs...)) {
-        Delegate<TRetVal(TArgs...)> Delegate_;
-        Delegate_.BindRaw(Instance, ClassMemFuncPtr);
+    void addRaw(TClass* instance, TRetVal (TClass::*classMemFuncPtr)(TArgs...)) {
+        Delegate<TRetVal(TArgs...)> delegate;
+        delegate.BindRaw(instance, classMemFuncPtr);
 
-        Delegates_.emplace_back(std::move(Delegate_));
+        delegates_.emplace_back(std::move(delegate));
     }
 
     template <typename TClass>
-    void AddRaw(TClass* Instance, TRetVal (TClass::*ClassMemFuncConstPtr)(TArgs...) const) {
-        Delegate<TRetVal(TArgs...)> Delegate_;
-        Delegate_.BindRaw(Instance, ClassMemFuncConstPtr);
+    void addRaw(TClass* instance, TRetVal (TClass::*classMemFuncConstPtr)(TArgs...) const) {
+        Delegate<TRetVal(TArgs...)> delegate;
+        delegate.BindRaw(instance, classMemFuncConstPtr);
 
-        Delegates_.emplace_back(std::move(Delegate_));
+        delegates_.emplace_back(std::move(delegate));
     }
 
     template <typename TLambda>
-    void AddLambda(TLambda&& LambdaObject) {
-        Delegate<TRetVal(TArgs...)> Delegate_;
-        Delegate_.BindLambda(std::forward<TLambda>(LambdaObject));
+    void addLambda(TLambda&& lambdaObject) {
+        Delegate<TRetVal(TArgs...)> delegate;
+        delegate.bindLambda(std::forward<TLambda>(lambdaObject));
 
-        Delegates_.emplace_back(std::move(Delegate_));
+        delegates_.emplace_back(std::move(delegate));
     }
 
     explicit operator bool() const {
-        return !Delegates_.empty();
+        return !delegates_.empty();
     }
 
     template <typename... TArgs>
-    void Broadcast(TArgs&&... Args) {
-        for (auto& Delegate_ : Delegates_) {
-            Delegate_.ExecuteIfBound(std::forward<TArgs>(Args)...);
+    void broadcast(TArgs&&... args) {
+        for (auto& delegate : delegates_) {
+            delegate.executeIfBound(std::forward<TArgs>(args)...);
         }
     }
 };

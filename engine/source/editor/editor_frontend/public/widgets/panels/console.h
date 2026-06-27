@@ -13,32 +13,32 @@ struct ConsoleTextBuffer {
     using TextLine = std::pair<std::string, ImVec4>;
 
     std::list<TextLine> Lines;
-    void Clear() { Lines.clear(); }
+    void clear() { Lines.clear(); }
 };
 
 class ImConsole : public ImPanel {
   public:
-    ImConsole(std::string_view StrId);
+    ImConsole(std::string_view strId);
 
-    void OnLogPushed(LogMsg const& LogMsg, std::string const& FormattedMessage);
+    void onLogPushed(LogMsg const& logMsg, std::string const& formattedMessage);
 
-    ConsoleTextBuffer& GetTextBuf();
-    ImGuiTextFilter& GetTextFilter();
+    ConsoleTextBuffer& getTextBuf();
+    ImGuiTextFilter& getTextFilter();
 
   protected:
-    void DrawPanelContent() override;
+    void drawPanelContent() override;
 
   private:
-    ConsoleTextBuffer TextBuf_;
-    ImGuiTextFilter TextFilter_;
+    ConsoleTextBuffer textBuf_;
+    ImGuiTextFilter textFilter_;
 };
 
-inline ConsoleTextBuffer& ImConsole::GetTextBuf() {
-    return TextBuf_;
+inline ConsoleTextBuffer& ImConsole::getTextBuf() {
+    return textBuf_;
 }
 
-inline ImGuiTextFilter& ImConsole::GetTextFilter() {
-    return TextFilter_;
+inline ImGuiTextFilter& ImConsole::getTextFilter() {
+    return textFilter_;
 }
 
 } // namespace px::ed

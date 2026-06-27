@@ -18,7 +18,7 @@ struct ImButtonConfig {
     ButtonPressedCallback OnPressed;
 };
 
-bool ImButtonNative(std::string_view Label, bool bUnderline);
+bool imButtonNative(std::string_view label, bool bUnderline);
 
 class ImButton
     : public ImWidgetWithConfig<ImButtonConfig>,
@@ -28,8 +28,8 @@ class ImButton
 
     // ~IPrecomputedExtentWidget Begin
 
-    ImVec2 ComputeExtent() const override;
-    void DrawInExtent(ImDrawList* DrawList, ImVec2 CursorPos, ImVec2 Extent) const override;
+    ImVec2 computeExtent() const override;
+    void drawInExtent(ImDrawList* drawList, ImVec2 cursorPos, ImVec2 extent) const override;
 
     // ~IPrecomputedExtentWidget End
 };

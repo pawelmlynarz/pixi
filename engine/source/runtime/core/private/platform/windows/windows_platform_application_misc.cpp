@@ -5,8 +5,8 @@
 
 namespace px {
 
-UniquePtr<PlatformApplication> WindowsApplicationMisc::CreateApplication() {
-    return WindowsApplicationFactory::Create();
+UniquePtr<PlatformApplication> WindowsApplicationMisc::createApplication() {
+    return WindowsApplicationFactory::create();
 }
 
 } // namespace px
