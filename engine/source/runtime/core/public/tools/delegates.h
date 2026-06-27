@@ -132,7 +132,7 @@ class Delegate<TRetVal(TArgs...)> {
     template <typename TClass>
     static Delegate createRaw(TClass* instance, TRetVal (TClass::*classMemFuncPtr)(TArgs...)) {
         Delegate<TRetVal(TArgs...)> delegate;
-        delegate.BindRaw(instance, classMemFuncPtr);
+        delegate.bindRaw(instance, classMemFuncPtr);
 
         return delegate;
     }
@@ -145,7 +145,7 @@ class Delegate<TRetVal(TArgs...)> {
     template <typename TClass>
     static Delegate createRaw(TClass* instance, TRetVal (TClass::*classMemFuncPtr)(TArgs...) const) {
         Delegate<TRetVal(TArgs...)> delegate;
-        delegate.BindRaw(instance, classMemFuncPtr);
+        delegate.bindRaw(instance, classMemFuncPtr);
 
         return delegate;
     }
@@ -158,7 +158,7 @@ class Delegate<TRetVal(TArgs...)> {
     template <typename TLambda>
     static Delegate createLambda(TLambda&& lambdaObject) {
         Delegate<TRetVal(TArgs...)> delegate;
-        delegate.BindLambda(std::forward<TLambda>(lambdaObject));
+        delegate.bindLambda(std::forward<TLambda>(lambdaObject));
 
         return delegate;
     }
@@ -234,3 +234,4 @@ class MulticastDelegate<TRetVal(TArgs...)> {
     using DelegateName = px::MulticastDelegate<void(__VA_ARGS__)>;
 
 using SimpleDelegate = px::Delegate<void(void)>;
+using SimpleMulticastDelegate = px::MulticastDelegate<void(void)>;

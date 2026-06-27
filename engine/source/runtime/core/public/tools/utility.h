@@ -119,6 +119,16 @@ inline bool operator==(SharedRef<T> const& a, SharedRef<T> const& b) noexcept {
     return a.get() == b.get();
 }
 
+template <typename T>
+inline bool operator==(SharedPtr<T> const& a, SharedRef<T> const& b) noexcept {
+    return a.get() == b.get();
+}
+
+template <typename T>
+inline bool operator==(SharedRef<T> const& a, SharedPtr<T> const& b) noexcept {
+    return a.get() == b.get();
+}
+
 template <typename TTo, typename TFrom>
 [[nodiscard]] SharedPtr<TTo> staticCastSharedPtr(SharedPtr<TFrom> const& ptr) noexcept {
     return std::static_pointer_cast<TTo>(ptr);

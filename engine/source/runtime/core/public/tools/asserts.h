@@ -108,7 +108,7 @@ PXCORE_API bool execAssertCheck(std::string const& translationUnitInfo, std::str
     }
 
 #define pxEnsureNoEntry(fmt, ...) \
-    pxEnsureAlwaysMsgf(false, fmt, __VA_ARGS__);
+    pxEnsureAlwaysMsgf(false, fmt, __VA_ARGS__)
 
 #define PX_ASSERT_IMPL(expr, ...)                       \
     if (!(expr)) {                                      \
@@ -123,6 +123,9 @@ PXCORE_API bool execAssertCheck(std::string const& translationUnitInfo, std::str
 #define pxAssert(expr) PX_ASSERT_IMPL(expr)
 
 #define pxAssertMsgf(expr, fmt, ...) PX_ASSERT_IMPL(expr, std::format(fmt, __VA_ARGS__))
+
+#define pxNotImplemented() \
+    pxEnsureNoEntry("Not implemented function")
 
 // NOLINTEND
 // clang-format on

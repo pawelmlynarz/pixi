@@ -8,8 +8,8 @@
 namespace px {
 
 struct CoreDelegates {
-    DECLARE_MULTICAST_DELEGATE(FOnEngineLoopInitComplete)
-    static PXCORE_API FOnEngineLoopInitComplete onEngineLoopInitComplete;
+    static PXCORE_API SimpleMulticastDelegate onEngineLoopInitComplete;
+    static PXCORE_API SimpleMulticastDelegate onEditorInitComplete;
 };
 
 } // namespace px

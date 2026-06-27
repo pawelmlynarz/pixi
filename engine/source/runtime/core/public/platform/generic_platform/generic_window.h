@@ -35,6 +35,7 @@ class GenericWindow : NonCopyableNonMovable, public EnableSharedFromThis<Generic
     PXCORE_API virtual void show() {}
     PXCORE_API virtual void hide() {}
     PXCORE_API virtual bool isVisible() const { return false; }
+    PXCORE_API virtual bool isFullscreenSupported() const { return true; }
 
   protected:
     SharedPtr<PlatformApplication> OwningApplication_{nullptr};

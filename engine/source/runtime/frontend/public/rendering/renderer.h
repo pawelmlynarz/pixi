@@ -28,6 +28,10 @@ class Renderer final : public BaseRenderer {
 
     PXFRONTEND_API void createViewport(SharedRef<SWindow> window) override;
 
+    PXFRONTEND_API void requestResizeViewport(SharedRef<SWindow> window, uint16 sizeX, uint16 sizeY) override;
+
+    PXFRONTEND_API void flushCommands() const override;
+
 #if WITH_IMGUI
     PXFRONTEND_API class ImGuiRenderer& getImGuiRenderer();
 #endif

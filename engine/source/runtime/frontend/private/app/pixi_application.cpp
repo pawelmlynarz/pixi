@@ -84,6 +84,15 @@ bool SimpleApplication::addWindow(SharedRef<SWindow> window, bool const bShowImm
     return true;
 }
 
+SharedPtr<SWindow> SimpleApplication::findWindowByPlatformWindow(SharedRef<class GenericWindow> const& platformWindow) {
+    for (auto const& window : windows_) {
+        if (window->getNativeWindow() == platformWindow) {
+            return window.toPtr();
+        }
+    }
+    return nullptr;
+}
+
 void SimpleApplication::drawWindows() const {
     for (auto const& window : windows_) {
         window->paintWindow();

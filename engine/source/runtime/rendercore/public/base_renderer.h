@@ -50,6 +50,11 @@ class BaseRenderer {
      * @param SWindow The window to create the viewport for.
      */
     virtual void createViewport(SharedRef<SWindow> window) = 0;
+    virtual void requestResizeViewport(SharedRef<SWindow> window, uint16 sizeX, uint16 sizeY) = 0;
+    /**
+     * Gives the renderer a chance to wait for any render commands to be completed before returning.
+     */
+    virtual void flushCommands() const = 0;
 };
 
 } // namespace px

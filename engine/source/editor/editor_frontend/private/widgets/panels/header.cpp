@@ -39,7 +39,7 @@ void drawVersionInfo() {
     float x{startPos.x};
     float const y{startPos.y};
 
-    std::array<char,2> buf{0, 0};
+    std::array<char, 2> buf{0, 0};
     for (int i{0}; i < 4; i++) {
         constexpr std::string_view prefix{"Pixi"};
         buf[0] = prefix[i];
@@ -51,7 +51,7 @@ void drawVersionInfo() {
     drawList->AddText(font, fontSize, ImVec2(x, y), IM_COL32_WHITE, rest.data());
 
     popFont();
-} 
+}
 
 } // namespace
 

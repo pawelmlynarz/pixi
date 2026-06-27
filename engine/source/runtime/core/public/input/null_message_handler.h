@@ -18,6 +18,7 @@ class NullApplicationMessageHandler final : public IGenericApplicationMessageHan
     bool onMouseMoved(SharedRef<GenericWindow> const& /*Window*/, Vector2 const& /*MousePos*/) override { return false; };
 
     void onWindowClose(SharedRef<GenericWindow> const& window) override {};
+    void onWindowResized(SharedRef<GenericWindow> const& window, uint16 width, uint16 height, bool wasMinimized) override {};
 };
 
 } // namespace px

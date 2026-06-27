@@ -24,6 +24,8 @@ class IGenericApplicationMessageHandler {
     virtual bool onMouseMoved(SharedRef<GenericWindow> const& window, Vector2 const& mousePos) = 0;
 
     virtual void onWindowClose(SharedRef<GenericWindow> const& window) = 0;
+
+    virtual void onWindowResized(SharedRef<GenericWindow> const& window, uint16 width, uint16 height, bool wasMinimized) = 0;
 };
 
 } // namespace px
