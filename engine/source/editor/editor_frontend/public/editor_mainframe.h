@@ -5,7 +5,7 @@
 #include "editor_frontend_module.h"
 
 // pxfrontend
-#include "widgets/swindow.h"
+#include "window/window.h"
 
 namespace px {
 
@@ -13,16 +13,18 @@ class ImContainerWidget;
 
 namespace ed {
 
-class SEditorMainFrame final : public SWindow {
+class EditorMainFrameWindow final : public Window {
   public:
-    PXEDITOR_FRONTEND_API SEditorMainFrame();
-    PXEDITOR_FRONTEND_API ~SEditorMainFrame() override;
+    PXEDITOR_FRONTEND_API EditorMainFrameWindow();
+    PXEDITOR_FRONTEND_API ~EditorMainFrameWindow() override;
 
   protected:
     void drawImGui() override;
 
   private:
-    std::vector<std::unique_ptr<ImContainerWidget>> widgets_;
+    using WidgetsList = std::vector<std::unique_ptr<ImContainerWidget>>;
+
+    WidgetsList widgets_;
 };
 
 } // namespace ed

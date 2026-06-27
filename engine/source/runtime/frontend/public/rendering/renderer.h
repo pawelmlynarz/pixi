@@ -12,7 +12,7 @@
 
 namespace px {
 
-class SWindow;
+class Window;
 
 class Renderer final : public BaseRenderer {
   public:
@@ -24,11 +24,11 @@ class Renderer final : public BaseRenderer {
 
     PXFRONTEND_API void tick(float dt) override;
 
-    PXFRONTEND_API SharedPtr<RHIViewport> getViewportResource(SharedRef<SWindow> window) const override;
+    PXFRONTEND_API SharedPtr<RHIViewport> getViewportResource(SharedRef<Window> window) const override;
 
-    PXFRONTEND_API void createViewport(SharedRef<SWindow> window) override;
+    PXFRONTEND_API void createViewport(SharedRef<Window> window) override;
 
-    PXFRONTEND_API void requestResizeViewport(SharedRef<SWindow> window, uint16 sizeX, uint16 sizeY) override;
+    PXFRONTEND_API void requestResizeViewport(SharedRef<Window> window, uint16 sizeX, uint16 sizeY) override;
 
     PXFRONTEND_API void flushCommands() const override;
 

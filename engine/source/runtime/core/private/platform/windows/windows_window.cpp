@@ -115,8 +115,8 @@ void glfwFramebufferResizeCallback(GLFWwindow* const window, int const width, in
 
 } // namespace
 
-void WindowsWindow::initializeWindow(SharedPtr<PlatformApplication> owningApplication, GenericWindowDefinition const& windowDefinition) {
-    GenericWindow::initializeWindow(owningApplication, windowDefinition);
+void WindowsWindow::initializeWindow(SharedPtr<PlatformApplication> owningApplication, PlatformWindowDefinition const& windowDefinition) {
+    PlatformWindow::initializeWindow(owningApplication, windowDefinition);
 
     ensureGlfwInitialized();
 
@@ -125,10 +125,10 @@ void WindowsWindow::initializeWindow(SharedPtr<PlatformApplication> owningApplic
     glfwDefaultWindowHints();
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
     glfwWindowHint(GLFW_VISIBLE, 0);
-    glfwWindowHint(GLFW_DECORATED, Definition_.bDecorated ? 1 : 0);
-    glfwWindowHint(GLFW_RESIZABLE, Definition_.bResizable ? 1 : 0);
+    glfwWindowHint(GLFW_DECORATED, Definition_.decorated ? 1 : 0);
+    glfwWindowHint(GLFW_RESIZABLE, Definition_.resizable ? 1 : 0);
 
-    handle_ = glfwCreateWindow(Definition_.WidthDesired, Definition_.HeightDesired, "Window", nullptr, nullptr);
+    handle_ = glfwCreateWindow(Definition_.widthDesired, Definition_.heightDesired, "Window", nullptr, nullptr);
     if (!handle_) {
         glfwTerminate();
         pxAssert(false);

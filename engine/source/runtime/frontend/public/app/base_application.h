@@ -53,12 +53,12 @@ class BaseApplication : NonCopyableNonMovable {
     /**
      * Associates a high-level Window with a native window and ensures that it is tracked properly by the application.
      *
-     * @param SWindow A window to which to add a native window.
+     * @param Window A window to which to add a native window.
      * @param bShowImmediately True to show the window, false if you're going to call ShowWindow() yourself later.
      *
      * @return True if operation successful.
      */
-    virtual bool addWindow(SharedRef<class SWindow> window, bool bShowImmediately = true) = 0;
+    virtual bool addWindow(SharedRef<class Window> window, bool bShowImmediately = true) = 0;
 
   protected:
     // Holds a pointer to the current application.

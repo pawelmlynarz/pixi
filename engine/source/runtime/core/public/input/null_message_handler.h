@@ -8,17 +8,17 @@ namespace px {
 
 class NullApplicationMessageHandler final : public IGenericApplicationMessageHandler {
   public:
-    bool onKeyChar(uint32 /*Character*/, bool /*IsRepeat*/) override { return false; };
+    bool onKeyChar(uint32 /*character*/, bool /*isRepeat*/) override { return false; };
 
-    bool onKeyDown(int32 const /*KeyCode*/, uint32 const /*CharacterCode*/, bool const /*IsRepeat*/) override { return false; };
-    bool onKeyUp(int32 const /*KeyCode*/, uint32 const /*CharacterCode*/, bool const /*IsRepeat*/) override { return false; };
+    bool onKeyDown(int32 const /*keyCode*/, uint32 const /*characterCode*/, bool const /*isRepeat*/) override { return false; };
+    bool onKeyUp(int32 const /*keyCode*/, uint32 const /*characterCode*/, bool const /*isRepeat*/) override { return false; };
 
-    bool onMouseDown(SharedRef<GenericWindow> const& /*Window*/, EMouseButton const /*Button*/, Vector2 const& /*MousePos*/) override { return false; };
-    bool onMouseUp(SharedRef<GenericWindow> const& /*Window*/, EMouseButton const /*Button*/, Vector2 const& /*MousePos*/) override { return false; };
-    bool onMouseMoved(SharedRef<GenericWindow> const& /*Window*/, Vector2 const& /*MousePos*/) override { return false; };
+    bool onMouseDown(SharedRef<PlatformWindow> const& /*platformWindow*/, EMouseButton const /*button*/, Vector2 const& /*mousePos*/) override { return false; };
+    bool onMouseUp(SharedRef<PlatformWindow> const& /*platformWindow*/, EMouseButton const /*button*/, Vector2 const& /*mousePos*/) override { return false; };
+    bool onMouseMoved(SharedRef<PlatformWindow> const& /*platformWindow*/, Vector2 const& /*mousePos*/) override { return false; };
 
-    void onWindowClose(SharedRef<GenericWindow> const& window) override {};
-    void onWindowResized(SharedRef<GenericWindow> const& window, uint16 width, uint16 height, bool wasMinimized) override {};
+    void onWindowClose(SharedRef<PlatformWindow> const& platformWindow) override {};
+    void onWindowResized(SharedRef<PlatformWindow> const& platformWindow, uint16 width, uint16 height, bool wasMinimized) override {};
 };
 
 } // namespace px

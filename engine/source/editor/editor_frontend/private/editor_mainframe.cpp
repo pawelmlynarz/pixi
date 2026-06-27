@@ -104,7 +104,7 @@ void createMainFrameDockSpace(ImGuiViewport* const viewport) {
 
 } // namespace
 
-SEditorMainFrame::SEditorMainFrame() {
+EditorMainFrameWindow::EditorMainFrameWindow() {
     widgets_.emplace_back(makeUnique<ImHeader>(widHeader));
     widgets_.emplace_back(makeUnique<ImFooter>(widFooter));
     widgets_.emplace_back(makeUnique<ImAssetBrowser>(widAssetBrowser));
@@ -114,9 +114,9 @@ SEditorMainFrame::SEditorMainFrame() {
     widgets_.emplace_back(makeUnique<ImViewport>(widViewport));
 }
 
-SEditorMainFrame::~SEditorMainFrame() = default;
+EditorMainFrameWindow::~EditorMainFrameWindow() = default;
 
-void SEditorMainFrame::drawImGui() {
+void EditorMainFrameWindow::drawImGui() {
     ImGuiViewport* const viewport{ImGui::GetMainViewport()};
     pxAssert(viewport != nullptr);
 

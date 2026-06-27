@@ -8,12 +8,12 @@
 
 namespace px {
 
-struct GenericWindowDefinition {
-    std::string_view Title;
-    uint16 WidthDesired{1280};
-    uint16 HeightDesired{720};
-    bool bDecorated{true};
-    bool bResizable{true};
+struct PlatformWindowDefinition {
+    std::string_view title;
+    uint16 widthDesired{1280};
+    uint16 heightDesired{720};
+    bool decorated{true};
+    bool resizable{true};
 };
 
 } // namespace px

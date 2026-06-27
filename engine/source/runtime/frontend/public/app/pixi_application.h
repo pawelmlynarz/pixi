@@ -31,9 +31,9 @@ class SimpleApplication final : public BaseApplication {
     }
 
     PXFRONTEND_API void tick(float dt);
-    PXFRONTEND_API bool addWindow(SharedRef<SWindow> window, bool bShowImmediately) override;
+    PXFRONTEND_API bool addWindow(SharedRef<Window> window, bool bShowImmediately) override;
 
-    PXFRONTEND_API SharedPtr<SWindow> findWindowByPlatformWindow(SharedRef<class GenericWindow> const& platformWindow);
+    PXFRONTEND_API SharedPtr<Window> findWindowByPlatformWindow(SharedRef<class PlatformWindow> const& platformWindow);
 
   private:
     void drawWindows() const;
@@ -44,7 +44,7 @@ class SimpleApplication final : public BaseApplication {
 
     SharedRef<PlatformApplication> platformApplication_;
 
-    std::vector<SharedRef<SWindow>> windows_;
+    std::vector<SharedRef<Window>> windows_;
 };
 
 } // namespace px

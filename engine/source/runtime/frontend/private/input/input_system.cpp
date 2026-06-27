@@ -62,7 +62,7 @@ bool InputSystem::processKeyUpEvent(KeyEvent const& KeyEvent) {
     return true;
 }
 
-bool InputSystem::onMouseDown([[maybe_unused]] SharedRef<GenericWindow> const& platformWindow, EMouseButton const button, Vector2 const& mousePos) {
+bool InputSystem::onMouseDown([[maybe_unused]] SharedRef<PlatformWindow> const& platformWindow, EMouseButton const button, Vector2 const& mousePos) {
     PointerEvent const pointerEvent{button, mousePos};
     return processMouseButtonDownEvent(pointerEvent);
 }
@@ -75,7 +75,7 @@ bool InputSystem::processMouseButtonDownEvent(PointerEvent const& MouseEvent) {
     return true;
 }
 
-bool InputSystem::onMouseUp([[maybe_unused]] SharedRef<GenericWindow> const& platformWindow, EMouseButton const button, Vector2 const& mousePos) {
+bool InputSystem::onMouseUp([[maybe_unused]] SharedRef<PlatformWindow> const& platformWindow, EMouseButton const button, Vector2 const& mousePos) {
     PointerEvent const pointerEvent{button, mousePos};
     return processMouseButtonUpEvent(pointerEvent);
 }
@@ -88,7 +88,7 @@ bool InputSystem::processMouseButtonUpEvent(PointerEvent const& MouseEvent) {
     return true;
 }
 
-bool InputSystem::onMouseMoved([[maybe_unused]] SharedRef<GenericWindow> const& platformWindow, Vector2 const& mousePos) {
+bool InputSystem::onMouseMoved([[maybe_unused]] SharedRef<PlatformWindow> const& platformWindow, Vector2 const& mousePos) {
     PointerEvent const pointerEvent{EMouseButton::None, mousePos};
     return processMouseMovedEvent(pointerEvent);
 }
@@ -101,11 +101,11 @@ bool InputSystem::processMouseMovedEvent(PointerEvent const& MouseEvent) {
     return true;
 }
 
-void InputSystem::onWindowClose(SharedRef<GenericWindow> const& platformWindow) {
+void InputSystem::onWindowClose(SharedRef<PlatformWindow> const& platformWindow) {
     owningApplication_->closeWindow(platformWindow);
 }
 
-void InputSystem::onWindowResized(SharedRef<GenericWindow> const& platformWindow, uint16 width, uint16 height, [[maybe_unused]] bool wasMinimized) {
+void InputSystem::onWindowResized(SharedRef<PlatformWindow> const& platformWindow, uint16 width, uint16 height, [[maybe_unused]] bool wasMinimized) {
     Renderer& renderer{dynamic_cast<Renderer&>(SimpleApplication::get().getRenderer())};
 
     // Flush the rendering command queue to ensure that there aren't pending viewport draw commands for the old viewport size.
