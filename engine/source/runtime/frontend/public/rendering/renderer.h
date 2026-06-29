@@ -3,12 +3,7 @@
 #pragma once
 
 #include "core_minimal.h"
-
-// pxrendercore
 #include "base_renderer.h"
-
-// pxcore
-#include "tools/utility.h"
 
 namespace px {
 

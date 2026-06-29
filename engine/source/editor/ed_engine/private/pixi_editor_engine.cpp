@@ -2,8 +2,6 @@
 
 #include "pixi_editor_engine.h"
 #include "pixi_editor_engine_internal.h"
-
-// pxengine
 #include "private/pixi_engine_internal.h"
 
 namespace px::ed {

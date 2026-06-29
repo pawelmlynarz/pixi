@@ -2,7 +2,6 @@
 
 #pragma once
 
-// pxcore
 #include "tools/asserts.h"
 
 // NRI

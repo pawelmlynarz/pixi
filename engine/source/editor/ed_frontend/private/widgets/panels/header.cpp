@@ -4,7 +4,7 @@
 #include "common/font.h"
 #include "utils/imgui_draw_utils.h"
 
-// pxcore
+// pxEngine
 #include "version.h"
 
 namespace px::ed {

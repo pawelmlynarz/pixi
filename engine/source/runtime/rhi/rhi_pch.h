@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include "core_pch.h"
-
 // NRI
 #include "NRI.h"
 #include "NRIDescs.h"

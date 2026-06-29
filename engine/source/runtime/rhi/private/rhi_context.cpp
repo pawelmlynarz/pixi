@@ -5,9 +5,6 @@
 #include "rhi_context.h"
 #include "rhi_asserts.h"
 
-// pxcore
-#include "tools/asserts.h"
-
 #include <array>
 
 namespace px {

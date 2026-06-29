@@ -2,9 +2,6 @@
 
 #include "common/font.h"
 
-// pxcore
-#include "tools/utility.h"
-
 // imgui
 #include "imgui.h"
 

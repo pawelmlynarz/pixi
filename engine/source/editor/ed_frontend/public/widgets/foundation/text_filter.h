@@ -5,8 +5,6 @@
 #include "widgets/widget.h"
 #include "common/font.h"
 #include "utils/imgui_draw_utils.h"
-
-// pxcore
 #include "tools/flags.h"
 
 namespace px::ed {

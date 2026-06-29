@@ -1,17 +1,17 @@
 // © 2026 Pawel Mlynarz
 
-// pxcore
+#include "launch_engine_loop.h"
+
+// pxEngine
 #include "core_globals.h"
 #include "hal/platform_tls.h"
 #include "private/core_globals_internal.h"
 #include "misc/core_delegates.h"
 
-// pxeditor
+// pxEngineEditor
 #if WITH_EDITOR
 #include "private/editor_core_launch.h"
 #endif // WITH_EDITOR
-
-#include "launch_engine_loop.h"
 
 namespace px {
 

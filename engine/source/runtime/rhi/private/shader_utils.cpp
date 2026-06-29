@@ -1,7 +1,6 @@
 // © 2026 Pawel Mlynarz
 
 #include "shader_utils.h"
-
 #include "rhi_asserts.h"
 
 #include <array>

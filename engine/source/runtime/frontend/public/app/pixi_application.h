@@ -5,9 +5,6 @@
 #include "core_minimal.h"
 #include "app/base_application.h"
 
-// pxcore
-#include "tools/utility.h"
-
 #include <vector>
 
 namespace px {

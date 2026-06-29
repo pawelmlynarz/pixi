@@ -1,7 +1,6 @@
 // © 2026 Pawel Mlynarz
 
 #include "input/input_system.h"
-
 #include "app/pixi_application.h"
 #include "platform/generic_platform/generic_application.h"
 #include "platform/generic_platform/generic_window.h"

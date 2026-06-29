@@ -1,6 +1,6 @@
 // © 2026 Pawel Mlynarz
 
-// pxcore
+// pxEngine
 #include "common/types.h"
 
 #include "Windows.h"
