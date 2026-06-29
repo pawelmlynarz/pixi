@@ -5,7 +5,7 @@
 #include "tools/compiler.h"
 
 #ifdef PX_BUILD_SHARED
-#ifdef PX_BUILD_EDITOR_ENGINE
+#ifdef PX_BUILD_ENGINE_EDITOR
 #define PXEDITOR_ENGINE_API DLLEXPORT
 #else
 #define PXEDITOR_ENGINE_API DLLIMPORT

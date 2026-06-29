@@ -1,35 +1,15 @@
 # --------------------------------------------------
-# Module:           RHI
-# Default Type:     Dynamic
+# Component:        RHI
 # --------------------------------------------------
 
 include(utils)
 include(build)
 
-set(MODULE_NAME rhi)
-if(NOT PX_BUILD_MONOLITHIC)
-    set(MODULE_TARGET_NAME px${MODULE_NAME})
-    
-    #
-    # Library
-    if(PX_BUILD_SHARED)
-        add_library(${MODULE_TARGET_NAME} SHARED "")
-    else()
-        add_library(${MODULE_TARGET_NAME} STATIC "")
-    endif()
-    add_library(px::rhi ALIAS ${MODULE_TARGET_NAME})
-endif()
+set(COMPONENT_NAME rhi)
 
 #
 # Dependencies
-if(NOT PX_BUILD_MONOLITHIC)
-    target_link_libraries(${MODULE_TARGET_NAME}
-            PUBLIC
-            px::core
-    )
-endif()
-
-target_link_libraries(${MODULE_TARGET_NAME}
+target_link_libraries(${ENGINE_TARGET_NAME}
         PUBLIC
         NRI
 )
@@ -39,26 +19,21 @@ target_link_libraries(${MODULE_TARGET_NAME}
 file(GLOB_RECURSE MODULE_SOURCES CONFIGURE_DEPENDS
         *.cpp *.h *.inl
 )
+target_sources(${ENGINE_TARGET_NAME} PRIVATE ${MODULE_SOURCES})
 
-#
-# Configuration
-target_sources(${MODULE_TARGET_NAME} PRIVATE ${MODULE_SOURCES})
-target_include_directories(${MODULE_TARGET_NAME}
+target_include_directories(${ENGINE_TARGET_NAME}
         PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/public
 )
+
 if(NOT BUILD_CLANG_TIDY)
-target_precompile_headers(${MODULE_TARGET_NAME} PRIVATE
-        ${MODULE_NAME}_pch.h
+target_precompile_headers(${ENGINE_TARGET_NAME} PRIVATE
+        ${COMPONENT_NAME}_pch.h
 )
 endif()
 
-set_engine_module_properties(${MODULE_NAME})
-
 #
 # IDE grouping
-if(NOT PX_BUILD_MONOLITHIC)
-    set_target_properties(${MODULE_TARGET_NAME} PROPERTIES FOLDER "engine/runtime/")
-    group_sources_for_target(${MODULE_SOURCES})
-endif()
+# set_target_properties(${ENGINE_TARGET_NAME} PROPERTIES FOLDER "engine/runtime/")
+# group_sources_for_target(${MODULE_SOURCES})
