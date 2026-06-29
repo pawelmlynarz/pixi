@@ -2,14 +2,14 @@
 
 #pragma once
 
-#include "core_module.h"
+#include "core_minimal.h"
 #include "tools/delegates.h"
 
 namespace px {
 
 struct CoreDelegates {
-    static PXCORE_API SimpleMulticastDelegate onEngineLoopInitComplete;
-    static PXCORE_API SimpleMulticastDelegate onEditorInitComplete;
+    static PXENGINE_API SimpleMulticastDelegate onEngineLoopInitComplete;
+    static PXENGINE_API SimpleMulticastDelegate onEditorInitComplete;
 };
 
 } // namespace px

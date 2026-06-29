@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "editor_frontend_module.h"
+#include "core_minimal.h"
 
 // imgui
 #include "imgui.h"
@@ -14,7 +14,7 @@ namespace px::ed {
 /**
  * Draws dashed line.
  */
-PXEDITOR_FRONTEND_API void drawDashedLine(
+PXENGINE_EDITOR_API void drawDashedLine(
     ImDrawList* drawList, ImVec2 const& a, ImVec2 const& b,
     float dashLength = 6.0f, float gapLength = 4.0f, float thickness = 2.f
 );
@@ -22,7 +22,7 @@ PXEDITOR_FRONTEND_API void drawDashedLine(
 /**
  * Draws dashed rectangle (4 dashed lines).
  */
-PXEDITOR_FRONTEND_API void drawDashedRect(
+PXENGINE_EDITOR_API void drawDashedRect(
     ImDrawList* drawList, ImVec2 const& min, ImVec2 const& max,
     float dashLength = 6.0f, float gapLength = 4.0f, float thickness = 2.f
 );
@@ -30,7 +30,7 @@ PXEDITOR_FRONTEND_API void drawDashedRect(
 /**
  * Draws dashed window border with configurable padding.
  */
-PXEDITOR_FRONTEND_API void drawDashedWindowBorder(
+PXENGINE_EDITOR_API void drawDashedWindowBorder(
     ImVec2 const& padding = {6.f, 6.f},
     float dashLength = 10.0f, float gapLength = 2.0f, float thickness = 2.f
 );
@@ -39,7 +39,7 @@ PXEDITOR_FRONTEND_API void drawDashedWindowBorder(
  * Draws Simple header with text. Use ImEditorPanelHeader if you to embed widgets inside it.
  * -- [Header Text] ------------------------------------------------------------------
  */
-PXEDITOR_FRONTEND_API void drawDashedHeader(
+PXENGINE_EDITOR_API void drawDashedHeader(
     char const* text, ImVec2 const& padding = {6.f, 6.f}, float textPaddingLeft = 0.0f,
     float dashLength = 10.0f, float gapLength = 2.0f, float thickness = 2.f
 );
@@ -48,7 +48,7 @@ PXEDITOR_FRONTEND_API void drawDashedHeader(
  * Draws dashed line with precomputed gaps. Use to embed widgets inside the header dashed line.
  * -- [Widget A] --[Widget B]---------------------------------------------[Widget C]---
  */
-PXEDITOR_FRONTEND_API void drawDashedLineWithGaps(
+PXENGINE_EDITOR_API void drawDashedLineWithGaps(
     ImDrawList* drawList, ImVec2 const& a, ImVec2 const& b, std::vector<ImVec2> const& gaps,
     float dashLength = 10.0f, float gapLength = 2.0f, float thickness = 2.f
 );

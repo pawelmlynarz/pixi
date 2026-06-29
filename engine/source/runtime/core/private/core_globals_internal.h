@@ -2,11 +2,10 @@
 
 #pragma once
 
-#include "core_module.h"
-#include "common/types.h"
+#include "core_minimal.h"
 
 namespace px {
 
-PXCORE_API void initGameThreadId(uint32 threadId);
+PXENGINE_API void initGameThreadId(uint32 threadId);
 
 } // namespace px

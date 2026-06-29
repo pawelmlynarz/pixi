@@ -2,11 +2,8 @@
 
 #pragma once
 
-#include "frontend_module.h"
-
-// pxcore
+#include "core_minimal.h"
 #include "tools/misc.h"
-#include "tools/utility.h"
 
 namespace px {
 
@@ -17,8 +14,8 @@ class BaseRenderer;
  */
 class BaseApplication : NonCopyableNonMovable {
   public:
-    PXFRONTEND_API BaseApplication() = default;
-    PXFRONTEND_API virtual ~BaseApplication() = default;
+    PXENGINE_API BaseApplication() = default;
+    PXENGINE_API virtual ~BaseApplication() = default;
 
     /**
      * Returns the current instance of the application. The application should have been initialized before
@@ -36,19 +33,19 @@ class BaseApplication : NonCopyableNonMovable {
      *
      * @param Renderer The renderer to use.
      */
-    PXFRONTEND_API bool initializeRenderer(SharedPtr<BaseRenderer> renderer);
+    PXENGINE_API bool initializeRenderer(SharedPtr<BaseRenderer> renderer);
 
     /**
      * Destroys the renderer.
      */
-    PXFRONTEND_API void destoryRenderer();
+    PXENGINE_API void destoryRenderer();
 
     /**
      * Gets the renderer being used to draw this application.
      *
      * @return The renderer reference.
      */
-    PXFRONTEND_API BaseRenderer& getRenderer() const;
+    PXENGINE_API BaseRenderer& getRenderer() const;
 
     /**
      * Associates a high-level Window with a native window and ensures that it is tracked properly by the application.
@@ -62,7 +59,7 @@ class BaseApplication : NonCopyableNonMovable {
 
   protected:
     // Holds a pointer to the current application.
-    static PXFRONTEND_API SharedPtr<BaseApplication> baseApplicationInstance;
+    static PXENGINE_API SharedPtr<BaseApplication> baseApplicationInstance;
 
     // A pointer to the renderer used to render this application.
     SharedPtr<BaseRenderer> Renderer_{nullptr};

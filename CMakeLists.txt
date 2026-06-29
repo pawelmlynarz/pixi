@@ -24,7 +24,7 @@ set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP OFF)
 
 include(build)
-set_compiler_options()
+px_set_compiler_options()
 
 # --------------------------------------------------
 # Build Targets

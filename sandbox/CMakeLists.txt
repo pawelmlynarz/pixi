@@ -31,7 +31,7 @@ target_sources(${SANDBOX_TARGET_NAME} PRIVATE
 
 #
 # Configuration
-set_module_properties(${SANDBOX_TARGET_NAME})
+px_set_target_properties(${SANDBOX_TARGET_NAME})
 
 # --------------------------------------------------
 # Post Build

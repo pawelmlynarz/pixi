@@ -1,32 +1,32 @@
 # --------------------------------------------------
-# Component:        RenderCore
+# Component:        EditorEngine
 # --------------------------------------------------
 
-include(utils)
 include(build)
+include(utils)
 
-set(COMPONENT_NAME rendercore)
+set(COMPONENT_NAME editor_engine)
 
 #
 # Common Sources                                         
 file(GLOB_RECURSE MODULE_SOURCES CONFIGURE_DEPENDS
         *.cpp *.h *.inl
 )
-target_sources(${ENGINE_TARGET_NAME} PRIVATE ${MODULE_SOURCES})
+target_sources(${ENGINE_ED_TARGET_NAME} PRIVATE ${MODULE_SOURCES})
 
-target_include_directories(${ENGINE_TARGET_NAME}
+target_include_directories(${ENGINE_ED_TARGET_NAME}
         PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/public
 )
 
 if(NOT BUILD_CLANG_TIDY)
-target_precompile_headers(${ENGINE_TARGET_NAME} PRIVATE
+target_precompile_headers(${ENGINE_ED_TARGET_NAME} PRIVATE
         ${COMPONENT_NAME}_pch.h
 )
 endif()
 
 #
 # IDE grouping
-# set_target_properties(${ENGINE_TARGET_NAME} PROPERTIES FOLDER "engine/runtime/")
+# set_target_properties(${ENGINE_ED_TARGET_NAME} PROPERTIES FOLDER "engine/editor/")
 # group_sources_for_target(${MODULE_SOURCES})
