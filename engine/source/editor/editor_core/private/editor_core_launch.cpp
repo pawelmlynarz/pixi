@@ -8,9 +8,24 @@
 // pxeditorfrontend
 #include "editor_mainframe.h"
 
+#include "rendering/renderer.h"
+#include "rendering/imgui_renderer.h"
+#include "styles/editor_style.h"
+
 namespace px::ed {
 
 namespace {
+
+struct ImGuiEdHelper {
+    static void initImGuiEditorContext() {
+        auto& pxRenderer{dynamic_cast<Renderer&>(SimpleApplication::get().getRenderer())};
+        ImGui::SetCurrentContext(static_cast<ImGuiContext*>(pxRenderer.getImGuiRenderer().getImguiContext()));
+    }
+
+    static void initImGuiEditorStyleSet() {
+        EdStyle::setDefaultStyle();
+    }
+};
 
 SharedPtr<SEditorMainFrame> editorMainFrameWindow{nullptr};
 
@@ -33,6 +48,10 @@ int32 editorInit() {
     if (!createEditorMainFrame()) {
         return -1;
     }
+    
+    ImGuiEdHelper::initImGuiEditorContext();
+    ImGuiEdHelper::initImGuiEditorStyleSet();
+    
     return 0;
 }
 
