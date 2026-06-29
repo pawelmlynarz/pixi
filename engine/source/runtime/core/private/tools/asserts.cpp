@@ -27,7 +27,7 @@ bool execEnsureCheck(bool const bAlways, std::atomic_bool& bExecuted, [[maybe_un
     return false;
 }
 
-PXCORE_API bool execAssertCheck(std::string const& translationUnitInfo, std::string const& message) {
+PXENGINE_API bool execAssertCheck(std::string const& translationUnitInfo, std::string const& message) {
     std::string const msg{std::format("[Assert Failure].\n{}\n{}", translationUnitInfo, message.empty() ? "" : std::format("Message: {}\n", message))};
 
     pxToDo("Logger");

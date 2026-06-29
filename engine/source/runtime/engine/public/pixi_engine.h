@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "engine_module.h"
+#include "core_minimal.h"
 
 namespace px {
 

@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "frontend_module.h"
+#include "core_minimal.h"
 
 // pxrendercore
 #include "base_renderer.h"
@@ -16,24 +16,24 @@ class SWindow;
 
 class Renderer final : public BaseRenderer {
   public:
-    PXFRONTEND_API Renderer();
-    PXFRONTEND_API ~Renderer() override;
+    PXENGINE_API Renderer();
+    PXENGINE_API ~Renderer() override;
 
-    PXFRONTEND_API bool initialize() override;
-    PXFRONTEND_API void shutdown() override;
+    PXENGINE_API bool initialize() override;
+    PXENGINE_API void shutdown() override;
 
-    PXFRONTEND_API void tick(float dt) override;
+    PXENGINE_API void tick(float dt) override;
 
-    PXFRONTEND_API SharedPtr<RHIViewport> getViewportResource(SharedRef<SWindow> window) const override;
+    PXENGINE_API SharedPtr<RHIViewport> getViewportResource(SharedRef<SWindow> window) const override;
 
-    PXFRONTEND_API void createViewport(SharedRef<SWindow> window) override;
+    PXENGINE_API void createViewport(SharedRef<SWindow> window) override;
 
-    PXFRONTEND_API void requestResizeViewport(SharedRef<SWindow> window, uint16 sizeX, uint16 sizeY) override;
+    PXENGINE_API void requestResizeViewport(SharedRef<SWindow> window, uint16 sizeX, uint16 sizeY) override;
 
-    PXFRONTEND_API void flushCommands() const override;
+    PXENGINE_API void flushCommands() const override;
 
 #if WITH_IMGUI
-    PXFRONTEND_API class ImGuiRenderer& getImGuiRenderer();
+    PXENGINE_API class ImGuiRenderer& getImGuiRenderer();
 #endif
 
   private:

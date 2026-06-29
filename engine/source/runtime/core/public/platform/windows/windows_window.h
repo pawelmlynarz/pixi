@@ -26,10 +26,10 @@ class WindowsWindow final : public GenericWindow {
 
     GenericOSWindowHandle getOsWindowHandle() const override;
 
-    PXCORE_API void show() override;
-    PXCORE_API void hide() override;
-    PXCORE_API bool isVisible() const override;
-    PXCORE_API bool isFullscreenSupported() const override;
+    PXENGINE_API void show() override;
+    PXENGINE_API void hide() override;
+    PXENGINE_API bool isVisible() const override;
+    PXENGINE_API bool isFullscreenSupported() const override;
 
   private:
     GLFWwindow* handle_{nullptr};

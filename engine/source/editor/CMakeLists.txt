@@ -1,3 +1,3 @@
-add_subdirectory(editor_core)
-add_subdirectory(editor_engine)
-add_subdirectory(editor_frontend)
+add_subdirectory(ed_core)
+add_subdirectory(ed_engine)
+add_subdirectory(ed_frontend)

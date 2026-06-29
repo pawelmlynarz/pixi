@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "rendercore_module.h"
+#include "core_minimal.h"
 
 namespace px {
 

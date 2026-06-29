@@ -2,12 +2,12 @@
 
 #pragma once
 
-#include "core_module.h"
+#include "core_minimal.h"
 #include "platform/generic_platform/generic_platform_time.h"
 
 namespace px {
 
-class PXCORE_API WindowsPlatformTime final : public GenericPlatformTime {
+class PXENGINE_API WindowsPlatformTime final : public GenericPlatformTime {
   public:
     static TimePoint initialize() noexcept;
 

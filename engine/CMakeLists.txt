@@ -13,7 +13,7 @@ include(fetch_third_party)
 #
 # Builds engine module(s) as dynamic libraries.
 # An exception is Launch module which is obligatory to be static.
-option(PX_BUILD_SHARED "Builds engine modules as dll(s)." OFF)
+option(PX_BUILD_SHARED "Builds engine modules as dll(s)." ON)
 
 # --------------------------------------------------
 # Global Compile Definitions

@@ -2,7 +2,8 @@
 
 #pragma once
 
-#include "frontend_module.h"
+#include "core_minimal.h"
+
 #include "swidget.h"
 
 // pxcore
@@ -30,17 +31,17 @@ class SWindow : public SWidget {
         bool, Decorated
     )
 
-    PXFRONTEND_API void paintWindow();
+    PXENGINE_API void paintWindow();
 
-    PXFRONTEND_API void setNativeWindow(WeakPtr<GenericWindow> const& nativeWindow);
-    PXFRONTEND_API SharedPtr<GenericWindow> getNativeWindow() const;
-    PXFRONTEND_API void destoryNativeWindow();
+    PXENGINE_API void setNativeWindow(WeakPtr<GenericWindow> const& nativeWindow);
+    PXENGINE_API SharedPtr<GenericWindow> getNativeWindow() const;
+    PXENGINE_API void destoryNativeWindow();
 
-    PXFRONTEND_API void showWindow();
-    PXFRONTEND_API void hideWindow();
+    PXENGINE_API void showWindow();
+    PXENGINE_API void hideWindow();
 
   protected:
-    PXFRONTEND_API virtual void drawImGui() = 0;
+    PXENGINE_API virtual void drawImGui() = 0;
 
   private:
     void renderImGuiInternal();

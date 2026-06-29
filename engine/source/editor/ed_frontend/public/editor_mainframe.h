@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "editor_frontend_module.h"
+#include "core_minimal.h"
 
 // pxfrontend
 #include "widgets/swindow.h"
@@ -15,8 +15,8 @@ namespace ed {
 
 class SEditorMainFrame final : public SWindow {
   public:
-    PXEDITOR_FRONTEND_API SEditorMainFrame();
-    PXEDITOR_FRONTEND_API ~SEditorMainFrame() override;
+    PXENGINE_EDITOR_API SEditorMainFrame();
+    PXENGINE_EDITOR_API ~SEditorMainFrame() override;
 
   protected:
     void drawImGui() override;

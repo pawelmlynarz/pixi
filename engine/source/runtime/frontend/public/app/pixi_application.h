@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "frontend_module.h"
+#include "core_minimal.h"
 #include "app/base_application.h"
 
 // pxcore
@@ -20,27 +20,27 @@ class SimpleApplication final : public BaseApplication {
     SimpleApplication(SharedRef<PlatformApplication> const& platformApplication);
     ~SimpleApplication() override;
 
-    static PXFRONTEND_API SimpleApplication& createApplication();
-    static PXFRONTEND_API SimpleApplication& createApplication(SharedRef<class PlatformApplication> const& inPlatformApplication);
-    static PXFRONTEND_API void shutdownApplication();
-    static PXFRONTEND_API bool isInitialized();
+    static PXENGINE_API SimpleApplication& createApplication();
+    static PXENGINE_API SimpleApplication& createApplication(SharedRef<class PlatformApplication> const& inPlatformApplication);
+    static PXENGINE_API void shutdownApplication();
+    static PXENGINE_API bool isInitialized();
 
     static SimpleApplication& get() {
         pxAssert(applicationInstance.get() != nullptr);
         return *applicationInstance;
     }
 
-    PXFRONTEND_API void tick(float dt);
-    PXFRONTEND_API bool addWindow(SharedRef<SWindow> window, bool bShowImmediately) override;
+    PXENGINE_API void tick(float dt);
+    PXENGINE_API bool addWindow(SharedRef<SWindow> window, bool bShowImmediately) override;
 
-    PXFRONTEND_API SharedPtr<SWindow> findWindowByPlatformWindow(SharedRef<class GenericWindow> const& platformWindow);
+    PXENGINE_API SharedPtr<SWindow> findWindowByPlatformWindow(SharedRef<class GenericWindow> const& platformWindow);
 
   private:
     void drawWindows() const;
 
   private:
     // Holds a pointer to the current application.
-    static PXFRONTEND_API SharedPtr<SimpleApplication> applicationInstance;
+    static PXENGINE_API SharedPtr<SimpleApplication> applicationInstance;
 
     SharedRef<PlatformApplication> platformApplication_;
 

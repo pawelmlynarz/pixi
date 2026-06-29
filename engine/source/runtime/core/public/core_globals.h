@@ -2,20 +2,19 @@
 
 #pragma once
 
-#include "core_module.h"
-#include "common/types.h"
+#include "core_minimal.h"
 
 namespace px {
 
-extern PXCORE_API uint64 gFrameCounter;
-extern PXCORE_API uint32 gGameThreadId;
-extern PXCORE_API double gStartTime;
+extern PXENGINE_API uint64 gFrameCounter;
+extern PXENGINE_API uint32 gGameThreadId;
+extern PXENGINE_API double gStartTime;
 
-PXCORE_API void requestEngineExit();
-PXCORE_API bool isEngineExitRequested();
+PXENGINE_API void requestEngineExit();
+PXENGINE_API bool isEngineExitRequested();
 
-PXCORE_API bool isEditor();
+PXENGINE_API bool isEditor();
 
-PXCORE_API bool isInGameThread();
+PXENGINE_API bool isInGameThread();
 
 } // namespace px

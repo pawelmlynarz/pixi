@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "rendercore_module.h"
+#include "core_minimal.h"
 
 namespace px {
 
-struct PXRENDERCORE_API RenderResource {
+struct PXENGINE_API RenderResource {
 };
 
 } // namespace px

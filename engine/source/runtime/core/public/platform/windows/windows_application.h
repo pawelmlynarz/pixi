@@ -2,9 +2,8 @@
 
 #pragma once
 
-#include "core_module.h"
+#include "core_minimal.h"
 #include "platform/generic_platform/generic_application.h"
-#include "tools/utility.h"
 
 #include <vector>
 
@@ -29,7 +28,7 @@ class WindowsApplication final : public PlatformApplication {
 
 struct WindowsApplicationFactory {
     [[nodiscard]]
-    static PXCORE_API UniquePtr<WindowsApplication> create();
+    static PXENGINE_API UniquePtr<WindowsApplication> create();
 };
 
 } // namespace px

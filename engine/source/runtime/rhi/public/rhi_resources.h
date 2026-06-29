@@ -2,13 +2,10 @@
 
 #pragma once
 
-// pxcore
-#include "tools/utility.h"
-#include "common/types.h"
+#include "core_minimal.h"
 
 // NRI
 #include "NRI.h"
-#include "rhi_module.h"
 #include "Extensions/NRISwapChain.h"
 
 namespace px {
@@ -36,16 +33,16 @@ struct RHISwapChain {
     RHIContext& rhiContext_;
 };
 
-PXRHI_API UniquePtr<RHISwapChain> rhiCreateSwapchain(RHIContext& context, nri::Window const& window, uint16 sizeX, uint16 sizeY);
+PXENGINE_API UniquePtr<RHISwapChain> rhiCreateSwapchain(RHIContext& context, nri::Window const& window, uint16 sizeX, uint16 sizeY);
 
 struct RHIViewport {
-    PXRHI_API RHIViewport(RHIContext& context, void* osWindowHandle, uint16 sizeX, uint16 sizeY, bool isFullscreen);
-    PXRHI_API ~RHIViewport();
+    PXENGINE_API RHIViewport(RHIContext& context, void* osWindowHandle, uint16 sizeX, uint16 sizeY, bool isFullscreen);
+    PXENGINE_API ~RHIViewport();
 
-    PXRHI_API void* getOsWindowHandle() { return osWindowHandle_; }
-    PXRHI_API SharedPtr<RHISwapChain> getSwapChain() { return swapChainRhi_; }
-    PXRHI_API UVector2 getSize() const { return {sizeX_, sizeY_}; }
-    PXRHI_API void resize(uint16 sizeX, uint16 sizeY, bool isFullscreen);
+    PXENGINE_API void* getOsWindowHandle() { return osWindowHandle_; }
+    PXENGINE_API SharedPtr<RHISwapChain> getSwapChain() { return swapChainRhi_; }
+    PXENGINE_API UVector2 getSize() const { return {sizeX_, sizeY_}; }
+    PXENGINE_API void resize(uint16 sizeX, uint16 sizeY, bool isFullscreen);
 
   private:
     RHIContext& rhiContext_;
@@ -60,6 +57,6 @@ struct RHIViewport {
     SharedPtr<RHISwapChain> swapChainRhi_{nullptr};
 };
 
-PXRHI_API UniquePtr<RHIViewport> rhiCreateViewport(RHIContext& context, void* windowHandle, uint16 sizeX, uint16 sizeY, bool isFullscreen);
+PXENGINE_API UniquePtr<RHIViewport> rhiCreateViewport(RHIContext& context, void* windowHandle, uint16 sizeX, uint16 sizeY, bool isFullscreen);
 
 } // namespace px

@@ -2,13 +2,12 @@
 
 #pragma once
 
-#include "core_module.h"
-#include "tools/utility.h"
+#include "core_minimal.h"
 
 namespace px {
 
 struct GenericPlatformApplicationMisc {
-    static PXCORE_API UniquePtr<class PlatformApplication> createApplication();
+    static PXENGINE_API UniquePtr<class PlatformApplication> createApplication();
 };
 
 } // namespace px
