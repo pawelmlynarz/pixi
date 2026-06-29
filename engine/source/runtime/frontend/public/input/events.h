@@ -2,7 +2,6 @@
 
 #pragma once
 
-// pxcore
 #include "common/types.h"
 #include "input/key_codes.h"
 

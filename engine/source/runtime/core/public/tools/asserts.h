@@ -5,6 +5,7 @@
 // NOLINTBEGIN
 // clang-format off
 
+#include "common/types.h"
 #include "tools/compiler.h"
 
 #include <string>

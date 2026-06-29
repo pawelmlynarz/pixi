@@ -5,9 +5,6 @@
 #include "core_minimal.h"
 #include "app/base_application.h"
 
-// pxcore
-#include "tools/utility.h"
-
 #include <vector>
 
 namespace px {
@@ -29,7 +26,7 @@ class SimpleApplication final : public BaseApplication {
         pxAssert(applicationInstance.get() != nullptr);
         return *applicationInstance;
     }
-    
+
     PXENGINE_API void tick(float dt);
     PXENGINE_API bool addWindow(SharedRef<Window> window, bool bShowImmediately) override;
 

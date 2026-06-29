@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include "platform/generic_platform/generic_window_definition.h"
-#include "tools/utility.h"
+#include "core_minimal.h"
 #include "input/generic_message_handler.h"
+#include "platform/generic_platform/generic_window_definition.h"
 #include "tools/misc.h"
 
 namespace px {

@@ -16,7 +16,7 @@ endif()
 add_subdirectory(source)
 
 target_link_libraries(${SANDBOX_TARGET_NAME} PRIVATE
-        px::launch
+        px::EngineLaunch
 )
 
 #

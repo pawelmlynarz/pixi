@@ -4,8 +4,6 @@
 #if WITH_IMGUI
 #include "rendering/imgui_renderer.h"
 #endif
-
-// pxrendercore
 #include "render_resource.h"
 #include "rhi.h"
 #include "rhi_context.h"
@@ -25,11 +23,12 @@ struct RenderViewportInfo : public RenderResource {
 
 bool isViewportFullscreen(SharedRef<Window> const& window) {
     if constexpr (PlatformProperties::supportsWindowedMode()) {
-        if (WITH_EDITOR) {
+        if constexpr (WITH_EDITOR) {
             return false;
+        } else {
+            pxToDo("&& window.getWindowMode() == EWindowMode::Fullscreen");
+            return window->getNativeWindow()->isFullscreenSupported();
         }
-        pxToDo("&& window.getWindowMode() == EWindowMode::Fullscreen");
-        return window->getNativeWindow()->isFullscreenSupported();
     } else {
         return true;
     }

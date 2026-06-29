@@ -4,8 +4,6 @@
 #include "base_renderer.h"
 #include "window/window.h"
 #include "input/input_system.h"
-
-// pxcore
 #include "platform/generic_platform/generic_application.h"
 #include "platform/generic_platform/generic_window.h"
 #include "hal/platform_application_misc.h"

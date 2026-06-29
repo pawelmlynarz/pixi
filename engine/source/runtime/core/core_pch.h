@@ -21,7 +21,4 @@
 #include "Windows.h"
 #endif
 
-#include "common/types.h"
-#include "tools/asserts.h"
-#include "tools/compiler.h"
-#include "tools/utility.h"
+#include "core_minimal.h"

@@ -2,11 +2,8 @@
 
 #pragma once
 
+#include "core_minimal.h"
 #include "pixi_editor_engine.h"
-
-// pxcore
-#include "common/types.h"
-#include "tools/utility.h"
 
 namespace px::ed {
 

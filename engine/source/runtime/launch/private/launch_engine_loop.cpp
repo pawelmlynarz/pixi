@@ -2,23 +2,17 @@
 
 #include "launch_engine_loop.h"
 
-// pxcore
+// pxEngine
+#include "app/pixi_application.h"
 #include "core_globals.h"
 #include "log/log.h"
 #include "misc/core_delegates.h"
-
-// pxfrontend
-#include "app/pixi_application.h"
 #include "rendering/renderer.h"
-
-// pxengine
 #include "pixi_engine.h"
 #include "private/pixi_engine_internal.h"
-
-// pxrhi
 #include "rhi.h"
 
-// pxeditorengine
+// pxEngineEditor
 #if WITH_EDITOR
 #include "pixi_editor_engine.h"
 #include "private/pixi_editor_engine_internal.h"

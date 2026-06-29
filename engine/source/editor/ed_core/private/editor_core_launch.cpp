@@ -1,16 +1,13 @@
 // © 2026 Pawel Mlynarz
 
 #include "editor_core_launch.h"
-
-// pxfrontend
-#include "app/pixi_application.h"
-
-// pxeditorfrontend
 #include "editor_mainframe.h"
+#include "styles/editor_style.h"
 
+// pxEngine
+#include "app/pixi_application.h"
 #include "rendering/renderer.h"
 #include "rendering/imgui_renderer.h"
-#include "styles/editor_style.h"
 
 namespace px::ed {
 
@@ -48,10 +45,10 @@ int32 editorInit() {
     if (!createEditorMainFrame()) {
         return -1;
     }
-    
+
     ImGuiEdHelper::initImGuiEditorContext();
     ImGuiEdHelper::initImGuiEditorStyleSet();
-    
+
     return 0;
 }
 

@@ -4,11 +4,7 @@
 #include "app/base_application.h"
 #include "rendering/renderer.h"
 #include "rendering/imgui_renderer.h"
-
-// pxcore
 #include "platform/generic_platform/generic_window.h"
-
-// pxrhi
 #include "rhi.h"
 #include "rhi_context.h"
 #include "rhi_resources.h"

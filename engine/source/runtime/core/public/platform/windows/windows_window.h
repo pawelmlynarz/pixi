@@ -2,8 +2,8 @@
 
 #pragma once
 
+#include "core_minimal.h"
 #include "platform/generic_platform/generic_window.h"
-#include "tools/utility.h"
 
 struct GLFWwindow;
 

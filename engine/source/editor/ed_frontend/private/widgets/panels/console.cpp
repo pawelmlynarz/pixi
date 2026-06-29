@@ -1,14 +1,14 @@
 // © 2026 Pawel Mlynarz
 
 #include "widgets/panels/console.h"
-#include "widgets/foundation/panel_header.h"
 #include "widgets/foundation/common_widgets.h"
+#include "widgets/foundation/panel_header.h"
+#include "widgets/foundation/label.h"
 #include "utils/imgui_draw_utils.h"
 #include "utils/imgui_misc.h"
 
-// pxcore
+// pxEngine
 #include "log/log_sink.h"
-#include "widgets/foundation/label.h"
 
 namespace px::ed {
 

@@ -4,10 +4,6 @@
 
 #include "pixi_engine.h"
 
-// pxcore
-#include "common/types.h"
-#include "tools/utility.h"
-
 namespace px {
 
 [[nodiscard]]

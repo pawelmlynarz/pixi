@@ -4,7 +4,7 @@
 
 #include "widgets/panel.h"
 
-// pxcore
+// pxEngine
 #include "log/log.h"
 
 namespace px::ed {

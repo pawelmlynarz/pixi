@@ -2,9 +2,8 @@
 
 #pragma once
 
+#include "core_minimal.h"
 #include "input/key_codes.h"
-#include "tools/utility.h"
-#include "common/types.h"
 
 namespace px {
 

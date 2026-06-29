@@ -2,7 +2,7 @@
 
 #pragma once
 
-// core
+// pxEngine
 #include "common/types.h"
 
 namespace px {

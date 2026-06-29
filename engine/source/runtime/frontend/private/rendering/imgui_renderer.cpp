@@ -3,8 +3,6 @@
 #include "rendering/imgui_renderer.h"
 
 #if WITH_IMGUI
-
-// pxrhi
 #include "rhi_asserts.h"
 
 // imgui

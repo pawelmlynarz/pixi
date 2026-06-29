@@ -1,8 +1,6 @@
 // © 2026 Pawel Mlynarz
 
 #include "app/base_application.h"
-
-// pxrendercore
 #include "base_renderer.h"
 
 namespace px {

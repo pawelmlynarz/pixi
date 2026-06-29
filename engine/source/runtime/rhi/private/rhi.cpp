@@ -2,12 +2,6 @@
 
 #include "rhi.h"
 #include "rhi_context.h"
-
-// pxcore
-#include "tools/asserts.h"
-#include "tools/utility.h"
-
-// NRI
 #include "shader_utils.h"
 
 namespace px {

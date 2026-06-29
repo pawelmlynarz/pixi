@@ -3,8 +3,6 @@
 #pragma once
 
 #include "core_minimal.h"
-
-// pxfrontend
 #include "window/window.h"
 
 namespace px {

@@ -2,8 +2,7 @@
 
 #pragma once
 
-// pxcore
-#include "common/types.h"
+#include "core_minimal.h"
 
 namespace px::ed {
 

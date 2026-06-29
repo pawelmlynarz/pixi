@@ -44,12 +44,7 @@ target_include_directories(${ENGINE_TARGET_NAME}
 )
 
 if(NOT BUILD_CLANG_TIDY)
-target_precompile_headers(${ENGINE_TARGET_NAME} PRIVATE
-        ${COMPONENT_NAME}_pch.h
-)
+    target_precompile_headers(${ENGINE_TARGET_NAME} PRIVATE
+            ${COMPONENT_NAME}_pch.h
+    )
 endif()
-
-#
-# IDE grouping
-# set_target_properties(${ENGINE_TARGET_NAME} PROPERTIES FOLDER "engine/runtime/")
-# group_sources_for_target(${MODULE_SOURCES})

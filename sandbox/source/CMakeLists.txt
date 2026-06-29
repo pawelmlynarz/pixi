@@ -8,4 +8,4 @@ target_sources(${SANDBOX_TARGET_NAME} PRIVATE ${MODULE_SOURCES})
 
 target_include_directories(${SANDBOX_TARGET_NAME} PRIVATE source)
 
-group_sources_for_target(${MODULE_SOURCES})
+group_sources_for_target(${SANDBOX_TARGET_NAME})

@@ -2,8 +2,6 @@
 
 #include "pixi_engine.h"
 #include "pixi_engine_internal.h"
-
-// pxcore
 #include "hal/platform_time.h"
 
 #include <thread>

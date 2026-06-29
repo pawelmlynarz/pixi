@@ -5,11 +5,11 @@
 #if WITH_IMGUI
 
 #include "core_minimal.h"
+#include "tools/misc.h"
 
 // NRI
 #include "NRI.h"
 #include "Extensions/NRIImgui.h"
-#include "tools/misc.h"
 
 namespace px {
 

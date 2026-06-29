@@ -2,11 +2,8 @@
 
 #pragma once
 
+#include "core_minimal.h"
 #include "rhi_interface.h"
-
-// pxcore
-#include "common/types.h"
-#include "tools/utility.h"
 
 // NRI
 #include "NRI.h"
