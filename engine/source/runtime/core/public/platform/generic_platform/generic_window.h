@@ -2,10 +2,9 @@
 
 #pragma once
 
-#include "core_module.h"
+#include "core_minimal.h"
 #include "tools/misc.h"
 #include "generic_window_definition.h"
-#include "tools/utility.h"
 
 namespace px {
 
@@ -32,10 +31,10 @@ class PlatformWindow : NonCopyableNonMovable, public EnableSharedFromThis<Platfo
 
     virtual GenericOSWindowHandle getOsWindowHandle() const { return GenericOSWindowHandle(nullptr); }
 
-    PXCORE_API virtual void show() {}
-    PXCORE_API virtual void hide() {}
-    PXCORE_API virtual bool isVisible() const { return false; }
-    PXCORE_API virtual bool isFullscreenSupported() const { return true; }
+    PXENGINE_API virtual void show() {}
+    PXENGINE_API virtual void hide() {}
+    PXENGINE_API virtual bool isVisible() const { return false; }
+    PXENGINE_API virtual bool isFullscreenSupported() const { return true; }
 
   protected:
     SharedPtr<PlatformApplication> OwningApplication_{nullptr};

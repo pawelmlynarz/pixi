@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "tools/compiler.h"
 #include "log_sink.h"
 
 // spdlog
@@ -35,13 +36,13 @@ using Logger = spdlog::logger;
 struct LogManager {
     static constexpr ELogVerbosity sGlobalLogLevel{ELogVerbosity::Trace};
 
-    static PXCORE_API void initialize();
+    static PXENGINE_API void initialize();
 
-    static PXCORE_API void registerLogger(std::string_view const& categoryName, SharedPtr<Logger> logger);
+    static PXENGINE_API void registerLogger(std::string_view const& categoryName, SharedPtr<Logger> logger);
 
-    static PXCORE_API Logger& getLogger(std::string_view const& categoryName);
+    static PXENGINE_API Logger& getLogger(std::string_view const& categoryName);
 
-    static PXCORE_API void registerOutputLogSinkMt(SharedPtr<OutputLogSinkMT> const& outputLogSinkMt);
+    static PXENGINE_API void registerOutputLogSinkMt(SharedPtr<OutputLogSinkMT> const& outputLogSinkMt);
 };
 
 template <ELogVerbosity Verbosity, typename... TArgs>

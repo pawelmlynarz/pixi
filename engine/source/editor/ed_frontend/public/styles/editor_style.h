@@ -3,7 +3,6 @@
 #pragma once
 
 #include "core_minimal.h"
-#include "editor_frontend_module.h"
 
 // imgui
 #include "imgui.h"
@@ -40,11 +39,11 @@ struct StyleConfig {
 };
 
 struct EdStyle {
-    static PXEDITOR_FRONTEND_API StyleConfig& getStyle();
+    static PXENGINE_EDITOR_API StyleConfig& getStyle();
 
-    static PXEDITOR_FRONTEND_API ImU32 getColorU32(ImGuiCol idx, float alphaMul = 1.0f);
+    static PXENGINE_EDITOR_API ImU32 getColorU32(ImGuiCol idx, float alphaMul = 1.0f);
 
-    static PXEDITOR_FRONTEND_API void setDefaultStyle();
+    static PXENGINE_EDITOR_API void setDefaultStyle();
 };
 
 } // namespace px::ed

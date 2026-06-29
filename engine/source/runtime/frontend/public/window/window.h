@@ -2,11 +2,7 @@
 
 #pragma once
 
-#include "frontend_module.h"
-
-// pxcore
-#include "tools/utility.h"
-#include "common/types.h"
+#include "core_minimal.h"
 
 #include <string>
 
@@ -42,18 +38,18 @@ class Window : public EnableSharedFromThis<Window> {
         return *this;
     }
 
-    PXFRONTEND_API void paintWindow();
+    PXENGINE_API void paintWindow();
 
-    PXFRONTEND_API void setNativeWindow(WeakPtr<PlatformWindow> const& platformWindow);
-    PXFRONTEND_API SharedPtr<PlatformWindow> getNativeWindow() const;
-    PXFRONTEND_API void destoryNativeWindow();
+    PXENGINE_API void setNativeWindow(WeakPtr<PlatformWindow> const& platformWindow);
+    PXENGINE_API SharedPtr<PlatformWindow> getNativeWindow() const;
+    PXENGINE_API void destoryNativeWindow();
 
-    PXFRONTEND_API void showWindow();
-    PXFRONTEND_API void hideWindow();
+    PXENGINE_API void showWindow();
+    PXENGINE_API void hideWindow();
 
   protected:
 #if WITH_IMGUI
-    PXFRONTEND_API virtual void drawImGui() = 0;
+    PXENGINE_API virtual void drawImGui() = 0;
 #endif
 
   private:

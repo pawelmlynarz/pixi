@@ -2,10 +2,7 @@
 
 #pragma once
 
-#include "rhi_module.h"
-
-// pxcore
-#include "common/types.h"
+#include "core_minimal.h"
 
 // NRI
 #include "NRIDescs.h"
@@ -17,7 +14,7 @@ namespace px {
 
 using ShaderStorage = std::vector<std::vector<uint8>>;
 
-PXRHI_API nri::ShaderDesc loadShader(
+PXENGINE_API nri::ShaderDesc loadShader(
     nri::GraphicsAPI backend, std::string const& shaderName,
     ShaderStorage& storage, std::string_view entryPointName = ""
 );

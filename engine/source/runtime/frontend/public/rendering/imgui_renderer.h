@@ -6,8 +6,6 @@
 
 #include "core_minimal.h"
 
-#include "frontend_module.h"
-
 // NRI
 #include "NRI.h"
 #include "Extensions/NRIImgui.h"
@@ -25,13 +23,13 @@ class ImGuiRenderer : NonCopyableNonMovable {
 
     inline bool hasUserInterface() const;
 
-    PXFRONTEND_API void cmdCopyImguiData(nri::CommandBuffer& cmdBuffer, nri::Streamer& streamer) const;
+    PXENGINE_API void cmdCopyImguiData(nri::CommandBuffer& cmdBuffer, nri::Streamer& streamer) const;
 
-    PXFRONTEND_API void cmdDrawImgui(nri::CommandBuffer& cmdBuffer, nri::Format attachmentFormat, float sdrScale, bool bIsSrgb) const;
+    PXENGINE_API void cmdDrawImgui(nri::CommandBuffer& cmdBuffer, nri::Format attachmentFormat, float sdrScale, bool bIsSrgb) const;
 
-    PXFRONTEND_API void* getImguiContext();
+    PXENGINE_API void* getImguiContext();
 
-    PXFRONTEND_API void requestResizeDisplaySize(UVector2 const& displaySize);
+    PXENGINE_API void requestResizeDisplaySize(UVector2 const& displaySize);
 
   private:
     void* imguiContext_{nullptr};

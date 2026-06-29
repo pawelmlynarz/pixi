@@ -2,9 +2,6 @@
 
 #pragma once
 
-#include "editor_engine_module.h"
-
-// pxengine
 #include "pixi_engine.h"
 
 namespace px::ed {
@@ -12,6 +9,6 @@ namespace px::ed {
 class PixiEditorEngine final : public PixiEngine {
 };
 
-PXEDITOR_ENGINE_API PixiEditorEngine& getEditorEngine();
+PXENGINE_EDITOR_API PixiEditorEngine& getEditorEngine();
 
 } // namespace px::ed

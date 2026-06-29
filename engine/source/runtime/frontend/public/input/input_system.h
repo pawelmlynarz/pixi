@@ -2,8 +2,7 @@
 
 #pragma once
 
-#include "core_module.h"
-#include "frontend_module.h"
+#include "core_minimal.h"
 #include "input/generic_message_handler.h"
 #include "tools/misc.h"
 
@@ -19,7 +18,7 @@ class PlatformApplication;
  */
 class InputSystem final : NonCopyableNonMovable, public IGenericApplicationMessageHandler {
   public:
-    PXFRONTEND_API InputSystem(SharedRef<PlatformApplication> owningApplication);
+    PXENGINE_API InputSystem(SharedRef<PlatformApplication> owningApplication);
 
     bool onKeyChar(uint32 character, bool isRepeat) override;
     bool processKeyCharEvent(CharacterEvent const& charEvent);

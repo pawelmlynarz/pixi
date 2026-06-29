@@ -24,9 +24,28 @@
 // Platform Headers Utility
 
 #if PLATFORM_WINDOWS
-#define COMPILED_PLATFORM_HEADER(HeaderFile) PX_STRINGIZE(platform/windows/PX_JOIN(windows_, HeaderFile))
+#   define COMPILED_PLATFORM_HEADER(HeaderFile) PX_STRINGIZE(platform/windows/PX_JOIN(windows_, HeaderFile))
 #else
-#error Unsupported platform: compiled platform header format not provided.
+#   error Unsupported platform: compiled platform header format not provided.
+#endif
+
+//
+// Shared build API defs.
+
+#ifdef PX_BUILD_SHARED
+#   ifdef PX_BUILD_ENGINE
+#       define PXENGINE_API DLLEXPORT
+#   else
+#       define PXENGINE_API DLLIMPORT
+#   endif
+
+#   ifdef PX_BUILD_ENGINE_EDITOR
+#       define PXENGINE_EDITOR_API DLLEXPORT
+#   else
+#       define PXENGINE_EDITOR_API DLLIMPORT
+#   endif
+#else
+#   define PXENGINE_API
 #endif
 
 // clang-format on

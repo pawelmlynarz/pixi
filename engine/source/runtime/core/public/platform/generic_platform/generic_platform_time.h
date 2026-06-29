@@ -9,9 +9,9 @@ namespace px {
 struct TimePoint {
     int64 Ticks;
 
-    PXCORE_API double asSeconds() const;
-    PXCORE_API double asMilliseconds() const;
-    PXCORE_API double asMicroseconds() const;
+    PXENGINE_API double asSeconds() const;
+    PXENGINE_API double asMilliseconds() const;
+    PXENGINE_API double asMicroseconds() const;
 };
 
 class GenericPlatformTime {
