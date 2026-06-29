@@ -25,9 +25,3 @@ if (NOT BUILD_CLANG_TIDY)
             ${COMPONENT_NAME}_pch.h
     )
 endif ()
-
-#
-# IDE grouping
-# set_target_properties(${ENGINE_ED_TARGET_NAME} PROPERTIES FOLDER "engine/editor/")
-# group_sources_for_target(${MODULE_SOURCES})
-

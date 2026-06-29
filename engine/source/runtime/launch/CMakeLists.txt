@@ -6,16 +6,10 @@ include(utils)
 include(build)
 
 set(COMPONENT_NAME launch)
-set(LAUNCH_TARGET_NAME pxLaunch)
-
-#
-# Library (static only)
-add_library(${LAUNCH_TARGET_NAME} STATIC "")
-add_library(px::launch ALIAS ${LAUNCH_TARGET_NAME})
 
 #
 # Dependencies
-target_link_libraries(${LAUNCH_TARGET_NAME} 
+target_link_libraries(${ENGINE_LAUNCH_TARGET_NAME} 
         PRIVATE
         px::Engine
         $<$<CONFIG:DebugEditor>:px::EngineEditor>
@@ -39,23 +33,18 @@ if(WIN32)
 endif()
 list(APPEND MODULE_SOURCES ${MODULE_PLATFORM_SOURCES})
 
-target_sources(${LAUNCH_TARGET_NAME} PRIVATE ${MODULE_SOURCES})
+target_sources(${ENGINE_LAUNCH_TARGET_NAME} PRIVATE ${MODULE_SOURCES})
 
-target_include_directories(${LAUNCH_TARGET_NAME}
+target_include_directories(${ENGINE_LAUNCH_TARGET_NAME}
         PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/public
 )
 
 if(NOT BUILD_CLANG_TIDY)
-target_precompile_headers(${LAUNCH_TARGET_NAME} PRIVATE
-        ${COMPONENT_NAME}_pch.h
-)
+    target_precompile_headers(${ENGINE_LAUNCH_TARGET_NAME} PRIVATE
+            ${COMPONENT_NAME}_pch.h
+    )
 endif()
 
-px_set_engine_launch_target_properties(${LAUNCH_TARGET_NAME})
-
-#
-# IDE grouping
-# set_target_properties(${MODULE_TARGET_NAME} PROPERTIES FOLDER "engine/runtime/")
-# group_sources_for_target(${MODULE_SOURCES})
+px_set_engine_launch_target_properties(${ENGINE_LAUNCH_TARGET_NAME})

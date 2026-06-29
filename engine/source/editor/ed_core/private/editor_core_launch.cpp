@@ -45,10 +45,10 @@ int32 editorInit() {
     if (!createEditorMainFrame()) {
         return -1;
     }
-    
+
     ImGuiEdHelper::initImGuiEditorContext();
     ImGuiEdHelper::initImGuiEditorStyleSet();
-    
+
     return 0;
 }
 
