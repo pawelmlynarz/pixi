@@ -8,6 +8,13 @@ include(utils)
 set(COMPONENT_NAME editor_frontend)
 
 #
+# Dependencies
+target_link_libraries(${ENGINE_ED_TARGET_NAME}
+        PUBLIC
+        imgui
+)
+
+#
 # Common Sources                                         
 file(GLOB_RECURSE MODULE_SOURCES CONFIGURE_DEPENDS
         *.cpp *.h *.inl
