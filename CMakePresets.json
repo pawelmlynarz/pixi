@@ -5,25 +5,24 @@
       "name": "base",
       "hidden": true,
       "binaryDir": "${sourceDir}/build/${presetName}",
-      "architecture": "x64",
       "cacheVariables": {
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
 		"CMAKE_CONFIGURATION_TYPES": "DebugEditor;Debug;Release"
       }
     },
     {
-      "name": "ninja-msvc",
+      "name": "ninja-clang-cl",
       "inherits": "base",
-      "generator": "Ninja Multi-Config",
+      "generator": "Ninja",
 	  "cacheVariables":
 	  {
-		"CMAKE_TOOLCHAIN_FILE": "${sourceDir}/engine/tools/cmake/platform/toolchains/t-x64-msvc.cmake"
+		"CMAKE_TOOLCHAIN_FILE": "${sourceDir}/engine/tools/cmake/platform/toolchains/t-x64-clang-cl.cmake"
 	  }
     },
     {
       "name": "ninja-clang",
       "inherits": "base",
-      "generator": "Ninja Multi-Config",
+      "generator": "Ninja",
 	  "cacheVariables":
 	  {
 		"CMAKE_TOOLCHAIN_FILE": "${sourceDir}/engine/tools/cmake/platform/toolchains/t-x64-clang.cmake"
@@ -56,18 +55,18 @@
       "configuration": "Release"
     },
 	{
-      "name": "ninja-msvc-Debug",
-      "configurePreset": "ninja-msvc",
+      "name": "ninja-clang-cl-Debug",
+      "configurePreset": "ninja-clang-cl",
       "configuration": "Debug"
     },
     {
-      "name": "ninja-msvc-DebugEditor",
-      "configurePreset": "ninja-msvc",
+      "name": "ninja-clang-cl-DebugEditor",
+      "configurePreset": "ninja-clang-cl",
       "configuration": "DebugEditor"
     },
     {
-      "name": "ninja-msvc-Release",
-      "configurePreset": "ninja-msvc",
+      "name": "ninja-clang-cl-Release",
+      "configurePreset": "ninja-clang-cl",
       "configuration": "Release"
     },
 		{
