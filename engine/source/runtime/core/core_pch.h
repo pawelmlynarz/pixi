@@ -7,6 +7,7 @@
 #include <vector>
 #include <variant>
 #include <array>
+#include <bit>
 #include <memory>
 #include <optional>
 #include <thread>
