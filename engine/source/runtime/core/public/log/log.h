@@ -37,17 +37,24 @@ struct LogManager {
     static constexpr ELogVerbosity sGlobalLogLevel{ELogVerbosity::Trace};
 
     static PXENGINE_API void initialize();
+    
+    static PXENGINE_API void shutdown();
 
     static PXENGINE_API void registerLogger(std::string_view const& categoryName, SharedPtr<Logger> logger);
 
     static PXENGINE_API Logger& getLogger(std::string_view const& categoryName);
 
     static PXENGINE_API void registerOutputLogSinkMt(SharedPtr<OutputLogSinkMT> const& outputLogSinkMt);
+    
+    static PXENGINE_API bool isReady();
 };
 
 template <ELogVerbosity Verbosity, typename... TArgs>
 void logImpl(std::string_view const category, TArgs&&... args) {
     if constexpr (Verbosity >= LogManager::sGlobalLogLevel) {
+        if (!LogManager::isReady()) {
+            return;
+        }
         auto& logger{LogManager::getLogger(category)};
 
         if constexpr (Verbosity == ELogVerbosity::Trace) {

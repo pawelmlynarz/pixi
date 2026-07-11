@@ -13,7 +13,6 @@ struct PXENGINE_API Memory {
     static void* alloc(size_t size);
 
     // Allocate a block of memory aligned to a given power-of-two number of bytes
-
     static void* allocAligned(size_t size, size_t align);
 
     // Attempt to extend an existing allocation or allocate a new block of memory.
