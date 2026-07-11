@@ -68,6 +68,8 @@ void EngineLoop::exit() {
 
     SimpleApplication::shutdownApplication();
     shutdownRhi();
+    
+    LogManager::shutdown();
 }
 
 } // namespace px

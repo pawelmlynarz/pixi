@@ -12,7 +12,7 @@ namespace {
 constexpr std::string_view defaultPattern{"%^[%T][%n][%L]: %v%$"};
 
 using LoggersMap = std::unordered_map<std::string_view, SharedPtr<Logger>>;
-LoggersMap registeredLoggers;
+std::optional<LoggersMap> registeredLoggers;
 
 struct LevelFormatter : spdlog::custom_flag_formatter {
     void format(spdlog::details::log_msg const& msg, std::tm const&, spdlog::memory_buf_t& dest) override {
@@ -52,21 +52,30 @@ void registerEngineLoggers() {
 } // namespace
 
 void LogManager::initialize() {
+    registeredLoggers = LoggersMap();
     registerEngineLoggers();
 }
 
-void LogManager::registerLogger(std::string_view const& categoryName, std::shared_ptr<Logger> logger) {
-    auto const foundLogger{registeredLoggers.find(categoryName)};
-    pxAssertMsgf(foundLogger == registeredLoggers.end(), "Logger with name provided is already registered.");
+void LogManager::shutdown() {
+    registeredLoggers.reset();
+}
 
-    registeredLoggers[categoryName] = std::move(logger);
-    registeredLoggers[categoryName]->set_pattern(defaultPattern.data());
-    registeredLoggers[categoryName]->set_formatter(LevelFormatter::createFormatter());
-    registeredLoggers[categoryName]->set_level(spdlog::level::trace);
+void LogManager::registerLogger(std::string_view const& categoryName, std::shared_ptr<Logger> logger) {
+    pxAssert(registeredLoggers.has_value());
+    
+    auto const foundLogger{registeredLoggers->find(categoryName)};
+    pxAssertMsgf(foundLogger == registeredLoggers->end(), "Logger with name provided is already registered.");
+
+    (*registeredLoggers)[categoryName] = std::move(logger);
+    (*registeredLoggers)[categoryName]->set_pattern(defaultPattern.data());
+    (*registeredLoggers)[categoryName]->set_formatter(LevelFormatter::createFormatter());
+    (*registeredLoggers)[categoryName]->set_level(spdlog::level::trace);
 }
 
 void LogManager::registerOutputLogSinkMt(SharedPtr<OutputLogSinkMT> const& outputLogSinkMt) {
-    for (auto& logger : std::views::values(registeredLoggers)) {
+    pxAssert(registeredLoggers.has_value());
+    
+    for (auto& logger : std::views::values(*registeredLoggers)) {
         logger->sinks().emplace_back(outputLogSinkMt);
         outputLogSinkMt->set_pattern(defaultPattern.data());
         outputLogSinkMt->set_formatter(LevelFormatter::createFormatter());
@@ -74,9 +83,15 @@ void LogManager::registerOutputLogSinkMt(SharedPtr<OutputLogSinkMT> const& outpu
     }
 }
 
+bool LogManager::isReady() {
+    return registeredLoggers.has_value();
+}
+
 Logger& LogManager::getLogger(std::string_view const& categoryName) {
-    auto const foundLogger{registeredLoggers.find(categoryName)};
-    pxAssertMsgf(foundLogger != registeredLoggers.end(), "Logger with provided name was not registered.");
+    pxAssert(registeredLoggers.has_value());
+    
+    auto const foundLogger{registeredLoggers->find(categoryName)};
+    pxAssertMsgf(foundLogger != registeredLoggers->end(), "Logger with provided name was not registered.");
 
     return *foundLogger->second;
 }
