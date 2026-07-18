@@ -8,6 +8,7 @@
 namespace px {
 
 #define HEAP_ALLOCATOR_STATS WITH_EDITOR
+#define HEAP_ALLOCATOR_TRACKING_STACKS WITH_EDITOR
 
 constexpr size_t defaultHeapSize{256_MiB};
 

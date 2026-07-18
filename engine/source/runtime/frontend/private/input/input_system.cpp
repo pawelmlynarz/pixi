@@ -13,8 +13,8 @@
 
 namespace px {
 
-InputSystem::InputSystem(SharedRef<PlatformApplication> owningApplication)
-    : owningApplication_(std::move(owningApplication)) {
+InputSystem::InputSystem(SharedPtr<PlatformApplication> const& owningApplication)
+    : owningApplication_(owningApplication) {
 }
 
 bool InputSystem::onKeyChar(uint32 character, bool isRepeat) {
@@ -101,7 +101,7 @@ bool InputSystem::processMouseMovedEvent(PointerEvent const& MouseEvent) {
 }
 
 void InputSystem::onWindowClose(SharedRef<PlatformWindow> const& platformWindow) {
-    owningApplication_->closeWindow(platformWindow);
+    owningApplication_.lock()->closeWindow(platformWindow);
 }
 
 void InputSystem::onWindowResized(SharedRef<PlatformWindow> const& platformWindow, uint16 width, uint16 height, [[maybe_unused]] bool wasMinimized) {

@@ -7,6 +7,7 @@
 #include <vector>
 #include <variant>
 #include <array>
+#include <ranges>
 #include <bit>
 #include <memory>
 #include <optional>
@@ -14,6 +15,7 @@
 #include <span>
 #include <utility>
 #include <unordered_map>
+#include <unordered_set>
 #include <type_traits>
 #include <filesystem>
 #include <fstream>

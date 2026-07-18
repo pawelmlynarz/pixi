@@ -18,7 +18,7 @@ class PlatformApplication;
  */
 class InputSystem final : NonCopyableNonMovable, public IGenericApplicationMessageHandler {
   public:
-    PXENGINE_API InputSystem(SharedRef<PlatformApplication> owningApplication);
+    PXENGINE_API InputSystem(SharedPtr<PlatformApplication> const& owningApplication);
 
     bool onKeyChar(uint32 character, bool isRepeat) override;
     bool processKeyCharEvent(CharacterEvent const& charEvent);
@@ -42,7 +42,7 @@ class InputSystem final : NonCopyableNonMovable, public IGenericApplicationMessa
     void onWindowResized(SharedRef<PlatformWindow> const& platformWindow, uint16 width, uint16 height, bool wasMinimized) override;
 
   private:
-    SharedRef<PlatformApplication> owningApplication_;
+    WeakPtr<PlatformApplication> owningApplication_;
 };
 
 } // namespace px

@@ -9,33 +9,45 @@
 #include "memory/mallocator.h"
 #include "memory/heap_allocator.h"
 
+namespace {
+
+px::LockingAllocator* sHeapAllocator{nullptr};
+
+} // namespace
+
 #ifdef __clang__
 
-int __cdecl preStaticsInitStartup() __attribute__((constructor(101)));
+int __cdecl preStaticsInit() __attribute__((constructor(101)));
 
 #elifdef _MSC_VER
 
-int __cdecl preStaticsInitStartup();
+int __cdecl preStaticsInit();
 
 #pragma section(".CRT$XIU", read)
-extern "C" __declspec(allocate(".CRT$XIU")) int(__cdecl* _initAllocators)() = preStaticsInitStartup;
+extern "C" __declspec(allocate(".CRT$XIU")) int(__cdecl* _initAllocators)() = preStaticsInit;
 
 #endif
 
-int __cdecl preStaticsInitStartup() {
+void __cdecl postStaticsDestructed();
+
+int __cdecl preStaticsInit() {
     using namespace px;
 
-    Memory::setDefaultAllocator(getDefaultAllocator<Mallocator>());
+    Memory::setDefaultAllocator(getDefaultInstance<Mallocator>());
+    Memory::setDebugAllocator(getDefaultInstance<Mallocator>());
 
     Allocator* const heapAllocator{createHeapAllocator(defaultHeapSize)};
 
-    // Locking allocator takes responsibility for destroying the heap, let's make it
-    // static for calling destructor as we don't have an exit point.
-    static LockingAllocator sLockingAllocator(heapAllocator);
+    std::atexit(postStaticsDestructed);
+    sHeapAllocator = new LockingAllocator(heapAllocator);
 
-    Memory::setDefaultAllocator(sLockingAllocator);
+    Memory::setDefaultAllocator(*sHeapAllocator);
 
     return 0;
+}
+
+void __cdecl postStaticsDestructed() {
+    delete sHeapAllocator;
 }
 
 #endif

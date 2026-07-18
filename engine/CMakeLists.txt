@@ -31,6 +31,8 @@ if (TARGET_PLATFORM STREQUAL "Windows")
     list(APPEND PX_ENGINE_COMPILE_DEFINITIONS PLATFORM_WINDOWS)
 endif ()
 
+set(NEW_DELETE_GLUE ${ENGINE_ROOT}/source/runtime/core/private/memory/new.cpp)
+
 #
 # Engine Target
 set(ENGINE_MODULE_NAME Engine)
@@ -76,6 +78,7 @@ target_link_libraries(${ENGINE_ED_TARGET_NAME}
         PRIVATE
         px::Engine
 )
+target_sources(${ENGINE_ED_TARGET_NAME} PRIVATE ${NEW_DELETE_GLUE})
 
 px_set_engine_editor_target_properties(${ENGINE_ED_TARGET_NAME})
 
@@ -97,6 +100,8 @@ set(ENGINE_LAUNCH_TARGET_NAME px${ENGINE_LAUNCH_MODULE_NAME})
 # Library (static only)
 add_library(${ENGINE_LAUNCH_TARGET_NAME} STATIC "")
 add_library(px::EngineLaunch ALIAS ${ENGINE_LAUNCH_TARGET_NAME})
+
+target_sources(${ENGINE_LAUNCH_TARGET_NAME} PRIVATE ${NEW_DELETE_GLUE})
 
 # --------------------------------------------------
 # Module(s) Subdirectories

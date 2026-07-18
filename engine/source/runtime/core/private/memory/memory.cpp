@@ -6,7 +6,6 @@
 #include "tools/misc.h"
 
 #include <memory>
-#include <bit>
 
 namespace px {
 
@@ -14,6 +13,7 @@ namespace {
 
 thread_local Allocator* currentAllocator{nullptr};
 Allocator* defaultAllocator{nullptr};
+Allocator* debugAllocator{nullptr};
 
 inline void setCurrentAllocator(Allocator* newAllocator) {
     currentAllocator = newAllocator;
@@ -86,6 +86,14 @@ Allocator& Memory::getDefaultAllocator() {
 void Memory::setDefaultAllocator(Allocator& allocator) {
     defaultAllocator = &allocator;
     setCurrentAllocator(defaultAllocator);
+}
+
+Allocator& Memory::getDebugAllocator() {
+    return *debugAllocator;
+}
+
+void Memory::setDebugAllocator(Allocator& allocator) {
+    debugAllocator = &allocator;
 }
 
 Allocator& Memory::getCurrent() {

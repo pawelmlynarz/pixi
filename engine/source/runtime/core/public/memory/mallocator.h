@@ -9,6 +9,6 @@ namespace px {
 class Mallocator;
 
 template <>
-PXENGINE_API Allocator& getDefaultAllocator<Mallocator>();
+PXENGINE_API Allocator& getDefaultInstance<Mallocator>();
 
 } // namespace px

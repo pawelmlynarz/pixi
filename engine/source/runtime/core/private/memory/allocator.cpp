@@ -12,7 +12,7 @@ LockingAllocator::LockingAllocator(Allocator* allocator)
 }
 
 LockingAllocator::~LockingAllocator() {
-    Memory::setDefaultAllocator(getDefaultAllocator<Mallocator>());
+    Memory::setDefaultAllocator(getDefaultInstance<Mallocator>());
     delete allocator_;
 }
 

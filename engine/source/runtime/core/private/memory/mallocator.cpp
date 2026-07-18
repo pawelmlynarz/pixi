@@ -1,6 +1,7 @@
 // © 2026 Pawel Mlynarz
 
 #include "memory/mallocator.h"
+#include "common/types.h"
 
 namespace px {
 
@@ -13,23 +14,25 @@ class Mallocator final : public Allocator {
 };
 
 void* Mallocator::alloc(size_t const size) {
-    return ::malloc(size);
+    return _aligned_malloc(size, alignof(std::max_align_t));
 }
 
 void Mallocator::free(void* const addr) {
-    ::free(addr);
+    _aligned_free(addr);
 }
 
 void* Mallocator::allocAligned(size_t const size, size_t const align) {
-    return ::_aligned_malloc(size, align);
+    pxAssert(isPowerOfTwo(align));
+
+    return _aligned_malloc(size, std::max(align, sDefaultAlign));
 }
 
 void* Mallocator::realloc(void* const addr, size_t const size, bool /*preserve*/) {
-    return ::realloc(addr, size);
+    return _aligned_realloc(addr, size, alignof(std::max_align_t));
 }
 
 template <>
-Allocator& getDefaultAllocator<Mallocator>() {
+Allocator& getDefaultInstance<Mallocator>() {
     static Mallocator defaultInstance;
     return defaultInstance;
 }

@@ -15,6 +15,7 @@ Checks: >
   -bugprone-throwing-static-initialization,
   -bugprone-suspicious-stringview-data-usage,
   -bugprone-exception-escape,
+  -bugprone-unchecked-optional-access,
   -cppcoreguidelines-avoid-magic-numbers,
   -cppcoreguidelines-avoid-non-const-global-variables,
   -cppcoreguidelines-macro-usage,
