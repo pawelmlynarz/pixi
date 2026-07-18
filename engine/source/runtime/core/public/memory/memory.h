@@ -27,6 +27,12 @@ struct PXENGINE_API Memory {
     // Set the default allocator.
     static void setDefaultAllocator(Allocator& allocator);
 
+    // Get the debug allocator.
+    static Allocator& getDebugAllocator();
+
+    // Set the debug allocator.
+    static void setDebugAllocator(Allocator& allocator);
+
     // Get the current allocator.
     static Allocator& getCurrent();
 

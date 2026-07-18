@@ -16,4 +16,6 @@ using int16 = std::int16_t;
 using int32 = std::int32_t;
 using int64 = std::int64_t;
 
+constexpr size_t sDefaultAlign{4};
+
 } // namespace px

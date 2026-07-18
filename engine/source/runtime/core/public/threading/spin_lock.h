@@ -20,7 +20,7 @@ class PXENGINE_API SpinLock {
     };
 
     PX_NONCOPYABLE_NONMOVABLE(SpinLock);
-    
+
     SpinLock() noexcept = default;
     ~SpinLock() {
         pxAssert(lock_.load(std::memory_order_acquire) == Unlocked);

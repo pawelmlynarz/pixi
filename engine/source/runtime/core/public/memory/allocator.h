@@ -28,12 +28,12 @@ struct PXENGINE_API Allocator {
     virtual void free(void* addr) = 0;
     virtual void* allocAligned(size_t size, size_t align) = 0;
     virtual void* realloc(void* addr, size_t size, bool preserve = true) = 0;
-    
+
     virtual void checkCorruption() {}
 };
 
 template <typename AllocatorT>
-Allocator& getDefaultAllocator() = delete;
+Allocator& getDefaultInstance() = delete;
 
 class PXENGINE_API LockingAllocator final : public Allocator {
   public:

@@ -37,7 +37,7 @@ struct LogManager {
     static constexpr ELogVerbosity sGlobalLogLevel{ELogVerbosity::Trace};
 
     static PXENGINE_API void initialize();
-    
+
     static PXENGINE_API void shutdown();
 
     static PXENGINE_API void registerLogger(std::string_view const& categoryName, SharedPtr<Logger> logger);
@@ -45,12 +45,12 @@ struct LogManager {
     static PXENGINE_API Logger& getLogger(std::string_view const& categoryName);
 
     static PXENGINE_API void registerOutputLogSinkMt(SharedPtr<OutputLogSinkMT> const& outputLogSinkMt);
-    
+
     static PXENGINE_API bool isReady();
 };
 
 template <ELogVerbosity Verbosity, typename... TArgs>
-void logImpl(std::string_view const category, TArgs&&... args) {
+void logImpl(std::string_view const category, spdlog::format_string_t<TArgs...> const& fmt, TArgs&&... args) {
     if constexpr (Verbosity >= LogManager::sGlobalLogLevel) {
         if (!LogManager::isReady()) {
             return;
@@ -58,13 +58,13 @@ void logImpl(std::string_view const category, TArgs&&... args) {
         auto& logger{LogManager::getLogger(category)};
 
         if constexpr (Verbosity == ELogVerbosity::Trace) {
-            logger.trace(std::forward<TArgs>(args)...);
+            logger.trace(fmt, std::forward<TArgs>(args)...);
         } else if constexpr (Verbosity == ELogVerbosity::Info) {
-            logger.info(std::forward<TArgs>(args)...);
+            logger.info(fmt, std::forward<TArgs>(args)...);
         } else if constexpr (Verbosity == ELogVerbosity::Warning) {
-            logger.warn(std::forward<TArgs>(args)...);
+            logger.warn(fmt, std::forward<TArgs>(args)...);
         } else if constexpr (Verbosity == ELogVerbosity::Error) {
-            logger.error(std::forward<TArgs>(args)...);
+            logger.error(fmt, std::forward<TArgs>(args)...);
         } else {
             static_assert(false, "Requested verbosity currently disabled.");
         }

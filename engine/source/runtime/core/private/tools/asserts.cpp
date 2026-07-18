@@ -21,7 +21,7 @@ bool execEnsureCheck(bool const bAlways, std::atomic_bool& bExecuted, [[maybe_un
 #if PLATFORM_WINDOWS
         OutputDebugStringA(msg.c_str());
 #endif
-        pxLog(Core, Error, msg.c_str());
+        pxLog(Core, Error, "{}", msg.c_str());
 
         return IsDebuggerPresent(); // Proceed to DEBUG_BREAK
     }
@@ -35,7 +35,7 @@ PXENGINE_API bool execAssertCheck(std::string const& translationUnitInfo, std::s
 #if PLATFORM_WINDOWS
     OutputDebugStringA(msg.c_str());
 #endif
-    pxLog(Core, Error, msg.c_str());
+    pxLog(Core, Error, "{}", msg.c_str());
 
     return true; // Proceed to Abort
 }

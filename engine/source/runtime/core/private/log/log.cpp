@@ -62,7 +62,7 @@ void LogManager::shutdown() {
 
 void LogManager::registerLogger(std::string_view const& categoryName, std::shared_ptr<Logger> logger) {
     pxAssert(registeredLoggers.has_value());
-    
+
     auto const foundLogger{registeredLoggers->find(categoryName)};
     pxAssertMsgf(foundLogger == registeredLoggers->end(), "Logger with name provided is already registered.");
 
@@ -74,7 +74,7 @@ void LogManager::registerLogger(std::string_view const& categoryName, std::share
 
 void LogManager::registerOutputLogSinkMt(SharedPtr<OutputLogSinkMT> const& outputLogSinkMt) {
     pxAssert(registeredLoggers.has_value());
-    
+
     for (auto& logger : std::views::values(*registeredLoggers)) {
         logger->sinks().emplace_back(outputLogSinkMt);
         outputLogSinkMt->set_pattern(defaultPattern.data());
@@ -89,7 +89,7 @@ bool LogManager::isReady() {
 
 Logger& LogManager::getLogger(std::string_view const& categoryName) {
     pxAssert(registeredLoggers.has_value());
-    
+
     auto const foundLogger{registeredLoggers->find(categoryName)};
     pxAssertMsgf(foundLogger != registeredLoggers->end(), "Logger with provided name was not registered.");
 

@@ -7,7 +7,7 @@
 #include "platform/generic_platform/generic_application.h"
 #include "platform/generic_platform/generic_window.h"
 #include "hal/platform_application_misc.h"
-
+#pragma optimize("", off)
 namespace px {
 
 SharedPtr<SimpleApplication> SimpleApplication::applicationInstance{nullptr};
@@ -36,7 +36,7 @@ SharedRef<PlatformWindow> createPlatformWindow(SharedRef<Window> const& window, 
 SimpleApplication::SimpleApplication(SharedRef<PlatformApplication> const& platformApplication)
     : platformApplication_(platformApplication) {
     platformApplication_->initialize();
-    platformApplication_->setMessageHandler(makeShared<InputSystem>(platformApplication_));
+    platformApplication_->setMessageHandler(makeShared<InputSystem>(platformApplication_.toPtr()));
 }
 
 SimpleApplication::~SimpleApplication() = default;
@@ -96,3 +96,4 @@ void SimpleApplication::drawWindows() const {
 }
 
 } // namespace px
+#pragma optimize("", on)
