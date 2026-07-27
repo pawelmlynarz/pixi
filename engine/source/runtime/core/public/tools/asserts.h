@@ -83,11 +83,11 @@ PXENGINE_API bool execAssertCheck(std::string const& translationUnitInfo, std::s
     PX_ENSURE_IMPL(false, expr, std::format(fmt, __VA_ARGS__))
 
 #define pxEnsureAlwaysMsgf(expr, fmt, ...) \
-    PX_ENSURE_IMPL(true, expr, fmt, __VA_ARGS__)
+    PX_ENSURE_IMPL(true, expr, std::format(fmt, __VA_ARGS__))
 
 #define pxEnsureReturnIfFalse(condition, ...) \
     if (!(condition)) {                     \
-        Ensure(false);                      \
+        pxEnsure(false);                    \
         return __VA_OPT__(__VA_ARGS__);     \
     }
 
@@ -98,7 +98,7 @@ PXENGINE_API bool execAssertCheck(std::string const& translationUnitInfo, std::s
 
 #define pxEnsureContinueIfFalse(condition) \
     if (!(condition)) {                  \
-        Ensure(false);                   \
+        pxEnsure(false);                 \
         continue;                        \
     }
 

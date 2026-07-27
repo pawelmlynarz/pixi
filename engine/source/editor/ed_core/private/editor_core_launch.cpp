@@ -54,7 +54,7 @@ int32 editorInit() {
 
 void editorExit() {
     if (editorMainFrameWindow) {
-        editorMainFrameWindow->destoryNativeWindow();
+        editorMainFrameWindow->destroyNativeWindow();
         editorMainFrameWindow.reset();
     }
 }

@@ -12,7 +12,7 @@ bool BaseApplication::initializeRenderer(SharedPtr<BaseRenderer> renderer) {
     return Renderer_->initialize();
 }
 
-void BaseApplication::destoryRenderer() {
+void BaseApplication::destroyRenderer() {
     if (Renderer_) {
         Renderer_->shutdown();
     }

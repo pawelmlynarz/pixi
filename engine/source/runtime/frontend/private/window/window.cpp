@@ -46,18 +46,18 @@ void Window::renderFrameInternal() {
     uint32_t const QueuedFrameIndex{frameIdx_ % C.getQueuedFrameNum()};
     RHIQueuedFrame const& QueuedFrame{C.getQueuedFrames()[QueuedFrameIndex]};
 
-    uint32_t const RecycledSemaphoreIndex{frameIdx_ % static_cast<uint32_t>(RHISwapChain->SwapChainTexturesRHI.size())};
-    nri::Fence* SwapChainAcquireSemaphore{RHISwapChain->SwapChainTexturesRHI[RecycledSemaphoreIndex].AcquireSemaphore};
+    uint32_t const RecycledSemaphoreIndex{frameIdx_ % static_cast<uint32_t>(RHISwapChain->swapChainTexturesRhi.size())};
+    nri::Fence* SwapChainAcquireSemaphore{RHISwapChain->swapChainTexturesRhi[RecycledSemaphoreIndex].acquireSemaphore};
 
     uint32_t CurrentSwapChainTextureIndex{0};
-    RHI.AcquireNextTexture(*RHISwapChain->SwapChain, *SwapChainAcquireSemaphore, CurrentSwapChainTextureIndex);
-    RHISwapChainTexture const& SwapChainTexture{RHISwapChain->SwapChainTexturesRHI[CurrentSwapChainTextureIndex]};
+    RHI.AcquireNextTexture(*RHISwapChain->swapChain, *SwapChainAcquireSemaphore, CurrentSwapChainTextureIndex);
+    RHISwapChainTexture const& SwapChainTexture{RHISwapChain->swapChainTexturesRhi[CurrentSwapChainTextureIndex]};
 
     nri::CommandBuffer* CommandBuffer{QueuedFrame.CommandBuffer};
     RHI.BeginCommandBuffer(*CommandBuffer, C.getDescriptorPool());
     {
         nri::TextureBarrierDesc TextureBarriers{};
-        TextureBarriers.texture = SwapChainTexture.Texture;
+        TextureBarriers.texture = SwapChainTexture.texture;
         TextureBarriers.after = {.access = nri::AccessBits::COLOR_ATTACHMENT, .layout = nri::Layout::COLOR_ATTACHMENT};
 
         nri::BarrierDesc BarrierDesc{};
@@ -67,7 +67,7 @@ void Window::renderFrameInternal() {
         RHI.CmdBarrier(*CommandBuffer, BarrierDesc);
 
         nri::AttachmentDesc ColorAttachmentDesc{};
-        ColorAttachmentDesc.descriptor = SwapChainTexture.ColorAttachment;
+        ColorAttachmentDesc.descriptor = SwapChainTexture.colorAttachment;
 
         nri::RenderingDesc RenderingDesc{};
         RenderingDesc.colorNum = 1;
@@ -91,7 +91,7 @@ void Window::renderFrameInternal() {
 
         RHI.CmdBeginRendering(*CommandBuffer, RenderingDesc);
         {
-            R.getImGuiRenderer().cmdDrawImgui(*CommandBuffer, SwapChainTexture.AttachmentFormat, 1.0f, true);
+            R.getImGuiRenderer().cmdDrawImgui(*CommandBuffer, SwapChainTexture.attachmentFormat, 1.0f, true);
         }
         RHI.CmdEndRendering(*CommandBuffer);
 #endif
@@ -109,7 +109,7 @@ void Window::renderFrameInternal() {
         TextureAcquiredFence.stages = nri::StageBits::COLOR_ATTACHMENT;
 
         nri::FenceSubmitDesc RenderingFinishedFence{};
-        RenderingFinishedFence.fence = SwapChainTexture.ReleaseSemaphore;
+        RenderingFinishedFence.fence = SwapChainTexture.releaseSemaphore;
 
         nri::QueueSubmitDesc QueueSubmitDesc{};
         QueueSubmitDesc.waitFences = &TextureAcquiredFence;
@@ -123,7 +123,7 @@ void Window::renderFrameInternal() {
     }
     RHI.EndStreamerFrame(*C.getStreamer());
 
-    RHI.QueuePresent(*RHISwapChain->SwapChain, *SwapChainTexture.ReleaseSemaphore);
+    RHI.QueuePresent(*RHISwapChain->swapChain, *SwapChainTexture.releaseSemaphore);
 
     {
         nri::FenceSubmitDesc SignalFence{};
@@ -165,7 +165,7 @@ void Window::hideWindow() {
     }
 }
 
-void Window::destoryNativeWindow() {
+void Window::destroyNativeWindow() {
     if (SharedPtr const window{nativeWindow_.lock()}) {
         window->destroyWindow();
     }

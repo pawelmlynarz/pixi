@@ -13,11 +13,11 @@ namespace px {
 class RHIContext;
 
 struct RHISwapChainTexture {
-    nri::Fence* AcquireSemaphore{nullptr};
-    nri::Fence* ReleaseSemaphore{nullptr};
-    nri::Texture* Texture{nullptr};
-    nri::Descriptor* ColorAttachment{nullptr};
-    nri::Format AttachmentFormat{nri::Format::UNKNOWN};
+    nri::Fence* acquireSemaphore{nullptr};
+    nri::Fence* releaseSemaphore{nullptr};
+    nri::Texture* texture{nullptr};
+    nri::Descriptor* colorAttachment{nullptr};
+    nri::Format attachmentFormat{nri::Format::UNKNOWN};
 };
 
 struct RHISwapChain {
@@ -25,9 +25,9 @@ struct RHISwapChain {
 
     void destroy();
 
-    nri::SwapChain* SwapChain{nullptr};
-    nri::Format SwapChainFormat{nri::Format::UNKNOWN};
-    std::vector<RHISwapChainTexture> SwapChainTexturesRHI;
+    nri::SwapChain* swapChain{nullptr};
+    nri::Format swapChainFormat{nri::Format::UNKNOWN};
+    std::vector<RHISwapChainTexture> swapChainTexturesRhi;
 
   private:
     RHIContext& rhiContext_;

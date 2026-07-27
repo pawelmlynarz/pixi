@@ -38,7 +38,7 @@ class BaseApplication : NonCopyableNonMovable {
     /**
      * Destroys the renderer.
      */
-    PXENGINE_API void destoryRenderer();
+    PXENGINE_API void destroyRenderer();
 
     /**
      * Gets the renderer being used to draw this application.

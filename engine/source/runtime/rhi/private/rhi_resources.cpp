@@ -40,14 +40,14 @@ RHISwapChain::RHISwapChain(RHIContext& context, nri::Window const& window, uint1
         .queuedFrameNum = px::RHIContext::getQueuedFrameNum()
     };
 
-    RHI_ABORT_ON_FAILURE(rhiContext_.getRhi().CreateSwapChain(*device, swapChainDesc, SwapChain))
+    RHI_ABORT_ON_FAILURE(rhiContext_.getRhi().CreateSwapChain(*device, swapChainDesc, swapChain))
 
     uint32_t swapChainTextureNum{0};
-    nri::Texture* const* swapChainTextures{rhi.GetSwapChainTextures(*SwapChain, swapChainTextureNum)};
-    SwapChainFormat = rhi.GetTextureDesc(*swapChainTextures[0]).format;
+    nri::Texture* const* swapChainTextures{rhi.GetSwapChainTextures(*swapChain, swapChainTextureNum)};
+    swapChainFormat = rhi.GetTextureDesc(*swapChainTextures[0]).format;
 
     for (uint32_t idx{0}; idx < swapChainTextureNum; ++idx) {
-        nri::TextureViewDesc const textureViewDesc{.texture = swapChainTextures[idx], .type = nri::TextureView::COLOR_ATTACHMENT, .format = SwapChainFormat};
+        nri::TextureViewDesc const textureViewDesc{.texture = swapChainTextures[idx], .type = nri::TextureView::COLOR_ATTACHMENT, .format = swapChainFormat};
 
         nri::Descriptor* colorAttachment{nullptr};
         RHI_ABORT_ON_FAILURE(rhi.CreateTextureView(textureViewDesc, colorAttachment))
@@ -59,13 +59,13 @@ RHISwapChain::RHISwapChain(RHIContext& context, nri::Window const& window, uint1
         RHI_ABORT_ON_FAILURE(rhi.CreateFence(*device, nri::SWAPCHAIN_SEMAPHORE, releaseSemaphore))
 
         RHISwapChainTexture const texture{
-            .AcquireSemaphore = acquireSemaphore,
-            .ReleaseSemaphore = releaseSemaphore,
-            .Texture = swapChainTextures[idx],
-            .ColorAttachment = colorAttachment,
-            .AttachmentFormat = SwapChainFormat
+            .acquireSemaphore = acquireSemaphore,
+            .releaseSemaphore = releaseSemaphore,
+            .texture = swapChainTextures[idx],
+            .colorAttachment = colorAttachment,
+            .attachmentFormat = swapChainFormat
         };
-        SwapChainTexturesRHI.emplace_back(texture);
+        swapChainTexturesRhi.emplace_back(texture);
     }
 }
 
@@ -73,15 +73,15 @@ void RHISwapChain::destroy() {
     RHIInterface const& rhi{rhiContext_.getRhi()};
     rhi.DeviceWaitIdle(rhiContext_.getDevice());
 
-    for (RHISwapChainTexture const& swapChainTexture : SwapChainTexturesRHI) {
-        rhi.DestroyFence(swapChainTexture.AcquireSemaphore);
-        rhi.DestroyFence(swapChainTexture.ReleaseSemaphore);
-        rhi.DestroyDescriptor(swapChainTexture.ColorAttachment);
+    for (RHISwapChainTexture const& swapChainTexture : swapChainTexturesRhi) {
+        rhi.DestroyFence(swapChainTexture.acquireSemaphore);
+        rhi.DestroyFence(swapChainTexture.releaseSemaphore);
+        rhi.DestroyDescriptor(swapChainTexture.colorAttachment);
     }
 
-    if (SwapChain) {
-        rhi.DestroySwapChain(SwapChain);
-        SwapChain = nullptr;
+    if (swapChain) {
+        rhi.DestroySwapChain(swapChain);
+        swapChain = nullptr;
     }
 }
 

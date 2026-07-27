@@ -30,9 +30,9 @@ class CallableStaticFunctionWrapper<TRetVal(TArgs...)> final : public CallableWr
     explicit CallableStaticFunctionWrapper(TRetVal (*staticFuncPtr)(TArgs...)) noexcept
         : staticFuncPtr_(staticFuncPtr) {}
 
-    void Execute(TArgs&&... args) override {
+    void execute(TArgs&&... args) override {
         if (staticFuncPtr_) {
-            m_StaticFuncPtr(std::forward<TArgs>(args)...);
+            staticFuncPtr_(std::forward<TArgs>(args)...);
         }
     }
 };
@@ -114,10 +114,10 @@ class Delegate<TRetVal(TArgs...)> {
     }
 
     void bindStatic(TRetVal (*staticFuncPtr)(TArgs...)) {
-        callableWrapper_ = MakeUnique<CallableStaticFunctionWrapper<TRetVal(TArgs...)>>(staticFuncPtr);
+        callableWrapper_ = makeUnique<CallableStaticFunctionWrapper<TRetVal(TArgs...)>>(staticFuncPtr);
     }
 
-    Delegate createStatic(TRetVal (*staticFuncPtr)(TArgs...)) {
+    static Delegate createStatic(TRetVal (*staticFuncPtr)(TArgs...)) {
         Delegate<TRetVal(TArgs...)> delegate;
         delegate.bindStatic(staticFuncPtr);
 
@@ -139,7 +139,7 @@ class Delegate<TRetVal(TArgs...)> {
 
     template <typename TClass>
     void bindRaw(TClass* instance, TRetVal (TClass::*classMemFuncConstPtr)(TArgs...) const) {
-        callableWrapper_ = MakeUnique<CallableMethodWrapper<true, TClass, TRetVal(TArgs...)>>(instance, classMemFuncConstPtr);
+        callableWrapper_ = makeUnique<CallableMethodWrapper<true, TClass, TRetVal(TArgs...)>>(instance, classMemFuncConstPtr);
     }
 
     template <typename TClass>
@@ -184,7 +184,7 @@ class MulticastDelegate<TRetVal(TArgs...)> {
   public:
     void addStatic(TRetVal (*staticFuncPtr)(TArgs...)) {
         Delegate<TRetVal(TArgs...)> delegate;
-        delegate.BindStatic(staticFuncPtr);
+        delegate.bindStatic(staticFuncPtr);
 
         delegates_.emplace_back(std::move(delegate));
     }
@@ -192,7 +192,7 @@ class MulticastDelegate<TRetVal(TArgs...)> {
     template <typename TClass>
     void addRaw(TClass* instance, TRetVal (TClass::*classMemFuncPtr)(TArgs...)) {
         Delegate<TRetVal(TArgs...)> delegate;
-        delegate.BindRaw(instance, classMemFuncPtr);
+        delegate.bindRaw(instance, classMemFuncPtr);
 
         delegates_.emplace_back(std::move(delegate));
     }
@@ -200,7 +200,7 @@ class MulticastDelegate<TRetVal(TArgs...)> {
     template <typename TClass>
     void addRaw(TClass* instance, TRetVal (TClass::*classMemFuncConstPtr)(TArgs...) const) {
         Delegate<TRetVal(TArgs...)> delegate;
-        delegate.BindRaw(instance, classMemFuncConstPtr);
+        delegate.bindRaw(instance, classMemFuncConstPtr);
 
         delegates_.emplace_back(std::move(delegate));
     }

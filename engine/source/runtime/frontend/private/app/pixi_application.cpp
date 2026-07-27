@@ -52,7 +52,7 @@ SimpleApplication& SimpleApplication::createApplication(SharedRef<class Platform
 }
 
 void SimpleApplication::shutdownApplication() {
-    applicationInstance->destoryRenderer();
+    applicationInstance->destroyRenderer();
     applicationInstance->platformApplication_->shutdown();
     applicationInstance.reset();
 }

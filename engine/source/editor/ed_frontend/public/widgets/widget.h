@@ -14,6 +14,7 @@ namespace px {
 using ImWidgetId = std::string_view;
 
 constexpr char const* cStr(ImWidgetId const widgetId) {
+    pxAssertMsgf(widgetId.data()[widgetId.size()] == '\0', "ImWidgetId must be backed by a null-terminated string.");
     return widgetId.data();
 }
 

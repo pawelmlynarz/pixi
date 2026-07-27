@@ -59,12 +59,16 @@ void logImpl(std::string_view const category, spdlog::format_string_t<TArgs...> 
 
         if constexpr (Verbosity == ELogVerbosity::Trace) {
             logger.trace(fmt, std::forward<TArgs>(args)...);
+        } else if constexpr (Verbosity == ELogVerbosity::Debug) {
+            logger.debug(fmt, std::forward<TArgs>(args)...);
         } else if constexpr (Verbosity == ELogVerbosity::Info) {
             logger.info(fmt, std::forward<TArgs>(args)...);
         } else if constexpr (Verbosity == ELogVerbosity::Warning) {
             logger.warn(fmt, std::forward<TArgs>(args)...);
         } else if constexpr (Verbosity == ELogVerbosity::Error) {
             logger.error(fmt, std::forward<TArgs>(args)...);
+        } else if constexpr (Verbosity == ELogVerbosity::Critical) {
+            logger.critical(fmt, std::forward<TArgs>(args)...);
         } else {
             static_assert(false, "Requested verbosity currently disabled.");
         }

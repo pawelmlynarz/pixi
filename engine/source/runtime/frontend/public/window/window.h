@@ -42,7 +42,7 @@ class Window : public EnableSharedFromThis<Window> {
 
     PXENGINE_API void setNativeWindow(WeakPtr<PlatformWindow> const& platformWindow);
     PXENGINE_API SharedPtr<PlatformWindow> getNativeWindow() const;
-    PXENGINE_API void destoryNativeWindow();
+    PXENGINE_API void destroyNativeWindow();
 
     PXENGINE_API void showWindow();
     PXENGINE_API void hideWindow();
