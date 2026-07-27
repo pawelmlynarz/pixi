@@ -1,7 +1,7 @@
 // © 2026 Pawel Mlynarz
 
 #include "window/window.h"
-#include "app/base_application.h"
+#include "app/pixi_application.h"
 #include "rendering/renderer.h"
 #include "rendering/imgui_renderer.h"
 #include "platform/generic_platform/generic_window.h"
@@ -37,7 +37,7 @@ void Window::renderFrameInternal() {
     pxToDo("Rewrite");
 
     RHIContext const& C{getRhiContext()};
-    Renderer& R{dynamic_cast<Renderer&>(BaseApplication::get().getRenderer())};
+    Renderer& R{dynamic_cast<Renderer&>(PixiApplication::get().getRenderer())};
     SharedPtr const Viewport{R.getViewportResource(sharedThis(this))};
     SharedPtr const RHISwapChain{Viewport->getSwapChain()};
 
@@ -149,7 +149,7 @@ SharedPtr<PlatformWindow> Window::getNativeWindow() const {
 
 void Window::showWindow() {
     if (!bHasEverBeenShown_) {
-        BaseApplication::get().getRenderer().createViewport(sharedThis(this));
+        PixiApplication::get().getRenderer().createViewport(sharedThis(this));
     }
 
     if (SharedPtr const nativeWindow{nativeWindow_.lock()}; nativeWindow != nullptr) {

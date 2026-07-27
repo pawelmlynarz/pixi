@@ -51,12 +51,10 @@ class PXENGINE_API LockingAllocator final : public Allocator {
     LockingAllocatorLock lock_;
 };
 
-class PXENGINE_API AllocatorScopeOverride {
+class PXENGINE_API AllocatorScopeOverride final : NonCopyableNonMovable {
   public:
     AllocatorScopeOverride(Allocator& allocator);
     ~AllocatorScopeOverride();
-
-    PX_NONCOPYABLE_NONMOVABLE(AllocatorScopeOverride)
 
   private:
     Allocator& oldAllocator_;

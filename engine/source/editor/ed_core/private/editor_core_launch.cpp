@@ -15,7 +15,7 @@ namespace {
 
 struct ImGuiEdHelper {
     static void initImGuiEditorContext() {
-        auto& pxRenderer{dynamic_cast<Renderer&>(SimpleApplication::get().getRenderer())};
+        auto& pxRenderer{dynamic_cast<Renderer&>(PixiApplication::get().getRenderer())};
         ImGui::SetCurrentContext(static_cast<ImGuiContext*>(pxRenderer.getImGuiRenderer().getImguiContext()));
     }
 
@@ -34,7 +34,7 @@ bool createEditorMainFrame() {
         .decorated(true)
         .resizable(true);
 
-    return SimpleApplication::get().addWindow(editorMainFrameWindow, true);
+    return PixiApplication::get().addWindow(editorMainFrameWindow, true);
 }
 
 } // namespace
