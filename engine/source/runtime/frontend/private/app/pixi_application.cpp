@@ -1,7 +1,7 @@
 // © 2026 Pawel Mlynarz
 
 #include "app/pixi_application.h"
-#include "base_renderer.h"
+#include "rendering/renderer.h"
 #include "window/window.h"
 #include "input/input_system.h"
 #include "platform/generic_platform/generic_application.h"
@@ -10,9 +10,9 @@
 
 namespace px {
 
-SharedPtr<PixiApplication> PixiApplication::applicationInstance{nullptr};
-
 namespace {
+
+SharedPtr<PixiApplication> applicationInstance{nullptr};
 
 SharedRef<PlatformWindow> createPlatformWindow(SharedRef<Window> const& window, SharedRef<PlatformApplication> const& platformApplication) {
     PlatformWindowDefinition const windowDefinition{
@@ -60,7 +60,12 @@ bool PixiApplication::isInitialized() {
     return applicationInstance != nullptr;
 }
 
-bool PixiApplication::initializeRenderer(SharedPtr<BaseRenderer> renderer) {
+PixiApplication& PixiApplication::get() {
+    pxAssert(applicationInstance.get() != nullptr);
+    return *applicationInstance;
+}
+
+bool PixiApplication::initializeRenderer(SharedPtr<Renderer> renderer) {
     renderer_ = std::move(renderer);
     return renderer_->initialize();
 }
@@ -72,7 +77,7 @@ void PixiApplication::destroyRenderer() {
     renderer_.reset();
 }
 
-BaseRenderer& PixiApplication::getRenderer() const {
+Renderer& PixiApplication::getRenderer() const {
     pxAssert(renderer_ != nullptr);
     return *renderer_;
 }

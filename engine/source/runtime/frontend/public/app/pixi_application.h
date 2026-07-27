@@ -9,8 +9,8 @@
 
 namespace px {
 
-class BaseRenderer;
 class PlatformApplication;
+class Renderer;
 class PlatformWindow;
 class Window;
 
@@ -34,17 +34,14 @@ class PixiApplication final : NonCopyableNonMovable {
      *
      * @return Reference to the application.
      */
-    static PixiApplication& get() {
-        pxAssert(applicationInstance.get() != nullptr);
-        return *applicationInstance;
-    }
+    static PXENGINE_API PixiApplication& get();
 
     /**
      * Initializes the renderer responsible for drawing all elements in this application.
      *
      * @param renderer The renderer to use.
      */
-    PXENGINE_API bool initializeRenderer(SharedPtr<BaseRenderer> renderer);
+    PXENGINE_API bool initializeRenderer(SharedPtr<Renderer> renderer);
 
     /**
      * Destroys the renderer.
@@ -56,7 +53,7 @@ class PixiApplication final : NonCopyableNonMovable {
      *
      * @return The renderer reference.
      */
-    PXENGINE_API BaseRenderer& getRenderer() const;
+    PXENGINE_API Renderer& getRenderer() const;
 
     PXENGINE_API void tick(float dt);
 
@@ -76,11 +73,8 @@ class PixiApplication final : NonCopyableNonMovable {
     void drawWindows() const;
 
   private:
-    // Holds a pointer to the current application.
-    static PXENGINE_API SharedPtr<PixiApplication> applicationInstance;
-
     SharedRef<PlatformApplication> platformApplication_;
-    SharedPtr<BaseRenderer> renderer_{nullptr};
+    SharedPtr<Renderer> renderer_{nullptr};
 
     std::vector<SharedRef<Window>> windows_;
 };

@@ -37,7 +37,7 @@ void Window::renderFrameInternal() {
     pxToDo("Rewrite");
 
     RHIContext const& C{getRhiContext()};
-    Renderer& R{dynamic_cast<Renderer&>(PixiApplication::get().getRenderer())};
+    Renderer& R{PixiApplication::get().getRenderer()};
     SharedPtr const Viewport{R.getViewportResource(sharedThis(this))};
     SharedPtr const RHISwapChain{Viewport->getSwapChain()};
 

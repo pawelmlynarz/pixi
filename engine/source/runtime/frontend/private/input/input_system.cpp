@@ -105,7 +105,7 @@ void InputSystem::onWindowClose(SharedRef<PlatformWindow> const& platformWindow)
 }
 
 void InputSystem::onWindowResized(SharedRef<PlatformWindow> const& platformWindow, uint16 width, uint16 height, [[maybe_unused]] bool wasMinimized) {
-    Renderer& renderer{dynamic_cast<Renderer&>(PixiApplication::get().getRenderer())};
+    Renderer& renderer{PixiApplication::get().getRenderer()};
 
     // Flush the rendering command queue to ensure that there aren't pending viewport draw commands for the old viewport size.
     renderer.flushCommands();

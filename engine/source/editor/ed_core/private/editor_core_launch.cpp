@@ -15,7 +15,7 @@ namespace {
 
 struct ImGuiEdHelper {
     static void initImGuiEditorContext() {
-        auto& pxRenderer{dynamic_cast<Renderer&>(PixiApplication::get().getRenderer())};
+        auto& pxRenderer{PixiApplication::get().getRenderer()};
         ImGui::SetCurrentContext(static_cast<ImGuiContext*>(pxRenderer.getImGuiRenderer().getImguiContext()));
     }
 
