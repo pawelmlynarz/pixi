@@ -32,7 +32,7 @@ void* Mallocator::realloc(void* const addr, size_t const size, bool /*preserve*/
 }
 
 template <>
-Allocator& getDefaultInstance<Mallocator>() {
+Allocator& getDefaultAllocatorInstance<Mallocator>() {
     static Mallocator defaultInstance;
     return defaultInstance;
 }
