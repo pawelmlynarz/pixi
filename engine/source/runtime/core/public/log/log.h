@@ -36,17 +36,17 @@ using Logger = spdlog::logger;
 struct LogManager {
     static constexpr ELogVerbosity sGlobalLogLevel{ELogVerbosity::Trace};
 
-    static PXENGINE_API void initialize();
+    static PX_ENGINE_API void initialize();
 
-    static PXENGINE_API void shutdown();
+    static PX_ENGINE_API void shutdown();
 
-    static PXENGINE_API void registerLogger(std::string_view const& categoryName, SharedPtr<Logger> logger);
+    static PX_ENGINE_API void registerLogger(std::string_view const& categoryName, SharedPtr<Logger> logger);
 
-    static PXENGINE_API Logger& getLogger(std::string_view const& categoryName);
+    static PX_ENGINE_API Logger& getLogger(std::string_view const& categoryName);
 
-    static PXENGINE_API void registerOutputLogSinkMt(SharedPtr<OutputLogSinkMT> const& outputLogSinkMt);
+    static PX_ENGINE_API void registerOutputLogSinkMt(SharedPtr<OutputLogSinkMT> const& outputLogSinkMt);
 
-    static PXENGINE_API bool isReady();
+    static PX_ENGINE_API bool isReady();
 };
 
 template <ELogVerbosity Verbosity, typename... TArgs>

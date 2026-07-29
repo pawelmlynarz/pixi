@@ -10,7 +10,7 @@ constexpr bool isPowerOfTwo(size_t const value) noexcept {
     return std::has_single_bit(value);
 }
 
-class PXENGINE_API NonCopyable {
+class PX_ENGINE_API NonCopyable {
   protected:
     NonCopyable() = default;
     ~NonCopyable() = default;
@@ -23,7 +23,7 @@ class PXENGINE_API NonCopyable {
     NonCopyable& operator=(NonCopyable&&) = delete;
 };
 
-class PXENGINE_API NonMovable {
+class PX_ENGINE_API NonMovable {
   protected:
     NonMovable() = default;
     ~NonMovable() = default;
@@ -33,7 +33,7 @@ class PXENGINE_API NonMovable {
     NonMovable& operator=(NonMovable&&) = delete;
 };
 
-class PXENGINE_API NonCopyableNonMovable : NonCopyable, NonMovable {
+class PX_ENGINE_API NonCopyableNonMovable : NonCopyable, NonMovable {
   protected:
     NonCopyableNonMovable() = default;
     ~NonCopyableNonMovable() = default;

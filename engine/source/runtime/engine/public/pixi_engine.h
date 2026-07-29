@@ -8,9 +8,9 @@ namespace px {
 
 class PixiEngine {
   public:
-    PXENGINE_API void updateTimeAndHandleMaxTickRate();
-    PXENGINE_API float getDeltaTime() const;
-    PXENGINE_API float getFps() const;
+    PX_ENGINE_API void updateTimeAndHandleMaxTickRate();
+    PX_ENGINE_API float getDeltaTime() const;
+    PX_ENGINE_API float getFps() const;
 
     struct TimingInfo {
         double CurrentRealTime{0.f};
@@ -18,6 +18,6 @@ class PixiEngine {
     } TimingInfo_;
 };
 
-PXENGINE_API PixiEngine& getEngine();
+PX_ENGINE_API PixiEngine& getEngine();
 
 } // namespace px

@@ -24,6 +24,6 @@ class HeapAllocator;
  *
  * @return Pointer to the newly created allocator. Caller takes ownership.
  */
-PXENGINE_API Allocator* createHeapAllocator(size_t heapSize);
+PX_ENGINE_API Allocator* createHeapAllocator(size_t heapSize);
 
 } // namespace px

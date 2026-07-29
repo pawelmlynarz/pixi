@@ -6,7 +6,7 @@
 
 namespace px::ed {
 
-PXENGINE_EDITOR_API int32 editorInit();
-PXENGINE_EDITOR_API void editorExit();
+PX_ENGINE_EDITOR_API int32 editorInit();
+PX_ENGINE_EDITOR_API void editorExit();
 
 } // namespace px::ed

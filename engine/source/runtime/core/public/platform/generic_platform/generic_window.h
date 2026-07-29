@@ -31,10 +31,10 @@ class PlatformWindow : NonCopyableNonMovable, public EnableSharedFromThis<Platfo
 
     virtual GenericOSWindowHandle getOsWindowHandle() const { return GenericOSWindowHandle(nullptr); }
 
-    PXENGINE_API virtual void show() {}
-    PXENGINE_API virtual void hide() {}
-    PXENGINE_API virtual bool isVisible() const { return false; }
-    PXENGINE_API virtual bool isFullscreenSupported() const { return true; }
+    PX_ENGINE_API virtual void show() {}
+    PX_ENGINE_API virtual void hide() {}
+    PX_ENGINE_API virtual bool isVisible() const { return false; }
+    PX_ENGINE_API virtual bool isFullscreenSupported() const { return true; }
 
   protected:
     SharedPtr<PlatformApplication> OwningApplication_{nullptr};

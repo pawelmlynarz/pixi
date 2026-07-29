@@ -20,19 +20,19 @@ class PixiApplication final : NonCopyableNonMovable {
      *
      * @param platformApplication The platform application that owns native windows and message dispatch.
      */
-    PXENGINE_API explicit PixiApplication(SharedRef<class PlatformApplication> const& platformApplication);
+    PX_ENGINE_API explicit PixiApplication(SharedRef<class PlatformApplication> const& platformApplication);
 
     /**
      * Destroys the application.
      */
-    PXENGINE_API ~PixiApplication();
+    PX_ENGINE_API ~PixiApplication();
 
     /**
      * Creates the application singleton, creating a default platform application for the current platform.
      *
      * @return Reference to the newly created application.
      */
-    static PXENGINE_API PixiApplication& createApplication();
+    static PX_ENGINE_API PixiApplication& createApplication();
 
     /**
      * Creates the application singleton around the given platform application.
@@ -41,17 +41,17 @@ class PixiApplication final : NonCopyableNonMovable {
      *
      * @return Reference to the newly created application.
      */
-    static PXENGINE_API PixiApplication& createApplication(SharedRef<PlatformApplication> const& platformApplication);
+    static PX_ENGINE_API PixiApplication& createApplication(SharedRef<PlatformApplication> const& platformApplication);
 
     /**
      * Shuts down and destroys the application singleton.
      */
-    static PXENGINE_API void shutdownApplication();
+    static PX_ENGINE_API void shutdownApplication();
 
     /**
      * @return True if the application singleton has been created.
      */
-    static PXENGINE_API bool isInitialized();
+    static PX_ENGINE_API bool isInitialized();
 
     /**
      * Returns the current instance of the application. The application should have been initialized before
@@ -59,33 +59,33 @@ class PixiApplication final : NonCopyableNonMovable {
      *
      * @return Reference to the application.
      */
-    static PXENGINE_API PixiApplication& get();
+    static PX_ENGINE_API PixiApplication& get();
 
     /**
      * Initializes the renderer responsible for drawing all elements in this application.
      *
      * @param renderer The renderer to use.
      */
-    PXENGINE_API bool initializeRenderer(SharedPtr<class Renderer> renderer);
+    PX_ENGINE_API bool initializeRenderer(SharedPtr<class Renderer> renderer);
 
     /**
      * Destroys the renderer.
      */
-    PXENGINE_API void destroyRenderer();
+    PX_ENGINE_API void destroyRenderer();
 
     /**
      * Gets the renderer being used to draw this application.
      *
      * @return The renderer reference.
      */
-    PXENGINE_API Renderer& getRenderer() const;
+    PX_ENGINE_API Renderer& getRenderer() const;
 
     /**
      * Ticks the application: polls platform messages, ticks the renderer, and draws all windows.
      *
      * @param dt Delta time, in seconds.
      */
-    PXENGINE_API void tick(float dt);
+    PX_ENGINE_API void tick(float dt);
 
     /**
      * Associates a high-level Window with a native window and ensures that it is tracked properly by the application.
@@ -95,7 +95,7 @@ class PixiApplication final : NonCopyableNonMovable {
      *
      * @return True if operation successful.
      */
-    PXENGINE_API bool addWindow(SharedRef<class Window> window, bool bShowImmediately = true);
+    PX_ENGINE_API bool addWindow(SharedRef<class Window> window, bool bShowImmediately = true);
 
     /**
      * Finds the high-level Window associated with a given native platform window.
@@ -104,7 +104,7 @@ class PixiApplication final : NonCopyableNonMovable {
      *
      * @return The associated Window, or nullptr if none is tracked.
      */
-    PXENGINE_API SharedPtr<Window> findWindowByPlatformWindow(SharedRef<class PlatformWindow> const& platformWindow);
+    PX_ENGINE_API SharedPtr<Window> findWindowByPlatformWindow(SharedRef<class PlatformWindow> const& platformWindow);
 
   private:
     void drawWindows() const;

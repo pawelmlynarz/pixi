@@ -8,6 +8,6 @@
 namespace px::ed {
 
 [[nodiscard]]
-PXENGINE_EDITOR_API int32 initializeEditorEngine(SharedPtr<PixiEditorEngine> const& editorEngine);
+PX_ENGINE_EDITOR_API int32 initializeEditorEngine(SharedPtr<PixiEditorEngine> const& editorEngine);
 
 } // namespace px::ed

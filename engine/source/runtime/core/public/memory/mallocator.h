@@ -11,6 +11,6 @@ namespace px {
 class Mallocator;
 
 template <>
-PXENGINE_API Allocator& getDefaultAllocatorInstance<Mallocator>();
+PX_ENGINE_API Allocator& getDefaultAllocatorInstance<Mallocator>();
 
 } // namespace px

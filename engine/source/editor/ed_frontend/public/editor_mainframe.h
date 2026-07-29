@@ -13,8 +13,8 @@ namespace ed {
 
 class EditorMainFrameWindow final : public Window {
   public:
-    PXENGINE_EDITOR_API EditorMainFrameWindow();
-    PXENGINE_EDITOR_API ~EditorMainFrameWindow() override;
+    PX_ENGINE_EDITOR_API EditorMainFrameWindow();
+    PX_ENGINE_EDITOR_API ~EditorMainFrameWindow() override;
 
   protected:
     void drawImGui() override;

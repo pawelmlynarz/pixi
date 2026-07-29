@@ -39,11 +39,11 @@ struct StyleConfig {
 };
 
 struct EdStyle {
-    static PXENGINE_EDITOR_API StyleConfig& getStyle();
+    static PX_ENGINE_EDITOR_API StyleConfig& getStyle();
 
-    static PXENGINE_EDITOR_API ImU32 getColorU32(ImGuiCol idx, float alphaMul = 1.0f);
+    static PX_ENGINE_EDITOR_API ImU32 getColorU32(ImGuiCol idx, float alphaMul = 1.0f);
 
-    static PXENGINE_EDITOR_API void setDefaultStyle();
+    static PX_ENGINE_EDITOR_API void setDefaultStyle();
 };
 
 } // namespace px::ed

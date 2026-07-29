@@ -10,7 +10,7 @@ namespace px {
 /**
  * Abstract allocator interface implemented by every allocator in the engine (heap, malloc-backed, locking, etc.).
  */
-struct PXENGINE_API Allocator {
+struct PX_ENGINE_API Allocator {
     virtual ~Allocator() = default;
 
     /**
@@ -67,7 +67,7 @@ Allocator& getDefaultAllocatorInstance() = delete;
  * RAII scope guard that overrides Memory's current allocator for its lifetime, restoring the previous
  * allocator on destruction.
  */
-class PXENGINE_API AllocatorScopeOverride final : NonCopyableNonMovable {
+class PX_ENGINE_API AllocatorScopeOverride final : NonCopyableNonMovable {
   public:
     AllocatorScopeOverride(Allocator& allocator);
     

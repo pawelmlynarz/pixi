@@ -34,18 +34,19 @@
 
 #ifdef PX_BUILD_SHARED
 #   ifdef PX_BUILD_ENGINE
-#       define PXENGINE_API DLLEXPORT
+#       define PX_ENGINE_API DLLEXPORT
 #   else
-#       define PXENGINE_API DLLIMPORT
+#       define PX_ENGINE_API DLLIMPORT
 #   endif
 
 #   ifdef PX_BUILD_ENGINE_EDITOR
-#       define PXENGINE_EDITOR_API DLLEXPORT
+#       define PX_ENGINE_EDITOR_API DLLEXPORT
 #   else
-#       define PXENGINE_EDITOR_API DLLIMPORT
+#       define PX_ENGINE_EDITOR_API DLLIMPORT
 #   endif
 #else
-#   define PXENGINE_API
+#   define PX_ENGINE_API
+#   define PX_ENGINE_EDITOR_API
 #endif
 
 // clang-format on

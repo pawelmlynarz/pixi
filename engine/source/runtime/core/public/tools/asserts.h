@@ -48,9 +48,9 @@ inline std::string getTranslationUnitInfo(std::source_location const& Loc = std:
     return std::format("In function {} on line {}", Loc.function_name(), Loc.line());
 }
 
-PXENGINE_API bool execEnsureCheck(bool const bAlways, std::atomic_bool& bExecuted, std::string const& translationUnitInfo, std::string const& message = {});
+PX_ENGINE_API bool execEnsureCheck(bool const bAlways, std::atomic_bool& bExecuted, std::string const& translationUnitInfo, std::string const& message = {});
 
-PXENGINE_API bool execAssertCheck(std::string const& translationUnitInfo, std::string const& message = {});
+PX_ENGINE_API bool execAssertCheck(std::string const& translationUnitInfo, std::string const& message = {});
 
 } // namespace px::asserts
 

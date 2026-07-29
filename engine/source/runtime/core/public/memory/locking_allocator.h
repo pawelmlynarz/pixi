@@ -24,7 +24,7 @@ namespace px {
 /**
  * Wraps another allocator and serializes access to it behind a lock, making it safe to call from multiple threads.
  */
-class PXENGINE_API LockingAllocator final : public Allocator {
+class PX_ENGINE_API LockingAllocator final : public Allocator {
   public:
     /**
      * Constructs the locking allocator around another allocator, taking ownership of it.

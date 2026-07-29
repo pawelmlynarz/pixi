@@ -6,7 +6,7 @@
 
 namespace px {
 
-struct PXENGINE_API RenderResource {
+struct PX_ENGINE_API RenderResource {
 };
 
 } // namespace px

@@ -12,7 +12,7 @@ struct Allocator;
  * Engine-wide entry point for all memory allocation. Routes every request to the current allocator
  * (thread-local, see getCurrent()/setCurrent()), which defaults to the default allocator.
  */
-struct PXENGINE_API Memory {
+struct PX_ENGINE_API Memory {
     /**
      * Allocates a block of memory using the current allocator.
      *
