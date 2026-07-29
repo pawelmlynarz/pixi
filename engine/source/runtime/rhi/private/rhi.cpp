@@ -8,7 +8,7 @@ namespace px {
 
 namespace {
 
-UniquePtr<RHIContext> rhiContextInst{nullptr};
+UniquePtr<RHIContext> sRhiContext{nullptr};
 
 nri::GraphicsAPI getBackendForPlatform() {
 #if PLATFORM_WINDOWS
@@ -21,23 +21,23 @@ nri::GraphicsAPI getBackendForPlatform() {
 } // namespace
 
 void initializeRhi() {
-    pxAssert(!rhiContextInst);
-    rhiContextInst = makeUnique<RHIContext>(getBackendForPlatform());
-    rhiContextInst->initialize();
+    pxAssert(!sRhiContext);
+    sRhiContext = makeUnique<RHIContext>(getBackendForPlatform());
+    sRhiContext->initialize();
 }
 
 RHIContext& getRhiContext() {
-    pxAssert(rhiContextInst);
-    return *rhiContextInst;
+    pxAssert(sRhiContext);
+    return *sRhiContext;
 }
 
 void shutdownRhi() {
-    pxAssert(rhiContextInst);
-    rhiContextInst->shutdown();
+    pxAssert(sRhiContext);
+    sRhiContext->shutdown();
 }
 
 nri::GraphicsAPI getBackend() {
-    return rhiContextInst->getBackend();
+    return sRhiContext->getBackend();
 }
 
 } // namespace px

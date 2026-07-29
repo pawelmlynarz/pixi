@@ -11,7 +11,7 @@ namespace px::ed {
 
 namespace {
 
-std::optional<StyleConfig> currentStyle;
+std::optional<StyleConfig> sCurrentStyle;
 
 } // namespace
 
@@ -32,8 +32,8 @@ ImVec4 const& StyleConfig::operator[](int const idx) const {
 }
 
 StyleConfig& EdStyle::getStyle() {
-    pxAssert(currentStyle.has_value());
-    return *currentStyle;
+    pxAssert(sCurrentStyle.has_value());
+    return *sCurrentStyle;
 }
 
 ImU32 EdStyle::getColorU32(ImGuiCol const idx, float const alphaMul) {
@@ -65,7 +65,7 @@ void EdStyle::setDefaultStyle() {
     defaultConfig[PxGuiCol_DashedFrameBorder] = ImVec4{0.627451f, 0.627451f, 0.627451f, 0.7f};
     defaultConfig[PxGuiCol_FrameBorder] = ImVec4{0.427451f, 0.427451f, 0.427451f, 0.55f};
 
-    currentStyle = defaultConfig;
+    sCurrentStyle = defaultConfig;
 }
 
 } // namespace px::ed

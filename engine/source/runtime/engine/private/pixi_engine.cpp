@@ -10,7 +10,7 @@ namespace px {
 
 namespace {
 
-SharedPtr<PixiEngine> pixiEngineInst{nullptr};
+SharedPtr<PixiEngine> sPixiEngine{nullptr};
 
 constexpr double maxTickRate{60.0};
 constexpr double minFrameTime{1.0 / maxTickRate};
@@ -18,17 +18,17 @@ constexpr double minFrameTime{1.0 / maxTickRate};
 } // namespace
 
 int32 initializeEngine(SharedPtr<PixiEngine> const& engine) {
-    pixiEngineInst = engine;
+    sPixiEngine = engine;
     return 0;
 }
 
 void destroyEngine() {
-    pixiEngineInst.reset();
+    sPixiEngine.reset();
 }
 
 PixiEngine& getEngine() {
-    pxAssert(pixiEngineInst != nullptr);
-    return *pixiEngineInst;
+    pxAssert(sPixiEngine != nullptr);
+    return *sPixiEngine;
 }
 
 void PixiEngine::updateTimeAndHandleMaxTickRate() {

@@ -24,23 +24,23 @@ struct ImGuiEdHelper {
     }
 };
 
-SharedPtr<EditorMainFrameWindow> editorMainFrameWindow{nullptr};
+SharedPtr<EditorMainFrameWindow> sEditorMainFrameWindow{nullptr};
 
 bool createEditorMainFrame() {
-    editorMainFrameWindow = makeShared<EditorMainFrameWindow>();
+    sEditorMainFrameWindow = makeShared<EditorMainFrameWindow>();
 
-    editorMainFrameWindow->title("Pixi Editor")
+    sEditorMainFrameWindow->title("Pixi Editor")
         .size({1920, 1080})
         .decorated(true)
         .resizable(true);
 
-    return PixiApplication::get().addWindow(editorMainFrameWindow, true);
+    return PixiApplication::get().addWindow(sEditorMainFrameWindow, true);
 }
 
 } // namespace
 
 int32 editorInit() {
-    pxAssert(!editorMainFrameWindow);
+    pxAssert(!sEditorMainFrameWindow);
 
     if (!createEditorMainFrame()) {
         return -1;
@@ -53,9 +53,9 @@ int32 editorInit() {
 }
 
 void editorExit() {
-    if (editorMainFrameWindow) {
-        editorMainFrameWindow->destroyNativeWindow();
-        editorMainFrameWindow.reset();
+    if (sEditorMainFrameWindow) {
+        sEditorMainFrameWindow->destroyNativeWindow();
+        sEditorMainFrameWindow.reset();
     }
 }
 

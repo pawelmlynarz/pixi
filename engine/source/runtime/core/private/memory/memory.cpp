@@ -11,19 +11,19 @@ namespace px {
 
 namespace {
 
-thread_local Allocator* currentAllocator{nullptr};
-Allocator* defaultAllocator{nullptr};
-Allocator* debugAllocator{nullptr};
+thread_local Allocator* sCurrentAllocator{nullptr};
+Allocator* sDefaultAllocator{nullptr};
+Allocator* sDebugAllocator{nullptr};
 
 inline void setCurrentAllocator(Allocator* newAllocator) {
-    currentAllocator = newAllocator;
+    sCurrentAllocator = newAllocator;
 }
 
 inline Allocator* getCurrentAllocator() {
-    if (!currentAllocator) {
-        currentAllocator = defaultAllocator;
+    if (!sCurrentAllocator) {
+        sCurrentAllocator = sDefaultAllocator;
     }
-    return currentAllocator;
+    return sCurrentAllocator;
 }
 
 } // namespace
@@ -80,20 +80,20 @@ void Memory::free(void* const addr) {
 }
 
 Allocator& Memory::getDefaultAllocator() {
-    return *defaultAllocator;
+    return *sDefaultAllocator;
 }
 
 void Memory::setDefaultAllocator(Allocator& allocator) {
-    defaultAllocator = &allocator;
-    setCurrentAllocator(defaultAllocator);
+    sDefaultAllocator = &allocator;
+    setCurrentAllocator(sDefaultAllocator);
 }
 
 Allocator& Memory::getDebugAllocator() {
-    return *debugAllocator;
+    return *sDebugAllocator;
 }
 
 void Memory::setDebugAllocator(Allocator& allocator) {
-    debugAllocator = &allocator;
+    sDebugAllocator = &allocator;
 }
 
 Allocator& Memory::getCurrent() {

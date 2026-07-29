@@ -13,16 +13,16 @@ double gStartTime{PlatformTime::initialize().asSeconds()};
 
 namespace {
 
-bool bEngineExitRequested{false};
+bool sEngineExitRequested{false};
 
 } // namespace
 
 void requestEngineExit() {
-    bEngineExitRequested = true;
+    sEngineExitRequested = true;
 }
 
 bool isEngineExitRequested() {
-    return bEngineExitRequested;
+    return sEngineExitRequested;
 }
 
 bool isEditor() {

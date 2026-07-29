@@ -8,7 +8,7 @@ namespace px::ed {
 
 namespace {
 
-WeakPtr<PixiEditorEngine> pixiEditorEngineInst;
+WeakPtr<PixiEditorEngine> sPixiEditorEngine;
 
 } // namespace
 
@@ -17,13 +17,13 @@ int32 initializeEditorEngine(SharedPtr<PixiEditorEngine> const& editorEngine) {
     if (result != 0) {
         return result;
     }
-    pixiEditorEngineInst = editorEngine;
+    sPixiEditorEngine = editorEngine;
 
     return 0;
 }
 
 PixiEditorEngine& getEditorEngine() {
-    auto const sharedEditorEngine{pixiEditorEngineInst.lock()};
+    auto const sharedEditorEngine{sPixiEditorEngine.lock()};
     pxAssert(sharedEditorEngine != nullptr);
     return *sharedEditorEngine;
 }

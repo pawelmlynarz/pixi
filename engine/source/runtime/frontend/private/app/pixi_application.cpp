@@ -12,7 +12,7 @@ namespace px {
 
 namespace {
 
-SharedPtr<PixiApplication> applicationInstance{nullptr};
+SharedPtr<PixiApplication> sApplication{nullptr};
 
 SharedRef<PlatformWindow> createPlatformWindow(SharedRef<Window> const& window, SharedRef<PlatformApplication> const& platformApplication) {
     PlatformWindowDefinition const windowDefinition{
@@ -46,23 +46,23 @@ PixiApplication& PixiApplication::createApplication() {
 }
 
 PixiApplication& PixiApplication::createApplication(SharedRef<PlatformApplication> const& platformApplication) {
-    applicationInstance = makeShared<PixiApplication>(platformApplication);
-    return *applicationInstance;
+    sApplication = makeShared<PixiApplication>(platformApplication);
+    return *sApplication;
 }
 
 void PixiApplication::shutdownApplication() {
-    applicationInstance->destroyRenderer();
-    applicationInstance->platformApplication_->shutdown();
-    applicationInstance.reset();
+    sApplication->destroyRenderer();
+    sApplication->platformApplication_->shutdown();
+    sApplication.reset();
 }
 
 bool PixiApplication::isInitialized() {
-    return applicationInstance != nullptr;
+    return sApplication != nullptr;
 }
 
 PixiApplication& PixiApplication::get() {
-    pxAssert(applicationInstance.get() != nullptr);
-    return *applicationInstance;
+    pxAssert(sApplication.get() != nullptr);
+    return *sApplication;
 }
 
 bool PixiApplication::initializeRenderer(SharedPtr<Renderer> renderer) {
