@@ -36,17 +36,17 @@ using Logger = spdlog::logger;
 struct LogManager {
     static constexpr ELogVerbosity sGlobalLogLevel{ELogVerbosity::Trace};
 
-    static PXENGINE_API void initialize();
+    static PX_ENGINE_API void initialize();
 
-    static PXENGINE_API void shutdown();
+    static PX_ENGINE_API void shutdown();
 
-    static PXENGINE_API void registerLogger(std::string_view const& categoryName, SharedPtr<Logger> logger);
+    static PX_ENGINE_API void registerLogger(std::string_view const& categoryName, SharedPtr<Logger> logger);
 
-    static PXENGINE_API Logger& getLogger(std::string_view const& categoryName);
+    static PX_ENGINE_API Logger& getLogger(std::string_view const& categoryName);
 
-    static PXENGINE_API void registerOutputLogSinkMt(SharedPtr<OutputLogSinkMT> const& outputLogSinkMt);
+    static PX_ENGINE_API void registerOutputLogSinkMt(SharedPtr<OutputLogSinkMT> const& outputLogSinkMt);
 
-    static PXENGINE_API bool isReady();
+    static PX_ENGINE_API bool isReady();
 };
 
 template <ELogVerbosity Verbosity, typename... TArgs>
@@ -59,12 +59,16 @@ void logImpl(std::string_view const category, spdlog::format_string_t<TArgs...> 
 
         if constexpr (Verbosity == ELogVerbosity::Trace) {
             logger.trace(fmt, std::forward<TArgs>(args)...);
+        } else if constexpr (Verbosity == ELogVerbosity::Debug) {
+            logger.debug(fmt, std::forward<TArgs>(args)...);
         } else if constexpr (Verbosity == ELogVerbosity::Info) {
             logger.info(fmt, std::forward<TArgs>(args)...);
         } else if constexpr (Verbosity == ELogVerbosity::Warning) {
             logger.warn(fmt, std::forward<TArgs>(args)...);
         } else if constexpr (Verbosity == ELogVerbosity::Error) {
             logger.error(fmt, std::forward<TArgs>(args)...);
+        } else if constexpr (Verbosity == ELogVerbosity::Critical) {
+            logger.critical(fmt, std::forward<TArgs>(args)...);
         } else {
             static_assert(false, "Requested verbosity currently disabled.");
         }

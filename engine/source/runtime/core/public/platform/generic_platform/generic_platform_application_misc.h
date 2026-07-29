@@ -7,7 +7,7 @@
 namespace px {
 
 struct GenericPlatformApplicationMisc {
-    static PXENGINE_API UniquePtr<class PlatformApplication> createApplication();
+    static PX_ENGINE_API UniquePtr<class PlatformApplication> createApplication();
 };
 
 } // namespace px

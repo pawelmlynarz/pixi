@@ -48,9 +48,9 @@ inline std::string getTranslationUnitInfo(std::source_location const& Loc = std:
     return std::format("In function {} on line {}", Loc.function_name(), Loc.line());
 }
 
-PXENGINE_API bool execEnsureCheck(bool const bAlways, std::atomic_bool& bExecuted, std::string const& translationUnitInfo, std::string const& message = {});
+PX_ENGINE_API bool execEnsureCheck(bool const bAlways, std::atomic_bool& bExecuted, std::string const& translationUnitInfo, std::string const& message = {});
 
-PXENGINE_API bool execAssertCheck(std::string const& translationUnitInfo, std::string const& message = {});
+PX_ENGINE_API bool execAssertCheck(std::string const& translationUnitInfo, std::string const& message = {});
 
 } // namespace px::asserts
 
@@ -83,11 +83,11 @@ PXENGINE_API bool execAssertCheck(std::string const& translationUnitInfo, std::s
     PX_ENSURE_IMPL(false, expr, std::format(fmt, __VA_ARGS__))
 
 #define pxEnsureAlwaysMsgf(expr, fmt, ...) \
-    PX_ENSURE_IMPL(true, expr, fmt, __VA_ARGS__)
+    PX_ENSURE_IMPL(true, expr, std::format(fmt, __VA_ARGS__))
 
 #define pxEnsureReturnIfFalse(condition, ...) \
     if (!(condition)) {                     \
-        Ensure(false);                      \
+        pxEnsure(false);                    \
         return __VA_OPT__(__VA_ARGS__);     \
     }
 
@@ -98,7 +98,7 @@ PXENGINE_API bool execAssertCheck(std::string const& translationUnitInfo, std::s
 
 #define pxEnsureContinueIfFalse(condition) \
     if (!(condition)) {                  \
-        Ensure(false);                   \
+        pxEnsure(false);                 \
         continue;                        \
     }
 

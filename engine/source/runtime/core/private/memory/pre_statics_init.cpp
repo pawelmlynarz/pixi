@@ -6,6 +6,7 @@
 
 #include "memory/memory.h"
 #include "memory/allocator.h"
+#include "memory/locking_allocator.h"
 #include "memory/mallocator.h"
 #include "memory/heap_allocator.h"
 
@@ -33,8 +34,8 @@ void __cdecl postStaticsDestructed();
 int __cdecl preStaticsInit() {
     using namespace px;
 
-    Memory::setDefaultAllocator(getDefaultInstance<Mallocator>());
-    Memory::setDebugAllocator(getDefaultInstance<Mallocator>());
+    Memory::setDefaultAllocator(getDefaultAllocatorInstance<Mallocator>());
+    Memory::setDebugAllocator(getDefaultAllocatorInstance<Mallocator>());
 
     Allocator* const heapAllocator{createHeapAllocator(defaultHeapSize)};
 

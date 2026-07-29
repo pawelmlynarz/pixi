@@ -7,7 +7,7 @@
 
 namespace px {
 
-class PXENGINE_API WindowsPlatformTime final : public GenericPlatformTime {
+class PX_ENGINE_API WindowsPlatformTime final : public GenericPlatformTime {
   public:
     static TimePoint initialize() noexcept;
 

@@ -28,7 +28,7 @@ class WindowsApplication final : public PlatformApplication {
 
 struct WindowsApplicationFactory {
     [[nodiscard]]
-    static PXENGINE_API UniquePtr<WindowsApplication> create();
+    static PX_ENGINE_API UniquePtr<WindowsApplication> create();
 };
 
 } // namespace px

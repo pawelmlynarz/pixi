@@ -1,18 +1,18 @@
 // © 2026 Pawel Mlynarz
 
 #include "app/pixi_application.h"
-#include "base_renderer.h"
+#include "rendering/renderer.h"
 #include "window/window.h"
 #include "input/input_system.h"
 #include "platform/generic_platform/generic_application.h"
 #include "platform/generic_platform/generic_window.h"
 #include "hal/platform_application_misc.h"
-#pragma optimize("", off)
+
 namespace px {
 
-SharedPtr<SimpleApplication> SimpleApplication::applicationInstance{nullptr};
-
 namespace {
+
+SharedPtr<PixiApplication> sApplication{nullptr};
 
 SharedRef<PlatformWindow> createPlatformWindow(SharedRef<Window> const& window, SharedRef<PlatformApplication> const& platformApplication) {
     PlatformWindowDefinition const windowDefinition{
@@ -33,45 +33,66 @@ SharedRef<PlatformWindow> createPlatformWindow(SharedRef<Window> const& window, 
 
 } // namespace
 
-SimpleApplication::SimpleApplication(SharedRef<PlatformApplication> const& platformApplication)
+PixiApplication::PixiApplication(SharedRef<PlatformApplication> const& platformApplication)
     : platformApplication_(platformApplication) {
     platformApplication_->initialize();
     platformApplication_->setMessageHandler(makeShared<InputSystem>(platformApplication_.toPtr()));
 }
 
-SimpleApplication::~SimpleApplication() = default;
+PixiApplication::~PixiApplication() = default;
 
-SimpleApplication& SimpleApplication::createApplication() {
+PixiApplication& PixiApplication::createApplication() {
     return createApplication(SharedRef<PlatformApplication>(PlatformApplicationMisc::createApplication()));
 }
 
-SimpleApplication& SimpleApplication::createApplication(SharedRef<class PlatformApplication> const& platformApplication) {
-    applicationInstance = makeShared<SimpleApplication>(platformApplication);
-    baseApplicationInstance = applicationInstance;
-    return *applicationInstance;
+PixiApplication& PixiApplication::createApplication(SharedRef<PlatformApplication> const& platformApplication) {
+    sApplication = makeShared<PixiApplication>(platformApplication);
+    return *sApplication;
 }
 
-void SimpleApplication::shutdownApplication() {
-    applicationInstance->destoryRenderer();
-    applicationInstance->platformApplication_->shutdown();
-    applicationInstance.reset();
+void PixiApplication::shutdownApplication() {
+    sApplication->destroyRenderer();
+    sApplication->platformApplication_->shutdown();
+    sApplication.reset();
 }
 
-bool SimpleApplication::isInitialized() {
-    return applicationInstance != nullptr;
+bool PixiApplication::isInitialized() {
+    return sApplication != nullptr;
 }
 
-void SimpleApplication::tick(float const dt) {
+PixiApplication& PixiApplication::get() {
+    pxAssert(sApplication.get() != nullptr);
+    return *sApplication;
+}
+
+bool PixiApplication::initializeRenderer(SharedPtr<Renderer> renderer) {
+    renderer_ = std::move(renderer);
+    return renderer_->initialize();
+}
+
+void PixiApplication::destroyRenderer() {
+    if (renderer_) {
+        renderer_->shutdown();
+    }
+    renderer_.reset();
+}
+
+Renderer& PixiApplication::getRenderer() const {
+    pxAssert(renderer_ != nullptr);
+    return *renderer_;
+}
+
+void PixiApplication::tick(float const dt) {
     platformApplication_->pollMessages();
 
-    if (Renderer_) {
-        Renderer_->tick(dt);
+    if (renderer_) {
+        renderer_->tick(dt);
     }
 
     drawWindows();
 }
 
-bool SimpleApplication::addWindow(SharedRef<Window> window, bool const bShowImmediately) {
+bool PixiApplication::addWindow(SharedRef<Window> window, bool const bShowImmediately) {
     windows_.emplace_back(window);
     SharedRef const platformWindow{createPlatformWindow(window, platformApplication_)};
 
@@ -82,18 +103,17 @@ bool SimpleApplication::addWindow(SharedRef<Window> window, bool const bShowImme
     return true;
 }
 
-SharedPtr<Window> SimpleApplication::findWindowByPlatformWindow(SharedRef<PlatformWindow> const& platformWindow) {
+SharedPtr<Window> PixiApplication::findWindowByPlatformWindow(SharedRef<PlatformWindow> const& platformWindow) {
     auto const it = std::ranges::find_if(windows_, [&](SharedRef<Window> const& window) {
         return window->getNativeWindow() == platformWindow;
     });
     return it != windows_.end() ? it->toPtr() : nullptr;
 }
 
-void SimpleApplication::drawWindows() const {
+void PixiApplication::drawWindows() const {
     for (auto const& window : windows_) {
         window->paintWindow();
     }
 }
 
 } // namespace px
-#pragma optimize("", on)

@@ -3,32 +3,61 @@
 #pragma once
 
 #include "core_minimal.h"
-#include "base_renderer.h"
+#include "tools/misc.h"
 
 namespace px {
 
 class Window;
 
-class Renderer final : public BaseRenderer {
+class Renderer final : NonCopyableNonMovable {
   public:
-    PXENGINE_API Renderer();
-    PXENGINE_API ~Renderer() override;
+    PX_ENGINE_API Renderer();
+    PX_ENGINE_API ~Renderer();
 
-    PXENGINE_API bool initialize() override;
-    PXENGINE_API void shutdown() override;
+    /**
+     * @brief Initializes the renderer.
+     *
+     * @return True if successful.
+     */
+    PX_ENGINE_API bool initialize();
 
-    PXENGINE_API void tick(float dt) override;
+    /**
+     * @brief Shutdowns the renderer.
+     */
+    PX_ENGINE_API void shutdown();
 
-    PXENGINE_API SharedPtr<RHIViewport> getViewportResource(SharedRef<Window> window) const override;
+    /**
+     * @brief Ticks the renderer.
+     *
+     * @param dt Delta Time.
+     */
+    PX_ENGINE_API void tick(float dt);
 
-    PXENGINE_API void createViewport(SharedRef<Window> window) override;
+    /**
+     * @brief Retrieves the viewport RHI resource.
+     *
+     * @param window The window to fetch viewport from.
+     *
+     * @return RHIViewport associated with the window provided.
+     */
+    PX_ENGINE_API SharedPtr<struct RHIViewport> getViewportResource(SharedRef<Window> window) const;
 
-    PXENGINE_API void requestResizeViewport(SharedRef<Window> window, uint16 sizeX, uint16 sizeY) override;
+    /**
+     * Creates a rendering viewport
+     *
+     * @param window The window to create the viewport for.
+     */
+    PX_ENGINE_API void createViewport(SharedRef<Window> window);
 
-    PXENGINE_API void flushCommands() const override;
+    PX_ENGINE_API void requestResizeViewport(SharedRef<Window> window, uint16 sizeX, uint16 sizeY);
+
+    /**
+     * Gives the renderer a chance to wait for any render commands to be completed before returning.
+     */
+    PX_ENGINE_API void flushCommands() const;
 
 #if WITH_IMGUI
-    PXENGINE_API class ImGuiRenderer& getImGuiRenderer();
+    PX_ENGINE_API class ImGuiRenderer& getImGuiRenderer();
 #endif
 
   private:

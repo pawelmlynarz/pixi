@@ -25,7 +25,7 @@ int32 EngineLoop::preInit() {
     LogManager::initialize();
     initializeRhi();
 
-    auto& application{SimpleApplication::createApplication()};
+    auto& application{PixiApplication::createApplication()};
     application.initializeRenderer(makeShared<Renderer>());
 
     return 0;
@@ -55,7 +55,7 @@ void EngineLoop::tick() {
     pxToDo("Engine tick");
     pxToDo("Platform and input tick");
     pxToDo("Time and widgets(paint) tick");
-    SimpleApplication::get().tick(engine.getDeltaTime());
+    PixiApplication::get().tick(engine.getDeltaTime());
     pxToDo("EndFrame for active scenes");
 
     pxToDo("Game & Render thread sync");
@@ -66,7 +66,7 @@ void EngineLoop::tick() {
 void EngineLoop::exit() {
     destroyEngine();
 
-    SimpleApplication::shutdownApplication();
+    PixiApplication::shutdownApplication();
     shutdownRhi();
 
     LogManager::shutdown();

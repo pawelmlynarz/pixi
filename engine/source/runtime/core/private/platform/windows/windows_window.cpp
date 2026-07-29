@@ -12,21 +12,21 @@ namespace px {
 
 namespace {
 
-bool bGLFWInitialized{false};
+bool sGLFWInitialized{false};
 
 void glfwErrorCallback([[maybe_unused]] int const errorCode, [[maybe_unused]] char const* const description) {
     pxToDo("Handle error and implement logger.");
 }
 
 void ensureGlfwInitialized() {
-    if (bGLFWInitialized) {
+    if (sGLFWInitialized) {
         return;
     }
 
     glfwSetErrorCallback(glfwErrorCallback);
     pxAssert(glfwInit());
 
-    bGLFWInitialized = true;
+    sGLFWInitialized = true;
 }
 
 void glfwKeyCallback(GLFWwindow* const window, int32_t const key, int32_t const scancode, int32_t const action, [[maybe_unused]] int32_t const mods) {

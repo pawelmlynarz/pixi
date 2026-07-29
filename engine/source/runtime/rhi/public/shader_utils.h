@@ -14,7 +14,7 @@ namespace px {
 
 using ShaderStorage = std::vector<std::vector<uint8>>;
 
-PXENGINE_API nri::ShaderDesc loadShader(
+PX_ENGINE_API nri::ShaderDesc loadShader(
     nri::GraphicsAPI backend, std::string const& shaderName,
     ShaderStorage& storage, std::string_view entryPointName = ""
 );

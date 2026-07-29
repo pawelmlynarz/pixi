@@ -38,18 +38,18 @@ class Window : public EnableSharedFromThis<Window> {
         return *this;
     }
 
-    PXENGINE_API void paintWindow();
+    PX_ENGINE_API void paintWindow();
 
-    PXENGINE_API void setNativeWindow(WeakPtr<PlatformWindow> const& platformWindow);
-    PXENGINE_API SharedPtr<PlatformWindow> getNativeWindow() const;
-    PXENGINE_API void destoryNativeWindow();
+    PX_ENGINE_API void setNativeWindow(WeakPtr<PlatformWindow> const& platformWindow);
+    PX_ENGINE_API SharedPtr<PlatformWindow> getNativeWindow() const;
+    PX_ENGINE_API void destroyNativeWindow();
 
-    PXENGINE_API void showWindow();
-    PXENGINE_API void hideWindow();
+    PX_ENGINE_API void showWindow();
+    PX_ENGINE_API void hideWindow();
 
   protected:
 #if WITH_IMGUI
-    PXENGINE_API virtual void drawImGui() = 0;
+    PX_ENGINE_API virtual void drawImGui() = 0;
 #endif
 
   private:

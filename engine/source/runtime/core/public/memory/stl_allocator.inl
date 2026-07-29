@@ -8,7 +8,7 @@ namespace px {
 
 template <class DataT, class AllocatorT>
 StlAllocator<DataT, AllocatorT>::StlAllocator()
-    : allocator_(getDefaultInstance<AllocatorT>()) {}
+    : allocator_(getDefaultAllocatorInstance<AllocatorT>()) {}
 
 template <class DataT, class AllocatorT>
 template <class OtherDataT>
@@ -18,7 +18,7 @@ StlAllocator<DataT, AllocatorT>::StlAllocator(StlAllocator<OtherDataT, Allocator
 template <class DataT, class AllocatorT>
 template <class OtherDataT, class OtherAllocatorT>
 StlAllocator<DataT, AllocatorT>::StlAllocator(StlAllocator<OtherDataT, OtherAllocatorT> const&)
-    : allocator_(getDefaultInstance<OtherAllocatorT>()) {}
+    : allocator_(getDefaultAllocatorInstance<OtherAllocatorT>()) {}
 
 template <class DataT, class AllocatorT>
 DataT* StlAllocator<DataT, AllocatorT>::allocate(size_t const size) {

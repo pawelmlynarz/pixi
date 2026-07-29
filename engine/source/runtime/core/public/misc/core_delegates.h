@@ -8,8 +8,8 @@
 namespace px {
 
 struct CoreDelegates {
-    static PXENGINE_API SimpleMulticastDelegate onEngineLoopInitComplete;
-    static PXENGINE_API SimpleMulticastDelegate onEditorInitComplete;
+    static PX_ENGINE_API SimpleMulticastDelegate onEngineLoopInitComplete;
+    static PX_ENGINE_API SimpleMulticastDelegate onEditorInitComplete;
 };
 
 } // namespace px

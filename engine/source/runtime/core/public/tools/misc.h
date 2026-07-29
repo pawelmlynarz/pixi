@@ -6,24 +6,11 @@
 
 namespace px {
 
-// NOLINTBEGIN(bugprone-macro-parentheses)
-
-#define PX_NONCOPYABLE(T) \
-    T(T const&) = delete; \
-    T& operator=(T const&) = delete;
-
-#define PX_NONCOPYABLE_NONMOVABLE(T) \
-    PX_NONCOPYABLE(T)                \
-    T(T&&) = delete;                 \
-    T& operator=(T&&) = delete;
-
-// NOLINTEND(bugprone-macro-parentheses)
-
 constexpr bool isPowerOfTwo(size_t const value) noexcept {
     return std::has_single_bit(value);
 }
 
-class NonCopyable {
+class PX_ENGINE_API NonCopyable {
   protected:
     NonCopyable() = default;
     ~NonCopyable() = default;
@@ -36,7 +23,7 @@ class NonCopyable {
     NonCopyable& operator=(NonCopyable&&) = delete;
 };
 
-class NonMovable {
+class PX_ENGINE_API NonMovable {
   protected:
     NonMovable() = default;
     ~NonMovable() = default;
@@ -46,7 +33,7 @@ class NonMovable {
     NonMovable& operator=(NonMovable&&) = delete;
 };
 
-class NonCopyableNonMovable : NonCopyable, NonMovable {
+class PX_ENGINE_API NonCopyableNonMovable : NonCopyable, NonMovable {
   protected:
     NonCopyableNonMovable() = default;
     ~NonCopyableNonMovable() = default;

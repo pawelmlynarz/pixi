@@ -12,14 +12,12 @@ namespace px {
 // MSVC Complains about std::atomic<bool> not having dll interface, but it's a std type and doesn't need dll export.
 #pragma warning(disable : 4251)
 
-class PXENGINE_API SpinLock {
+class PX_ENGINE_API SpinLock final : NonCopyableNonMovable {
   public:
     enum : uint8_t {
         Unlocked = false,
         Locked = true
     };
-
-    PX_NONCOPYABLE_NONMOVABLE(SpinLock);
 
     SpinLock() noexcept = default;
     ~SpinLock() {

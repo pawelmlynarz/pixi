@@ -6,15 +6,15 @@
 
 namespace px {
 
-extern PXENGINE_API uint64 gFrameCounter;
-extern PXENGINE_API uint32 gGameThreadId;
-extern PXENGINE_API double gStartTime;
+extern PX_ENGINE_API uint64 gFrameCounter;
+extern PX_ENGINE_API uint32 gGameThreadId;
+extern PX_ENGINE_API double gStartTime;
 
-PXENGINE_API void requestEngineExit();
-PXENGINE_API bool isEngineExitRequested();
+PX_ENGINE_API void requestEngineExit();
+PX_ENGINE_API bool isEngineExitRequested();
 
-PXENGINE_API bool isEditor();
+PX_ENGINE_API bool isEditor();
 
-PXENGINE_API bool isInGameThread();
+PX_ENGINE_API bool isInGameThread();
 
 } // namespace px

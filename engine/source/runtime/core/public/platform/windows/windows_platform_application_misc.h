@@ -9,7 +9,7 @@ namespace px {
 
 struct WindowsApplicationMisc final : GenericPlatformApplicationMisc {
     [[nodiscard]]
-    static PXENGINE_API UniquePtr<PlatformApplication> createApplication();
+    static PX_ENGINE_API UniquePtr<PlatformApplication> createApplication();
 };
 
 using PlatformApplicationMisc = WindowsApplicationMisc;

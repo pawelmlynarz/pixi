@@ -10,7 +10,7 @@ namespace px::ed {
 namespace {
 
 using DockSpaceLayoutHash = size_t;
-std::vector<DockSpaceLayoutHash> initializedLayoutsList;
+std::vector<DockSpaceLayoutHash> sInitializedLayoutsList;
 
 ImGuiID createDockSpace(ImGuiViewport const* const viewport, ImDockSpaceConfig const& config) {
     ImGui::SetNextWindowPos(viewport->WorkPos);
@@ -52,9 +52,9 @@ ImDockSpace::ImDockSpace(ImGuiViewport* viewport, ImDockSpaceConfig const& confi
 
     DockSpaceLayoutHash const nameHash{std::hash<std::string_view>{}(config.Name)};
 
-    if (!std::ranges::contains(initializedLayoutsList, nameHash)) {
+    if (!std::ranges::contains(sInitializedLayoutsList, nameHash)) {
         config.BuildDockSpaceLayoutStrategy(viewport_, dockSpaceId_);
-        initializedLayoutsList.emplace_back(nameHash);
+        sInitializedLayoutsList.emplace_back(nameHash);
     }
 }
 

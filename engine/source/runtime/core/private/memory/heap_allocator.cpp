@@ -74,12 +74,16 @@ class HeapAllocator final : public Allocator {
     explicit HeapAllocator(size_t heapSize);
     ~HeapAllocator() override;
 
+    // ~Allocator Begin
+    
     void* alloc(size_t size) override;
     void free(void* addr) override;
     void* allocAligned(size_t size, size_t align) override;
     void* realloc(void* addr, size_t size, bool preserve = true) override;
     void checkCorruption() override;
-
+    
+    // ~Allocator End
+    
   private:
     void* memory_{nullptr};
     tlsf_t tlsfHandle_{nullptr};

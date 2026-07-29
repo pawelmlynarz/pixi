@@ -18,7 +18,7 @@ class PlatformApplication;
  */
 class InputSystem final : NonCopyableNonMovable, public IGenericApplicationMessageHandler {
   public:
-    PXENGINE_API InputSystem(SharedPtr<PlatformApplication> const& owningApplication);
+    PX_ENGINE_API InputSystem(SharedPtr<PlatformApplication> const& owningApplication);
 
     bool onKeyChar(uint32 character, bool isRepeat) override;
     bool processKeyCharEvent(CharacterEvent const& charEvent);
