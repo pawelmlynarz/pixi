@@ -29,9 +29,9 @@
 	  }
     },
     {
-      "name": "vs2022",
+      "name": "vs2026",
       "inherits": "base",
-      "generator": "Visual Studio 17 2022",
+      "generator": "Visual Studio 18 2026",
 	  "cacheVariables":
 	  {
 		"CMAKE_TOOLCHAIN_FILE": "${sourceDir}/engine/tools/cmake/platform/toolchains/t-x64-msvc.cmake"
@@ -40,18 +40,18 @@
   ],
   "buildPresets": [
 	{
-      "name": "vs2022-Debug",
-      "configurePreset": "vs2022",
+      "name": "vs2026-Debug",
+      "configurePreset": "vs2026",
       "configuration": "Debug"
     },
     {
-      "name": "vs2022-DebugEditor",
-      "configurePreset": "vs2022",
+      "name": "vs2026-DebugEditor",
+      "configurePreset": "vs2026",
       "configuration": "DebugEditor"
     },
     {
-      "name": "vs2022-Release",
-      "configurePreset": "vs2022",
+      "name": "vs2026-Release",
+      "configurePreset": "vs2026",
       "configuration": "Release"
     },
 	{
