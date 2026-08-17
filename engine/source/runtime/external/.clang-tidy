@@ -1,0 +1,3 @@
+# Vendored third party sources are not held to the engine's coding standards.
+Checks: '-*'
+HeaderFilterRegex: '$^'
