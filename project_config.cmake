@@ -16,3 +16,6 @@ endif()
 
 # Set to true to build sandbox showcase project.
 set(BUILD_SANDBOX ON)
+
+# Set to true to build the unit test project.
+set(BUILD_TESTS ON)

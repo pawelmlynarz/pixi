@@ -81,11 +81,11 @@ class BitMask {
     }
 
     uint32 trailingZeros() const noexcept {
-        return trailingZeros(mask_) >> Shift;
+        return px::trailingZeros(mask_) >> Shift;
     }
 
     uint32 leadingZeros() const noexcept {
-        return leadingZeroes(static_cast<T>(mask_ << extraBits_)) >> Shift;
+        return px::leadingZeroes(static_cast<T>(mask_ << extraBits_)) >> Shift;
     }
 
     BitMask begin() const noexcept { return *this; }

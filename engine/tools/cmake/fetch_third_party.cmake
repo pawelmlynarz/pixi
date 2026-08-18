@@ -80,6 +80,23 @@ fetchcontent_declare(
 )
 list(APPEND DEPS glfw)
 
+# third_party/googletest
+
+if(BUILD_TESTS)
+    # Force gtest to use the shared CRT so that it matches the engine's /MD runtime.
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    option(BUILD_GMOCK "" OFF)
+    option(INSTALL_GTEST "" OFF)
+
+    fetchcontent_declare(
+            googletest
+            DOWNLOAD_EXTRACT_TIMESTAMP 1
+            DOWNLOAD_NO_PROGRESS 1
+            URL https://github.com/google/googletest/archive/refs/tags/v1.17.0.zip
+    )
+    list(APPEND DEPS googletest)
+endif()
+
 # third_party/ShaderMake
 
 if(NOT BUILD_CLANG_TIDY)
@@ -129,6 +146,21 @@ set_third_party_filter(NRI_Validation "NRI")
 set_third_party_filter(NRI_VK "NRI")
 set_third_party_filter(glm "")
 set_third_party_filter(spdlog "")
+if(BUILD_TESTS)
+    set_third_party_filter(gtest "googletest")
+    set_third_party_filter(gtest_main "googletest")
+
+    # The engine builds with warnings as errors, which googletest is not expected to satisfy. Its headers
+    # are also marked as system headers so that they do not produce warnings in the test sources.
+    foreach(gtest_target gtest gtest_main)
+        if(TARGET ${gtest_target})
+            set_target_properties(${gtest_target} PROPERTIES SYSTEM TRUE)
+            if(MSVC)
+                target_compile_options(${gtest_target} PRIVATE /WX-)
+            endif()
+        endif()
+    endforeach()
+endif()
 
 # --------------------------------------------------
 # Manual Third Party Building (ignored CMakeLists)

@@ -1,0 +1,7 @@
+file(GLOB_RECURSE MODULE_SOURCES CONFIGURE_DEPENDS
+        *.cpp *.h *.inl
+)
+
+target_sources(${TESTS_TARGET_NAME} PRIVATE ${MODULE_SOURCES})
+
+target_include_directories(${TESTS_TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

@@ -30,6 +30,10 @@ px_set_compiler_options()
 # Build Targets
 # --------------------------------------------------
 
+if(BUILD_TESTS)
+    enable_testing()
+endif()
+
 add_subdirectory(engine)
 
 if(BUILD_SANDBOX)

@@ -17,24 +17,12 @@ using hash_t = uint64;
 // Compile Time Hashing
 
 // FNV-1a is used for hashes that must be computed at compile time, such as string identifiers and type
-// tags. It is slower than wyhash on large inputs but it is constexpr, which wyhash cannot be as it
-// relies on memcpy and platform intrinsics.
-//
-// Note that FNV-1a and wyhash produce different values for the same input, so a hash must always be
+// tags. Note that FNV-1a and wyhash produce different values for the same input, so a hash must always be
 // compared against one produced by the same function.
 
 inline constexpr uint64 kFnv1aOffsetBasis{14695981039346656037ull};
 inline constexpr uint64 kFnv1aPrime{1099511628211ull};
 
-/**
- * Hashes a string with the 64 bit FNV-1a algorithm. Usable in constant expressions, which makes it
- * suitable for hashing string literals at compile time.
- *
- * @param str String to hash. Accepts string literals, character pointers and string views.
- * @param hash Hash to continue from, which allows several strings to be hashed as if they were one.
- *
- * @return Hash of the string.
- */
 [[nodiscard]]
 consteval hash_t hashStringFnv1a(std::string_view const str, uint64 hash = kFnv1aOffsetBasis) noexcept {
     for (char const c : str) {
@@ -46,9 +34,6 @@ consteval hash_t hashStringFnv1a(std::string_view const str, uint64 hash = kFnv1
 
 //////////////////////////////////////////////////////
 // Runtime Hashing
-
-// Wyhash is used for everything that is hashed at runtime, most notably container keys. It is
-// significantly faster than FNV-1a on anything larger than a few bytes.
 
 inline constexpr uint64 kDefaultHashSeed{0};
 
@@ -73,6 +58,7 @@ inline hash_t hashOf(char const* const str, uint64 const seed = kDefaultHashSeed
 }
 
 template <typename T>
+    requires(!std::is_convertible_v<T const&, std::string_view>)
 [[nodiscard]]
 hash_t hashOf(T const& value, uint64 const seed = kDefaultHashSeed) noexcept {
     if constexpr (std::is_enum_v<T>) {
