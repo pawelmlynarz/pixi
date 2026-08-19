@@ -11,6 +11,7 @@ extern PX_ENGINE_API u32 gGameThreadId;
 extern PX_ENGINE_API f64 gStartTime;
 
 PX_ENGINE_API void requestEngineExit();
+
 PX_ENGINE_API bool isEngineExitRequested();
 
 PX_ENGINE_API bool isEditor();

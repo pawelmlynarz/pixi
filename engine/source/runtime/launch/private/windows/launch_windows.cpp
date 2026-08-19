@@ -17,7 +17,6 @@ i32 launchWindowsStartup(
     [[maybe_unused]] char* cmdLine,
     [[maybe_unused]] i32 showCmd
 ) {
-
     return engineMain();
 }
 
