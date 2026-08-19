@@ -4,7 +4,7 @@
 
 #include "widgets/widget.h"
 #include "common/font.h"
-#include "tools/flags.h"
+#include "common/bitflags.h"
 
 namespace px::ed {
 
@@ -14,11 +14,13 @@ enum class EImInputFieldFlags : uint8 {
     HasBorder = 1 << 1,
 };
 
+PX_ENABLE_BIT_FLAGS(EImInputFieldFlags);
+
 struct ImInputFieldConfig {
     std::string_view Label;
     EImFontSize FontSize{EImFontSize::Medium};
     float Width{300.f};
-    EImInputFieldFlags Flags{EImInputFieldFlags::HasBorder};
+    BitFlags<EImInputFieldFlags> Flags{EImInputFieldFlags::HasBorder};
 };
 
 class ImInputField : public ImWidgetWithConfig<ImInputFieldConfig>,
@@ -37,5 +39,3 @@ class ImInputField : public ImWidgetWithConfig<ImInputFieldConfig>,
 };
 
 } // namespace px::ed
-
-BitmaskEnum(px::ed::EImInputFieldFlags);
