@@ -43,9 +43,9 @@ void ImPanelHeader::addWidget(
     if (alignment == EWidgetAlignment::Left) {
         ImGui::SetCursorScreenPos(ImVec2(state_.CursorXLeft_, state_.Y_));
 
-        float const before{state_.CursorXLeft_};
+        f32 const before{state_.CursorXLeft_};
         drawStrategy(drawList, ImVec2(state_.CursorXLeft_, state_.Y_), extent);
-        float const after{before + extent.x};
+        f32 const after{before + extent.x};
 
         state_.CursorXLeft_ = after + Config_.NextWidgetPadding;
 
@@ -54,8 +54,8 @@ void ImPanelHeader::addWidget(
         ImGui::SetCursorScreenPos(ImVec2(state_.CursorXRight_ - extent.x, state_.Y_));
 
         drawStrategy(drawList, ImVec2(state_.CursorXRight_ - extent.x, state_.Y_), extent);
-        float const before{state_.CursorXRight_ - extent.x};
-        float const after{state_.CursorXRight_};
+        f32 const before{state_.CursorXRight_ - extent.x};
+        f32 const after{state_.CursorXRight_};
 
         state_.CursorXRight_ = before - Config_.NextWidgetPadding;
 

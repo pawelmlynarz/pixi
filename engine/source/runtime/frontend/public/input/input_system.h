@@ -20,13 +20,13 @@ class InputSystem final : NonCopyableNonMovable, public IGenericApplicationMessa
   public:
     PX_ENGINE_API InputSystem(SharedPtr<PlatformApplication> const& owningApplication);
 
-    bool onKeyChar(uint32 character, bool isRepeat) override;
+    bool onKeyChar(u32 character, bool isRepeat) override;
     bool processKeyCharEvent(CharacterEvent const& charEvent);
 
-    bool onKeyDown(int32 keyCode, uint32 characterCode, bool isRepeat) override;
+    bool onKeyDown(i32 keyCode, u32 characterCode, bool isRepeat) override;
     bool processKeyDownEvent(KeyEvent const& keyEvent);
 
-    bool onKeyUp(int32 keyCode, uint32 characterCode, bool isRepeat) override;
+    bool onKeyUp(i32 keyCode, u32 characterCode, bool isRepeat) override;
     bool processKeyUpEvent(KeyEvent const& keyEvent);
 
     bool onMouseDown(SharedRef<PlatformWindow> const& platformWindow, EMouseButton button, Vector2 const& mousePos) override;
@@ -39,7 +39,7 @@ class InputSystem final : NonCopyableNonMovable, public IGenericApplicationMessa
     bool processMouseMovedEvent(PointerEvent const& mouseEvent);
 
     void onWindowClose(SharedRef<PlatformWindow> const& platformWindow) override;
-    void onWindowResized(SharedRef<PlatformWindow> const& platformWindow, uint16 width, uint16 height, bool wasMinimized) override;
+    void onWindowResized(SharedRef<PlatformWindow> const& platformWindow, u16 width, u16 height, bool wasMinimized) override;
 
   private:
     WeakPtr<PlatformApplication> owningApplication_;

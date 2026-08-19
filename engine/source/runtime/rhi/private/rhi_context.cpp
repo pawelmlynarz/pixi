@@ -16,7 +16,7 @@ using AdaptersDescList = std::array<nri::AdapterDesc, 2>;
 AdaptersDescList RHIGetAdaptersDesc() {
     std::array<nri::AdapterDesc, 2> AdaptersDesc{};
 
-    uint32 AdaptersDescSize{static_cast<uint32>(AdaptersDesc.size())};
+    u32 AdaptersDescSize{static_cast<u32>(AdaptersDesc.size())};
     RHI_ABORT_ON_FAILURE(nri::nriEnumerateAdapters(AdaptersDesc.data(), AdaptersDescSize))
 
     return AdaptersDesc;
@@ -24,7 +24,7 @@ AdaptersDescList RHIGetAdaptersDesc() {
 
 void RHICreateDevice(RHIContext const& Context, AdaptersDescList const& AdaptersDesc) {
     pxToDo("Select best adapter.");
-    int32 constexpr BestAdapterIdx{0};
+    i32 constexpr BestAdapterIdx{0};
 
     nri::DeviceCreationDesc const DeviceCreationDesc{
         .graphicsAPI = Context.getBackend(),

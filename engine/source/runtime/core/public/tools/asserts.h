@@ -31,17 +31,17 @@ namespace px::asserts {
 
 using namespace px;
 
-template <uint64 UID>
+template <u64 UID>
 std::atomic_bool ensureHasExecuted{false};
 
-constexpr uint64 fileLineHashForEnsure(std::source_location const& loc = std::source_location::current()) {
-    uint32 result{2166136261u};
-    char const* filename{loc.file_name()};
+constexpr u64 fileLineHashForEnsure(std::source_location const& loc = std::source_location::current()) {
+    u32 result{2166136261u};
+    cstring filename{loc.file_name()};
     for (; *filename; ++filename) {
-        result ^= static_cast<uint8>(*filename);
+        result ^= static_cast<u8>(*filename);
         result *= 16777619u;
     }
-    return (static_cast<uint64>(result) << 32) | loc.line();
+    return (static_cast<u64>(result) << 32) | loc.line();
 }
 
 inline std::string getTranslationUnitInfo(std::source_location const& Loc = std::source_location::current()) {

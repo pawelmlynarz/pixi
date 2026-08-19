@@ -36,7 +36,7 @@ StyleConfig& EdStyle::getStyle() {
     return *sCurrentStyle;
 }
 
-ImU32 EdStyle::getColorU32(ImGuiCol const idx, float const alphaMul) {
+ImU32 EdStyle::getColorU32(ImGuiCol const idx, f32 const alphaMul) {
     StyleConfig const& style{getStyle()};
 
     ImVec4 color{style[idx]};

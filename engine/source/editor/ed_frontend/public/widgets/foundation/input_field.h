@@ -8,7 +8,7 @@
 
 namespace px::ed {
 
-enum class EImInputFieldFlags : uint8 {
+enum class EImInputFieldFlags : u8 {
     None = 0,
     HasBackground = 1 << 0,
     HasBorder = 1 << 1,
@@ -19,7 +19,7 @@ PX_ENABLE_BIT_FLAGS(EImInputFieldFlags);
 struct ImInputFieldConfig {
     std::string_view Label;
     EImFontSize FontSize{EImFontSize::Medium};
-    float Width{300.f};
+    f32 Width{300.f};
     BitFlags<EImInputFieldFlags> Flags{EImInputFieldFlags::HasBorder};
 };
 

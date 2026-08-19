@@ -116,7 +116,7 @@ constexpr ImGuiKey remapKey(EKeyCode const keyCode) {
     }
 }
 
-int32 remapMouseButton(EMouseButton const mouseButton) {
+i32 remapMouseButton(EMouseButton const mouseButton) {
     if (mouseButton == EMouseButton::Left) {
         return 0;
     }
@@ -157,7 +157,7 @@ bool ImGuiInputHandler::processKeyUpEvent(KeyEvent const& keyEvent) {
 
 bool ImGuiInputHandler::processMouseButtonDownEvent(PointerEvent const& mouseEvent) {
     ImGuiIO& io{ImGui::GetIO()};
-    int32 const remappedButton{remapMouseButton(mouseEvent.getButton())};
+    i32 const remappedButton{remapMouseButton(mouseEvent.getButton())};
     io.AddMouseButtonEvent(remappedButton, true);
 
     return true;
@@ -165,7 +165,7 @@ bool ImGuiInputHandler::processMouseButtonDownEvent(PointerEvent const& mouseEve
 
 bool ImGuiInputHandler::processMouseButtonUpEvent(PointerEvent const& mouseEvent) {
     ImGuiIO& io{ImGui::GetIO()};
-    int32 const remappedButton{remapMouseButton(mouseEvent.getButton())};
+    i32 const remappedButton{remapMouseButton(mouseEvent.getButton())};
     io.AddMouseButtonEvent(remappedButton, false);
 
     return true;

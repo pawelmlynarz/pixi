@@ -17,7 +17,7 @@ namespace px::ed {
  * provided that the first entry starts with ImGuiCol_COUNT value.
  */
 // NOLINTNEXTLINE(cppcoreguidelines-use-enum-class)
-enum PxGuiCol : uint8 {
+enum PxGuiCol : u8 {
     PxGuiCol_Text = ImGuiCol_COUNT,
     PxGuiCol_TextHovered,
     PxGuiCol_TextActive,
@@ -30,8 +30,8 @@ enum PxGuiCol : uint8 {
 struct StyleConfig {
     StyleConfig();
 
-    ImVec4& operator[](int32 idx);
-    ImVec4 const& operator[](int32 idx) const;
+    ImVec4& operator[](i32 idx);
+    ImVec4 const& operator[](i32 idx) const;
 
   private:
     std::span<ImVec4, ImGuiCol_COUNT> nativeColors_;
@@ -41,7 +41,7 @@ struct StyleConfig {
 struct EdStyle {
     static PX_ENGINE_EDITOR_API StyleConfig& getStyle();
 
-    static PX_ENGINE_EDITOR_API ImU32 getColorU32(ImGuiCol idx, float alphaMul = 1.0f);
+    static PX_ENGINE_EDITOR_API ImU32 getColorU32(ImGuiCol idx, f32 alphaMul = 1.0f);
 
     static PX_ENGINE_EDITOR_API void setDefaultStyle();
 };

@@ -12,7 +12,7 @@ KeyEvent::KeyEvent(EKeyCode keyCode, bool bIsRepeat)
     : InputEvent(bIsRepeat), keyCode_(keyCode) {
 }
 
-CharacterEvent::CharacterEvent(uint32 character, bool bIsRepeat)
+CharacterEvent::CharacterEvent(u32 character, bool bIsRepeat)
     : InputEvent(bIsRepeat), character_(character) {
 }
 

@@ -63,7 +63,7 @@ void Renderer::shutdown() {
     impl_->WindowToViewportInfo.clear();
 }
 
-void Renderer::tick(float const dt) {
+void Renderer::tick(f32 const dt) {
 #if WITH_IMGUI
     impl_->ImGuiRenderer.tick(dt);
 #endif
@@ -89,7 +89,7 @@ void Renderer::createViewport(SharedRef<Window> window) {
     viewInfo->RHIViewport = rhiCreateViewport(
         getRhiContext(),
         viewInfo->OSWindow,
-        static_cast<uint16>(windowSize.x), static_cast<uint16>(windowSize.y),
+        static_cast<u16>(windowSize.x), static_cast<u16>(windowSize.y),
         isViewportFullscreen(window)
     );
 
@@ -102,7 +102,7 @@ void Renderer::createViewport(SharedRef<Window> window) {
 #endif
 }
 
-void Renderer::requestResizeViewport(SharedRef<Window> window, uint16 sizeX, uint16 sizeY) {
+void Renderer::requestResizeViewport(SharedRef<Window> window, u16 sizeX, u16 sizeY) {
     if (auto& viewInfo{impl_->WindowToViewportInfo.at(window)}) {
         viewInfo->RHIViewport->resize(
             sizeX, sizeY, isViewportFullscreen(window)

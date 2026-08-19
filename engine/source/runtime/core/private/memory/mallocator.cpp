@@ -24,7 +24,7 @@ void Mallocator::free(void* const addr) {
 void* Mallocator::allocAligned(size_t const size, size_t const align) {
     pxAssert(isPowerOfTwo(align));
 
-    return _aligned_malloc(size, std::max(align, sDefaultAlign));
+    return _aligned_malloc(size, std::max(align, kDefaultAlign));
 }
 
 void* Mallocator::realloc(void* const addr, size_t const size, bool /*preserve*/) {

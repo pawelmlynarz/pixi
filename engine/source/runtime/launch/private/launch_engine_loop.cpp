@@ -21,7 +21,7 @@
 namespace px {
 
 [[nodiscard]]
-int32 EngineLoop::preInit() {
+i32 EngineLoop::preInit() {
     LogManager::initialize();
     initializeRhi();
 
@@ -32,11 +32,11 @@ int32 EngineLoop::preInit() {
 }
 
 [[nodiscard]]
-int32 EngineLoop::init() {
+i32 EngineLoop::init() {
 #if WITH_EDITOR
-    int32 const result{initializeEditorEngine(makeShared<ed::PixiEditorEngine>())};
+    i32 const result{initializeEditorEngine(makeShared<ed::PixiEditorEngine>())};
 #else
-    int32 const result{initializeEngine(makeShared<PixiEngine>())};
+    i32 const result{initializeEngine(makeShared<PixiEngine>())};
 #endif
     CoreDelegates::onEngineLoopInitComplete.broadcast();
 

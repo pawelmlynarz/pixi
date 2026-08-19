@@ -12,17 +12,17 @@ namespace px {
 //////////////////////////////////////////////////////
 // Utility Methods
 
-constexpr uint32 leadingZeroes(auto const x) noexcept {
+constexpr u32 leadingZeroes(auto const x) noexcept {
     static_assert(std::is_unsigned<decltype(x)>::value);
-    return static_cast<uint32>(std::countl_zero(x));
+    return static_cast<u32>(std::countl_zero(x));
 }
 
-constexpr uint32 trailingZeros(auto const x) noexcept {
+constexpr u32 trailingZeros(auto const x) noexcept {
     static_assert(std::is_unsigned<decltype(x)>::value);
-    return static_cast<uint32>(std::countr_zero(x));
+    return static_cast<u32>(std::countr_zero(x));
 }
 
-constexpr uint32 roundUpToPowerOf2(uint32 const value) noexcept {
+constexpr u32 roundUpToPowerOf2(u32 const value) noexcept {
     return std::bit_ceil(value);
 }
 
@@ -45,20 +45,20 @@ constexpr uint32 roundUpToPowerOf2(uint32 const value) noexcept {
  *    sits at bit 8 * i + 7 and the raw bit position has to be divided by eight to recover the index.
  *
  * For example:
- *   for (uint32 i : BitMask<uint32, 16>(0x5)) -> yields 0, 2
- *   for (uint32 i : BitMask<uint64, 8, 3>(0x0000000080800000)) -> yields 2, 3
+ *   for (u32 i : BitMask<u32, 16>(0x5)) -> yields 0, 2
+ *   for (u32 i : BitMask<u64, 8, 3>(0x0000000080800000)) -> yields 2, 3
  */
-template <class T, uint32 SignificantBits, uint32 Shift = 0>
+template <class T, u32 SignificantBits, u32 Shift = 0>
 class BitMask {
     static_assert(std::is_unsigned<T>::value);
     static_assert(Shift == 0 || Shift == 3);
     static_assert((SignificantBits << Shift) <= sizeof(T) * 8);
 
     /** Number of mask bits that carry slot information. */
-    static constexpr uint32 totalSignificantBits_{SignificantBits << Shift};
+    static constexpr u32 totalSignificantBits_{SignificantBits << Shift};
 
     /** Number of unused high bits in the underlying type. */
-    static constexpr uint32 extraBits_{static_cast<uint32>(sizeof(T) * 8) - totalSignificantBits_};
+    static constexpr u32 extraBits_{static_cast<u32>(sizeof(T) * 8) - totalSignificantBits_};
 
   public:
     explicit BitMask(T const mask)
@@ -72,19 +72,19 @@ class BitMask {
 
     explicit operator bool() const noexcept { return mask_ != 0; }
 
-    uint32 operator*() const noexcept { return lowestBitSet(); }
+    u32 operator*() const noexcept { return lowestBitSet(); }
 
-    uint32 lowestBitSet() const noexcept { return trailingZeros(); }
+    u32 lowestBitSet() const noexcept { return trailingZeros(); }
 
-    uint32 highestBitSet() const noexcept {
-        return static_cast<uint32>(std::bit_width(mask_) - 1) >> Shift;
+    u32 highestBitSet() const noexcept {
+        return static_cast<u32>(std::bit_width(mask_) - 1) >> Shift;
     }
 
-    uint32 trailingZeros() const noexcept {
+    u32 trailingZeros() const noexcept {
         return px::trailingZeros(mask_) >> Shift;
     }
 
-    uint32 leadingZeros() const noexcept {
+    u32 leadingZeros() const noexcept {
         return px::leadingZeroes(static_cast<T>(mask_ << extraBits_)) >> Shift;
     }
 

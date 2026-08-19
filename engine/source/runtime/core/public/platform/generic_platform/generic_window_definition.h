@@ -10,8 +10,8 @@ namespace px {
 
 struct PlatformWindowDefinition {
     std::string_view title;
-    uint16 widthDesired{1280};
-    uint16 heightDesired{720};
+    u16 widthDesired{1280};
+    u16 heightDesired{720};
     bool decorated{true};
     bool resizable{true};
 };

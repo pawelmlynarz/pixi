@@ -107,8 +107,8 @@ class BitFlags {
     }
 
     [[nodiscard]]
-    constexpr uint32 count() const noexcept {
-        return static_cast<uint32>(std::popcount(bits_));
+    constexpr u32 count() const noexcept {
+        return static_cast<u32>(std::popcount(bits_));
     }
 
     [[nodiscard]]

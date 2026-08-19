@@ -39,7 +39,7 @@ bool createEditorMainFrame() {
 
 } // namespace
 
-int32 editorInit() {
+i32 editorInit() {
     pxAssert(!sEditorMainFrameWindow);
 
     if (!createEditorMainFrame()) {

@@ -9,7 +9,7 @@ namespace px::ed {
 
 namespace {
 
-ImFont* addDefaultFont(float const size) {
+ImFont* addDefaultFont(f32 const size) {
     ImGuiIO& io{ImGui::GetIO()};
 
     ImFontConfig config;

@@ -4,7 +4,7 @@
 
 namespace px::ed {
 
-bool beginChildPadded(char const* const strId, ImVec2 const& size, ImVec2 const& padding, ImGuiChildFlags const childFlags, ImGuiWindowFlags const windowFlags) {
+bool beginChildPadded(cstring const strId, ImVec2 const& size, ImVec2 const& padding, ImGuiChildFlags const childFlags, ImGuiWindowFlags const windowFlags) {
     ImVec2 const regionAvail{ImGui::GetContentRegionAvail()};
     ImVec2 const cursor{ImGui::GetCursorPos()};
 

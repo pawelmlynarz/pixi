@@ -66,7 +66,7 @@ class Window : public EnableSharedFromThis<Window> {
   private:
     WeakPtr<PlatformWindow> nativeWindow_;
     bool bHasEverBeenShown_{false};
-    uint32 frameIdx_{0};
+    u32 frameIdx_{0};
 };
 
 } // namespace px

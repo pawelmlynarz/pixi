@@ -7,7 +7,7 @@
 namespace px {
 
 struct WindowsPlatformProperties final : GenericPlatformProperties {
-    static constexpr char const* platformName() {
+    static constexpr cstring platformName() {
         return "Windows";
     }
 

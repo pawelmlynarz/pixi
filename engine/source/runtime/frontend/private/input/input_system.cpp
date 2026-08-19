@@ -17,7 +17,7 @@ InputSystem::InputSystem(SharedPtr<PlatformApplication> const& owningApplication
     : owningApplication_(owningApplication) {
 }
 
-bool InputSystem::onKeyChar(uint32 character, bool isRepeat) {
+bool InputSystem::onKeyChar(u32 character, bool isRepeat) {
     CharacterEvent const charEvent{character, isRepeat};
 
     return processKeyCharEvent(charEvent);
@@ -31,7 +31,7 @@ bool InputSystem::processKeyCharEvent(CharacterEvent const& CharEvent) {
     return true;
 }
 
-bool InputSystem::onKeyDown(int32 const keyCode, [[maybe_unused]] uint32 const characterCode, bool const isRepeat) {
+bool InputSystem::onKeyDown(i32 const keyCode, [[maybe_unused]] u32 const characterCode, bool const isRepeat) {
     EKeyCode const key{asEnum<EKeyCode>(keyCode)};
     KeyEvent const keyEvent{key, isRepeat};
 
@@ -46,7 +46,7 @@ bool InputSystem::processKeyDownEvent(KeyEvent const& KeyEvent) {
     return true;
 }
 
-bool InputSystem::onKeyUp(int32 const keyCode, [[maybe_unused]] uint32 const characterCode, bool const isRepeat) {
+bool InputSystem::onKeyUp(i32 const keyCode, [[maybe_unused]] u32 const characterCode, bool const isRepeat) {
     EKeyCode const key{asEnum<EKeyCode>(keyCode)};
     KeyEvent const keyEvent{key, isRepeat};
 
@@ -104,7 +104,7 @@ void InputSystem::onWindowClose(SharedRef<PlatformWindow> const& platformWindow)
     owningApplication_.lock()->closeWindow(platformWindow);
 }
 
-void InputSystem::onWindowResized(SharedRef<PlatformWindow> const& platformWindow, uint16 width, uint16 height, [[maybe_unused]] bool wasMinimized) {
+void InputSystem::onWindowResized(SharedRef<PlatformWindow> const& platformWindow, u16 width, u16 height, [[maybe_unused]] bool wasMinimized) {
     Renderer& renderer{PixiApplication::get().getRenderer()};
 
     // Flush the rendering command queue to ensure that there aren't pending viewport draw commands for the old viewport size.

@@ -35,12 +35,12 @@ struct KeyEvent : public InputEvent {
  * CharacterEvent describes a keyboard action where the utf-16 code is given (keyboard/controller key/button pressed or released).
  */
 struct CharacterEvent : public InputEvent {
-    CharacterEvent(uint32 character, bool bIsRepeat);
+    CharacterEvent(u32 character, bool bIsRepeat);
 
-    uint32 getCharacter() const { return character_; }
+    u32 getCharacter() const { return character_; }
 
   private:
-    uint32 character_{0};
+    u32 character_{0};
 };
 
 /**

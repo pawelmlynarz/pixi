@@ -113,7 +113,7 @@ nri::ShaderDesc loadShader(nri::GraphicsAPI const backend, std::string const& sh
         }
 
         storage.emplace_back();
-        std::vector<uint8>& code{storage.back()};
+        std::vector<u8>& code{storage.back()};
 
         if (loadFile(path, code)) {
             shaderDesc.stage = extension.Stage;

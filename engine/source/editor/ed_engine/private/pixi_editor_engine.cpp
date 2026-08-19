@@ -12,8 +12,8 @@ WeakPtr<PixiEditorEngine> sPixiEditorEngine;
 
 } // namespace
 
-int32 initializeEditorEngine(SharedPtr<PixiEditorEngine> const& editorEngine) {
-    int32 const result{initializeEngine(editorEngine)};
+i32 initializeEditorEngine(SharedPtr<PixiEditorEngine> const& editorEngine) {
+    i32 const result{initializeEngine(editorEngine)};
     if (result != 0) {
         return result;
     }

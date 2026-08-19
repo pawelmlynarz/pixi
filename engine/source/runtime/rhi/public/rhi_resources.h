@@ -21,7 +21,7 @@ struct RHISwapChainTexture {
 };
 
 struct RHISwapChain {
-    RHISwapChain(RHIContext& context, nri::Window const& window, uint16 sizeX, uint16 sizeY);
+    RHISwapChain(RHIContext& context, nri::Window const& window, u16 sizeX, u16 sizeY);
 
     void destroy();
 
@@ -33,22 +33,22 @@ struct RHISwapChain {
     RHIContext& rhiContext_;
 };
 
-PX_ENGINE_API UniquePtr<RHISwapChain> rhiCreateSwapchain(RHIContext& context, nri::Window const& window, uint16 sizeX, uint16 sizeY);
+PX_ENGINE_API UniquePtr<RHISwapChain> rhiCreateSwapchain(RHIContext& context, nri::Window const& window, u16 sizeX, u16 sizeY);
 
 struct RHIViewport {
-    PX_ENGINE_API RHIViewport(RHIContext& context, void* osWindowHandle, uint16 sizeX, uint16 sizeY, bool isFullscreen);
+    PX_ENGINE_API RHIViewport(RHIContext& context, void* osWindowHandle, u16 sizeX, u16 sizeY, bool isFullscreen);
     PX_ENGINE_API ~RHIViewport();
 
     PX_ENGINE_API void* getOsWindowHandle() { return osWindowHandle_; }
     PX_ENGINE_API SharedPtr<RHISwapChain> getSwapChain() { return swapChainRhi_; }
     PX_ENGINE_API UVector2 getSize() const { return {sizeX_, sizeY_}; }
-    PX_ENGINE_API void resize(uint16 sizeX, uint16 sizeY, bool isFullscreen);
+    PX_ENGINE_API void resize(u16 sizeX, u16 sizeY, bool isFullscreen);
 
   private:
     RHIContext& rhiContext_;
 
-    uint16 sizeX_{0};
-    uint16 sizeY_{0};
+    u16 sizeX_{0};
+    u16 sizeY_{0};
     bool isFullscreen_{false};
 
     void* osWindowHandle_{nullptr};
@@ -57,6 +57,6 @@ struct RHIViewport {
     SharedPtr<RHISwapChain> swapChainRhi_{nullptr};
 };
 
-PX_ENGINE_API UniquePtr<RHIViewport> rhiCreateViewport(RHIContext& context, void* windowHandle, uint16 sizeX, uint16 sizeY, bool isFullscreen);
+PX_ENGINE_API UniquePtr<RHIViewport> rhiCreateViewport(RHIContext& context, void* windowHandle, u16 sizeX, u16 sizeY, bool isFullscreen);
 
 } // namespace px

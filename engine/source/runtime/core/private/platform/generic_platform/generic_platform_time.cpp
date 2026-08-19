@@ -4,16 +4,16 @@
 
 namespace px {
 
-double TimePoint::asSeconds() const {
-    return static_cast<double>(Ticks) / 1000000.0;
+f64 TimePoint::asSeconds() const {
+    return static_cast<f64>(Ticks) / 1000000.0;
 }
 
-double TimePoint::asMilliseconds() const {
-    return static_cast<double>(Ticks) / 1000.0;
+f64 TimePoint::asMilliseconds() const {
+    return static_cast<f64>(Ticks) / 1000.0;
 }
 
-double TimePoint::asMicroseconds() const {
-    return static_cast<double>(Ticks);
+f64 TimePoint::asMicroseconds() const {
+    return static_cast<f64>(Ticks);
 }
 
 } // namespace px

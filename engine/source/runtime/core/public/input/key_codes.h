@@ -6,14 +6,14 @@
 
 namespace px {
 
-enum class EMouseButton : uint8 {
+enum class EMouseButton : u8 {
     None,
     Left,
     Middle,
     Right
 };
 
-enum class EKeyCode : uint16 {
+enum class EKeyCode : u16 {
     // clang-format off
     
     None = 0,
