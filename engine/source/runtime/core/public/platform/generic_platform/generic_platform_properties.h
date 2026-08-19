@@ -5,7 +5,7 @@
 namespace px {
 
 struct GenericPlatformProperties {
-    static char const* platformName();
+    static cstring platformName();
 
     static constexpr bool supportsWindowedMode() {
         return false;

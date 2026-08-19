@@ -16,7 +16,7 @@ namespace px::ed {
  */
 PX_ENGINE_EDITOR_API void drawDashedLine(
     ImDrawList* drawList, ImVec2 const& a, ImVec2 const& b,
-    float dashLength = 6.0f, float gapLength = 4.0f, float thickness = 2.f
+    f32 dashLength = 6.0f, f32 gapLength = 4.0f, f32 thickness = 2.f
 );
 
 /**
@@ -24,7 +24,7 @@ PX_ENGINE_EDITOR_API void drawDashedLine(
  */
 PX_ENGINE_EDITOR_API void drawDashedRect(
     ImDrawList* drawList, ImVec2 const& min, ImVec2 const& max,
-    float dashLength = 6.0f, float gapLength = 4.0f, float thickness = 2.f
+    f32 dashLength = 6.0f, f32 gapLength = 4.0f, f32 thickness = 2.f
 );
 
 /**
@@ -32,7 +32,7 @@ PX_ENGINE_EDITOR_API void drawDashedRect(
  */
 PX_ENGINE_EDITOR_API void drawDashedWindowBorder(
     ImVec2 const& padding = {6.f, 6.f},
-    float dashLength = 10.0f, float gapLength = 2.0f, float thickness = 2.f
+    f32 dashLength = 10.0f, f32 gapLength = 2.0f, f32 thickness = 2.f
 );
 
 /**
@@ -40,8 +40,8 @@ PX_ENGINE_EDITOR_API void drawDashedWindowBorder(
  * -- [Header Text] ------------------------------------------------------------------
  */
 PX_ENGINE_EDITOR_API void drawDashedHeader(
-    char const* text, ImVec2 const& padding = {6.f, 6.f}, float textPaddingLeft = 0.0f,
-    float dashLength = 10.0f, float gapLength = 2.0f, float thickness = 2.f
+    cstring text, ImVec2 const& padding = {6.f, 6.f}, f32 textPaddingLeft = 0.0f,
+    f32 dashLength = 10.0f, f32 gapLength = 2.0f, f32 thickness = 2.f
 );
 
 /**
@@ -50,7 +50,7 @@ PX_ENGINE_EDITOR_API void drawDashedHeader(
  */
 PX_ENGINE_EDITOR_API void drawDashedLineWithGaps(
     ImDrawList* drawList, ImVec2 const& a, ImVec2 const& b, std::vector<ImVec2> const& gaps,
-    float dashLength = 10.0f, float gapLength = 2.0f, float thickness = 2.f
+    f32 dashLength = 10.0f, f32 gapLength = 2.0f, f32 thickness = 2.f
 );
 
 } // namespace px::ed

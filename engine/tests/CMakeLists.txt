@@ -28,6 +28,12 @@ target_sources(${TESTS_TARGET_NAME} PRIVATE
         ${TESTS_CMAKE_FILES}
 )
 
+if(NOT BUILD_CLANG_TIDY)
+    target_precompile_headers(${TESTS_TARGET_NAME} PRIVATE
+            tests_pch.h
+    )
+endif()
+
 #
 # Configuration
 px_set_target_properties(${TESTS_TARGET_NAME})

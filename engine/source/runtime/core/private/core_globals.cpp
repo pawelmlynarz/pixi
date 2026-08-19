@@ -7,9 +7,9 @@
 
 namespace px {
 
-uint64 gFrameCounter{0};
-uint32 gGameThreadId{0};
-double gStartTime{PlatformTime::initialize().asSeconds()};
+u64 gFrameCounter{0};
+u32 gGameThreadId{0};
+f64 gStartTime{PlatformTime::initialize().asSeconds()};
 
 namespace {
 
@@ -33,7 +33,7 @@ bool isEditor() {
 #endif
 }
 
-void initGameThreadId(uint32 const threadId) {
+void initGameThreadId(u32 const threadId) {
     gGameThreadId = threadId;
 }
 

@@ -6,11 +6,12 @@
 
 namespace px {
 
-extern PX_ENGINE_API uint64 gFrameCounter;
-extern PX_ENGINE_API uint32 gGameThreadId;
-extern PX_ENGINE_API double gStartTime;
+extern PX_ENGINE_API u64 gFrameCounter;
+extern PX_ENGINE_API u32 gGameThreadId;
+extern PX_ENGINE_API f64 gStartTime;
 
 PX_ENGINE_API void requestEngineExit();
+
 PX_ENGINE_API bool isEngineExitRequested();
 
 PX_ENGINE_API bool isEditor();

@@ -7,17 +7,16 @@
 
 namespace px {
 
-extern int32 engineMain();
+extern i32 engineMain();
 
 namespace {
 
-int32 launchWindowsStartup(
+i32 launchWindowsStartup(
     [[maybe_unused]] HINSTANCE instance,
     [[maybe_unused]] HINSTANCE prevInstance,
     [[maybe_unused]] char* cmdLine,
-    [[maybe_unused]] int32 showCmd
+    [[maybe_unused]] i32 showCmd
 ) {
-
     return engineMain();
 }
 

@@ -17,7 +17,7 @@ void ImTextFilter::drawInExtent(ImDrawList*, ImVec2, ImVec2 extent) const {
     ScopeFontOverride const scopeFont{ScopeFontOverride(Config_.FontSize)};
     ImGui::SetCursorPosY(ImGui::GetCursorPos().y - extent.y * .5f);
 
-    int32 pushedStylesCount{0};
+    i32 pushedStylesCount{0};
     if (!Config_.Flags.has(EImTextFilterFlags::HasBackground)) {
         ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(0, 0, 0, 0));
         ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, IM_COL32(0, 0, 0, 0));

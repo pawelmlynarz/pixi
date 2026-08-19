@@ -6,7 +6,7 @@
 
 namespace px::ed {
 
-enum class EImFontSize : uint8 {
+enum class EImFontSize : u8 {
     Small,
     Medium,
     Large,

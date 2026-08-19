@@ -6,7 +6,7 @@
 
 namespace px::ed {
 
-enum class EWidgetAlignment : uint8 {
+enum class EWidgetAlignment : u8 {
     Left,
     Right
 };

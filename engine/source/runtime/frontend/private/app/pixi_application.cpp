@@ -17,8 +17,8 @@ SharedPtr<PixiApplication> sApplication{nullptr};
 SharedRef<PlatformWindow> createPlatformWindow(SharedRef<Window> const& window, SharedRef<PlatformApplication> const& platformApplication) {
     PlatformWindowDefinition const windowDefinition{
         .title = window->getTitle(),
-        .widthDesired = static_cast<uint16>(window->getSize().x),
-        .heightDesired = static_cast<uint16>(window->getSize().y),
+        .widthDesired = static_cast<u16>(window->getSize().x),
+        .heightDesired = static_cast<u16>(window->getSize().y),
         .decorated = window->getDecorated(),
         .resizable = window->getResizable()
     };
@@ -82,7 +82,7 @@ Renderer& PixiApplication::getRenderer() const {
     return *renderer_;
 }
 
-void PixiApplication::tick(float const dt) {
+void PixiApplication::tick(f32 const dt) {
     platformApplication_->pollMessages();
 
     if (renderer_) {

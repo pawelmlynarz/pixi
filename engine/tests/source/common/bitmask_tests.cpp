@@ -11,16 +11,16 @@ using namespace px;
 namespace {
 
 // One bit per slot, as produced by _mm_movemask_epi8.
-using SseMask = BitMask<uint32, 16>;
+using SseMask = BitMask<u32, 16>;
 
 // One byte per slot, as produced by the portable group.
-using SwarMask = BitMask<uint64, 8, 3>;
+using SwarMask = BitMask<u64, 8, 3>;
 
 /** Collects the slot indexes yielded by iterating a mask. */
 template <typename MaskT>
-std::vector<uint32> collect(MaskT const mask) {
-    std::vector<uint32> indexes;
-    for (uint32 const index : mask) {
+std::vector<u32> collect(MaskT const mask) {
+    std::vector<u32> indexes;
+    for (u32 const index : mask) {
         indexes.push_back(index);
     }
     return indexes;
@@ -32,17 +32,17 @@ std::vector<uint32> collect(MaskT const mask) {
 // Bit Utilities
 
 TEST(BitUtilities, LeadingZeroes) {
-    EXPECT_EQ(leadingZeroes(uint32{0x80000000}), 0u);
-    EXPECT_EQ(leadingZeroes(uint32{0x00000001}), 31u);
-    EXPECT_EQ(leadingZeroes(uint32{0}), 32u);
-    EXPECT_EQ(leadingZeroes(uint64{1}), 63u);
+    EXPECT_EQ(leadingZeroes(u32{0x80000000}), 0u);
+    EXPECT_EQ(leadingZeroes(u32{0x00000001}), 31u);
+    EXPECT_EQ(leadingZeroes(u32{0}), 32u);
+    EXPECT_EQ(leadingZeroes(u64{1}), 63u);
 }
 
 TEST(BitUtilities, TrailingZeros) {
-    EXPECT_EQ(trailingZeros(uint32{0x00000001}), 0u);
-    EXPECT_EQ(trailingZeros(uint32{0x00000100}), 8u);
-    EXPECT_EQ(trailingZeros(uint32{0}), 32u);
-    EXPECT_EQ(trailingZeros(uint64{1ull << 40}), 40u);
+    EXPECT_EQ(trailingZeros(u32{0x00000001}), 0u);
+    EXPECT_EQ(trailingZeros(u32{0x00000100}), 8u);
+    EXPECT_EQ(trailingZeros(u32{0}), 32u);
+    EXPECT_EQ(trailingZeros(u64{1ull << 40}), 40u);
 }
 
 TEST(BitUtilities, RoundUpToPowerOf2) {
@@ -54,8 +54,8 @@ TEST(BitUtilities, RoundUpToPowerOf2) {
 }
 
 TEST(BitUtilities, AreUsableInConstantExpressions) {
-    static_assert(leadingZeroes(uint32{0x00000001}) == 31u);
-    static_assert(trailingZeros(uint32{0x00000100}) == 8u);
+    static_assert(leadingZeroes(u32{0x00000001}) == 31u);
+    static_assert(trailingZeros(u32{0x00000100}) == 8u);
     static_assert(roundUpToPowerOf2(17u) == 32u);
     SUCCEED();
 }
@@ -65,12 +65,12 @@ TEST(BitUtilities, AreUsableInConstantExpressions) {
 
 TEST(BitMask, IteratesSetBitsLowestFirst) {
     // The example documented on the class: one bit per slot.
-    EXPECT_EQ(collect(SseMask{0x5}), (std::vector<uint32>{0, 2}));
+    EXPECT_EQ(collect(SseMask{0x5}), (std::vector<u32>{0, 2}));
 }
 
 TEST(BitMask, IteratesByteMarkersWhenShifted) {
     // The example documented on the class: one byte per slot, marker at bit 8 * slot + 7.
-    EXPECT_EQ(collect(SwarMask{0x0000000080800000ull}), (std::vector<uint32>{2, 3}));
+    EXPECT_EQ(collect(SwarMask{0x0000000080800000ull}), (std::vector<u32>{2, 3}));
 }
 
 TEST(BitMask, EmptyMaskYieldsNothing) {
@@ -79,16 +79,16 @@ TEST(BitMask, EmptyMaskYieldsNothing) {
 }
 
 TEST(BitMask, IteratesEverySlot) {
-    std::vector<uint32> expected;
-    for (uint32 slot{0}; slot < 16; ++slot) {
+    std::vector<u32> expected;
+    for (u32 slot{0}; slot < 16; ++slot) {
         expected.push_back(slot);
     }
     EXPECT_EQ(collect(SseMask{0xFFFF}), expected);
 }
 
 TEST(BitMask, EachSingleSlotYieldsItsOwnIndex) {
-    for (uint32 slot{0}; slot < 16; ++slot) {
-        EXPECT_EQ(collect(SseMask{uint32{1} << slot}), std::vector<uint32>{slot}) << "slot " << slot;
+    for (u32 slot{0}; slot < 16; ++slot) {
+        EXPECT_EQ(collect(SseMask{u32{1} << slot}), std::vector<u32>{slot}) << "slot " << slot;
     }
 }
 
@@ -132,8 +132,8 @@ TEST(BitMask, BitQueriesAreExpressedInSlotsWhenShifted) {
 }
 
 TEST(BitMask, LeadingAndTrailingZerosAreConsistent) {
-    for (uint32 slot{0}; slot < 16; ++slot) {
-        SseMask const mask{uint32{1} << slot};
+    for (u32 slot{0}; slot < 16; ++slot) {
+        SseMask const mask{u32{1} << slot};
         EXPECT_EQ(mask.trailingZeros() + mask.leadingZeros(), 15u) << "slot " << slot;
     }
 }

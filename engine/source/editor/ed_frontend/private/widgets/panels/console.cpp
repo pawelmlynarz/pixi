@@ -82,7 +82,7 @@ void drawConsoleInputField() {
     ImGui::Dummy({10.f, 0.f});
     ImGui::SameLine();
 
-    float const cachedCursorY{ImGui::GetCursorPosY()};
+    f32 const cachedCursorY{ImGui::GetCursorPosY()};
     ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 3.f);
     pushFont(EImFontSize::Medium);
     ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.8f, 0.8f, 0.0f, 1.0f));

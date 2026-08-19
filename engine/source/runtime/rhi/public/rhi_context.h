@@ -17,7 +17,7 @@ struct RHIQueuedFrame {
     nri::CommandBuffer* CommandBuffer{nullptr};
     nri::Descriptor* ConstantBufferView{nullptr};
     nri::DescriptorSet* ConstantBufferDescriptorSet{nullptr};
-    uint64 ConstantBufferViewOffset{0U};
+    u64 ConstantBufferViewOffset{0U};
 };
 
 struct RHIStaticContext {
@@ -62,7 +62,7 @@ class RHIContext {
 
     inline std::vector<RHIQueuedFrame>& getQueuedFrames() const;
 
-    static inline uint8 getQueuedFrameNum();
+    static inline u8 getQueuedFrameNum();
 
     void waitIdle();
 
@@ -95,7 +95,7 @@ inline nri::Device*& RHIContext::getDevice() const {
     return resources_->Device;
 }
 
-inline uint8 RHIContext::getQueuedFrameNum() {
+inline u8 RHIContext::getQueuedFrameNum() {
     return RHIStaticContext::bVSync ? 2 : 3;
 }
 

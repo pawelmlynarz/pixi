@@ -10,9 +10,9 @@ namespace {
 
 LARGE_INTEGER frequency;
 
-int64 safeInt64MulDiv(int64 const value, int64 const numer, int64 const denom) {
-    int64 const q{value / denom};
-    int64 const r{value % denom};
+i64 safeInt64MulDiv(i64 const value, i64 const numer, i64 const denom) {
+    i64 const q{value / denom};
+    i64 const r{value % denom};
     return (q * numer) + (r * numer / denom);
 }
 
@@ -27,7 +27,7 @@ TimePoint WindowsPlatformTime::now() {
     LARGE_INTEGER time;
     QueryPerformanceCounter(&time);
 
-    int64 constexpr microsecondsPerSecond{1000000LL};
+    i64 constexpr microsecondsPerSecond{1000000LL};
     TimePoint const microseconds{safeInt64MulDiv(time.QuadPart, microsecondsPerSecond, frequency.QuadPart)};
 
     return microseconds;

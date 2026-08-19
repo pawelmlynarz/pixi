@@ -9,7 +9,7 @@
 
 namespace px::ed {
 
-enum class EImTextFilterFlags : uint8 {
+enum class EImTextFilterFlags : u8 {
     None = 0,
     HasBackground = 1 << 0,
     HasBorder = 1 << 1,
@@ -21,7 +21,7 @@ struct ImTextFilterConfig {
     ImGuiTextFilter& TextFilterRef;
     std::string_view Label;
     EImFontSize FontSize{EImFontSize::Medium};
-    float Width{100.f};
+    f32 Width{100.f};
     BitFlags<EImTextFilterFlags> Flags{EImTextFilterFlags::HasBorder};
 };
 

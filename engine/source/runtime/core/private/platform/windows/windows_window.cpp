@@ -14,7 +14,7 @@ namespace {
 
 bool sGLFWInitialized{false};
 
-void glfwErrorCallback([[maybe_unused]] int const errorCode, [[maybe_unused]] char const* const description) {
+void glfwErrorCallback([[maybe_unused]] int const errorCode, [[maybe_unused]] cstring const description) {
     pxToDo("Handle error and implement logger.");
 }
 
@@ -33,7 +33,7 @@ void glfwKeyCallback(GLFWwindow* const window, int32_t const key, int32_t const 
     WindowsWindow const* const winWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window))};
     SharedRef const messageHandler{winWindow->getOwningApplication()->getMessageHandler()};
 
-    switch (uint32 const characterCode{static_cast<uint32>(scancode)}; action) {
+    switch (u32 const characterCode{static_cast<u32>(scancode)}; action) {
     case GLFW_PRESS:
         messageHandler->onKeyDown(key, characterCode, false);
         break;
@@ -79,10 +79,10 @@ void glfwMouseButtonCallback(GLFWwindow* const window, int32_t const button, int
     default: break;
     }
 
-    double mouseX{};
-    double mouseY{};
+    f64 mouseX{};
+    f64 mouseY{};
     glfwGetCursorPos(window, &mouseX, &mouseY);
-    Vector2 const mousePos{static_cast<float>(mouseX), static_cast<float>(mouseY)};
+    Vector2 const mousePos{static_cast<f32>(mouseX), static_cast<f32>(mouseY)};
 
     if (action == GLFW_PRESS) {
         messageHandler->onMouseDown(sharedThis(winWindow), buttonEnum, mousePos);
@@ -91,14 +91,14 @@ void glfwMouseButtonCallback(GLFWwindow* const window, int32_t const button, int
     }
 }
 
-void glfwCursorPosCallback(GLFWwindow* window, double const x, double const y) {
+void glfwCursorPosCallback(GLFWwindow* window, f64 const x, f64 const y) {
     WindowsWindow* const winWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window))};
     SharedRef const messageHandler{winWindow->getOwningApplication()->getMessageHandler()};
 
     messageHandler->onMouseMoved(sharedThis(winWindow), {x, y});
 }
 
-void glfwScrollCallback(GLFWwindow* const window, double const xOffset, double const yOffset) {
+void glfwScrollCallback(GLFWwindow* const window, f64 const xOffset, f64 const yOffset) {
 }
 
 void glfwCloseCallback(GLFWwindow* const window) {
@@ -110,7 +110,7 @@ void glfwCloseCallback(GLFWwindow* const window) {
 void glfwFramebufferResizeCallback(GLFWwindow* const window, int const width, int const height) {
     WindowsWindow* const winWindow{static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window))};
     SharedRef const messageHandler{winWindow->getOwningApplication()->getMessageHandler()};
-    messageHandler->onWindowResized(sharedThis(winWindow), static_cast<uint16>(width), static_cast<uint16>(height), false);
+    messageHandler->onWindowResized(sharedThis(winWindow), static_cast<u16>(width), static_cast<u16>(height), false);
 }
 
 } // namespace

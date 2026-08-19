@@ -12,11 +12,11 @@ using namespace px;
 
 namespace {
 
-enum class Backend : uint8 { Vulkan, D3D12 };
+enum class Backend : u8 { Vulkan, D3D12 };
 
 struct PackedHandle {
-    uint32 index;
-    uint32 generation;
+    u32 index;
+    u32 generation;
 };
 
 } // namespace
@@ -92,7 +92,7 @@ TEST(HashBytes, HandlesEmptyAndLongInputs) {
 TEST(HashOf, StringsHashByContent) {
     std::string const owned{"StaticMesh"};
     std::string_view const view{owned};
-    char const* const pointer{owned.c_str()};
+    cstring const pointer{owned.c_str()};
 
     EXPECT_EQ(hashOf(view), hashOf(pointer));
     EXPECT_EQ(hashOf(view), hashOf("StaticMesh"));
@@ -112,7 +112,7 @@ TEST(HashOf, StringLiteralDoesNotHashItsTerminator) {
 TEST(HashOf, IntegersAreDeterministicAndDistinct) {
     EXPECT_EQ(hashOf(42), hashOf(42));
     EXPECT_NE(hashOf(42), hashOf(43));
-    EXPECT_NE(hashOf(uint64{0}), hashOf(uint64{1}));
+    EXPECT_NE(hashOf(u64{0}), hashOf(u64{1}));
 }
 
 TEST(HashOf, IntegersRespectSeed) {
@@ -120,7 +120,7 @@ TEST(HashOf, IntegersRespectSeed) {
 }
 
 TEST(HashOf, EnumsHashAsTheirUnderlyingValue) {
-    EXPECT_EQ(hashOf(Backend::D3D12), hashOf(static_cast<uint8>(Backend::D3D12)));
+    EXPECT_EQ(hashOf(Backend::D3D12), hashOf(static_cast<u8>(Backend::D3D12)));
     EXPECT_NE(hashOf(Backend::Vulkan), hashOf(Backend::D3D12));
 }
 
@@ -137,7 +137,7 @@ TEST(HashOf, TriviallyCopyableTypesHashByRepresentation) {
 }
 
 TEST(HashOf, IntegerFastPathDiffersFromByteHashing) {
-    uint64 const value{0x0123456789ABCDEFull};
+    u64 const value{0x0123456789ABCDEFull};
     EXPECT_NE(hashOf(value), hashBytes(&value, sizeof(value)));
 }
 

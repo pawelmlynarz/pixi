@@ -19,13 +19,13 @@ class ImGuiRenderer : NonCopyableNonMovable {
 
     void shutdown();
 
-    void tick(float dt);
+    void tick(f32 dt);
 
     inline bool hasUserInterface() const;
 
     PX_ENGINE_API void cmdCopyImguiData(nri::CommandBuffer& cmdBuffer, nri::Streamer& streamer) const;
 
-    PX_ENGINE_API void cmdDrawImgui(nri::CommandBuffer& cmdBuffer, nri::Format attachmentFormat, float sdrScale, bool bIsSrgb) const;
+    PX_ENGINE_API void cmdDrawImgui(nri::CommandBuffer& cmdBuffer, nri::Format attachmentFormat, f32 sdrScale, bool bIsSrgb) const;
 
     PX_ENGINE_API void* getImguiContext();
 

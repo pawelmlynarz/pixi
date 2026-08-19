@@ -18,12 +18,12 @@ namespace px {
 namespace {
 
 [[nodiscard]]
-int32 enginePreInit() {
+i32 enginePreInit() {
     return EngineLoop::preInit();
 }
 
 [[nodiscard]]
-int32 engineInit() {
+i32 engineInit() {
     return EngineLoop::init();
 }
 
@@ -37,8 +37,8 @@ void engineExit() {
 
 #if WITH_EDITOR
 [[nodiscard]]
-int32 editorInit() {
-    int32 result{engineInit()};
+i32 editorInit() {
+    i32 result{engineInit()};
     if (result != 0) {
         return result;
     }
@@ -68,12 +68,12 @@ struct EngineExitGuard {
 } // namespace
 
 // NOLINTNEXTLINE(misc-use-internal-linkage)
-int32 engineMain() {
+i32 engineMain() {
     EngineExitGuard const exitGuard;
 
     initGameThreadId(PlatformTLS::getCurrentThreadId());
 
-    int32 errorLevel{enginePreInit()};
+    i32 errorLevel{enginePreInit()};
     if (errorLevel != 0 || isEngineExitRequested()) {
         return errorLevel;
     }

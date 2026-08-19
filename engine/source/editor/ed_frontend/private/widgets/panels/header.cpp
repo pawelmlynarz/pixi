@@ -27,7 +27,7 @@ void drawVersionInfo() {
 
     ImDrawList* const drawList{ImGui::GetWindowDrawList()};
     ImFont* const font{ImGui::GetFont()};
-    float const fontSize{ImGui::GetFontSize()};
+    f32 const fontSize{ImGui::GetFontSize()};
 
     constexpr std::array colors{
         IM_COL32(255, 80, 80, 255),  // P
@@ -36,8 +36,8 @@ void drawVersionInfo() {
         IM_COL32(255, 200, 80, 255)  // i
     };
 
-    float x{startPos.x};
-    float const y{startPos.y};
+    f32 x{startPos.x};
+    f32 const y{startPos.y};
 
     std::array<char, 2> buf{0, 0};
     for (int i{0}; i < 4; i++) {

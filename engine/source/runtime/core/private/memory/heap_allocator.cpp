@@ -16,7 +16,7 @@ namespace {
 #if HEAP_ALLOCATOR_STATS
 
 struct AllocRecord {
-    using hash_t = uint32;
+    using hash_t = u32;
     void const* addr{nullptr};
     hash_t hash{0U};
     size_t allocatedSize{0_B};

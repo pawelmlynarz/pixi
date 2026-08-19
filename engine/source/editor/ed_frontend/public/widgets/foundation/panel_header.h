@@ -12,17 +12,17 @@ class IPrecomputedExtentWidget;
 
 namespace px::ed {
 
-enum class EWidgetAlignment : uint8;
+enum class EWidgetAlignment : u8;
 
 struct ImPanelHeaderConfig {
     ImVec2 HeaderPadding{ImVec2(24, 16.5)};
 
-    float FirstWidgetPadding{24.f};
-    float NextWidgetPadding{12.f};
-    float GapExtraPadding{8.f};
-    float DashLength{10.f};
-    float GapLength{2.f};
-    float Thickness{2.f};
+    f32 FirstWidgetPadding{24.f};
+    f32 NextWidgetPadding{12.f};
+    f32 GapExtraPadding{8.f};
+    f32 DashLength{10.f};
+    f32 GapLength{2.f};
+    f32 Thickness{2.f};
 };
 
 /**
@@ -74,11 +74,11 @@ class ImPanelHeader : public ImWidgetWithConfig<ImPanelHeaderConfig> {
     struct StateData {
         ImVec2 OrygCursorPos_;
 
-        float Y_{0.0f};
-        float StartX_{0.f};
-        float EndX_{0.f};
-        float CursorXLeft_{0.f};
-        float CursorXRight_{0.f};
+        f32 Y_{0.0f};
+        f32 StartX_{0.f};
+        f32 EndX_{0.f};
+        f32 CursorXLeft_{0.f};
+        f32 CursorXRight_{0.f};
 
         std::vector<ImVec2> Gaps_;
     } state_;

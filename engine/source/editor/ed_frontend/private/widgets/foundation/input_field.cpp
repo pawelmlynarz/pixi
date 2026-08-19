@@ -22,7 +22,7 @@ void ImInputField::drawInExtent(ImDrawList*, ImVec2, [[maybe_unused]] ImVec2 ext
 
     std::array<char, 256> buf{};
 
-    int32 pushedStylesCount{0};
+    i32 pushedStylesCount{0};
     if (!Config_.Flags.has(EImInputFieldFlags::HasBackground)) {
         ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(0, 0, 0, 0));
         ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, IM_COL32(0, 0, 0, 0));

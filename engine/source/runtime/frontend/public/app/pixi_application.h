@@ -85,7 +85,7 @@ class PixiApplication final : NonCopyableNonMovable {
      *
      * @param dt Delta time, in seconds.
      */
-    PX_ENGINE_API void tick(float dt);
+    PX_ENGINE_API void tick(f32 dt);
 
     /**
      * Associates a high-level Window with a native window and ensures that it is tracked properly by the application.

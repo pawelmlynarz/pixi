@@ -31,7 +31,7 @@ class Renderer final : NonCopyableNonMovable {
      *
      * @param dt Delta Time.
      */
-    PX_ENGINE_API void tick(float dt);
+    PX_ENGINE_API void tick(f32 dt);
 
     /**
      * @brief Retrieves the viewport RHI resource.
@@ -49,7 +49,7 @@ class Renderer final : NonCopyableNonMovable {
      */
     PX_ENGINE_API void createViewport(SharedRef<Window> window);
 
-    PX_ENGINE_API void requestResizeViewport(SharedRef<Window> window, uint16 sizeX, uint16 sizeY);
+    PX_ENGINE_API void requestResizeViewport(SharedRef<Window> window, u16 sizeX, u16 sizeY);
 
     /**
      * Gives the renderer a chance to wait for any render commands to be completed before returning.

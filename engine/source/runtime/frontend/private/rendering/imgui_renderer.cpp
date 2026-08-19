@@ -29,7 +29,7 @@ void ImGuiRenderer::initialize(nri::Device* const device, UVector2 const& displa
     io.BackendFlags |= ImGuiBackendFlags_RendererHasTextures;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     io.IniFilename = nullptr;
-    io.DisplaySize = ImVec2(static_cast<float>(displaySize_.x), static_cast<float>(displaySize_.y));
+    io.DisplaySize = ImVec2(static_cast<f32>(displaySize_.x), static_cast<f32>(displaySize_.y));
 
     ImFontConfig fontConfig{};
     fontConfig.SizePixels = 13.f;
@@ -54,7 +54,7 @@ void ImGuiRenderer::shutdown() {
 }
 
 // NOLINTNEXTLINE(readability-make-member-function-const)
-void ImGuiRenderer::tick([[maybe_unused]] float const dt) {}
+void ImGuiRenderer::tick([[maybe_unused]] f32 const dt) {}
 
 void ImGuiRenderer::cmdCopyImguiData(nri::CommandBuffer& cmdBuffer, nri::Streamer& streamer) const {
     if (!hasUserInterface()) {
@@ -65,15 +65,15 @@ void ImGuiRenderer::cmdCopyImguiData(nri::CommandBuffer& cmdBuffer, nri::Streame
 
     nri::CopyImguiDataDesc const copyImguiDataDesc{
         .drawLists = drawData.CmdLists.Data,
-        .drawListNum = static_cast<uint32>(drawData.CmdLists.Size),
+        .drawListNum = static_cast<u32>(drawData.CmdLists.Size),
         .textures = drawData.Textures->Data,
-        .textureNum = static_cast<uint32>(drawData.Textures->Size)
+        .textureNum = static_cast<u32>(drawData.Textures->Size)
     };
 
     imguiInterface_.CmdCopyImguiData(cmdBuffer, streamer, *imguiRenderer_, copyImguiDataDesc);
 }
 
-void ImGuiRenderer::cmdDrawImgui(nri::CommandBuffer& cmdBuffer, nri::Format const attachmentFormat, float const sdrScale, bool const bIsSrgb) const {
+void ImGuiRenderer::cmdDrawImgui(nri::CommandBuffer& cmdBuffer, nri::Format const attachmentFormat, f32 const sdrScale, bool const bIsSrgb) const {
     if (!hasUserInterface()) {
         return;
     }
@@ -82,7 +82,7 @@ void ImGuiRenderer::cmdDrawImgui(nri::CommandBuffer& cmdBuffer, nri::Format cons
 
     nri::DrawImguiDesc const drawImguiDesc{
         .drawLists = drawData.CmdLists.Data,
-        .drawListNum = static_cast<uint32>(drawData.CmdLists.Size),
+        .drawListNum = static_cast<u32>(drawData.CmdLists.Size),
         .displaySize = {.w = static_cast<nri::Dim_t>(drawData.DisplaySize.x), .h = static_cast<nri::Dim_t>(drawData.DisplaySize.y)},
         .hdrScale = sdrScale,
         .attachmentFormat = attachmentFormat,
@@ -100,7 +100,7 @@ void ImGuiRenderer::requestResizeDisplaySize(UVector2 const& displaySize) {
     displaySize_ = displaySize;
 
     ImGuiIO& io{ImGui::GetIO()};
-    io.DisplaySize = ImVec2(static_cast<float>(displaySize_.x), static_cast<float>(displaySize_.y));
+    io.DisplaySize = ImVec2(static_cast<f32>(displaySize_.x), static_cast<f32>(displaySize_.y));
 }
 
 } // namespace px

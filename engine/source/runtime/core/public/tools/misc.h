@@ -10,6 +10,10 @@ constexpr bool isPowerOfTwo(size_t const value) noexcept {
     return std::has_single_bit(value);
 }
 
+constexpr size_t alignUp(size_t const value, size_t const alignment) noexcept {
+    return (value + alignment - 1) & ~(alignment - 1);
+}
+
 class PX_ENGINE_API NonCopyable {
   protected:
     NonCopyable() = default;

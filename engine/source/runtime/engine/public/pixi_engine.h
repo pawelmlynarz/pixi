@@ -9,12 +9,12 @@ namespace px {
 class PixiEngine {
   public:
     PX_ENGINE_API void updateTimeAndHandleMaxTickRate();
-    PX_ENGINE_API float getDeltaTime() const;
-    PX_ENGINE_API float getFps() const;
+    PX_ENGINE_API f32 getDeltaTime() const;
+    PX_ENGINE_API f32 getFps() const;
 
     struct TimingInfo {
-        double CurrentRealTime{0.f};
-        float CurrentDeltaTime{0.f};
+        f64 CurrentRealTime{0.f};
+        f32 CurrentDeltaTime{0.f};
     } TimingInfo_;
 };
 

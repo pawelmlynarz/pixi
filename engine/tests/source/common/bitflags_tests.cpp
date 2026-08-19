@@ -12,7 +12,7 @@ using namespace px;
 
 namespace bitflags_test {
 
-enum class Permission : uint8 {
+enum class Permission : u8 {
     None = 0,
     Read = 1 << 0,
     Write = 1 << 1,
@@ -21,7 +21,7 @@ enum class Permission : uint8 {
 
 PX_ENABLE_BIT_FLAGS(Permission);
 
-enum class Stage : uint64 {
+enum class Stage : u64 {
     None = 0,
     Vertex = 1ull << 0,
     Fragment = 1ull << 1,
@@ -30,13 +30,13 @@ enum class Stage : uint64 {
 
 PX_ENABLE_BIT_FLAGS(Stage);
 
-enum class Colour : uint8 { Red, Green, Blue };
+enum class Colour : u8 { Red, Green, Blue };
 
 } // namespace bitflags_test
 
 namespace outer::inner {
 
-enum class Feature : uint16 {
+enum class Feature : u16 {
     None = 0,
     Shadows = 1 << 0,
     Reflections = 1 << 1,
@@ -50,7 +50,7 @@ struct Settings {
 
 } // namespace outer::inner
 
-enum class GlobalFeature : uint8 {
+enum class GlobalFeature : u8 {
     None = 0,
     First = 1 << 0,
     Second = 1 << 1,
@@ -61,7 +61,7 @@ PX_ENABLE_BIT_FLAGS(GlobalFeature);
 namespace placement {
 
 struct Host {
-    enum class Mode : uint8 {
+    enum class Mode : u8 {
         None = 0,
         Read = 1 << 0,
         Write = 1 << 1,
@@ -70,7 +70,7 @@ struct Host {
 
 PX_ENABLE_BIT_FLAGS(Host::Mode);
 
-enum class Misplaced : uint8 {
+enum class Misplaced : u8 {
     None = 0,
     Something = 1 << 0,
 };
@@ -141,10 +141,10 @@ TEST(BitFlags, OptsInFromANestedNamespace) {
 }
 
 TEST(BitFlags, UsesAnUnsignedValueTypeOfTheUnderlyingType) {
-    static_assert(std::is_same_v<Permissions::ValueType, uint8>);
-    static_assert(std::is_same_v<Stages::ValueType, uint64>);
+    static_assert(std::is_same_v<Permissions::ValueType, u8>);
+    static_assert(std::is_same_v<Stages::ValueType, u64>);
     static_assert(std::is_same_v<Permissions::EnumType, Permission>);
-    static_assert(sizeof(Permissions) == sizeof(uint8));
+    static_assert(sizeof(Permissions) == sizeof(u8));
     SUCCEED();
 }
 
