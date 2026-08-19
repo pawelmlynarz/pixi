@@ -17,9 +17,15 @@ include(platform/platform_check)
 # Environment Configuration
 # --------------------------------------------------
 
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 26)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+if(MSVC AND NOT CMAKE_CXX26_STANDARD_COMPILE_OPTION)
+    set(CMAKE_CXX26_STANDARD_COMPILE_OPTION "-std:c++latest")
+    set(CMAKE_CXX26_EXTENSION_COMPILE_OPTION "-std:c++latest")
+endif()
+
 set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP OFF)
 
