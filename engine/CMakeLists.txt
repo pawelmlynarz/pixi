@@ -111,3 +111,12 @@ add_subdirectory(source)
 
 group_sources_for_target(${ENGINE_TARGET_NAME})
 group_sources_for_target(${ENGINE_ED_TARGET_NAME})
+
+# --------------------------------------------------
+# Tests
+# --------------------------------------------------
+
+if(BUILD_TESTS)
+    set(TESTS_TARGET_NAME px${ENGINE_MODULE_NAME}Tests)
+    add_subdirectory(tests)
+endif()

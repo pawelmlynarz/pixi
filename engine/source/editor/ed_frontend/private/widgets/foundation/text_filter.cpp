@@ -18,14 +18,14 @@ void ImTextFilter::drawInExtent(ImDrawList*, ImVec2, ImVec2 extent) const {
     ImGui::SetCursorPosY(ImGui::GetCursorPos().y - extent.y * .5f);
 
     int32 pushedStylesCount{0};
-    if (!HasFlag(Config_.Flags, EImTextFilterFlags::HasBackground)) {
+    if (!Config_.Flags.has(EImTextFilterFlags::HasBackground)) {
         ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(0, 0, 0, 0));
         ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, IM_COL32(0, 0, 0, 0));
         ImGui::PushStyleColor(ImGuiCol_FrameBgActive, IM_COL32(0, 0, 0, 0));
         pushedStylesCount += 3;
     }
 
-    if (HasFlag(Config_.Flags, EImTextFilterFlags::HasBorder)) {
+    if (Config_.Flags.has(EImTextFilterFlags::HasBorder)) {
         ImGui::PushStyleColor(ImGuiCol_Border, EdStyle::getColorU32(PxGuiCol_FrameBorder));
         pushedStylesCount += 1;
     }

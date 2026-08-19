@@ -23,14 +23,14 @@ void ImInputField::drawInExtent(ImDrawList*, ImVec2, [[maybe_unused]] ImVec2 ext
     std::array<char, 256> buf{};
 
     int32 pushedStylesCount{0};
-    if (!HasFlag(Config_.Flags, EImInputFieldFlags::HasBackground)) {
+    if (!Config_.Flags.has(EImInputFieldFlags::HasBackground)) {
         ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(0, 0, 0, 0));
         ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, IM_COL32(0, 0, 0, 0));
         ImGui::PushStyleColor(ImGuiCol_FrameBgActive, IM_COL32(0, 0, 0, 0));
         pushedStylesCount += 3;
     }
 
-    if (HasFlag(Config_.Flags, EImInputFieldFlags::HasBorder)) {
+    if (Config_.Flags.has(EImInputFieldFlags::HasBorder)) {
         ImGui::PushStyleColor(ImGuiCol_Border, EdStyle::getColorU32(PxGuiCol_FrameBorder));
         pushedStylesCount += 1;
     }

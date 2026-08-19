@@ -1,0 +1,4 @@
+# Vendored third party sources are kept as close to upstream as possible so that they remain easy to
+# update. Formatting is disabled for this directory.
+DisableFormat: true
+SortIncludes: Never

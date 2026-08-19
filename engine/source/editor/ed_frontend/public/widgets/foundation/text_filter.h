@@ -5,7 +5,7 @@
 #include "widgets/widget.h"
 #include "common/font.h"
 #include "utils/imgui_draw_utils.h"
-#include "tools/flags.h"
+#include "common/bitflags.h"
 
 namespace px::ed {
 
@@ -15,12 +15,14 @@ enum class EImTextFilterFlags : uint8 {
     HasBorder = 1 << 1,
 };
 
+PX_ENABLE_BIT_FLAGS(EImTextFilterFlags);
+
 struct ImTextFilterConfig {
     ImGuiTextFilter& TextFilterRef;
     std::string_view Label;
     EImFontSize FontSize{EImFontSize::Medium};
     float Width{100.f};
-    EImTextFilterFlags Flags{EImTextFilterFlags::HasBorder};
+    BitFlags<EImTextFilterFlags> Flags{EImTextFilterFlags::HasBorder};
 };
 
 class ImTextFilter : public ImWidgetWithConfig<ImTextFilterConfig>,
@@ -37,5 +39,3 @@ class ImTextFilter : public ImWidgetWithConfig<ImTextFilterConfig>,
 };
 
 } // namespace px::ed
-
-BitmaskEnum(px::ed::EImTextFilterFlags);

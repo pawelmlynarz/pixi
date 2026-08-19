@@ -9,6 +9,7 @@
 #include <array>
 #include <ranges>
 #include <bit>
+#include <iterator>
 #include <memory>
 #include <optional>
 #include <thread>
